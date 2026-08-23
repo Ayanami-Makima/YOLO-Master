@@ -1,0 +1,32 @@
+{
+  "suite": "quick",
+  "total": 36,
+  "passed": 36,
+  "failed": 0,
+  "score": 1.0,
+  "slowest": [
+    {
+      "name": "benchmark_dry_run",
+      "elapsed_sec": 0.986
+    },
+    {
+      "name": "pipeline_profile_dry_run",
+      "elapsed_sec": 0.953
+    },
+    {
+      "name": "multimodal_evaluate_stub_probe",
+      "elapsed_sec": 0.781
+    },
+    {
+      "name": "multimodal_openai_stub_probe",
+      "elapsed_sec": 0.176
+    },
+    {
+      "name": "multimodal_open_world_stub_probe",
+      "elapsed_sec": 0.104
+    }
+  ],
+  "recommendations": [
+    "All cases passed. Keep the current skill shape and expand the case set before adding new handlers."
+  ]
+}
