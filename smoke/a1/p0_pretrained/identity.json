@@ -1,0 +1,32 @@
+{
+  "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+  "checkpoint_sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef",
+  "checkpoint_bytes": 5544453,
+  "data": "/data/data2/TuJiajun/COCO2017/coco/coco2017.yaml",
+  "data_sha256": "fadd46a0ceb946a0e4439f072eccc19b6af92b4de545d601dfac367be7adef92",
+  "dataset_manifest": "/data/data2/TuJiajun/COCO2017/coco/dataset_manifest.json",
+  "dataset_manifest_sha256": "f2a2adb80b6f5d20cb02b600b97158ed3dec032a4b3942ff6c3060f5293fa0ac",
+  "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+  "python_executable": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+  "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+  "ultralytics": "8.4.101",
+  "cells": {
+    "A": {
+      "model_class": "DetectionModel",
+      "head_class": "Detect",
+      "end2end": false,
+      "has_one2one_cv2": true,
+      "has_one2one_cv3": true,
+      "parameters": 2572280
+    },
+    "B": {
+      "model_class": "DetectionModel",
+      "head_class": "Detect",
+      "end2end": true,
+      "has_one2one_cv2": true,
+      "has_one2one_cv3": true,
+      "parameters": 2572280
+    }
+  },
+  "protocol": "same checkpoint/data/settings; only end2end=False/True differs"
+}

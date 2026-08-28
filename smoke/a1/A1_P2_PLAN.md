@@ -102,7 +102,7 @@ workers 和预训练策略。除 MoE 与 NMS/end-to-end 所需开关外，A/B/C/
 
 通过标准是命令无人工交互、CUDA 可用、train → val → best checkpoint 产物完整。
 
-### Phase P0：原生 detect 与 one-to-one 基线
+### Phase P0：原生 detect 与 one-to-one 基线（已完成）
 
 1. 固定 COCO-mini manifest 和统一配置。
 2. 跑 A、B 各一个 seed，定位检测头、assigner、loss、predict、validator、export 的输入输出。
@@ -110,7 +110,13 @@ workers 和预训练策略。除 MoE 与 NMS/end-to-end 所需开关外，A/B/C/
 4. 对 A、B 测 GPU/CPU batch=1：预热 50 次、正式 200 次；分开保存 preprocess、inference、
    postprocess、total 的原始样本。
 
-P0 通过标准：固定版本上的 A/B 可复现，有 COCO-mini mAP50-95 与 CPU/GPU 延迟原始数据。
+实际 P0 使用同一个 `yolo26n.pt` 预训练 checkpoint，在完整 COCO val2017 的 5,000 张图片上
+复现 A（one-to-many + NMS）与 B（one-to-one，NMS-free）。A/B mAP50-95 分别为 0.402/0.395，
+B 下降 0.7 AP；固定 16 图运行时追踪中 A 调用 16 次真实 NMS kernel，B 为 0。GPU/CPU batch=1
+逐样本延迟、mean/std/p50/p90/p99 和原生验证日志均已保存。
+
+P0 通过标准：固定版本上的 A/B 可复现，有 COCO-mini 或 COCO val mAP50-95、非空检测下的
+NMS 路径证据，以及 CPU/GPU batch=1 延迟原始数据。
 
 ### Phase P1：完整 2×2 与闭环
 
@@ -207,7 +213,10 @@ smoke/a1/                   # 已完成的准入 Smoke 和原始轻量证据
 
 ## 10. 当前下一步
 
-已完成：官方基线锁定、隔离环境、Agent quick 36/36、COCO8 单 epoch end-to-end detect Smoke。
+已完成：官方基线锁定、隔离环境、Agent quick 36/36、COCO8 单 epoch End-to-End Smoke，以及
+使用统一预训练权重的完整 COCO val P0。P0 证据见 `smoke/a1/P0_PRETRAINED_REPORT.md` 和
+`smoke/a1/p0_pretrained/`。
 
-下一项工作是建立 `configs/a1/` 的 A/B/C/D 派生配置和 COCO-mini manifest，先完成 P0 的 A/B
-原生对照及 CPU/GPU batch=1 端到端延迟脚本，再决定是否进入 MoE 2×2。
+从随机初始化开始的 full-COCO 30-epoch 训练已暂停并保留现场。下一项工作是在确认预训练权重
+到 A/B/C/D 的统一迁移规则后，使用固定的中等规模 COCO 子集短程微调，再在完整 COCO val 上
+完成 P1 2×2 对照；在迁移规则未审计前不重启 C/D。

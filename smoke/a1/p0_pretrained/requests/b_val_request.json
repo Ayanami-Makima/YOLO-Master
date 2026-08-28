@@ -1,0 +1,40 @@
+{
+  "skill": "yolo.val",
+  "request_id": "a1_p0_pretrained_b",
+  "runtime": {
+    "cwd": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master",
+    "python": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+    "prefer_cli": true
+  },
+  "inputs": {
+    "model": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+    "data": "/data/data2/TuJiajun/COCO2017/coco/coco2017.yaml",
+    "task": "detect"
+  },
+  "params": {
+    "imgsz": 640,
+    "batch": 16,
+    "device": "0",
+    "workers": 0,
+    "split": "val",
+    "conf": 0.001,
+    "iou": 0.7,
+    "max_det": 300,
+    "half": false,
+    "save_json": true,
+    "plots": false,
+    "verbose": false,
+    "project": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/native_validation",
+    "name": "b",
+    "exist_ok": false,
+    "end2end": true
+  },
+  "artifacts": {
+    "project": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/agent_manifests",
+    "name": "val_b"
+  },
+  "policy": {
+    "dry_run": false,
+    "async": false
+  }
+}

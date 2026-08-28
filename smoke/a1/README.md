@@ -1,12 +1,14 @@
 # A1: MoE × End-to-End NMS-free Smoke
 
-This directory records the admission smoke for the Tencent Rhino-Bird A1 task:
+This directory records the admission smoke and pretrained P0 baseline for the Tencent Rhino-Bird A1 task:
 **MoE × End-to-End: whether the existing one-to-one path can form an NMS-free
 loop**.
 
 ## Scope and baseline
 
-This is an admission smoke, not a P0 accuracy result or a research conclusion.
+The original COCO8 run is an admission smoke, not an accuracy result. The later
+pretrained COCO val2017 A/B comparison is the P0 accuracy and latency baseline;
+neither run is a P1 MoE conclusion.
 The code baseline is the public YOLO-Master commit:
 
 ```text
@@ -69,10 +71,48 @@ The raw logs, command arguments, and result CSV are under `evidence/`.
 Checkpoint files are intentionally excluded: they are reproducible generated
 artifacts, not source evidence needed to review this smoke.
 
+## P0 pretrained baseline (completed)
+
+P0 uses the same `yolo26n.pt` checkpoint for both cells and changes only the
+native detection-head route: A selects one-to-many outputs followed by NMS;
+B selects the checkpoint's one-to-one end-to-end outputs. No training or
+checkpoint modification is performed.
+
+| Cell | Route | Precision | Recall | mAP50 | mAP50-95 |
+| --- | --- | ---: | ---: | ---: | ---: |
+| A | one-to-many + NMS | 0.659 | 0.515 | 0.562 | 0.402 |
+| B | one-to-one, NMS-free | 0.656 | 0.505 | 0.550 | 0.395 |
+
+B is **0.7 AP points** below A on all 5,000 COCO val2017 images. On 16 fixed
+validation images, A produced 77 detections and executed 16 real suppression
+kernels; B produced 76 detections and executed zero suppression kernels.
+
+Batch-1 total wall latency, excluding model loading and disk I/O:
+
+| Device | A mean ± std | B mean ± std | B vs A |
+| --- | ---: | ---: | ---: |
+| RTX 4090 GPU 0 | 3.289 ± 0.089 ms | 3.284 ± 0.098 ms | -0.14% |
+| CPU, one Torch/OpenCV thread | 20.246 ± 0.379 ms | 20.757 ± 0.569 ms | +2.52% |
+
+The accuracy drop is within the two-AP target, and the runtime trace proves the
+native B path is NMS-free. The speed result is neutral on GPU and slightly
+slower on CPU, so P0 establishes correctness but does not claim a latency win.
+See [`P0_PRETRAINED_REPORT.md`](P0_PRETRAINED_REPORT.md), the compact evidence
+under [`p0_pretrained/`](p0_pretrained/), and the reproducer
+[`scripts/a1/evaluate_p0_pretrained.py`](../../scripts/a1/evaluate_p0_pretrained.py).
+
 ## Limits and next step
 
-This completes only the Smoke/admission gate. P0 still requires a COCO-mini or
-COCO-val run, mAP50-95, GPU and CPU batch=1 latency with standard deviation,
-and a documented reproducibility package. The subsequent A1 work must also
-perform the MoE on/off × NMS on/off 2×2 ablation before making any NMS-free or
-MoE compatibility claim.
+P1 pilot 的当前结果和原始证据索引见 [`P1_PILOT_REPORT.md`](P1_PILOT_REPORT.md)。
+
+完整 COCO2017 已在 `scut-server` 验收完成（118,287 train / 5,000 val），就绪标记为
+`/data/data2/TuJiajun/COCO2017/coco/READY.json`。从随机初始化开始的 r4 full-COCO
+30-epoch 训练已于 2026-08-29 按计划暂停：C 的失败证据和 D 已完成的第一个 epoch、
+checkpoint、日志均保留在 `/data/data2/TuJiajun/A1-smoke-r4/p1_full_r4/`，没有把它们
+计为 P0/P1 结论。旧 r1/r2/r3 诊断产物也继续保留。
+当前诊断、复现命令与实时日志入口见 [`P1_RECOVERY_20260828.md`](P1_RECOVERY_20260828.md)。
+
+The Smoke admission gate and pretrained P0 are complete. P1 still requires the
+matched MoE on/off × end-to-end on/off 2×2 fine-tuning ablation, route
+statistics, export audit, and a valid accuracy/latency conclusion before making
+any MoE compatibility claim.

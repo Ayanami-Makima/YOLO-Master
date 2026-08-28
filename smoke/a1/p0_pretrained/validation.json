@@ -1,0 +1,33 @@
+{
+  "status": "completed",
+  "cells": {
+    "A": {
+      "status": "completed",
+      "end2end": false,
+      "precision": 0.659,
+      "recall": 0.515,
+      "map50": 0.562,
+      "map50_95": 0.402,
+      "speed": null,
+      "manifest": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/agent_manifests/val_a/skill_manifest.json",
+      "request": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/requests/a_val_request.json",
+      "request_sha256": "4c43d2f5b3252487f55f5ee876f5344f08107b17a423bf000baf6f5b47a5ded0",
+      "stdout": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/logs/a_val_stdout.json",
+      "stderr": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/logs/a_val_stderr.log"
+    },
+    "B": {
+      "status": "completed",
+      "end2end": true,
+      "precision": 0.656,
+      "recall": 0.505,
+      "map50": 0.55,
+      "map50_95": 0.395,
+      "speed": null,
+      "manifest": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/agent_manifests/val_b/skill_manifest.json",
+      "request": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/requests/b_val_request.json",
+      "request_sha256": "f23a734499e8e0948e7eca00cdf4ef463d178b3db4fef03a586908e8f9a02dca",
+      "stdout": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/logs/b_val_stdout.json",
+      "stderr": "/data/data2/TuJiajun/A1-smoke-r4/p0_pretrained_yolo26n/logs/b_val_stderr.log"
+    }
+  }
+}
