@@ -101,6 +101,20 @@ See [`P0_PRETRAINED_REPORT.md`](P0_PRETRAINED_REPORT.md), the compact evidence
 under [`p0_pretrained/`](p0_pretrained/), and the reproducer
 [`scripts/a1/evaluate_p0_pretrained.py`](../../scripts/a1/evaluate_p0_pretrained.py).
 
+## P1 pretrained 2×2 pilot (executed, acceptance failed)
+
+The locked pretrained P1 pilot has now run A/B/C/D through preflight, 5-epoch
+training, full COCO validation, NMS tracing, latency, routing, and ONNX audit.
+B/D execute zero suppression kernels, so the NMS-free route is real. However,
+all four full-COCO mAP50-95 values are effectively zero because the custom
+A2C2f/A2C2fMoE blocks are mostly or partly randomly initialized and the short
+low-LR fine-tuning budget cannot train them. A/B/C also have at least one ONNX
+agreement failure. Therefore the planned pilot is complete, but P1 is **not
+accepted or complete as a task milestone**.
+
+See [`P1_PRETRAINED_PILOT_REPORT.md`](P1_PRETRAINED_PILOT_REPORT.md) and the
+compact evidence under [`p1_pretrained/`](p1_pretrained/).
+
 ## Limits and next step
 
 P1 pilot 的当前结果和原始证据索引见 [`P1_PILOT_REPORT.md`](P1_PILOT_REPORT.md)。
@@ -112,7 +126,7 @@ checkpoint、日志均保留在 `/data/data2/TuJiajun/A1-smoke-r4/p1_full_r4/`�
 计为 P0/P1 结论。旧 r1/r2/r3 诊断产物也继续保留。
 当前诊断、复现命令与实时日志入口见 [`P1_RECOVERY_20260828.md`](P1_RECOVERY_20260828.md)。
 
-The Smoke admission gate and pretrained P0 are complete. P1 still requires the
-matched MoE on/off × end-to-end on/off 2×2 fine-tuning ablation, route
-statistics, export audit, and a valid accuracy/latency conclusion before making
-any MoE compatibility claim.
+The Smoke admission gate and pretrained P0 are complete. P1 now has a complete
+single-seed negative pilot, but still requires a warm-start strategy that
+preserves useful pretrained behavior, followed by a valid-accuracy 2×2 rerun
+and passing export agreement before making any MoE compatibility claim.

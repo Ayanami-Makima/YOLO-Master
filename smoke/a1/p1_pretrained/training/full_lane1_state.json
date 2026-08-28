@@ -1,0 +1,160 @@
+{
+  "phase": "full",
+  "lane": "1",
+  "pid": 182443,
+  "completed": [
+    {
+      "cell": "d",
+      "training_manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/training_manifest.json",
+      "training_manifest_sha256": "fa8f8b4352004a08ae04997464d6da8282563fceb29d3fae321e5df162699009",
+      "request_sha256": "4688a14124203d00a5bf071db92abaf13ad5621d9d2154e255ba04b40dcaf428",
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep",
+      "epochs": 5,
+      "last_epoch_metrics": {
+        "epoch": "5",
+        "time": "1039.54",
+        "train/box_loss": "2.76994",
+        "train/cls_loss": "5.68959",
+        "train/dfl_loss": "0.03369",
+        "train/mixture_aux_loss": "0.99981",
+        "metrics/precision(B)": "0.00146",
+        "metrics/recall(B)": "0.0375",
+        "metrics/mAP50(B)": "0.00099",
+        "metrics/mAP50-95(B)": "0.0003",
+        "val/box_loss": "2.79985",
+        "val/cls_loss": "5.84545",
+        "val/dfl_loss": "0.03902",
+        "val/mixture_aux_loss": "0",
+        "lr/pg0": "0.000208",
+        "lr/pg1": "0.000208",
+        "lr/pg2": "0.000208",
+        "lr/pg3": "0.000104",
+        "lr/pg4": "0.000416"
+      },
+      "checkpoints": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/weights/best.pt",
+          "sha256": "7d59a593f25882efda134439592984d1ece92a9b902e96693641ac89802266dc",
+          "bytes": 10847613
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/weights/last.pt",
+          "sha256": "4ac76936e9fb71fdabde96a1f1e735cba00d6f040bca2704cad0bc084daee7d0",
+          "bytes": 10847613
+        }
+      },
+      "logs": [
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/d_full/cli-0h3p8pby/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/d_full/cli-0h3p8pby/stdout.log",
+          "sha256": "f50ee6fc67f2c3d8040a60aaa81bd5a97b0faaa0d769bb0cbbdd146b7a088ea8",
+          "bytes": 1064131
+        }
+      ]
+    },
+    {
+      "cell": "b",
+      "training_manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/training_manifest.json",
+      "training_manifest_sha256": "87c8f665efcf03eed5249f75472ba24962fc2229ca6a0ba3a7e305ad82c497d0",
+      "request_sha256": "21d7deddeec0393ae523edc4499ccdd44d078cd1ba2cf73438841f7d9ab75778",
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep",
+      "epochs": 5,
+      "last_epoch_metrics": {
+        "epoch": "5",
+        "time": "808.014",
+        "train/box_loss": "2.84284",
+        "train/cls_loss": "5.83149",
+        "train/dfl_loss": "0.03471",
+        "metrics/precision(B)": "0.00145",
+        "metrics/recall(B)": "0.02857",
+        "metrics/mAP50(B)": "0.00063",
+        "metrics/mAP50-95(B)": "0.00023",
+        "val/box_loss": "2.837",
+        "val/cls_loss": "5.98945",
+        "val/dfl_loss": "0.03949",
+        "lr/pg0": "0.000208",
+        "lr/pg1": "0.000208",
+        "lr/pg2": "0.000208",
+        "lr/pg3": "0.000104",
+        "lr/pg4": "0.000416"
+      },
+      "checkpoints": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/weights/best.pt",
+          "sha256": "e86013e10d48c930ac37f834155b17fbaf53fbb83287a55885044711f3ba6d73",
+          "bytes": 5792801
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/weights/last.pt",
+          "sha256": "6ce682efe158178c06893772bdaa3d98b682e4d76561373a54c82e0ac0cdd626",
+          "bytes": 5792801
+        }
+      },
+      "logs": [
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stdout.log",
+          "sha256": "6091452ba180511f5941d92aabf850449ea15aec34eacee299da48dea5ff1adc",
+          "bytes": 987271
+        }
+      ]
+    }
+  ],
+  "status": "completed",
+  "protocol_sha256": "83afec2749a8fa5c8c57d0113ff48f90de9f27fc885935a6c8580efafa0dcf72",
+  "audit": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_data_model_audit.json",
+  "max_hours": 0,
+  "cell": "b",
+  "job": {
+    "mode": "async",
+    "job_id": "d0018b0a25d7",
+    "pid": 193784,
+    "status_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/agent/logs/async-jobs/d0018b0a25d7/status.json",
+    "progress_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/agent_manifests/b_matched_seed260829_5ep/progress.jsonl",
+    "stdout_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/agent/logs/async-jobs/d0018b0a25d7/stdout.jsonl",
+    "stderr_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/agent/logs/async-jobs/d0018b0a25d7/stderr.log"
+  },
+  "epoch": 5,
+  "latest_metrics": {
+    "epoch": "5",
+    "time": "808.014",
+    "train/box_loss": "2.84284",
+    "train/cls_loss": "5.83149",
+    "train/dfl_loss": "0.03471",
+    "metrics/precision(B)": "0.00145",
+    "metrics/recall(B)": "0.02857",
+    "metrics/mAP50(B)": "0.00063",
+    "metrics/mAP50-95(B)": "0.00023",
+    "val/box_loss": "2.837",
+    "val/cls_loss": "5.98945",
+    "val/dfl_loss": "0.03949",
+    "lr/pg0": "0.000208",
+    "lr/pg1": "0.000208",
+    "lr/pg2": "0.000208",
+    "lr/pg3": "0.000104",
+    "lr/pg4": "0.000416"
+  },
+  "elapsed_seconds": 825.8,
+  "cli_log_directory": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full",
+  "cli_logs": [
+    "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stderr.log",
+    "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stdout.log"
+  ],
+  "final_result": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/agent/logs/async-jobs/d0018b0a25d7/stdout.jsonl",
+  "child_alive": false,
+  "launch_state": "verified",
+  "training_manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/training_manifest.json",
+  "training_manifest_sha256": "87c8f665efcf03eed5249f75472ba24962fc2229ca6a0ba3a7e305ad82c497d0",
+  "request_sha256": "21d7deddeec0393ae523edc4499ccdd44d078cd1ba2cf73438841f7d9ab75778",
+  "model_sha256": "eef7dd3573cb7d3d6aaade8dc85092594a7aaa094fb3966d1e7ba40281dae3c2",
+  "dataset_manifest_sha256": "f2a2adb80b6f5d20cb02b600b97158ed3dec032a4b3942ff6c3060f5293fa0ac",
+  "updated_at": "2026-08-29T01:40:26+0800"
+}

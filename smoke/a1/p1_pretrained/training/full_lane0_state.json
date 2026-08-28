@@ -1,0 +1,160 @@
+{
+  "phase": "full",
+  "lane": "0",
+  "pid": 182442,
+  "completed": [
+    {
+      "cell": "c",
+      "training_manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/training_manifest.json",
+      "training_manifest_sha256": "1812634f30338f7cecb1fd166822312b0159fced83bd4f90e93bff029fe0b55c",
+      "request_sha256": "5fe941fca0b4a6aeebfdeb46e489071c96e5f83c87029c68ed81c6a30369a31e",
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep",
+      "epochs": 5,
+      "last_epoch_metrics": {
+        "epoch": "5",
+        "time": "1000.2",
+        "train/box_loss": "3.07552",
+        "train/cls_loss": "5.51852",
+        "train/dfl_loss": "0.04418",
+        "train/mixture_aux_loss": "0.99992",
+        "metrics/precision(B)": "0.00098",
+        "metrics/recall(B)": "0.02304",
+        "metrics/mAP50(B)": "0.00032",
+        "metrics/mAP50-95(B)": "8e-05",
+        "val/box_loss": "3.06472",
+        "val/cls_loss": "5.86778",
+        "val/dfl_loss": "0.0514",
+        "val/mixture_aux_loss": "0",
+        "lr/pg0": "0.000208",
+        "lr/pg1": "0.000208",
+        "lr/pg2": "0.000208",
+        "lr/pg3": "0.000104",
+        "lr/pg4": "0.000416"
+      },
+      "checkpoints": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/weights/best.pt",
+          "sha256": "382ed7399cdb471578517dc536de14ac929631c81c8c2a51a6881580c652c6fa",
+          "bytes": 10486749
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/weights/last.pt",
+          "sha256": "b69e0cb6b4c673154ea98334829e0d46683b6bbe67608cf4cdaa0d0df3255602",
+          "bytes": 10486749
+        }
+      },
+      "logs": [
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_full/cli-1adqua94/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_full/cli-1adqua94/stdout.log",
+          "sha256": "bee397bc50472af74a222934f3354a8f3182ccb48566848d175417a96916f30b",
+          "bytes": 1064410
+        }
+      ]
+    },
+    {
+      "cell": "a",
+      "training_manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/training_manifest.json",
+      "training_manifest_sha256": "ea47482edd01a38284052a7da55d6b15a5ee070b2c53003cc2b8d0422c99648a",
+      "request_sha256": "6b0de1fb6722f7ee41ce7520aa73498a543829090cd33cb370d9b17a114a9962",
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep",
+      "epochs": 5,
+      "last_epoch_metrics": {
+        "epoch": "5",
+        "time": "765.378",
+        "train/box_loss": "2.88479",
+        "train/cls_loss": "5.28205",
+        "train/dfl_loss": "0.04058",
+        "metrics/precision(B)": "0.09066",
+        "metrics/recall(B)": "0.00492",
+        "metrics/mAP50(B)": "0.00105",
+        "metrics/mAP50-95(B)": "0.00039",
+        "val/box_loss": "2.89435",
+        "val/cls_loss": "5.46623",
+        "val/dfl_loss": "0.04717",
+        "lr/pg0": "0.000208",
+        "lr/pg1": "0.000208",
+        "lr/pg2": "0.000208",
+        "lr/pg3": "0.000104",
+        "lr/pg4": "0.000416"
+      },
+      "checkpoints": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/weights/best.pt",
+          "sha256": "c81768c67e62f88ffb2589b2e515ee44e318a91bbb6dc7f7cbc1a5cf51756eb4",
+          "bytes": 5432121
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/weights/last.pt",
+          "sha256": "5b7d5b0d5a16dbe64571800ea47be1c3e631e8e0d79e45ecd3d4cbac4de4c30a",
+          "bytes": 5432121
+        }
+      },
+      "logs": [
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stdout.log",
+          "sha256": "f5201cc93b8449a84713894deb6707c4470e8345543abdd6e3db060b6af50489",
+          "bytes": 985107
+        }
+      ]
+    }
+  ],
+  "status": "completed",
+  "protocol_sha256": "83afec2749a8fa5c8c57d0113ff48f90de9f27fc885935a6c8580efafa0dcf72",
+  "audit": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_data_model_audit.json",
+  "max_hours": 0,
+  "cell": "a",
+  "job": {
+    "mode": "async",
+    "job_id": "ab57b8d7c342",
+    "pid": 193443,
+    "status_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/agent/logs/async-jobs/ab57b8d7c342/status.json",
+    "progress_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/agent_manifests/a_matched_seed260829_5ep/progress.jsonl",
+    "stdout_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/agent/logs/async-jobs/ab57b8d7c342/stdout.jsonl",
+    "stderr_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/agent/logs/async-jobs/ab57b8d7c342/stderr.log"
+  },
+  "epoch": 5,
+  "latest_metrics": {
+    "epoch": "5",
+    "time": "765.378",
+    "train/box_loss": "2.88479",
+    "train/cls_loss": "5.28205",
+    "train/dfl_loss": "0.04058",
+    "metrics/precision(B)": "0.09066",
+    "metrics/recall(B)": "0.00492",
+    "metrics/mAP50(B)": "0.00105",
+    "metrics/mAP50-95(B)": "0.00039",
+    "val/box_loss": "2.89435",
+    "val/cls_loss": "5.46623",
+    "val/dfl_loss": "0.04717",
+    "lr/pg0": "0.000208",
+    "lr/pg1": "0.000208",
+    "lr/pg2": "0.000208",
+    "lr/pg3": "0.000104",
+    "lr/pg4": "0.000416"
+  },
+  "elapsed_seconds": 780.7,
+  "cli_log_directory": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full",
+  "cli_logs": [
+    "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stderr.log",
+    "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stdout.log"
+  ],
+  "final_result": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/agent/logs/async-jobs/ab57b8d7c342/stdout.jsonl",
+  "child_alive": false,
+  "launch_state": "verified",
+  "training_manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/training_manifest.json",
+  "training_manifest_sha256": "ea47482edd01a38284052a7da55d6b15a5ee070b2c53003cc2b8d0422c99648a",
+  "request_sha256": "6b0de1fb6722f7ee41ce7520aa73498a543829090cd33cb370d9b17a114a9962",
+  "model_sha256": "c318e832fb461abbe675113de323d02ac5acd2ce0559a1fe8fbfa9991b1d0064",
+  "dataset_manifest_sha256": "f2a2adb80b6f5d20cb02b600b97158ed3dec032a4b3942ff6c3060f5293fa0ac",
+  "updated_at": "2026-08-29T01:39:11+0800"
+}
