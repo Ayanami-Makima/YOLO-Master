@@ -113,6 +113,9 @@ def test_prepare_registers_exactly_30_independent_requests() -> None:
     assert "OFFICIAL_CHECKPOINT_SHA256" in text
     assert "expected_train=5000, expected_val=512" in text
     assert "expected_train=256, expected_val=128" in text
+    assert '"model_change_inherited_from_r20"' in text
+    assert '"r21_execution_repair"' in text
+    assert '"model_or_routing_semantics_changed_from_r20": False' in text
 
 
 def test_r21_has_no_unlocked_r19_builder_or_runner_dependency() -> None:

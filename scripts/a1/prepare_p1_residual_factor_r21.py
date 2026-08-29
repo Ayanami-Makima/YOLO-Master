@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Generate the immutable A1 P1 r21 three-seed residual-factor protocol.
 
-r21 changes one MoE-only training detail relative to r19: noisy hard-Top2
-dispatch remains unchanged, while the balance and z-loss inputs are computed
-from the corresponding clean router logits.  The fixed validation audit still
-uses clean, deterministic hard Top-2 and its thresholds are not relaxed.
+r21 preserves r20's MoE training semantics exactly: noisy hard-Top2 dispatch
+and clean balance/z-loss inputs.  Its only change from r20 is fail-closed
+binding of every process to the isolated worktree actually named by the
+protocol.  Model behavior, budgets, and gate thresholds are unchanged.
 """
 
 from __future__ import annotations
@@ -457,7 +457,7 @@ def main() -> None:
         "source_checkpoint": {
             "path": str(checkpoint),
             "sha256": sha256(checkpoint),
-            "lineage": "official_yolo26n_only; never an r19 initializer or trained checkpoint",
+            "lineage": "official_yolo26n_only; never any P1 initializer or trained checkpoint",
         },
         "parent": {"path": str(parent_path), "sha256": sha256(parent_path)},
         "implementation": {
@@ -507,11 +507,17 @@ def main() -> None:
             "auxiliary_objective": CLEAN_AUX_POLICY,
             "validation_audit_export_noise_std": 0.0,
         },
-        "r21_single_change": {
+        "model_change_inherited_from_r20": {
             "scope": "C/D routers only, identically for every layer and seed",
             "change": "balance and z losses consume clean routing tensors; noisy hard-Top2 dispatch is unchanged",
             "a_b_tensor_and_output_invariance_required": True,
             "c_d_policy_parity_required": True,
+        },
+        "r21_execution_repair": {
+            "scope": "all versioned initializer, runner, driver, and audit entrypoints",
+            "change": "pin and attest the isolated worktree modules actually loaded by every process",
+            "shared_virtualenv_editable_install_changed": False,
+            "model_or_routing_semantics_changed_from_r20": False,
             "thresholds_changed": False,
             "budget_changed": False,
             "inference_changed": False,
