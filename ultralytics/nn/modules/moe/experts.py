@@ -4,6 +4,8 @@
 import torch
 import torch.nn as nn
 import math
+from ultralytics.nn.modules.conv import Conv
+
 from .utils import FlopsUtils, get_safe_groups
 
 
@@ -89,6 +91,33 @@ class SimpleExpert(nn.Module):
 
     def compute_flops(self, input_shape):
         return FlopsUtils.count_conv2d(self.conv, input_shape)
+
+
+class DenseMLPExpert(nn.Module):
+    """ABlock-compatible MLP expert for function-preserving dense-to-MoE warm starts.
+
+    Unlike ``SimpleExpert``, this expert intentionally retains the exact two
+    Ultralytics ``Conv`` blocks (including BatchNorm state) used by ``ABlock``.
+    When every expert is initialized from the same dense MLP and the shared
+    expert is zero, normalized Top-K mixing reproduces the dense teacher at the
+    start of training. P1 freezes all BatchNorm modules, so routed sub-batches
+    never update or estimate expert-local running statistics.
+    """
+
+    def __init__(self, in_channels, out_channels, expand_ratio=2, num_groups=8):
+        super().__init__()
+        del num_groups
+        hidden_dim = int(in_channels * expand_ratio)
+        self.mlp = nn.Sequential(
+            Conv(in_channels, hidden_dim, 1),
+            Conv(hidden_dim, out_channels, 1, act=False),
+        )
+
+    def forward(self, x):
+        return self.mlp(x)
+
+    def compute_flops(self, input_shape):
+        return FlopsUtils.count_conv2d(self.mlp, input_shape)
 
 
 class SpatialExpert(nn.Module):

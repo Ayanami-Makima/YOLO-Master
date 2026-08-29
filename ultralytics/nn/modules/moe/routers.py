@@ -181,6 +181,29 @@ class BaseRouter(nn.Module):
         self.top_k = top_k
         self.capacity_factor = capacity_factor  # P1-5: optional token-level overflow guard
         self.softmax = nn.Softmax(dim=1)
+        # P1 experiments may opt into a short, deterministic exploration
+        # schedule without consuming the process-global Torch RNG.  ``sigma0``
+        # is a persistent calibration result; the seed and step are reset by
+        # the request runner at the start of every independent run.
+        self.register_buffer("p1_noise_sigma0", torch.tensor(0.0, dtype=torch.float32), persistent=True)
+        self.p1_noise_seed: Optional[int] = None
+        self.p1_noise_step = 0
+
+    def configure_p1_private_noise(self, seed: Optional[int], *, reset_step: bool = True) -> None:
+        """Configure an optional private RNG stream for training-time logit noise."""
+        self.p1_noise_seed = None if seed is None else int(seed)
+        if reset_step:
+            self.p1_noise_step = 0
+
+    def _sample_p1_private_noise(self, logits: torch.Tensor) -> torch.Tensor:
+        """Sample device-independent noise without advancing Torch's global RNG."""
+        if self.p1_noise_seed is None:
+            return torch.randn_like(logits)
+        generator = torch.Generator(device="cpu")
+        generator.manual_seed(self.p1_noise_seed + self.p1_noise_step)
+        self.p1_noise_step += 1
+        noise = torch.randn(logits.shape, generator=generator, device="cpu", dtype=torch.float32)
+        return noise.to(device=logits.device, dtype=logits.dtype)
 
     def _process_logits(
         self, logits: torch.Tensor, noise_std: float, training: bool, top_k: Optional[int] = None
@@ -199,7 +222,7 @@ class BaseRouter(nn.Module):
 
         # 1) Add noise during training (simplified Gumbel-Softmax trick)
         if training and noise_std > 0:
-            logits = logits + torch.randn_like(logits) * noise_std
+            logits = logits + self._sample_p1_private_noise(logits) * noise_std
 
         # 2) Keep routing probability math in fp32.  Under CUDA autocast the
         # router logits can be fp16; retaining fp32 through Top-K normalization

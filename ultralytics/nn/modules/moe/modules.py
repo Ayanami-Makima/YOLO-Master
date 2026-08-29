@@ -26,6 +26,7 @@ from .experts import (  # noqa: F401 - preserve historical module attributes
     OptimizedSimpleExpert,
     FusedGhostExpert,
     SimpleExpert,
+    DenseMLPExpert,
     GhostExpert,
     InvertedResidualExpert,
     EfficientExpertGroup,
@@ -420,7 +421,6 @@ class ES_MOE(nn.Module):
         use_sparse_inference=True,
         dynamic_threshold=0.4,
         max_kernel_size=15,
-        expert_kernel_sizes=None,
     ):
         """
         Args:
@@ -432,10 +432,6 @@ class ES_MOE(nn.Module):
             use_sparse_inference: Enable sparse Top-K expert computation during inference
             dynamic_threshold: Optional threshold for pruning low-confidence experts during inference
             max_kernel_size: Largest odd depthwise kernel assigned to an expert
-            expert_kernel_sizes: Optional explicit per-expert depthwise kernel sizes
-                (length must equal ``num_experts``). When ``None`` the kernels are
-                derived from defaults; pruned checkpoints set this so retraining
-                rebuilds the exact kept-expert kernels and reloads their weights.
         """
         super(ES_MOE, self).__init__()
 
@@ -461,7 +457,6 @@ class ES_MOE(nn.Module):
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.num_experts = num_experts
-        self.reduction = reduction
         self.top_k = min(top_k, num_experts) if top_k is not None else num_experts
         self.use_top_k = top_k is not None
         self.use_sparse_inference = use_sparse_inference
@@ -471,25 +466,12 @@ class ES_MOE(nn.Module):
         # Dynamic routing (Top-K supported)
         self.routing = DynamicRoutingLayer(in_channels, num_experts, reduction, top_k)
 
-        # Expert group (original design). ``expert_kernel_sizes`` lets a pruned
-        # checkpoint reconstruct its kept experts' heterogeneous kernels so that
-        # ``YOLO(pruned.pt).train()`` reloads expert weights instead of dropping
-        # them on a kernel-shape mismatch (prune -> LoRA/full fine-tune recovery).
-        if expert_kernel_sizes is not None:
-            if len(expert_kernel_sizes) != num_experts:
-                raise ValueError(f"expert_kernel_sizes must have {num_experts} entries, got {len(expert_kernel_sizes)}")
-            ks = []
-            for k in expert_kernel_sizes:
-                k = int(k)
-                if k % 2 == 0:
-                    k -= 1
-                ks.append(min(k, max_kernel_size))
+        # Expert group (original design)
+        default_kernel_sizes = [3, 5, 7]
+        if num_experts <= len(default_kernel_sizes):
+            ks = [min(k, max_kernel_size) for k in default_kernel_sizes[:num_experts]]
         else:
-            default_kernel_sizes = [3, 5, 7]
-            if num_experts <= len(default_kernel_sizes):
-                ks = [min(k, max_kernel_size) for k in default_kernel_sizes[:num_experts]]
-            else:
-                ks = [min(3 + 2 * i, max_kernel_size) for i in range(num_experts)]
+            ks = [min(3 + 2 * i, max_kernel_size) for i in range(num_experts)]
         self.experts = nn.ModuleList([EfficientExpertGroup(in_channels, out_channels, kernel_size=k) for k in ks])
 
         # Output normalization (original design)
@@ -1003,7 +985,10 @@ class OptimizedMOEImproved(nn.Module):
         # 2) Instantiate Experts
         self.experts = nn.ModuleList()
         kwargs = {}
-        if expert_type == "ghost":
+        if expert_type == "dense_mlp":
+            expert_cls = DenseMLPExpert
+            kwargs["expand_ratio"] = expert_expand_ratio
+        elif expert_type == "ghost":
             expert_cls = GhostExpert
             kwargs["ratio"] = int(expert_expand_ratio)
         elif expert_type == "inverted":
@@ -1069,8 +1054,12 @@ class OptimizedMOEImproved(nn.Module):
     def forward(self, x):
         B, C, H, W = x.shape
 
-        if self.training and self.progressive_sparsity:
-            self._update_sparsity()
+        if self.training:
+            if self.progressive_sparsity:
+                self._update_sparsity()
+            # Keep the training clock independent of the Top-K schedule. P1
+            # disables progressive sparsity, but expert dropout still uses this
+            # counter and would otherwise repeat the step-zero drop set forever.
             self._training_step += 1
 
         # Use current_top_k for routing
@@ -1096,7 +1085,12 @@ class OptimizedMOEImproved(nn.Module):
         # Only after warmup so it doesn't fight progressive-sparsity scheduling.
         active_experts = list(range(self.num_experts))
         _step = self._training_step
-        if self.training and _step >= self.warmup_steps and _step % self.dropout_interval == 0:
+        if (
+            self.training
+            and self.expert_dropout_rate > 0
+            and _step >= self.warmup_steps
+            and _step % self.dropout_interval == 0
+        ):
             num_drop = max(1, int(self.num_experts * self.expert_dropout_rate))
             # Draw the drop set on a fixed-seed generator keyed by the global
             # step so every DDP rank disables the *same* experts. Without this,

@@ -5,6 +5,7 @@ import torch
 from torch import nn
 
 from ultralytics.engine.trainer import BaseTrainer
+from ultralytics.nn.modules import C3k2ResidualFactor
 from ultralytics.optim.muon import MuSGD
 
 
@@ -84,6 +85,26 @@ def test_explicit_musgd_request_is_respected_for_adapter_training():
     )
 
     assert isinstance(optimizer, MuSGD)
+
+
+def test_p1_residual_gain_has_dedicated_no_warmup_optimizer_group():
+    trainer = _trainer(adapter_active=False)
+    trainer.args.moe_router_lr_scale = 1.0
+    model = C3k2ResidualFactor(64, 64, n=1, moe=True, num_experts=4, top_k=2)
+
+    optimizer = trainer.build_optimizer(model, name="SGD", lr=0.0001, momentum=0.9, decay=0.0005, iterations=100)
+
+    gain_group = next(group for group in optimizer.param_groups if group["param_group"] == "residual_gain")
+    assert gain_group["lr"] == pytest.approx(0.01)
+    assert gain_group["weight_decay"] == 0.0
+    assert gain_group["p1_no_warmup"] is True
+    assert {id(parameter) for parameter in gain_group["params"]} == {id(model.gain)}
+    memberships = [
+        group["param_group"]
+        for group in optimizer.param_groups
+        if any(parameter is model.gain for parameter in group["params"])
+    ]
+    assert memberships == ["residual_gain"]
 
 
 def test_resume_skips_musgd_state_when_auto_policy_now_builds_adamw():

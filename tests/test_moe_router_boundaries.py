@@ -58,10 +58,39 @@ def _valid_input(batch=2, channels=IN_CHANNELS, h=16, w=16):
     return torch.randn(batch, channels, h, w)
 
 
+def test_p1_private_router_noise_is_repeatable_and_does_not_advance_global_rng():
+    router = AdaptiveRoutingLayer(IN_CHANNELS, NUM_EXPERTS, top_k=TOP_K, noise_std=0.05)
+    logits = torch.zeros(8, NUM_EXPERTS)
+    global_state = torch.random.get_rng_state().clone()
+
+    router.configure_p1_private_noise(260829)
+    first = router._sample_p1_private_noise(logits)
+    assert torch.equal(global_state, torch.random.get_rng_state())
+
+    router.configure_p1_private_noise(260829)
+    second = router._sample_p1_private_noise(logits)
+    router.configure_p1_private_noise(260830)
+    third = router._sample_p1_private_noise(logits)
+    assert torch.equal(first, second)
+    assert not torch.equal(first, third)
+
+
+def test_p1_private_router_noise_keeps_hard_top2_and_is_disabled_in_eval():
+    router = AdaptiveRoutingLayer(IN_CHANNELS, NUM_EXPERTS, top_k=TOP_K, noise_std=0.05)
+    logits = torch.zeros(8, NUM_EXPERTS)
+    router.configure_p1_private_noise(260829)
+    weights, indices, _ = router._process_logits(logits, router.noise_std, True)
+    assert weights.shape == indices.shape == (8, TOP_K)
+    assert router.p1_noise_step == 1
+
+    eval_weights, eval_indices, _ = router._process_logits(logits, router.noise_std, False)
+    assert eval_weights.shape == eval_indices.shape == (8, TOP_K)
+    assert router.p1_noise_step == 1
+
+
 # =============================================================================
 # _validate_router_input unit tests
 # =============================================================================
-
 
 class TestValidateRouterInput:
     def test_valid_4d_input_passes(self):
@@ -100,9 +129,7 @@ class TestValidateRouterInput:
 
         monkeypatch.setenv("ULTRA_DEBUG_NONFINITE", "1")
         monkeypatch.setenv("ULTRA_DEBUG_POST_URL", "http://127.0.0.1:9/collect")
-        monkeypatch.setattr(
-            routers, "urlopen", lambda *args, **kwargs: pytest.fail("network post attempted"), raising=False
-        )
+        monkeypatch.setattr(routers, "urlopen", lambda *args, **kwargs: pytest.fail("network post attempted"), raising=False)
         with pytest.raises(MoERouterError):
             _validate_router_input(torch.full((1, IN_CHANNELS, 2, 2), float("nan")), IN_CHANNELS)
 
@@ -110,7 +137,6 @@ class TestValidateRouterInput:
 # =============================================================================
 # UltraEfficientRouter boundary tests
 # =============================================================================
-
 
 class TestUltraEfficientRouterBoundaries:
     def test_valid_forward(self, ultra_router):
@@ -153,7 +179,6 @@ class TestUltraEfficientRouterBoundaries:
 # EfficientSpatialRouter boundary tests
 # =============================================================================
 
-
 class TestEfficientSpatialRouterBoundaries:
     def test_valid_forward(self, spatial_router):
         x = _valid_input()
@@ -178,9 +203,7 @@ class TestEfficientSpatialRouterBoundaries:
             spatial_router(_valid_input())
 
     def test_nonfinite_internal_router_output_raises(self, spatial_router, monkeypatch):
-        monkeypatch.setattr(
-            spatial_router.router, "forward", lambda _: torch.full((2, NUM_EXPERTS, 1, 1), float("nan"))
-        )
+        monkeypatch.setattr(spatial_router.router, "forward", lambda _: torch.full((2, NUM_EXPERTS, 1, 1), float("nan")))
         with pytest.raises(MoERouterError, match="internal output"):
             spatial_router(_valid_input())
 
@@ -188,7 +211,6 @@ class TestEfficientSpatialRouterBoundaries:
 # =============================================================================
 # AdaptiveRoutingLayer boundary tests
 # =============================================================================
-
 
 class TestAdaptiveRoutingLayerBoundaries:
     def test_valid_forward(self, adaptive_router):
@@ -206,7 +228,6 @@ class TestAdaptiveRoutingLayerBoundaries:
 # =============================================================================
 # LocalRoutingLayer boundary tests
 # =============================================================================
-
 
 class TestLocalRoutingLayerBoundaries:
     def test_valid_forward(self, local_router):
@@ -342,7 +363,6 @@ def test_capacity_factor_must_be_positive_and_finite(capacity_factor):
 # Exception hierarchy tests
 # =============================================================================
 
-
 class TestExceptionHierarchy:
     def test_moerouter_error_inherits_yolomaster(self):
         assert issubclass(MoERouterError, YOLOMasterError)
@@ -361,7 +381,6 @@ class TestExceptionHierarchy:
 # =============================================================================
 # FP16 routing precision regressions
 # =============================================================================
-
 
 class TestABlockMoEDiagnostics:
     def test_diagnostics_fail_at_first_nonfinite_boundary(self, monkeypatch):
