@@ -896,14 +896,18 @@ class OptimizedMOE(nn.Module):
                 loss_info["router_probs"], loss_info["router_logits"], loss_info["topk_indices"]
             )
             _registry_set(self, aux_loss)
+            has_dispatch_snapshot = "dispatch_topk_indices" in loss_info
+            snapshot_probs = loss_info.get("dispatch_router_probs", loss_info.get("router_probs"))
+            snapshot_indices = loss_info.get("dispatch_topk_indices", loss_info.get("topk_indices"))
+            snapshot_usage = None
+            if not has_dispatch_snapshot and isinstance(snapshot_probs, torch.Tensor):
+                snapshot_usage = snapshot_probs.detach().mean(dim=0)
             _record_moe_snapshot(
                 self,
-                expert_usage=loss_info["router_probs"].detach().mean(dim=0)
-                if isinstance(loss_info.get("router_probs"), torch.Tensor)
-                else None,
-                topk_indices=loss_info.get("topk_indices"),
+                expert_usage=snapshot_usage,
+                topk_indices=snapshot_indices,
                 topk_weights=routing_weights,
-                router_probs=loss_info.get("router_probs"),
+                router_probs=snapshot_probs,
                 aux_loss=aux_loss,
             )
 
@@ -1158,14 +1162,18 @@ class OptimizedMOEImproved(nn.Module):
                 loss_dict["router_probs"], loss_dict["router_logits"], loss_dict["topk_indices"]
             )
             _registry_set(self, aux_loss)
+            has_dispatch_snapshot = "dispatch_topk_indices" in loss_dict
+            snapshot_probs = loss_dict.get("dispatch_router_probs", loss_dict.get("router_probs"))
+            snapshot_indices = loss_dict.get("dispatch_topk_indices", loss_dict.get("topk_indices"))
+            snapshot_usage = None
+            if not has_dispatch_snapshot and isinstance(snapshot_probs, torch.Tensor):
+                snapshot_usage = snapshot_probs.detach().mean(dim=0)
             _record_moe_snapshot(
                 self,
-                expert_usage=loss_dict.get("router_probs").detach().mean(dim=0)
-                if isinstance(loss_dict.get("router_probs"), torch.Tensor)
-                else None,
-                topk_indices=loss_dict.get("topk_indices"),
+                expert_usage=snapshot_usage,
+                topk_indices=snapshot_indices,
                 topk_weights=routing_weights,
-                router_probs=loss_dict.get("router_probs"),
+                router_probs=snapshot_probs,
                 aux_loss=aux_loss,
             )
         else:

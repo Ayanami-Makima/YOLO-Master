@@ -188,6 +188,11 @@ class BaseRouter(nn.Module):
         self.register_buffer("p1_noise_sigma0", torch.tensor(0.0, dtype=torch.float32), persistent=True)
         self.p1_noise_seed: Optional[int] = None
         self.p1_noise_step = 0
+        # Opt-in used only by the A1 P1 residual MoE.  Dispatch may explore
+        # with private training noise while the auxiliary objective observes
+        # the clean hard-Top-K policy that validation/auditing uses.  Keep the
+        # default False so every non-P1 caller retains the historical contract.
+        self.p1_balance_on_clean_routes = False
 
     def configure_p1_private_noise(self, seed: Optional[int], *, reset_step: bool = True) -> None:
         """Configure an optional private RNG stream for training-time logit noise."""
@@ -219,15 +224,26 @@ class BaseRouter(nn.Module):
         # Guard: detect NaN/Inf in logits early (catches upstream corruption)
         if torch.isnan(logits).any() or torch.isinf(logits).any():
             raise MoERouterError(f"Router logits contain NaN/Inf before softmax (B={logits.shape[0]})")
+        clean_aux_enabled = getattr(self, "p1_balance_on_clean_routes", False)
+        if clean_aux_enabled and self.capacity_factor is not None:
+            raise MoERouterError(
+                "p1_balance_on_clean_routes is incompatible with capacity_factor; "
+                "P1 requires unmodified clean hard-Top-K auxiliary selections"
+            )
+
+        # Keep an explicit pre-noise view.  P1 can train the balance/z losses
+        # against this clean policy without changing the noisy sparse dispatch.
+        clean_logits = logits
 
         # 1) Add noise during training (simplified Gumbel-Softmax trick)
+        dispatch_logits = clean_logits
         if training and noise_std > 0:
-            logits = logits + self._sample_p1_private_noise(logits) * noise_std
+            dispatch_logits = clean_logits + self._sample_p1_private_noise(clean_logits) * noise_std
 
         # 2) Keep routing probability math in fp32.  Under CUDA autocast the
         # router logits can be fp16; retaining fp32 through Top-K normalization
         # avoids quantized small probabilities and a low-precision reduction.
-        probs = F.softmax(logits.float(), dim=1)
+        probs = F.softmax(dispatch_logits.float(), dim=1)
 
         # 3) Select Top-K in fp32
         topk_vals, topk_indices = torch.topk(probs, effective_top_k, dim=1)
@@ -273,9 +289,22 @@ class BaseRouter(nn.Module):
         # 5) Collect loss-related info (train only)
         loss_dict = {}
         if training:
-            loss_dict["router_logits"] = logits
-            loss_dict["router_probs"] = probs
-            loss_dict["topk_indices"] = topk_indices
+            if clean_aux_enabled:
+                clean_probs = F.softmax(clean_logits.float(), dim=1)
+                clean_topk_indices = torch.topk(clean_probs, effective_top_k, dim=1).indices
+                # Existing keys remain the MoELoss interface.  Under the P1
+                # opt-in they deliberately describe the clean policy.
+                loss_dict["router_logits"] = clean_logits
+                loss_dict["router_probs"] = clean_probs
+                loss_dict["topk_indices"] = clean_topk_indices
+                # Preserve the actual dispatch view for telemetry/snapshots.
+                loss_dict["dispatch_router_logits"] = dispatch_logits
+                loss_dict["dispatch_router_probs"] = probs
+                loss_dict["dispatch_topk_indices"] = topk_indices
+            else:
+                loss_dict["router_logits"] = dispatch_logits
+                loss_dict["router_probs"] = probs
+                loss_dict["topk_indices"] = topk_indices
             if assignment_overflow_mask is not None:
                 overflow_count = int(assignment_overflow_mask.sum().item())
                 loss_dict["overflow_count"] = overflow_count

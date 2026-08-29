@@ -41,11 +41,36 @@ def test_moe_adapter_uses_hard_top_k_from_first_step():
     assert all(item._current_top_k == 2 for item in routers)
     assert all(item.warmup_steps == 0 for item in routers)
     assert all(item.routing.noise_std == 0.0 for item in routers)
+    assert all(item.routing.p1_balance_on_clean_routes is True for item in routers)
+    assert all(
+        item.routing_aux_semantics == "clean_hard_top2_balance_with_noisy_dispatch"
+        for item in routers
+    )
     assert all(item.expert_dropout_rate == 0.0 for item in routers)
     assert module.router_noise_std == 0.0
+    assert module.routing_aux_semantics == "clean_hard_top2_balance_with_noisy_dispatch"
     assert module.expert_dropout_rate == 0.0
     assert module.p1_gain_lr_scale == 100.0
     assert module.p1_gain_no_warmup is True
+
+
+def test_moe_clean_aux_opt_in_survives_initializer_style_save_reload(tmp_path):
+    module = C3k2ResidualFactor(64, 64, n=1, moe=True, num_experts=4, top_k=2).eval()
+    checkpoint = tmp_path / "p1_moe_initializer.pt"
+    torch.save({"model": module}, checkpoint)
+
+    restored = torch.load(checkpoint, map_location="cpu", weights_only=False)["model"].eval()
+    routed_modules = [
+        item for item in restored.factor.modules() if hasattr(item, "progressive_sparsity")
+    ]
+
+    assert routed_modules
+    assert restored.routing_aux_semantics == "clean_hard_top2_balance_with_noisy_dispatch"
+    assert all(item.routing.p1_balance_on_clean_routes is True for item in routed_modules)
+    assert all(
+        item.routing_aux_semantics == "clean_hard_top2_balance_with_noisy_dispatch"
+        for item in routed_modules
+    )
 
 
 def test_zero_expert_dropout_never_samples_a_drop_set(monkeypatch):

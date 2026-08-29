@@ -12,9 +12,13 @@ Tests:
 import pytest
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 from ultralytics.nn.modules.moe import base as moe_base
+from ultralytics.nn.modules.moe.loss import MoELoss
+from ultralytics.nn.modules.moe.modules import OptimizedMOEImproved
 from ultralytics.nn.modules.moe.routers import (
+    BaseRouter,
     UltraEfficientRouter,
     EfficientSpatialRouter,
     AdaptiveRoutingLayer,
@@ -86,6 +90,208 @@ def test_p1_private_router_noise_keeps_hard_top2_and_is_disabled_in_eval():
     eval_weights, eval_indices, _ = router._process_logits(logits, router.noise_std, False)
     assert eval_weights.shape == eval_indices.shape == (8, TOP_K)
     assert router.p1_noise_step == 1
+
+
+def test_non_p1_router_keeps_historical_noisy_loss_view():
+    router = BaseRouter(num_experts=NUM_EXPERTS, top_k=TOP_K)
+    assert router.p1_balance_on_clean_routes is False
+    logits = torch.tensor([[0.04, 0.03, 0.00, -0.01], [0.04, 0.03, 0.00, -0.01]])
+    router.configure_p1_private_noise(260831)
+
+    _, dispatch_indices, loss_info = router._process_logits(logits, noise_std=0.05, training=True)
+
+    assert "dispatch_router_logits" not in loss_info
+    assert "dispatch_router_probs" not in loss_info
+    assert "dispatch_topk_indices" not in loss_info
+    assert torch.equal(loss_info["topk_indices"], dispatch_indices)
+    assert not torch.equal(loss_info["router_logits"], logits)
+    assert torch.allclose(loss_info["router_probs"], F.softmax(loss_info["router_logits"], dim=1))
+
+
+def test_p1_clean_aux_view_does_not_change_noisy_hard_top2_dispatch_or_global_rng():
+    router = BaseRouter(num_experts=NUM_EXPERTS, top_k=TOP_K)
+    router.p1_balance_on_clean_routes = True
+    router.configure_p1_private_noise(260831)
+    logits = torch.tensor(
+        [[0.04, 0.03, 0.00, -0.01], [0.04, 0.03, 0.00, -0.01]],
+        requires_grad=True,
+    )
+    global_state = torch.random.get_rng_state().clone()
+
+    dispatch_weights, dispatch_indices, loss_info = router._process_logits(
+        logits, noise_std=0.05, training=True
+    )
+
+    generator = torch.Generator(device="cpu")
+    generator.manual_seed(260831)
+    expected_noise = torch.randn(logits.shape, generator=generator, dtype=torch.float32)
+    expected_dispatch_logits = logits + expected_noise * 0.05
+    expected_dispatch_probs = F.softmax(expected_dispatch_logits, dim=1)
+    expected_dispatch_values, expected_dispatch_indices = torch.topk(expected_dispatch_probs, TOP_K, dim=1)
+    expected_dispatch_weights = expected_dispatch_values / expected_dispatch_values.sum(dim=1, keepdim=True)
+    expected_clean_probs = F.softmax(logits, dim=1)
+    expected_clean_indices = torch.topk(expected_clean_probs, TOP_K, dim=1).indices
+
+    assert torch.equal(global_state, torch.random.get_rng_state())
+    assert router.p1_noise_step == 1
+    assert torch.allclose(dispatch_weights, expected_dispatch_weights)
+    assert torch.equal(dispatch_indices, expected_dispatch_indices)
+    assert not torch.equal(dispatch_indices, expected_clean_indices)
+    assert loss_info["router_logits"] is logits
+    assert torch.allclose(loss_info["router_probs"], expected_clean_probs)
+    assert torch.equal(loss_info["topk_indices"], expected_clean_indices)
+    assert torch.allclose(loss_info["dispatch_router_logits"], expected_dispatch_logits)
+    assert torch.allclose(loss_info["dispatch_router_probs"], expected_dispatch_probs)
+    assert torch.equal(loss_info["dispatch_topk_indices"], expected_dispatch_indices)
+
+
+def test_p1_clean_aux_view_is_seed_invariant_while_private_dispatch_can_differ():
+    logits = torch.tensor([[0.04, 0.03, 0.00, -0.01], [0.04, 0.03, 0.00, -0.01]])
+    loss_views = []
+    dispatch_indices = []
+    for seed in (260829, 260831):
+        router = BaseRouter(num_experts=NUM_EXPERTS, top_k=TOP_K)
+        router.p1_balance_on_clean_routes = True
+        router.configure_p1_private_noise(seed)
+        _, indices, loss_info = router._process_logits(logits, noise_std=0.05, training=True)
+        loss_views.append(loss_info)
+        dispatch_indices.append(indices)
+
+    assert torch.equal(loss_views[0]["router_logits"], loss_views[1]["router_logits"])
+    assert torch.equal(loss_views[0]["router_probs"], loss_views[1]["router_probs"])
+    assert torch.equal(loss_views[0]["topk_indices"], loss_views[1]["topk_indices"])
+    assert not torch.equal(dispatch_indices[0], dispatch_indices[1])
+
+
+def test_p1_clean_and_dispatch_views_are_exact_when_training_noise_is_zero():
+    router = BaseRouter(num_experts=NUM_EXPERTS, top_k=TOP_K)
+    router.p1_balance_on_clean_routes = True
+    logits = torch.tensor([[0.04, 0.03, 0.00, -0.01], [0.02, 0.01, -0.01, -0.02]])
+
+    dispatch_weights, dispatch_indices, loss_info = router._process_logits(
+        logits, noise_std=0.0, training=True
+    )
+
+    assert dispatch_weights.shape == dispatch_indices.shape == (2, TOP_K)
+    assert torch.equal(loss_info["router_logits"], loss_info["dispatch_router_logits"])
+    assert torch.equal(loss_info["router_probs"], loss_info["dispatch_router_probs"])
+    assert torch.equal(loss_info["topk_indices"], loss_info["dispatch_topk_indices"])
+    assert torch.equal(dispatch_indices, loss_info["dispatch_topk_indices"])
+
+
+def test_p1_clean_aux_view_rejects_capacity_routing_semantics():
+    router = BaseRouter(num_experts=NUM_EXPERTS, top_k=TOP_K, capacity_factor=1.0)
+    router.p1_balance_on_clean_routes = True
+
+    with pytest.raises(MoERouterError, match="incompatible with capacity_factor"):
+        router._process_logits(torch.zeros(4, NUM_EXPERTS), noise_std=0.0, training=True)
+
+
+def test_p1_clean_aux_view_drives_moe_loss_and_router_gradient():
+    router = BaseRouter(num_experts=NUM_EXPERTS, top_k=TOP_K)
+    router.p1_balance_on_clean_routes = True
+    router.configure_p1_private_noise(260831)
+    logits = torch.tensor(
+        [[0.04, 0.03, 0.00, -0.01], [0.02, 0.01, -0.01, -0.02]],
+        requires_grad=True,
+    )
+    _, _, loss_info = router._process_logits(logits, noise_std=0.05, training=True)
+    loss_fn = MoELoss(
+        balance_loss_coeff=1.0,
+        z_loss_coeff=0.1,
+        num_experts=NUM_EXPERTS,
+        top_k=TOP_K,
+    )
+
+    actual = loss_fn(
+        loss_info["router_probs"],
+        loss_info["router_logits"],
+        loss_info["topk_indices"],
+    )
+    clean_probs = F.softmax(logits, dim=1)
+    clean_indices = torch.topk(clean_probs, TOP_K, dim=1).indices
+    expected = loss_fn(clean_probs, logits, clean_indices)
+
+    assert torch.equal(actual, expected)
+    assert torch.isfinite(actual)
+    assert actual.detach().item() > 0
+    actual.backward()
+    assert logits.grad is not None
+    assert torch.isfinite(logits.grad).all()
+    assert torch.count_nonzero(logits.grad).item() > 0
+
+
+def test_p1_clean_aux_opt_in_does_not_change_eval_routing():
+    logits = torch.tensor([[0.04, 0.03, 0.00, -0.01], [0.02, 0.01, -0.01, -0.02]])
+    historical = BaseRouter(num_experts=NUM_EXPERTS, top_k=TOP_K)
+    clean_aux = BaseRouter(num_experts=NUM_EXPERTS, top_k=TOP_K)
+    clean_aux.p1_balance_on_clean_routes = True
+
+    expected_weights, expected_indices, expected_info = historical._process_logits(
+        logits, noise_std=0.05, training=False
+    )
+    actual_weights, actual_indices, actual_info = clean_aux._process_logits(
+        logits, noise_std=0.05, training=False
+    )
+
+    assert expected_info == actual_info == {}
+    assert torch.equal(actual_weights, expected_weights)
+    assert torch.equal(actual_indices, expected_indices)
+
+
+def test_optimized_moe_snapshot_uses_dispatch_view_while_aux_uses_clean_view(monkeypatch):
+    module = OptimizedMOEImproved(
+        in_channels=8,
+        out_channels=8,
+        num_experts=NUM_EXPERTS,
+        top_k=TOP_K,
+        noise_std=0.0,
+        progressive_sparsity=False,
+        add_residual=False,
+    ).train()
+    module._moe_force_snapshot = True
+    clean_logits = torch.tensor(
+        [[0.04, 0.03, 0.00, -0.01], [0.02, 0.01, -0.01, -0.02]],
+        requires_grad=True,
+    )
+    clean_probs = F.softmax(clean_logits, dim=1)
+    clean_indices = torch.topk(clean_probs, TOP_K, dim=1).indices
+    dispatch_logits = clean_logits + torch.tensor(
+        [[-0.10, -0.10, 0.20, 0.10], [-0.10, -0.10, 0.10, 0.20]]
+    )
+    dispatch_probs = F.softmax(dispatch_logits, dim=1)
+    dispatch_values, dispatch_indices = torch.topk(dispatch_probs, TOP_K, dim=1)
+    dispatch_weights = dispatch_values / dispatch_values.sum(dim=1, keepdim=True)
+    loss_info = {
+        "router_logits": clean_logits,
+        "router_probs": clean_probs,
+        "topk_indices": clean_indices,
+        "dispatch_router_logits": dispatch_logits,
+        "dispatch_router_probs": dispatch_probs,
+        "dispatch_topk_indices": dispatch_indices,
+    }
+    monkeypatch.setattr(
+        module.routing,
+        "forward",
+        lambda _inputs, top_k=None: (dispatch_weights, dispatch_indices, loss_info),
+    )
+
+    output = module(torch.randn(2, 8, 4, 4))
+    expected_aux = module.moe_loss_fn(clean_probs, clean_logits, clean_indices)
+    snapshot = module.last_routing_snapshot
+
+    assert torch.isfinite(output).all()
+    assert torch.equal(module.aux_loss, expected_aux)
+    assert module.aux_loss.detach().item() > 0
+    assert torch.allclose(snapshot["mean_router_probs"], dispatch_probs.detach().mean(dim=0))
+    expected_dispatch_counts = torch.bincount(dispatch_indices.reshape(-1), minlength=NUM_EXPERTS).float()
+    expected_dispatch_usage = expected_dispatch_counts / expected_dispatch_counts.sum()
+    assert torch.equal(snapshot["topk_counts"], expected_dispatch_counts)
+    assert torch.equal(snapshot["expert_usage"], expected_dispatch_usage)
+    assert not torch.allclose(snapshot["mean_router_probs"], clean_probs.detach().mean(dim=0))
+    task_loss = output.square().mean()
+    composite_loss = task_loss + module.aux_loss
+    assert torch.allclose(composite_loss - task_loss, module.aux_loss)
 
 
 # =============================================================================

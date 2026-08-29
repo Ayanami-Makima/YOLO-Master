@@ -116,13 +116,18 @@ class C3k2ResidualFactor(ResidualFactorAdapter):
                     module._current_top_k = module.top_k
                     module.warmup_steps = 0
                     module.expert_dropout_rate = 0.0
+                    module.routing_aux_semantics = "clean_hard_top2_balance_with_noisy_dispatch"
                     routing = getattr(module, "routing", None)
                     if routing is not None and hasattr(routing, "noise_std"):
                         routing.noise_std = 0.0
+                        routing.p1_balance_on_clean_routes = True
         self.moe = moe
         self.num_experts = num_experts if moe else 0
         self.top_k = top_k if moe else 0
         self.routing_schedule = "hard_top_k_from_step_zero" if moe else "not_applicable"
+        self.routing_aux_semantics = (
+            "clean_hard_top2_balance_with_noisy_dispatch" if moe else "not_applicable"
+        )
         self.router_noise_std = 0.0 if moe else None
         self.router_noise_schedule = "runner_controlled_or_disabled" if moe else "not_applicable"
         self.expert_dropout_rate = 0.0 if moe else None
