@@ -64,11 +64,12 @@ def summarize_image_counts(counts: Counter, num_experts: int, top_k: int, num_im
     """Add image-level selection metrics required by the registered gate."""
     if num_images < 1:
         raise ValueError("routing gate requires at least one image")
-    summary = summarize_counts(counts, num_experts, top_k, num_images)
+    summary = summarize_counts(counts, num_experts, top_k)
     expected = num_images * top_k
     image_fractions = [counts[index] / num_images for index in range(num_experts)]
     summary.update(
         {
+            "images": num_images,
             "expected_selections": expected,
             "image_selection_fractions": image_fractions,
             "max_image_selection_fraction": max(image_fractions, default=0.0),

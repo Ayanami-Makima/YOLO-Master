@@ -7,6 +7,7 @@ import copy
 import importlib.util
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 from types import ModuleType
 
@@ -226,7 +227,14 @@ def test_formal_admission_reads_the_routing_reports_dead_expert_field(tmp_path: 
 
 def test_routing_audit_uses_current_summary_api() -> None:
     text = ROUTING_AUDIT.read_text(encoding="utf-8")
-    assert "summarize_counts(counts, num_experts, top_k, num_images)" in text
+    assert "summarize_counts(counts, num_experts, top_k)" in text
+    assert '"images": num_images' in text
+    audit = load_stdlib_script(ROUTING_AUDIT, "r20_routing_summary_for_test")
+    summary = audit.summarize_image_counts(Counter({0: 256, 1: 256, 2: 256, 3: 256}), 4, 2, 512)
+    assert summary["images"] == 512
+    assert summary["selections"] == summary["expected_selections"] == 1024
+    assert summary["dead_experts_on_sample"] == []
+    assert summary["max_image_selection_fraction"] == 0.5
 
 
 def test_formal_admission_attests_every_clean_aux_router(tmp_path: Path) -> None:
