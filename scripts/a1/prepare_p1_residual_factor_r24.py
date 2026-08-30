@@ -192,7 +192,9 @@ def calibration_images(formal_data: Path) -> tuple[list[str], Path]:
     return resolved, source
 
 
-def data_registry_entry(data_yaml: Path, *, expected_train: int, expected_val: int) -> dict[str, Any]:
+def data_registry_entry(
+    data_yaml: Path, *, expected_train: int, expected_val: int, hash_sample_content: bool = True
+) -> dict[str, Any]:
     """Bind a dataset YAML and the ordered train/val list files it references."""
     spec = yaml.safe_load(data_yaml.read_text(encoding="utf-8"))
     lists: dict[str, Any] = {}
@@ -206,12 +208,19 @@ def data_registry_entry(data_yaml: Path, *, expected_train: int, expected_val: i
         count = sum(bool(line.strip()) for line in path.read_text(encoding="utf-8").splitlines())
         if count != expected_count:
             raise ValueError(f"{data_yaml} {split}: expected {expected_count} images, found {count}")
-        lists[split] = {
+        item = {
             "path": str(path),
             "sha256": sha256(path),
             "images": count,
-            "content": data_list_content_signature(path),
+            "integrity": (
+                "ordered_list_sha256_count_and_image_label_content_sha256"
+                if hash_sample_content
+                else "ordered_list_sha256_and_exact_count"
+            ),
         }
+        if hash_sample_content:
+            item["content"] = data_list_content_signature(path)
+        lists[split] = item
     return {"path": str(data_yaml), "sha256": sha256(data_yaml), "lists": lists}
 
 
@@ -392,7 +401,9 @@ def main() -> None:
             raise FileNotFoundError(path)
 
     pilot_registry = data_registry_entry(pilot_data, expected_train=5000, expected_val=512)
-    formal_registry = data_registry_entry(formal_data, expected_train=118287, expected_val=5000)
+    formal_registry = data_registry_entry(
+        formal_data, expected_train=118287, expected_val=5000, hash_sample_content=False
+    )
     preflight_registry = data_registry_entry(preflight_data, expected_train=256, expected_val=128)
     images, source_list = calibration_images(formal_data)
     output.mkdir(parents=True)
@@ -546,6 +557,9 @@ def main() -> None:
             "formal_train_images": 118287,
             "formal_validation_images": 5000,
             "formal_epochs": 30,
+            "formal_data_integrity": "YAML SHA256 plus ordered train/val list SHA256 and exact counts",
+            "per_file_content_hashing_required": False,
+            "per_file_content_hashing_reason": "not required by A1 and disproportionate for full COCO",
             "inference_changed": False,
         },
         "routing_gate": {

@@ -52,11 +52,18 @@ def data_list_content_signature(list_path: Path) -> dict[str, Any]:
 
 
 def verify_registered_data_content(protocol: dict[str, Any]) -> None:
-    """Recompute every registered ordered image/label aggregate and fail on drift."""
+    """Verify each dataset at its registered, scale-appropriate integrity level."""
     for label, dataset in protocol.get("data", {}).items():
         for split, item in dataset.get("lists", {}).items():
-            actual = data_list_content_signature(Path(item["path"]))
-            expected = item.get("content")
-            if actual != expected:
-                raise ValueError(f"{label}/{split} image-or-label content drift")
+            path = Path(item["path"])
+            lines = [line for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+            if sha256(path) != item.get("sha256") or len(lines) != item.get("images"):
+                raise ValueError(f"{label}/{split} ordered image-list drift")
+            integrity = item.get("integrity")
+            if integrity == "ordered_list_sha256_count_and_image_label_content_sha256":
+                actual = data_list_content_signature(path)
+                if actual != item.get("content"):
+                    raise ValueError(f"{label}/{split} image-or-label content drift")
+            elif integrity != "ordered_list_sha256_and_exact_count":
+                raise ValueError(f"{label}/{split} unknown integrity policy: {integrity!r}")
 
