@@ -17,8 +17,12 @@ timestamp() {
 
 wait_for_both_gpus() {
     local stage="$1"
-    while nvidia-smi --query-compute-apps=gpu_uuid --format=csv,noheader \
-        | grep -E -q "^(${GPU0_UUID}|${GPU1_UUID})$"; do
+    local compute_uuids
+    while true; do
+        compute_uuids="$(nvidia-smi --query-compute-apps=gpu_uuid --format=csv,noheader)"
+        if [[ "$compute_uuids" != *"$GPU0_UUID"* && "$compute_uuids" != *"$GPU1_UUID"* ]]; then
+            break
+        fi
         echo "$(timestamp) waiting_for_idle_gpus stage=$stage"
         sleep 60
     done
