@@ -1,0 +1,131 @@
+{
+  "skill": "yolo.train",
+  "request_id": "d_routing_probe_seed260830_1ep",
+  "protocol": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r22/configs/a1/p1_factorial_r22/protocol.json"
+  },
+  "runtime": {
+    "cwd": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r22",
+    "python": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+    "prefer_cli": false
+  },
+  "inputs": {
+    "model": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_r22/initializers/seed260830/d_residual_factor_init.pt",
+    "task": "detect",
+    "data": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/coco.yaml"
+  },
+  "params": {
+    "epochs": 1,
+    "imgsz": 640,
+    "batch": 4,
+    "workers": 0,
+    "pretrained": true,
+    "optimizer": "SGD",
+    "lr0": 0.0001,
+    "lrf": 0.2,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "nbs": 16,
+    "warmup_epochs": 0.5,
+    "warmup_bias_lr": 0.0,
+    "warmup_momentum": 0.8,
+    "freeze": [
+      0,
+      1,
+      2,
+      3,
+      5,
+      7,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "amp": false,
+    "deterministic": true,
+    "seed": 260830,
+    "patience": 0,
+    "mosaic": 0.0,
+    "mixup": 0.0,
+    "copy_paste": 0.0,
+    "close_mosaic": 0,
+    "cos_lr": false,
+    "cache": false,
+    "plots": false,
+    "save": true,
+    "save_period": 1,
+    "val": true,
+    "fraction": 1.0,
+    "exist_ok": false,
+    "resume": false,
+    "device": "0",
+    "project": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_r22/routing_probe/seed260830",
+    "name": "d_routing_probe_seed260830_1ep",
+    "moe_noise_std": 0.0,
+    "moe_router_lr_scale": 1.0,
+    "moe_expert_warmup_epochs": 0,
+    "moe_dynamic_schedule": "none",
+    "moe_map_saturation_enabled": false,
+    "moe_balance_loss": 1.0,
+    "moe_router_z_loss": 0.1,
+    "moe_aux_gain": 1.0,
+    "mixture_aux_budget": 3.0,
+    "moe_temperature": 1.0,
+    "moa_mot_temperature_factor": 1.0,
+    "moa_mot_min_temperature": 1.0
+  },
+  "a1_policy": {
+    "freeze_batch_norm": true,
+    "freeze_residual_factor_bases": true,
+    "formal_restart_from_initializer": false,
+    "routing_semantics": "hard_top2_from_step_zero_private_exploration_clean_aux",
+    "expert_dropout_rate": 0.0,
+    "router_exploration": {
+      "sigma_source": "train512_median_per_image_logit_std_clipped",
+      "sigma_min": 0.01,
+      "sigma_max": 0.05,
+      "hold_through_microbatch": 625,
+      "decay_to_zero_microbatch": 1000,
+      "private_seed_stride": 10000,
+      "evaluation_noise_std": 0.0,
+      "base_seed": 260830,
+      "enabled": true
+    },
+    "routing_auxiliary_objective": {
+      "enabled": true,
+      "runtime_semantics": "clean_hard_top2_balance_with_noisy_dispatch",
+      "dispatch_source": "train_only_private_noisy_logits",
+      "dispatch_operator": "hard_top2",
+      "balance_probability_source": "clean_logits_softmax",
+      "balance_assignment_source": "clean_logits_hard_top2",
+      "z_loss_source": "clean_logits",
+      "evaluation_source": "clean_logits_hard_top2",
+      "adds_parameters": false,
+      "changes_inference": false
+    },
+    "factor_gain_optimizer": {
+      "lr": 0.01,
+      "weight_decay": 0.0,
+      "warmup": false
+    },
+    "batch_norm_calibration": "train_only_fixed_512_no_grad_then_frozen"
+  },
+  "diagnostics": {
+    "detect_anomaly": false,
+    "failure_report": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_r22/routing_probe/seed260830/d_routing_probe_seed260830_1ep/failure_diagnostics.json"
+  },
+  "policy": {
+    "async": false,
+    "dry_run": false
+  }
+}
