@@ -421,6 +421,7 @@ class ES_MOE(nn.Module):
         use_sparse_inference=True,
         dynamic_threshold=0.4,
         max_kernel_size=15,
+        expert_kernel_sizes=None,
     ):
         """
         Args:
@@ -432,6 +433,7 @@ class ES_MOE(nn.Module):
             use_sparse_inference: Enable sparse Top-K expert computation during inference
             dynamic_threshold: Optional threshold for pruning low-confidence experts during inference
             max_kernel_size: Largest odd depthwise kernel assigned to an expert
+            expert_kernel_sizes: Optional exact per-expert depthwise kernels for checkpoint-compatible rebuilds
         """
         super(ES_MOE, self).__init__()
 
@@ -457,6 +459,7 @@ class ES_MOE(nn.Module):
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.num_experts = num_experts
+        self.reduction = reduction
         self.top_k = min(top_k, num_experts) if top_k is not None else num_experts
         self.use_top_k = top_k is not None
         self.use_sparse_inference = use_sparse_inference
@@ -467,11 +470,22 @@ class ES_MOE(nn.Module):
         self.routing = DynamicRoutingLayer(in_channels, num_experts, reduction, top_k)
 
         # Expert group (original design)
-        default_kernel_sizes = [3, 5, 7]
-        if num_experts <= len(default_kernel_sizes):
-            ks = [min(k, max_kernel_size) for k in default_kernel_sizes[:num_experts]]
+        if expert_kernel_sizes is not None:
+            if len(expert_kernel_sizes) != num_experts:
+                raise ValueError(
+                    "expert_kernel_sizes must provide one kernel per expert: "
+                    f"expected {num_experts}, got {len(expert_kernel_sizes)}"
+                )
+            ks = [int(kernel) for kernel in expert_kernel_sizes]
+            if any(kernel < 3 or kernel % 2 == 0 for kernel in ks):
+                raise ValueError("expert_kernel_sizes must contain odd kernel sizes of at least 3")
         else:
-            ks = [min(3 + 2 * i, max_kernel_size) for i in range(num_experts)]
+            default_kernel_sizes = [3, 5, 7]
+            if num_experts <= len(default_kernel_sizes):
+                ks = [min(k, max_kernel_size) for k in default_kernel_sizes[:num_experts]]
+            else:
+                ks = [min(3 + 2 * i, max_kernel_size) for i in range(num_experts)]
+        self.expert_kernel_sizes = tuple(ks)
         self.experts = nn.ModuleList([EfficientExpertGroup(in_channels, out_channels, kernel_size=k) for k in ks])
 
         # Output normalization (original design)
