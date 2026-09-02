@@ -8,6 +8,7 @@ import torch
 from ultralytics.nn.modules._numeric import (
     all_reduce_mean,
     clamp_min_for_dtype,
+    disabled_autocast,
     fp_clamp_floor,
     stable_normalize,
 )
@@ -51,6 +52,24 @@ def test_all_mixture_namespaces_share_canonical_all_reduce_mean():
     assert moa_all_reduce_mean is all_reduce_mean
     assert moe_all_reduce_mean is all_reduce_mean
     assert mot_all_reduce_mean is all_reduce_mean
+
+
+def test_disabled_autocast_uses_legacy_cuda_api_when_torch_autocast_is_unavailable(monkeypatch):
+    """Torch 1.8 exposes only ``torch.cuda.amp.autocast``."""
+    sentinel = object()
+    calls = []
+
+    def legacy_autocast(*, enabled):
+        calls.append(enabled)
+        return sentinel
+
+    monkeypatch.delattr(torch, "autocast", raising=False)
+    monkeypatch.setattr(torch.cuda.amp, "autocast", legacy_autocast)
+
+    assert disabled_autocast("cuda") is sentinel
+    assert calls == [False]
+    with disabled_autocast("cpu"):
+        pass
 
 
 def test_all_reduce_mean_keeps_global_value_and_local_gradient():

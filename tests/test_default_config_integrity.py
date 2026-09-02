@@ -38,6 +38,8 @@ def test_mixture_defaults_parse_with_expected_types():
     assert cfg.mot_scene_hidden_dim is None
     assert cfg.mot_scene_inference_mode == "dynamic"
     assert cfg.moa_regional_max_kv_tokens == 4096
+    assert cfg.moa_sparse_inference is False
+    assert cfg.moa_sparse_inference_threshold == 0.02
 
 
 def test_new_mixture_float_key_is_type_checked():
@@ -48,6 +50,17 @@ def test_new_mixture_float_key_is_type_checked():
         assert "latent_aux_gain" in str(exc)
     else:
         raise AssertionError("latent_aux_gain must reject string values")
+
+
+def test_moa_sparse_inference_defaults_are_type_checked():
+    check_cfg({"moa_sparse_inference": True, "moa_sparse_inference_threshold": 0.25})
+    for key, value in (("moa_sparse_inference", 1), ("moa_sparse_inference_threshold", "0.25")):
+        try:
+            check_cfg({key: value})
+        except TypeError as exc:
+            assert key in str(exc)
+        else:
+            raise AssertionError(f"{key} must reject an invalid value type")
 
 
 def test_scene_inference_mode_is_type_checked():

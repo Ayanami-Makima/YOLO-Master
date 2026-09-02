@@ -430,7 +430,10 @@ def test_mot_block_handles_window_larger_than_feature_map_train():
     assert torch.isfinite(out).all()
     assert torch.isfinite(aux)
 
-    (out.sum() + aux).backward()
+    # GroupNorm centers each group, so ``out.sum()`` can cancel exactly and
+    # only exercise the residual path. A squared objective keeps the padding,
+    # routing, and every dense-training expert branch in the backward graph.
+    (out.square().sum() + aux).backward()
     # Non-selected experts still get gradient through exploration_eps blending
     assert _has_grad(block.router)
     for expert in block.experts:
@@ -464,7 +467,10 @@ def test_mot_block_shift_odd_spatial_train():
     assert out.shape == x.shape
     assert torch.isfinite(out).all()
 
-    (out.sum() + aux).backward()
+    # GroupNorm centers output channels, so ``out.sum()`` can cancel the
+    # expert path exactly. A squared objective keeps every dense-training
+    # expert branch in the backward graph on all platforms.
+    (out.square().sum() + aux).backward()
     assert _has_grad(block.router)
     for expert in block.experts:
         assert _has_grad(expert)

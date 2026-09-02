@@ -215,6 +215,20 @@ def test_c2fmoa_rounds_head_count_to_expert_groups():
     assert module.m[0].local_head.num_heads == 2
 
 
+def test_c2fmoa_forwards_sparse_inference_options():
+    module = C2fMoA(32, 32, n=2, num_heads=3, sparse_inference=True, sparse_inference_threshold=0.05)
+
+    assert module.sparse_inference is True
+    assert module.sparse_inference_threshold == 0.05
+    assert all(block.sparse_inference is True for block in module.m)
+    assert all(block.sparse_inference_threshold == 0.05 for block in module.m)
+
+
+def test_c2fmoa_rejects_invalid_sparse_inference_threshold():
+    with pytest.raises(ValueError, match="sparse_inference_threshold"):
+        C2fMoA(32, 32, n=1, num_heads=3, sparse_inference_threshold=1.0)
+
+
 def test_neck_moa_fusion_eval_projects_self_path_and_zero_aux_loss():
     module = NeckMoAFusion(16, 32, 24, num_heads=4).eval()
     out = module(torch.randn(1, 16, 5, 5), torch.randn(1, 32, 3, 3))
