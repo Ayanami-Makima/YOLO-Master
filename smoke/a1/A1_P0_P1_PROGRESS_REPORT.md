@@ -473,6 +473,19 @@ P1 当前是中等规模、冻结预训练 base 的结论，不能外推为完�
 
 r28 使用固定 20,000 张 train2017、完整 5,000 张 val2017、15 epochs 和三种子；12 个 epoch-15 `last.pt` 均完成。均值 mAP50-95 为 A 0.40200、B 0.39488、C 0.40222、D 0.39465；MoE 主效应 −0.00001，End-to-End 主效应 −0.00734。训练、冻结、恢复审计、运行时路径、ONNX、资源与低竞争 CPU 延迟均已闭环，详见 `P1_FACTORIAL_MEDIUM_R28_FINAL_AUDIT.md` 与 `P1_FACTORIAL_MEDIUM_R28_CLOSURE_REPORT.md`。该结果替代“r26 待建立”的状态，不覆盖 r23/r24/r25 的历史记录。
 
+### 6.5 r28 延迟结果
+
+延迟协议固定为 batch=1、50 次预热、200 次正式采样，范围为 RAM 图像 → preprocess → inference → postprocess → Results，不含模型加载和磁盘 I/O。GPU 主测量在无背景任务的 GPU0 上完成；CPU 测量固定 4 个 Torch/OpenCV 线程及 affinity 28–31，属于受控低竞争窗口。表中 SD 为三种子单元均值的标准差，逐次样本以及 p50/p90/p99 保存在 closure evidence 目录。
+
+| 单元 | GPU0 total 均值 ± seed SD (ms) | CPU total 均值 ± seed SD (ms) |
+| --- | ---: | ---: |
+| A Dense + NMS | 12.496 ± 0.188 | 5118.699 ± 7.305 |
+| B Dense + End-to-End | 12.049 ± 0.327 | 5099.800 ± 2.874 |
+| C MoE + NMS | 25.880 ± 0.103 | 7235.376 ± 6.724 |
+| D MoE + End-to-End | 26.111 ± 0.979 | 7219.193 ± 2.416 |
+
+相对同一因子分支去除 NMS：GPU 上 B−A 为 −0.447 ms（约 −3.6%），D−C 为 +0.231 ms（约 +0.9%）；CPU 上 B−A 为 −18.900 ms（−0.369%），D−C 为 −16.183 ms（−0.224%）。因此，A1 要求的 CPU total latency 可测改善满足，但改善很小，不能表述为显著部署加速。MoE 相比 Dense 的 GPU 延迟增加约 13–14 ms，说明当前逐专家 dispatch、索引聚合和 shared expert 的实现开销超过了 Top-2 的理论稀疏收益。此前 GPU1 并行测量受到背景任务影响，仅作为补充对照，不用于主结论。
+
 ---
 
 ## 7. 建议下一步
@@ -481,8 +494,6 @@ r28 使用固定 20,000 张 train2017、完整 5,000 张 val2017、15 epochs 和
 2. 将 r28 作为 A1 P1 的中等规模可复现实验基线；r23/r24/r25 继续仅作历史审计证据。
 3. 若启动 full-COCO 长周期实验，必须建立独立 protocol、initializer、准入与审计，不能续训 r28。
 4. 如需提升导出数值一致性，应单独研究 B/D 极低分 TopK 尾部差异，不能抹去严格 raw ONNX 的 `partial` 限制。
-
----
 
 ## 8. 主要证据文件
 
@@ -508,3 +519,15 @@ P1：
 - `r23-final-audit/formal_admission.json`
 - `r23-final-audit/routing/hard_top2_512.json`
 - `r23-final-audit/residual_activity/routing_probe_512.json`
+
+---
+
+## 9. 待导师确认的后续方向
+
+当前 r28 已完成 A1 P1 的中等规模闭环，但 MoE 在本预算下没有稳定精度收益且推理更慢。建议向导师集中确认以下问题：
+
+1. 是否将 r28 作为 P1 的正式阶段结论：End-to-End 路径成立，MoE 主效应接近 0，当前实现没有速度收益？
+2. 下一步优先验证“训练不足”还是“dispatch 实现开销”：是否新建独立 r29，从原始 initializer 重新跑 50/100 epochs，而不是续训 r28？
+3. 若优先做性能，是否允许进入 MoE grouped/fused dispatch、Triton/CUDA kernel 或专家剪枝优化，并以新协议重新测 latency？
+4. 若按任务书推进 P2，是否选择 seg/pose 下游扩展，还是选择“无速度收益”的机制级负结果路线？
+5. 对 B/D 严格 raw ONNX 行级比较的 4 个极低分 TopK 尾部差异，是否接受当前 `partial` 限制，还是要求先完成导出一致性修复？
