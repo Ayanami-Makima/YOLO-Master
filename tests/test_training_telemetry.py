@@ -11,6 +11,7 @@ import pytest
 import torch
 
 from ultralytics.engine.telemetry import TrainingTelemetry, aggregate_rank_records, device_memory_sample
+from ultralytics.utils import MACOS
 from ultralytics.utils.dist import ddp_launch_env, ddp_launch_prefix, find_free_network_port
 
 
@@ -114,6 +115,8 @@ def test_training_telemetry_records_cpu_step_contract(tmp_path, monkeypatch):
 
 
 def test_cpu_gloo_two_rank_telemetry_artifact_gate(tmp_path):
+    if MACOS and os.environ.get("PYTEST_XDIST_WORKER"):
+        pytest.skip("Nested torchrun under xdist is unreliable on macOS; covered serially and on Linux")
     command = [
         *ddp_launch_prefix(),
         "--master_addr=127.0.0.1",
