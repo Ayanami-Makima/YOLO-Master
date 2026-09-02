@@ -101,32 +101,41 @@ See [`P0_PRETRAINED_REPORT.md`](P0_PRETRAINED_REPORT.md), the compact evidence
 under [`p0_pretrained/`](p0_pretrained/), and the reproducer
 [`scripts/a1/evaluate_p0_pretrained.py`](../../scripts/a1/evaluate_p0_pretrained.py).
 
-## P1 pretrained 2×2 pilot (executed, acceptance failed)
+## Historical invalid P1 pilot (r9)
 
-The locked pretrained P1 pilot has now run A/B/C/D through preflight, 5-epoch
-training, full COCO validation, NMS tracing, latency, routing, and ONNX audit.
-B/D execute zero suppression kernels, so the NMS-free route is real. However,
-all four full-COCO mAP50-95 values are effectively zero because the custom
-A2C2f/A2C2fMoE blocks are mostly or partly randomly initialized and the short
-low-LR fine-tuning budget cannot train them. A/B/C also have at least one ONNX
-agreement failure. Therefore the planned pilot is complete, but P1 is **not
-accepted or complete as a task milestone**.
-
-See [`P1_PRETRAINED_PILOT_REPORT.md`](P1_PRETRAINED_PILOT_REPORT.md) and the
+The early pretrained 2×2 pilot directly rebuilt the official C3k2 layers as
+custom A2C2f/A2C2fMoE blocks. That left a material part of the checkpoint
+randomly initialized, so its near-zero mAP results are retained only as a
+diagnostic record, not as a P1 conclusion. See
+[`P1_PRETRAINED_PILOT_REPORT.md`](P1_PRETRAINED_PILOT_REPORT.md) and the
 compact evidence under [`p1_pretrained/`](p1_pretrained/).
 
-## Limits and next step
+## P1 r28 warm-start 2×2 factorial (completed)
 
-P1 pilot 的当前结果和原始证据索引见 [`P1_PILOT_REPORT.md`](P1_PILOT_REPORT.md)。
+The valid P1 experiment uses `C3k2ResidualFactor`: the official pretrained
+C3k2 base at layers 4/6/8 is retained and frozen, while the residual factor
+and detection head are trained. It completed A/B/C/D × seeds 260829/260830/
+260831 on 20,000 COCO train images and 5,000 val images for 15 epochs. Mean
+mAP50-95 is A 0.40200, B 0.39488, C 0.40222 and D 0.39465; the MoE main effect
+is -0.00001 and the End-to-End main effect is -0.00734.
 
-完整 COCO2017 已在 `scut-server` 验收完成（118,287 train / 5,000 val），就绪标记为
-`/data/data2/TuJiajun/COCO2017/coco/READY.json`。从随机初始化开始的 r4 full-COCO
-30-epoch 训练已于 2026-08-29 按计划暂停：C 的失败证据和 D 已完成的第一个 epoch、
-checkpoint、日志均保留在 `/data/data2/TuJiajun/A1-smoke-r4/p1_full_r4/`，没有把它们
-计为 P0/P1 结论。旧 r1/r2/r3 诊断产物也继续保留。
-当前诊断、复现命令与实时日志入口见 [`P1_RECOVERY_20260828.md`](P1_RECOVERY_20260828.md)。
+All 12 runtime traces distinguish NMS (A/C) from the native NMS-free
+score-filter route (B/D), and all exported ONNX graphs contain zero
+`NonMaxSuppression` nodes. Strict raw-output ONNX parity remains partial: A/C
+pass 24/24 inputs and B/D pass 20/24; the four B/D differences are
+very-low-score TopK-tail members. The deployment-relevant `conf=0.001`
+semantic comparison passes B/D 24/24, but does not replace that strict
+limitation.
 
-The Smoke admission gate and pretrained P0 are complete. P1 now has a complete
-single-seed negative pilot, but still requires a warm-start strategy that
-preserves useful pretrained behavior, followed by a valid-accuracy 2×2 rerun
-and passing export agreement before making any MoE compatibility claim.
+Controlled low-contention CPU timing records B−A = -18.900 ms (-0.37%) and
+D−C = -16.183 ms (-0.22%): measurable but too small to claim a material
+speedup. See [`P1_FACTORIAL_MEDIUM_R28_FINAL_AUDIT.md`](P1_FACTORIAL_MEDIUM_R28_FINAL_AUDIT.md),
+[`P1_FACTORIAL_MEDIUM_R28_CLOSURE_REPORT.md`](P1_FACTORIAL_MEDIUM_R28_CLOSURE_REPORT.md),
+and the [closure evidence](p1_factorial_medium_r28/closure_r1/).
+
+The smoke admission gate, P0, and the valid warm-start P1 r28 factorial
+experiment are complete. The r9 and early pretrained pilots remain preserved
+as invalid or negative historical evidence. P1 r28 supports a constrained
+accuracy conclusion, not a general claim of MoE benefit or material latency
+acceleration; any full-COCO long-schedule follow-up must start as an
+independent protocol.

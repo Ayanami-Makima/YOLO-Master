@@ -1,0 +1,60 @@
+{
+  "schema": "a1-p1-r28-closure-progress-summary/v2",
+  "status": "completed_with_strict_onnx_tail_limitation",
+  "protocol_sha256": "007efefc86a1b3e76773f0c28f610de03715393a259e0846c3954652c8e15dfe",
+  "formal_checkpoint_selection": "epoch-15 last.pt for all 12 formal cells; no best-epoch cherry-picking",
+  "predict_runtime_path": {
+    "status": "passed",
+    "nms_cells": "A/C: 6/6 models, 16/16 traced calls per model reach the suppression kernel",
+    "end2end_cells": "B/D: 6/6 models, 16/16 traced calls per model use end2end_score_filter; suppression kernel calls are zero"
+  },
+  "onnx": {
+    "all_models_exported": true,
+    "non_max_suppression_nodes": 0,
+    "strict_raw_parity": "A/C 24/24 passed; B/D 20/24 passed; four B/D low-confidence TopK-tail comparisons differ",
+    "confidence_0_001_e2e_semantic_parity": "B/D 24/24 passed",
+    "strict_limitation": "The confidence-threshold semantic pass does not replace the partial strict all-row raw-output result.",
+    "strict_status": "partial"
+  },
+  "deterministic_resources": {
+    "status": "passed_12_of_12",
+    "input": "finite all-zero float32 [1,3,640,640], two THOP repetitions",
+    "parameters": {"A": 2993452, "B": 3148280, "C": 5424348, "D": 5579176},
+    "gflops": {"A": 7.4179712, "B": 8.0429312, "C": 8.2517248, "D": 8.8766848}
+  },
+  "gpu_latency_clean": {
+    "status": "completed",
+    "device": "GPU0",
+    "warmup": 50,
+    "samples": 200,
+    "mean_total_ms": {"A": 12.496, "B": 12.049, "C": 25.880, "D": 26.111}
+  },
+  "gpu_latency_parallel_supplement": {
+    "status": "completed_with_background_load_caveat",
+    "device": "GPU1",
+    "mean_total_ms": {"A": 27.470, "B": 24.409, "C": 51.104, "D": 54.486}
+  },
+  "cpu_latency": {
+    "status": "completed",
+    "measurement": "CPU, 4 Torch/OpenCV threads, affinity 28-31; 3 seeds x 4 cells x (50 warmup + 200 timed samples)",
+    "scope": "RAM image -> preprocess -> inference -> postprocess -> Results; excludes model loading and disk I/O",
+    "recorded_load_average": [7.09033203125, 13.58740234375, 25.9384765625],
+    "mean_total_ms": {"A": 5118.699223, "B": 5099.799695, "C": 7235.376224, "D": 7219.192839},
+    "seed_sd_ms": {"A": 7.304645, "B": 2.874221, "C": 6.724034, "D": 2.415557},
+    "end2end_minus_nms": {"B_minus_A_ms": -18.899528, "B_minus_A_percent": -0.3692, "D_minus_C_ms": -16.183385, "D_minus_C_percent": -0.2237},
+    "interpretation": "Both end-to-end comparisons are measurably lower under the locked protocol, but below 0.4 percent and not a material speedup claim.",
+    "evidence_dir": "cpu_latency_low_contention_r1"
+  },
+  "evidence_sha256": {
+    "predict": "61a8e6c8c4ff477ce42c223579c73c88e7d43b19409b16cc4322d5774ee9ec46",
+    "strict_export": "5f86d5b5b58284d836b2dfbf2b051e106f8231f248e542ec2e02cb3af7566eca",
+    "threshold_export": "9ee52afc34c31f0ef312beed8353d586e568465db0c1789d9c4b41cdb7af9485",
+    "resources": "44df5b8d710671f2ae75ed26a4efc838e6a1fbadada6cdc8a2db73ebbe104a2c",
+    "deterministic_resources": "00c3abaf6b2ef3fe0f77dc8b0d5b868d0bc9e6df06c2dfb6329f427d085bc9a8",
+    "gpu_latency_clean": "4dd9ec2b00615256752d7f9ae118d2775ffc3398acfaf6725bf20daa6024d04d",
+    "gpu_latency_parallel": "fe08989b3c20478d180a6e85e6ced86c18e62b8e49edef1e9f0ee53e3001b4a2",
+    "cpu_latency_protocol": "007efefc86a1b3e76773f0c28f610de03715393a259e0846c3954652c8e15dfe",
+    "cpu_latency_evidence": "ad9d4b8a0ce031fad218a0c3b49311bba7dba009cccfbee65a33e6c3440aa057",
+    "cpu_latency_samples": "a984d9ce72215c79cb31a900ab950808e7b69abf9f122e716afede297590e45f"
+  }
+}

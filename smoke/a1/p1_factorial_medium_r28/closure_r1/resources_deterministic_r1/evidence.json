@@ -1,0 +1,689 @@
+{
+  "checkpoint_selection": "epoch-15 last.pt for all 12 formal cells; no best-epoch cherry-picking",
+  "environment": {
+    "device": "cuda:0",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+    "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+    "torch": "2.10.0+cu128",
+    "ultralytics": "8.4.101",
+    "ultralytics_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/__init__.py"
+  },
+  "method": {
+    "counter": "THOP forward-hook profile",
+    "input": "fixed finite all-zero float32 [1,3,640,640]",
+    "interpretation": "fixed-input executed FLOPs; not a claim of data-distribution average or theoretical sparse FLOPs",
+    "repetitions": 2,
+    "reported_unit": "GFLOPs = 2 * THOP MACs / 1e9"
+  },
+  "schema": "a1-p1-r28-deterministic-resource-evidence/v1",
+  "seeds": {
+    "260829": {
+      "a": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/a_formal_seed260829_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "dce906840c103c8e7e4e01c12ed621b65f4d532b24b22217a850c462dd3ec8a7",
+        "checkpoint_sha256_before": "dce906840c103c8e7e4e01c12ed621b65f4d532b24b22217a850c462dd3ec8a7",
+        "gflops": 7.4179712,
+        "parameters": 2993452,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 7.4179712,
+            "macs": 3708985600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 2993452,
+            "parameters_profiled": 2993452
+          },
+          {
+            "gflops": 7.4179712,
+            "macs": 3708985600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 2993452,
+            "parameters_profiled": 2993452
+          }
+        ],
+        "status": "completed"
+      },
+      "b": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/b_formal_seed260829_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "352b4ce33152cd7a0b094f9f904049e64db5b497bf6508f0dc0a6e1a5651e373",
+        "checkpoint_sha256_before": "352b4ce33152cd7a0b094f9f904049e64db5b497bf6508f0dc0a6e1a5651e373",
+        "gflops": 8.0429312,
+        "parameters": 3148280,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.0429312,
+            "macs": 4021465600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 3148280,
+            "parameters_profiled": 3148280
+          },
+          {
+            "gflops": 8.0429312,
+            "macs": 4021465600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 3148280,
+            "parameters_profiled": 3148280
+          }
+        ],
+        "status": "completed"
+      },
+      "c": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "bdfe8a0283d133c9317da05f1ad5a82aae08367e810ba68547de7713de49f999",
+        "checkpoint_sha256_before": "bdfe8a0283d133c9317da05f1ad5a82aae08367e810ba68547de7713de49f999",
+        "gflops": 8.2517248,
+        "parameters": 5424348,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.2517248,
+            "macs": 4125862400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5424348,
+            "parameters_profiled": 5424348
+          },
+          {
+            "gflops": 8.2517248,
+            "macs": 4125862400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5424348,
+            "parameters_profiled": 5424348
+          }
+        ],
+        "status": "completed"
+      },
+      "d": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "b2cd9b61fbc924c725f82f9cc1346f4e5828cb69468f6c639ab4f5c089f678c1",
+        "checkpoint_sha256_before": "b2cd9b61fbc924c725f82f9cc1346f4e5828cb69468f6c639ab4f5c089f678c1",
+        "gflops": 8.8766848,
+        "parameters": 5579176,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.8766848,
+            "macs": 4438342400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5579176,
+            "parameters_profiled": 5579176
+          },
+          {
+            "gflops": 8.8766848,
+            "macs": 4438342400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5579176,
+            "parameters_profiled": 5579176
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    "260830": {
+      "a": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/a_formal_seed260830_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "62c9fe9d31b5dfb6754dca6cfbe18fa58857965f3615ce2e9e5498892a0ad389",
+        "checkpoint_sha256_before": "62c9fe9d31b5dfb6754dca6cfbe18fa58857965f3615ce2e9e5498892a0ad389",
+        "gflops": 7.4179712,
+        "parameters": 2993452,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 7.4179712,
+            "macs": 3708985600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 2993452,
+            "parameters_profiled": 2993452
+          },
+          {
+            "gflops": 7.4179712,
+            "macs": 3708985600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 2993452,
+            "parameters_profiled": 2993452
+          }
+        ],
+        "status": "completed"
+      },
+      "b": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/b_formal_seed260830_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "a557a581a21d74b8850e2820ab0a5c81744b73f2c54bba876f60edb8af280020",
+        "checkpoint_sha256_before": "a557a581a21d74b8850e2820ab0a5c81744b73f2c54bba876f60edb8af280020",
+        "gflops": 8.0429312,
+        "parameters": 3148280,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.0429312,
+            "macs": 4021465600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 3148280,
+            "parameters_profiled": 3148280
+          },
+          {
+            "gflops": 8.0429312,
+            "macs": 4021465600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 3148280,
+            "parameters_profiled": 3148280
+          }
+        ],
+        "status": "completed"
+      },
+      "c": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/c_formal_seed260830_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "4568f65e73fb05d0996eb431c01374bf8bb2988d4ac44d3fba3e1dc2230ce1b6",
+        "checkpoint_sha256_before": "4568f65e73fb05d0996eb431c01374bf8bb2988d4ac44d3fba3e1dc2230ce1b6",
+        "gflops": 8.2517248,
+        "parameters": 5424348,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.2517248,
+            "macs": 4125862400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5424348,
+            "parameters_profiled": 5424348
+          },
+          {
+            "gflops": 8.2517248,
+            "macs": 4125862400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5424348,
+            "parameters_profiled": 5424348
+          }
+        ],
+        "status": "completed"
+      },
+      "d": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/d_formal_seed260830_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "b5f294a896f3a53aec8c412a2b3ebec0a3dddf69de00da428453e6173d3a147d",
+        "checkpoint_sha256_before": "b5f294a896f3a53aec8c412a2b3ebec0a3dddf69de00da428453e6173d3a147d",
+        "gflops": 8.8766848,
+        "parameters": 5579176,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.8766848,
+            "macs": 4438342400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5579176,
+            "parameters_profiled": 5579176
+          },
+          {
+            "gflops": 8.8766848,
+            "macs": 4438342400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5579176,
+            "parameters_profiled": 5579176
+          }
+        ],
+        "status": "completed"
+      }
+    },
+    "260831": {
+      "a": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/a_formal_seed260831_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "df9c6397be4027de5c8653021cadf65d0eee6612e747694bdace604afee476b8",
+        "checkpoint_sha256_before": "df9c6397be4027de5c8653021cadf65d0eee6612e747694bdace604afee476b8",
+        "gflops": 7.4179712,
+        "parameters": 2993452,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 7.4179712,
+            "macs": 3708985600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 2993452,
+            "parameters_profiled": 2993452
+          },
+          {
+            "gflops": 7.4179712,
+            "macs": 3708985600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 2993452,
+            "parameters_profiled": 2993452
+          }
+        ],
+        "status": "completed"
+      },
+      "b": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/b_formal_seed260831_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "da33e8bac9ebf9a9f89a99bae7e70611ef57139ee8f730f0a2da29b91f6f01fd",
+        "checkpoint_sha256_before": "da33e8bac9ebf9a9f89a99bae7e70611ef57139ee8f730f0a2da29b91f6f01fd",
+        "gflops": 8.0429312,
+        "parameters": 3148280,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.0429312,
+            "macs": 4021465600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 3148280,
+            "parameters_profiled": 3148280
+          },
+          {
+            "gflops": 8.0429312,
+            "macs": 4021465600.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 3148280,
+            "parameters_profiled": 3148280
+          }
+        ],
+        "status": "completed"
+      },
+      "c": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/c_formal_seed260831_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "a8eb4af047b278a876e1dfe775d698e453478161f1a9907e98f735f5fc863ef1",
+        "checkpoint_sha256_before": "a8eb4af047b278a876e1dfe775d698e453478161f1a9907e98f735f5fc863ef1",
+        "gflops": 8.2517248,
+        "parameters": 5424348,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.2517248,
+            "macs": 4125862400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5424348,
+            "parameters_profiled": 5424348
+          },
+          {
+            "gflops": 8.2517248,
+            "macs": 4125862400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    84,
+                    8400
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5424348,
+            "parameters_profiled": 5424348
+          }
+        ],
+        "status": "completed"
+      },
+      "d": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/d_formal_seed260831_15ep/weights/last.pt",
+        "checkpoint_sha256_after": "183efe3cd626d02ec0ca2adb13459493def87d17bad8c0edfaba27f000a65cdd",
+        "checkpoint_sha256_before": "183efe3cd626d02ec0ca2adb13459493def87d17bad8c0edfaba27f000a65cdd",
+        "gflops": 8.8766848,
+        "parameters": 5579176,
+        "repeatable": true,
+        "repetitions": [
+          {
+            "gflops": 8.8766848,
+            "macs": 4438342400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5579176,
+            "parameters_profiled": 5579176
+          },
+          {
+            "gflops": 8.8766848,
+            "macs": 4438342400.0,
+            "output": {
+              "items": [
+                {
+                  "shape": [
+                    1,
+                    300,
+                    6
+                  ],
+                  "type": "Tensor"
+                },
+                {
+                  "type": "dict"
+                }
+              ],
+              "type": "tuple"
+            },
+            "parameters": 5579176,
+            "parameters_profiled": 5579176
+          }
+        ],
+        "status": "completed"
+      }
+    }
+  },
+  "status": "completed",
+  "timestamp_utc": "2026-09-02T02:33:48.820721+00:00"
+}

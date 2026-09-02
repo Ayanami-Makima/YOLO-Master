@@ -1,6 +1,6 @@
 # A1 P0 / P1 实验进展报告
 
-更新日期：2026-08-30
+更新日期：2026-09-02
 
 ## 1. 当前总体进展
 
@@ -12,11 +12,11 @@ A1 当前围绕 YOLO26n 的两项核心问题展开：
 目前状态如下：
 
 - **P0 已完成并通过。** 官方 `yolo26n.pt` 的两条原生推理路径均已在完整 COCO val2017 上复现，并完成真实 NMS 调用和延迟审计。
-- **P1 pilot 已完成并通过。** r23 已完成 3 个配对随机种子、4 个实验单元，共 12 次正式训练；所有正式 checkpoint、冻结状态、参数更新、路由状态和残差活性审计均通过。中等规模扩展实验尚未完成。
-- P1 的当前结论是：在锁定的 pilot 预算下，**MoE 没有表现出相对 Dense 的精度优势；End-to-End 的精度稳定低于 NMS**。
-- full-COCO r24/r25 已完成协议、初始化、preflight、routing probe 和正式准入验证；实测 118,287 张训练图、5,000 张验证图、30 epochs 的完整 12 单元实验预计需要约 16 天，因此在正式训练初期主动停止，不作为结果。
+- **P1 中等规模正式实验已完成。** r28 在固定 COCO 20,000 / 5,000、15 epochs、3 个配对随机种子下完成 A/B/C/D 共 12 个正式单元；恢复感知审计 12/12 通过，官方 C3k2 base、其余冻结层和 BatchNorm 均完全不变。
+- **P1 闭环已补齐且有边界。** 运行时 NMS/End-to-End 路径、12 个无 `NonMaxSuppression` 的 ONNX 图、确定性资源、GPU 与 CPU 延迟均已记录；CPU 的 B−A / D−C 分别为 −0.37% / −0.22%，可测但很小。严格 raw ONNX all-row 比较仍为 `partial`（A/C 24/24，B/D 20/24；B/D 的 4 个极低分 TopK 尾行不同），不以阈值语义审计替代该限制。
+- P1 当前结论是：在锁定的中等规模预算下，**MoE 没有表现出相对 Dense 的稳定精度优势；End-to-End 的精度稳定低于 NMS**。r23 pilot 与 r24/r25 full-COCO 尝试保留为历史证据，不取代 r28 的正式结论。
 
-> 注意：P0 使用完整 COCO val2017，P1 使用固定的 5,000 张训练图像和 512 张验证图像。两者数据尺度不同，指标不能直接横向比较。
+> 注意：P0 使用完整 COCO val2017；当前 P1 正式结论来自固定 20,000 张训练图像、完整 5,000 张验证图像和 15 epochs。两者数据尺度、训练状态不同，指标不能直接横向比较。
 
 ---
 
@@ -435,9 +435,9 @@ P0 已证明官方 `yolo26n.pt` 的标准 NMS 和 End-to-End NMS-free 两条原�
 - End-to-End：mAP50-95 = 0.395
 - End-to-End 相对 NMS：-0.007
 
-### 6.2 P1 pilot 结论
+### 6.2 P1 r28 中等规模结论
 
-P1 r23 已满足以下要求：
+P1 r28 已满足以下要求：
 
 - 2×2 等预算设计
 - 官方预训练 C3k2 功能保持
@@ -449,48 +449,36 @@ P1 r23 已满足以下要求：
 - 无路由集中或路由崩塌
 - 正式结果可追溯和可复现
 
-在固定 5,000 张训练图像、512 张验证图像、5 epochs 和 3 个种子的 pilot 预算下：
+在固定 20,000 张训练图像、5,000 张验证图像、15 epochs 和 3 个种子的中等规模预算下：
 
 1. **MoE 与 Dense 的精度总体相当。**
 2. **MoE 没有表现出统计上明确的 mAP50-95 优势。**
-3. **End-to-End 的精度比 NMS 稳定低约 0.0104 mAP50-95。**
+3. **End-to-End 的精度比 NMS 稳定低约 0.00734 mAP50-95。**
 4. **MoE 与 End-to-End 的交互效应很小。**
-5. 当前结果是有效的 pilot 负结果，不是模型失败或路由崩塌。
+5. 当前结果是有效的中等规模实验结果，不是模型失败或路由崩塌。
 
 ### 6.3 结论边界
 
-P1 目前只是 pilot-budget 结论，不能外推为完整 COCO 结论，主要限制为：
+P1 当前是中等规模、冻结预训练 base 的结论，不能外推为完整 COCO 长周期或从头训练结论，主要限制为：
 
-- 训练数据只有 5,000 张图像。
-- 验证数据只有固定 512 张图像。
-- 正式训练只有 5 epochs。
+- 训练数据为固定 20,000 张图像，而非完整 train2017。
+- 正式训练为 15 epochs，而非长周期收敛训练。
 - 统计分析只有 3 个配对种子。
 
-若要判断 MoE 在完整训练规模下的最终收益，需要重新建立并锁定 full-COCO 实验协议。不得直接把当前 pilot checkpoint 续训为 full-COCO，也不得把 P1 pilot 指标与 P0 完整 COCO 指标直接比较。
+若要判断 MoE 在完整训练规模下的最终收益，需要重新建立并锁定 full-COCO 实验协议。不得直接把 r28 checkpoint 续训为 full-COCO，也不得把 P1 指标与 P0 完整 COCO 指标直接比较。
 
-### 6.4 full-COCO 扩展尝试与当前状态
+### 6.4 r28 中等规模正式闭环
 
-r24/r25 使用完整 COCO train2017 的 118,287 张训练图像、完整 val2017 的 5,000 张验证图像和 30 epochs。所有正式训练前门禁均已通过：
-
-- 12/12 preflight checkpoint 通过。
-- 6/6 routing probe checkpoint 通过。
-- 36/36 硬 Top-2 路由器通过熵和集中度门禁。
-- 18/18 残差层通过活性门禁。
-- formal admission 通过。
-
-正式训练实测约 5 batch/s，每个单元约需 50 小时；按三种子、A/B/C/D 和双 GPU 顺序执行，关键路径预计约 16 天。考虑当前资源周期，r25 已在正式 A 单元第 1 个 epoch 初期停止，未续跑，也未将部分 checkpoint 作为实验结果。
-
-下一步计划建立全新 r26 中等规模实验：固定抽取 20,000 张 COCO train2017 图像，使用完整 5,000 张 COCO val2017，训练 15 epochs。模型、A/B/C/D 定义、3 个随机种子、优化器、冻结策略、BatchNorm 策略和路由门禁均保持不变；所有 initializer 重新从官方 `yolo26n.pt` 独立构建，不复用 r25 权重。
+r28 使用固定 20,000 张 train2017、完整 5,000 张 val2017、15 epochs 和三种子；12 个 epoch-15 `last.pt` 均完成。均值 mAP50-95 为 A 0.40200、B 0.39488、C 0.40222、D 0.39465；MoE 主效应 −0.00001，End-to-End 主效应 −0.00734。训练、冻结、恢复审计、运行时路径、ONNX、资源与低竞争 CPU 延迟均已闭环，详见 `P1_FACTORIAL_MEDIUM_R28_FINAL_AUDIT.md` 与 `P1_FACTORIAL_MEDIUM_R28_CLOSURE_REPORT.md`。该结果替代“r26 待建立”的状态，不覆盖 r23/r24/r25 的历史记录。
 
 ---
 
 ## 7. 建议下一步
 
-1. 冻结并保留 r23 的协议、数据列表、实现 SHA、initializer、正式请求和 12 个 checkpoint。
-2. 将 r23 作为 A1 P1 的可复现 pilot 基线，不覆盖现有结果。
-3. 建立独立 r26：20,000 张固定训练子集、完整 5,000 张验证集、15 epochs、3 seeds、A/B/C/D。
-4. 后续可补充参数量、GPU 显存、训练吞吐量和推理延迟，形成精度—资源联合分析。
-5. r26 只调整数据规模和 epochs，不修改 MoE 路由、辅助损失或推理语义，也不续接 r25。
+1. 封存并保留 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据，不覆盖或续训。
+2. 将 r28 作为 A1 P1 的中等规模可复现实验基线；r23/r24/r25 继续仅作历史审计证据。
+3. 若启动 full-COCO 长周期实验，必须建立独立 protocol、initializer、准入与审计，不能续训 r28。
+4. 如需提升导出数值一致性，应单独研究 B/D 极低分 TopK 尾部差异，不能抹去严格 raw ONNX 的 `partial` 限制。
 
 ---
 
@@ -506,6 +494,11 @@ P0：
 
 P1：
 
+- `smoke/a1/P1_FACTORIAL_MEDIUM_R28_FINAL_AUDIT.md`
+- `smoke/a1/P1_FACTORIAL_MEDIUM_R28_CLOSURE_REPORT.md`
+- `smoke/a1/p1_factorial_medium_r28/closure_r1/closure_result_summary.json`
+- `smoke/a1/p1_factorial_medium_r28/closure_r1/cpu_latency_low_contention_r1/`
+- `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`
 - `r23-final-audit/result_summary.json`
 - `r23-final-audit/protocol.json`

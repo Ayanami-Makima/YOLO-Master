@@ -1,0 +1,622 @@
+{
+  "schema": "a1-p1-r28-resource-evidence/v1",
+  "status": "completed",
+  "checkpoint_selection": "epoch-15 last.pt for all 12 formal cells; no best-epoch cherry-picking",
+  "device": "1",
+  "seeds": {
+    "260829": {
+      "a": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/a_formal_seed260829_15ep/weights/last.pt",
+          "sha256": "dce906840c103c8e7e4e01c12ed621b65f4d532b24b22217a850c462dd3ec8a7",
+          "bytes": 6411473,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "8208.92",
+            "train/box_loss": "1.06174",
+            "train/cls_loss": "0.99044",
+            "train/dfl_loss": "0.00966",
+            "metrics/precision(B)": "0.64719",
+            "metrics/recall(B)": "0.52513",
+            "metrics/mAP50(B)": "0.56177",
+            "metrics/mAP50-95(B)": "0.40192",
+            "val/box_loss": "1.08968",
+            "val/cls_loss": "1.10326",
+            "val/dfl_loss": "0.01101",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 2993452,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 7.4179712,
+        "routed_modules": 0,
+        "residual_factor_adapters": 3,
+        "end2end": false,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 45608960,
+          "reserved_before_bytes": 752877568,
+          "peak_allocated_bytes": 718991360,
+          "peak_reserved_bytes": 752877568,
+          "detections": 16,
+          "native_speed_ms": {
+            "preprocess": 0.5526670065592043,
+            "inference": 5.70625899854349,
+            "postprocess": 0.37816599797224626
+          }
+        }
+      },
+      "b": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/b_formal_seed260829_15ep/weights/last.pt",
+          "sha256": "352b4ce33152cd7a0b094f9f904049e64db5b497bf6508f0dc0a6e1a5651e373",
+          "bytes": 6772153,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "1408.56",
+            "train/box_loss": "1.2839",
+            "train/cls_loss": "1.34022",
+            "train/dfl_loss": "0.00918",
+            "metrics/precision(B)": "0.66182",
+            "metrics/recall(B)": "0.50474",
+            "metrics/mAP50(B)": "0.55289",
+            "metrics/mAP50-95(B)": "0.39512",
+            "val/box_loss": "1.30491",
+            "val/cls_loss": "1.46223",
+            "val/dfl_loss": "0.0104",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 3148280,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 8.042931200000002,
+        "routed_modules": 0,
+        "residual_factor_adapters": 3,
+        "end2end": true,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 45609472,
+          "reserved_before_bytes": 752877568,
+          "peak_allocated_bytes": 718991872,
+          "peak_reserved_bytes": 752877568,
+          "detections": 14,
+          "native_speed_ms": {
+            "preprocess": 0.5179669969948009,
+            "inference": 5.863070000486914,
+            "postprocess": 0.14242400357034057
+          }
+        }
+      },
+      "c": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+          "sha256": "bdfe8a0283d133c9317da05f1ad5a82aae08367e810ba68547de7713de49f999",
+          "bytes": 11629801,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "11749.4",
+            "train/box_loss": "1.06197",
+            "train/cls_loss": "0.99167",
+            "train/dfl_loss": "0.00968",
+            "train/mixture_aux_loss": "0.99999",
+            "metrics/precision(B)": "0.65369",
+            "metrics/recall(B)": "0.52197",
+            "metrics/mAP50(B)": "0.56301",
+            "metrics/mAP50-95(B)": "0.40247",
+            "val/box_loss": "1.08922",
+            "val/cls_loss": "1.10305",
+            "val/dfl_loss": "0.01101",
+            "val/mixture_aux_loss": "0",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 5424348,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 8.2517248,
+        "routed_modules": 15,
+        "residual_factor_adapters": 3,
+        "end2end": false,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 55322112,
+          "reserved_before_bytes": 763363328,
+          "peak_allocated_bytes": 728704512,
+          "peak_reserved_bytes": 763363328,
+          "detections": 16,
+          "native_speed_ms": {
+            "preprocess": 0.6354110009851865,
+            "inference": 11.924258004000876,
+            "postprocess": 0.39632799598621204
+          }
+        }
+      },
+      "d": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+          "sha256": "b2cd9b61fbc924c725f82f9cc1346f4e5828cb69468f6c639ab4f5c089f678c1",
+          "bytes": 11990729,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "12431.3",
+            "train/box_loss": "1.28515",
+            "train/cls_loss": "1.33864",
+            "train/dfl_loss": "0.00932",
+            "train/mixture_aux_loss": "0.99999",
+            "metrics/precision(B)": "0.66459",
+            "metrics/recall(B)": "0.50399",
+            "metrics/mAP50(B)": "0.55089",
+            "metrics/mAP50-95(B)": "0.39452",
+            "val/box_loss": "1.304",
+            "val/cls_loss": "1.46369",
+            "val/dfl_loss": "0.0104",
+            "val/mixture_aux_loss": "0",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 5579176,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 0.0,
+        "routed_modules": 15,
+        "residual_factor_adapters": 3,
+        "end2end": true,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 55322112,
+          "reserved_before_bytes": 763363328,
+          "peak_allocated_bytes": 728704512,
+          "peak_reserved_bytes": 763363328,
+          "detections": 12,
+          "native_speed_ms": {
+            "preprocess": 0.5312239954946563,
+            "inference": 12.029874997097068,
+            "postprocess": 0.12148499808972701
+          }
+        }
+      }
+    },
+    "260830": {
+      "a": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/a_formal_seed260830_15ep/weights/last.pt",
+          "sha256": "62c9fe9d31b5dfb6754dca6cfbe18fa58857965f3615ce2e9e5498892a0ad389",
+          "bytes": 6411473,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "3111.53",
+            "train/box_loss": "1.06152",
+            "train/cls_loss": "0.99009",
+            "train/dfl_loss": "0.00963",
+            "metrics/precision(B)": "0.64155",
+            "metrics/recall(B)": "0.52473",
+            "metrics/mAP50(B)": "0.56189",
+            "metrics/mAP50-95(B)": "0.40177",
+            "val/box_loss": "1.09048",
+            "val/cls_loss": "1.10435",
+            "val/dfl_loss": "0.01102",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 2993452,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 7.4179712,
+        "routed_modules": 0,
+        "residual_factor_adapters": 3,
+        "end2end": false,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 66719232,
+          "reserved_before_bytes": 773849088,
+          "peak_allocated_bytes": 740101632,
+          "peak_reserved_bytes": 773849088,
+          "detections": 16,
+          "native_speed_ms": {
+            "preprocess": 0.5436149949673563,
+            "inference": 5.814010000904091,
+            "postprocess": 0.3847249972750433
+          }
+        }
+      },
+      "b": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/b_formal_seed260830_15ep/weights/last.pt",
+          "sha256": "a557a581a21d74b8850e2820ab0a5c81744b73f2c54bba876f60edb8af280020",
+          "bytes": 6772153,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "652.614",
+            "train/box_loss": "1.27555",
+            "train/cls_loss": "1.33411",
+            "train/dfl_loss": "0.00923",
+            "metrics/precision(B)": "0.66243",
+            "metrics/recall(B)": "0.5035",
+            "metrics/mAP50(B)": "0.55161",
+            "metrics/mAP50-95(B)": "0.39481",
+            "val/box_loss": "1.30467",
+            "val/cls_loss": "1.46468",
+            "val/dfl_loss": "0.01042",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 3148280,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 8.042931200000002,
+        "routed_modules": 0,
+        "residual_factor_adapters": 3,
+        "end2end": true,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 78587392,
+          "reserved_before_bytes": 782237696,
+          "peak_allocated_bytes": 751969792,
+          "peak_reserved_bytes": 782237696,
+          "detections": 12,
+          "native_speed_ms": {
+            "preprocess": 0.6122659979155287,
+            "inference": 5.929084996751044,
+            "postprocess": 0.12244199751876295
+          }
+        }
+      },
+      "c": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/c_formal_seed260830_15ep/weights/last.pt",
+          "sha256": "4568f65e73fb05d0996eb431c01374bf8bb2988d4ac44d3fba3e1dc2230ce1b6",
+          "bytes": 11629865,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "7251.36",
+            "train/box_loss": "1.06155",
+            "train/cls_loss": "0.99557",
+            "train/dfl_loss": "0.00971",
+            "train/mixture_aux_loss": "1",
+            "metrics/precision(B)": "0.64692",
+            "metrics/recall(B)": "0.5212",
+            "metrics/mAP50(B)": "0.56226",
+            "metrics/mAP50-95(B)": "0.40182",
+            "val/box_loss": "1.09046",
+            "val/cls_loss": "1.10392",
+            "val/dfl_loss": "0.01102",
+            "val/mixture_aux_loss": "0",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 5424348,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 0.0,
+        "routed_modules": 15,
+        "residual_factor_adapters": 3,
+        "end2end": false,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 67190272,
+          "reserved_before_bytes": 778043392,
+          "peak_allocated_bytes": 741391872,
+          "peak_reserved_bytes": 778043392,
+          "detections": 14,
+          "native_speed_ms": {
+            "preprocess": 0.5861240060767159,
+            "inference": 12.323030998231843,
+            "postprocess": 0.4512730010901578
+          }
+        }
+      },
+      "d": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/d_formal_seed260830_15ep/weights/last.pt",
+          "sha256": "b5f294a896f3a53aec8c412a2b3ebec0a3dddf69de00da428453e6173d3a147d",
+          "bytes": 11990729,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "4672.58",
+            "train/box_loss": "1.28722",
+            "train/cls_loss": "1.34186",
+            "train/dfl_loss": "0.00924",
+            "train/mixture_aux_loss": "0.99999",
+            "metrics/precision(B)": "0.66891",
+            "metrics/recall(B)": "0.5002",
+            "metrics/mAP50(B)": "0.55143",
+            "metrics/mAP50-95(B)": "0.39492",
+            "val/box_loss": "1.30423",
+            "val/cls_loss": "1.46546",
+            "val/dfl_loss": "0.01039",
+            "val/mixture_aux_loss": "0",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 5579176,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 9.0458368,
+        "routed_modules": 15,
+        "residual_factor_adapters": 3,
+        "end2end": true,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 76431872,
+          "reserved_before_bytes": 782237696,
+          "peak_allocated_bytes": 749814272,
+          "peak_reserved_bytes": 782237696,
+          "detections": 12,
+          "native_speed_ms": {
+            "preprocess": 0.5446029972517863,
+            "inference": 11.849247995996848,
+            "postprocess": 0.11751000420190394
+          }
+        }
+      }
+    },
+    "260831": {
+      "a": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/a_formal_seed260831_15ep/weights/last.pt",
+          "sha256": "df9c6397be4027de5c8653021cadf65d0eee6612e747694bdace604afee476b8",
+          "bytes": 6411158,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "10043.2",
+            "train/box_loss": "1.06258",
+            "train/cls_loss": "0.9937",
+            "train/dfl_loss": "0.0097",
+            "metrics/precision(B)": "0.65679",
+            "metrics/recall(B)": "0.51835",
+            "metrics/mAP50(B)": "0.56214",
+            "metrics/mAP50-95(B)": "0.40232",
+            "val/box_loss": "1.09017",
+            "val/cls_loss": "1.10369",
+            "val/dfl_loss": "0.01101",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 2993452,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 7.4179712,
+        "routed_modules": 0,
+        "residual_factor_adapters": 3,
+        "end2end": false,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 87828480,
+          "reserved_before_bytes": 792723456,
+          "peak_allocated_bytes": 761210880,
+          "peak_reserved_bytes": 792723456,
+          "detections": 15,
+          "native_speed_ms": {
+            "preprocess": 0.6077319994801655,
+            "inference": 5.784092994872481,
+            "postprocess": 0.45667800441151485
+          }
+        }
+      },
+      "b": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/b_formal_seed260831_15ep/weights/last.pt",
+          "sha256": "da33e8bac9ebf9a9f89a99bae7e70611ef57139ee8f730f0a2da29b91f6f01fd",
+          "bytes": 6771838,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "12989.6",
+            "train/box_loss": "1.28756",
+            "train/cls_loss": "1.345",
+            "train/dfl_loss": "0.00933",
+            "metrics/precision(B)": "0.66439",
+            "metrics/recall(B)": "0.50248",
+            "metrics/mAP50(B)": "0.55115",
+            "metrics/mAP50-95(B)": "0.39472",
+            "val/box_loss": "1.30294",
+            "val/cls_loss": "1.4654",
+            "val/dfl_loss": "0.01038",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 3148280,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 8.042931200000002,
+        "routed_modules": 0,
+        "residual_factor_adapters": 3,
+        "end2end": true,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 45608960,
+          "reserved_before_bytes": 790626304,
+          "peak_allocated_bytes": 718991360,
+          "peak_reserved_bytes": 790626304,
+          "detections": 14,
+          "native_speed_ms": {
+            "preprocess": 0.6183440054883249,
+            "inference": 5.913332002819516,
+            "postprocess": 0.13531100557884201
+          }
+        }
+      },
+      "c": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/c_formal_seed260831_15ep/weights/last.pt",
+          "sha256": "a8eb4af047b278a876e1dfe775d698e453478161f1a9907e98f735f5fc863ef1",
+          "bytes": 11629801,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "14030.4",
+            "train/box_loss": "1.06266",
+            "train/cls_loss": "0.99444",
+            "train/dfl_loss": "0.0097",
+            "train/mixture_aux_loss": "0.99999",
+            "metrics/precision(B)": "0.65935",
+            "metrics/recall(B)": "0.51813",
+            "metrics/mAP50(B)": "0.56264",
+            "metrics/mAP50-95(B)": "0.40236",
+            "val/box_loss": "1.08959",
+            "val/cls_loss": "1.10339",
+            "val/dfl_loss": "0.011",
+            "val/mixture_aux_loss": "0",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 5424348,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 0.0,
+        "routed_modules": 15,
+        "residual_factor_adapters": 3,
+        "end2end": false,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 55322112,
+          "reserved_before_bytes": 763363328,
+          "peak_allocated_bytes": 728704512,
+          "peak_reserved_bytes": 763363328,
+          "detections": 15,
+          "native_speed_ms": {
+            "preprocess": 0.6941000028746203,
+            "inference": 12.660997999773826,
+            "postprocess": 0.4618780003511347
+          }
+        }
+      },
+      "d": {
+        "status": "completed",
+        "checkpoint": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/d_formal_seed260831_15ep/weights/last.pt",
+          "sha256": "183efe3cd626d02ec0ca2adb13459493def87d17bad8c0edfaba27f000a65cdd",
+          "bytes": 11990729,
+          "selection": "formal epoch-15 last.pt",
+          "final_metrics": {
+            "epoch": "15",
+            "time": "13706",
+            "train/box_loss": "1.28763",
+            "train/cls_loss": "1.34475",
+            "train/dfl_loss": "0.00933",
+            "train/mixture_aux_loss": "0.99999",
+            "metrics/precision(B)": "0.66217",
+            "metrics/recall(B)": "0.50379",
+            "metrics/mAP50(B)": "0.55084",
+            "metrics/mAP50-95(B)": "0.39451",
+            "val/box_loss": "1.30387",
+            "val/cls_loss": "1.46392",
+            "val/dfl_loss": "0.01039",
+            "val/mixture_aux_loss": "0",
+            "lr/pg0": "2.53333e-05",
+            "lr/pg1": "2.53333e-05",
+            "lr/pg2": "2.53333e-05",
+            "lr/pg3": "2.53333e-05",
+            "lr/pg4": "5.06667e-05",
+            "lr/pg5": "0.00253333"
+          }
+        },
+        "parameters": 5579176,
+        "gradient_parameters_on_reload": 0,
+        "gflops": 0.0,
+        "routed_modules": 15,
+        "residual_factor_adapters": 3,
+        "end2end": true,
+        "batch1_cuda_memory": {
+          "device": "1",
+          "allocated_before_bytes": 55322112,
+          "reserved_before_bytes": 763363328,
+          "peak_allocated_bytes": 728704512,
+          "peak_reserved_bytes": 763363328,
+          "detections": 13,
+          "native_speed_ms": {
+            "preprocess": 0.6286030038609169,
+            "inference": 12.493512003857177,
+            "postprocess": 0.1452290016459301
+          }
+        }
+      }
+    }
+  },
+  "checkpoint_hashes_after": {
+    "260829": {
+      "a": "dce906840c103c8e7e4e01c12ed621b65f4d532b24b22217a850c462dd3ec8a7",
+      "b": "352b4ce33152cd7a0b094f9f904049e64db5b497bf6508f0dc0a6e1a5651e373",
+      "c": "bdfe8a0283d133c9317da05f1ad5a82aae08367e810ba68547de7713de49f999",
+      "d": "b2cd9b61fbc924c725f82f9cc1346f4e5828cb69468f6c639ab4f5c089f678c1"
+    },
+    "260830": {
+      "a": "62c9fe9d31b5dfb6754dca6cfbe18fa58857965f3615ce2e9e5498892a0ad389",
+      "b": "a557a581a21d74b8850e2820ab0a5c81744b73f2c54bba876f60edb8af280020",
+      "c": "4568f65e73fb05d0996eb431c01374bf8bb2988d4ac44d3fba3e1dc2230ce1b6",
+      "d": "b5f294a896f3a53aec8c412a2b3ebec0a3dddf69de00da428453e6173d3a147d"
+    },
+    "260831": {
+      "a": "df9c6397be4027de5c8653021cadf65d0eee6612e747694bdace604afee476b8",
+      "b": "da33e8bac9ebf9a9f89a99bae7e70611ef57139ee8f730f0a2da29b91f6f01fd",
+      "c": "a8eb4af047b278a876e1dfe775d698e453478161f1a9907e98f735f5fc863ef1",
+      "d": "183efe3cd626d02ec0ca2adb13459493def87d17bad8c0edfaba27f000a65cdd"
+    }
+  }
+}
