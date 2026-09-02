@@ -59,8 +59,19 @@ class MoABlock(nn.Module):
         local_window_size: int = 7,
         sequential_heads: bool = True,
         regional_max_kv_tokens: int | None = 4096,
+        sparse_inference: bool = False,
+        sparse_inference_threshold: float = 0.02,
+        inference_sparse_threshold: float | None = None,
     ):
         super().__init__()
+        if inference_sparse_threshold is not None:
+            if sparse_inference_threshold != 0.02 and sparse_inference_threshold != inference_sparse_threshold:
+                raise ValueError(
+                    "Specify only one sparse inference threshold: "
+                    "sparse_inference_threshold or inference_sparse_threshold."
+                )
+            sparse_inference_threshold = inference_sparse_threshold
+            sparse_inference = True
         self.sequential_heads = sequential_heads
         self.sparse_inference = bool(sparse_inference)
         self.sparse_inference_threshold = float(sparse_inference_threshold)
