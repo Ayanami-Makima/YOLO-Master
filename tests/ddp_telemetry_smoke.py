@@ -12,6 +12,23 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 from ultralytics.engine.telemetry import TrainingTelemetry
 from ultralytics.nn.modules.mot import MoTBlock
+from ultralytics.utils.torch_utils import TORCH_1_9
+
+
+def _init_gloo(rank: int, world: int, timeout: timedelta) -> None:
+    """Initialize Gloo without libuv on modern Windows torchrun workers."""
+    if os.name == "nt" and TORCH_1_9:
+        store = dist.TCPStore(
+            host_name=os.environ["MASTER_ADDR"],
+            port=int(os.environ["MASTER_PORT"]),
+            world_size=world,
+            is_master=False,
+            timeout=timeout,
+            use_libuv=False,
+        )
+        dist.init_process_group("gloo", store=store, rank=rank, world_size=world, timeout=timeout)
+        return
+    dist.init_process_group("gloo", timeout=timeout)
 
 
 def main():
@@ -19,12 +36,8 @@ def main():
     world = int(os.environ["WORLD_SIZE"])
     out_dir = Path(os.environ["TELEMETRY_SMOKE_DIR"])
     assert world == 2, f"telemetry gate requires exactly two ranks, got {world}"
-    # torchrun may not preserve the parent launcher's setting on Windows.
-    # Set it again inside each worker before env:// creates its TCPStore.
-    if os.name == "nt":
-        os.environ["USE_LIBUV"] = "0"
     torch.set_num_threads(1)
-    dist.init_process_group("gloo", timeout=timedelta(seconds=60))
+    _init_gloo(rank, world, timedelta(seconds=60))
     try:
         torch.manual_seed(9000 + rank)
         model = DDP(MoTBlock(24, num_heads=3, top_k=1, sparse_train=True), find_unused_parameters=True)

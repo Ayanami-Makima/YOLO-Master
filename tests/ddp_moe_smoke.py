@@ -8,18 +8,31 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 from ultralytics.nn.modules.moe.modules import OptimizedMOE
+from ultralytics.utils.torch_utils import TORCH_1_9
+
+
+def _init_gloo(rank: int, world: int, timeout: timedelta) -> None:
+    """Initialize Gloo without libuv on modern Windows torchrun workers."""
+    if os.name == "nt" and TORCH_1_9:
+        store = dist.TCPStore(
+            host_name=os.environ["MASTER_ADDR"],
+            port=int(os.environ["MASTER_PORT"]),
+            world_size=world,
+            is_master=False,
+            timeout=timeout,
+            use_libuv=False,
+        )
+        dist.init_process_group("gloo", store=store, rank=rank, world_size=world, timeout=timeout)
+        return
+    dist.init_process_group("gloo", timeout=timeout)
 
 
 def main():
     rank = int(os.environ["RANK"])
     world = int(os.environ["WORLD_SIZE"])
     assert world == 2, f"P0 gate requires exactly two ranks, got {world}"
-    # torchrun may not preserve the parent launcher's setting on Windows.
-    # Set it again inside each worker before env:// creates its TCPStore.
-    if os.name == "nt":
-        os.environ["USE_LIBUV"] = "0"
     torch.set_num_threads(1)
-    dist.init_process_group("gloo", timeout=timedelta(seconds=60))
+    _init_gloo(rank, world, timedelta(seconds=60))
     try:
         torch.manual_seed(1234)
         model = OptimizedMOE(8, 8, num_experts=2, top_k=2)
