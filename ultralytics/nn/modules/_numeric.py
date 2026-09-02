@@ -11,6 +11,8 @@ import torch.nn as nn
 
 def _autocast_is_available(device_type: str) -> bool:
     """Return whether this PyTorch build exposes autocast for ``device_type``."""
+    if not callable(getattr(torch, "autocast", None)):
+        return False
     checker = getattr(getattr(torch, "amp", None), "autocast_mode", None)
     checker = getattr(checker, "is_autocast_available", None)
     if checker is not None:
@@ -24,9 +26,18 @@ def _autocast_is_available(device_type: str) -> bool:
 
 
 def disabled_autocast(device_type: str):
-    """Disable autocast when supported, otherwise return a no-op context."""
+    """Disable autocast when supported, otherwise return a no-op context.
+
+    Torch 1.8 predates ``torch.autocast``. Its CUDA-only predecessor lives
+    under ``torch.cuda.amp.autocast``; CPU and MPS use a no-op in that legacy
+    release.
+    """
     if _autocast_is_available(device_type):
         return torch.autocast(device_type=device_type, enabled=False)
+    if device_type == "cuda":
+        legacy_autocast = getattr(getattr(torch.cuda, "amp", None), "autocast", None)
+        if callable(legacy_autocast):
+            return legacy_autocast(enabled=False)
     return nullcontext()
 
 

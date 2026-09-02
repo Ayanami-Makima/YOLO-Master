@@ -41,12 +41,20 @@ SLOW_WEIGHTS = [
     "sam2.1_b.pt",
 ]
 
+# Full COCO multitask data is deliberately user-provisioned: it has no safe
+# CI autodownload recipe. Dedicated multitask tests create a tiny COCO-format
+# fixture instead, so the generic asset cache remains portable and bounded.
+NON_CACHEABLE_DATASETS = {"coco-multitask.yaml"}
 DATASETS = [
-    *TASK2DATA.values(),
-    *TASK2CALIBRATIONDATA.values(),
-    "coco8-grayscale.yaml",
-    "coco8-multispectral.yaml",
-    "coco12-formats.yaml",
+    dataset
+    for dataset in [
+        *TASK2DATA.values(),
+        *TASK2CALIBRATIONDATA.values(),
+        "coco8-grayscale.yaml",
+        "coco8-multispectral.yaml",
+        "coco12-formats.yaml",
+    ]
+    if dataset not in NON_CACHEABLE_DATASETS
 ]
 
 

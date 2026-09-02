@@ -76,6 +76,24 @@ def test_disabled_autocast_uses_supported_cpu_context():
     assert result.item() == 2
 
 
+def test_disabled_autocast_uses_legacy_cuda_api_without_native_autocast(monkeypatch):
+    """Torch 1.8 exposes only ``torch.cuda.amp.autocast``."""
+    sentinel = object()
+    calls = []
+
+    def legacy_autocast(*, enabled):
+        calls.append(enabled)
+        return sentinel
+
+    monkeypatch.delattr(torch, "autocast", raising=False)
+    monkeypatch.setattr(torch.cuda.amp, "autocast", legacy_autocast)
+
+    assert disabled_autocast("cuda") is sentinel
+    assert calls == [False]
+    with disabled_autocast("cpu"):
+        pass
+
+
 def test_all_reduce_mean_keeps_global_value_and_local_gradient():
     local = torch.tensor([0.2, 0.8], requires_grad=True)
 
