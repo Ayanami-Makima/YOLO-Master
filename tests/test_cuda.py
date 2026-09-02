@@ -79,7 +79,7 @@ def test_export_onnx_matrix(task, dynamic, batch, simplify, nms):
     "task, dynamic, quantize, batch",
     [
         (task, dynamic, quantize, batch)
-        # Limit Jetson task coverage for slow CI speed; full task coverage remains on GPU CI.
+        # Limit Jetson task coverage for slow CI speed; full generic single-task coverage remains on GPU CI.
         # for task, dynamic, quantize, batch in product(GENERIC_EXPORT_TASKS, [True, False], [8, 16], [1, 2])
         for task, dynamic, quantize, batch in product(
             ["detect"] if IS_JETSON else GENERIC_EXPORT_TASKS, [True], [8, 16], [2]
