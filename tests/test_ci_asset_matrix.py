@@ -20,4 +20,4 @@ def test_generic_smoke_matrix_excludes_full_coco_but_engine_matrix_keeps_multita
 def test_generic_model_matrix_contains_only_downloadable_checkpoints():
     """The generic tests materialize models under WEIGHTS_DIR and cannot use a YAML architecture path."""
     assert TASK2DATA["multitask"] == "coco-multitask.yaml"
-    assert all(model.endswith(".pt") or model.endswith(".ts") for model in MODELS)
+    assert all(model.endswith((".pt", ".ts")) for model in MODELS)
