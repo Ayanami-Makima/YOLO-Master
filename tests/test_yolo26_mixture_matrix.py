@@ -1,5 +1,7 @@
 """End-to-end compatibility matrix for YOLO26 and routed model variants."""
 
+from __future__ import annotations
+
 from copy import deepcopy
 from pathlib import Path
 
