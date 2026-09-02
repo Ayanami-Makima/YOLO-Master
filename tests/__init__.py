@@ -33,6 +33,10 @@ TASK_MODEL_DATA = sorted(
     ]
 )  # (task, model, data) tuples
 TASK_MODEL_DATA_ALL = sorted(_task_model_data(task) for task in TASKS)
+# Generic export matrices assume one downloadable single-task checkpoint and a
+# lightweight calibration set. MultiTask has an architecture YAML plus a
+# full-COCO default, so its dedicated task/export tests own that coverage.
+GENERIC_EXPORT_TASKS = tuple(task for task in sorted(TASKS) if task != "multitask")
 # Generic prediction/export tests materialize entries under WEIGHTS_DIR, so
 # they intentionally use downloadable checkpoints rather than YAML-only model
 # definitions. The multitask YAML remains covered by its dedicated task tests.

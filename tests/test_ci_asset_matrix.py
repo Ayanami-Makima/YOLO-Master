@@ -1,7 +1,7 @@
 """Regression tests for keeping CI smoke assets small and self-contained."""
 
-from tests import MODELS, TASK_MODEL_DATA, TASK_MODEL_DATA_ALL
-from tests.cache_test_assets import DATASETS, NON_CACHEABLE_DATASETS
+from tests import GENERIC_EXPORT_TASKS, MODELS, TASK_MODEL_DATA, TASK_MODEL_DATA_ALL
+from tests.cache_test_assets import COMMON_WEIGHTS, DATASETS, NON_CACHEABLE_DATASETS
 from ultralytics.cfg import TASK2DATA
 
 
@@ -21,3 +21,13 @@ def test_generic_model_matrix_contains_only_downloadable_checkpoints():
     """The generic tests materialize models under WEIGHTS_DIR and cannot use a YAML architecture path."""
     assert TASK2DATA["multitask"] == "coco-multitask.yaml"
     assert all(model.endswith((".pt", ".ts")) for model in MODELS)
+
+
+def test_generic_export_matrix_excludes_full_coco_multitask():
+    """Slow export/GPU matrices must not treat the production default as a tiny calibration dataset."""
+    assert "multitask" not in GENERIC_EXPORT_TASKS
+
+
+def test_asset_cache_weights_are_downloadable_release_artifacts():
+    """Architecture YAMLs are source files, not release assets to pre-cache."""
+    assert all(weight.endswith((".pt", ".ts")) for weight in COMMON_WEIGHTS)

@@ -21,7 +21,7 @@ from ultralytics.utils import ARM64, ASSETS_URL, DATASETS_DIR, IS_RASPBERRYPI, L
 from ultralytics.utils.downloads import attempt_download_asset, safe_download
 
 COMMON_WEIGHTS = [
-    *TASK2MODEL.values(),
+    *(model for model in TASK2MODEL.values() if model.endswith((".pt", ".ts"))),
     "yolo11n-grayscale.pt",
     "rtdetr-l.pt",
     "FastSAM-s.pt",
