@@ -38,10 +38,12 @@ def main():
         model = OptimizedMOE(8, 8, num_experts=2, top_k=2)
         ddp = DDP(model, find_unused_parameters=True, broadcast_buffers=False)
         optimizer = torch.optim.SGD(ddp.parameters(), lr=0.05)
+        # Spatially varying, rank-consistent inputs avoid GroupNorm's exact
+        # cancellation for constant inputs while keeping DDP gradients equal.
+        inputs = torch.linspace(0.5, 1.5, steps=4 * 8 * 2 * 2).reshape(4, 8, 2, 2)
         for step in range(2):
             optimizer.zero_grad(set_to_none=True)
-            inputs = torch.full((4, 8, 2, 2), 1.0 + rank + step * 0.25)
-            loss = ddp(inputs).square().mean()
+            loss = ddp(inputs + step * 0.25).square().mean()
             loss.backward()
             grads = [p.grad for p in ddp.module.parameters() if p.requires_grad and p.grad is not None]
             assert grads, "routed module produced no gradients"
