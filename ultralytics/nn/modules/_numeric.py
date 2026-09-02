@@ -10,9 +10,20 @@ import torch.nn as nn
 
 
 def disabled_autocast(device_type: str):
-    """Return an autocast-disabled context for router-critical numerical work."""
-    if device_type in {"cpu", "cuda", "mps"}:
-        return torch.autocast(device_type=device_type, enabled=False)
+    """Return an autocast-disabled context for router-critical numerical work.
+
+    ``torch.autocast`` was introduced after the minimum supported Torch 1.8
+    test shard. CUDA-only autocast existed there under ``torch.cuda.amp``;
+    CPU and MPS need no fallback because those device autocast APIs were not
+    available yet.
+    """
+    native_autocast = getattr(torch, "autocast", None)
+    if device_type in {"cpu", "cuda", "mps"} and callable(native_autocast):
+        return native_autocast(device_type=device_type, enabled=False)
+    if device_type == "cuda":
+        legacy_autocast = getattr(getattr(torch.cuda, "amp", None), "autocast", None)
+        if callable(legacy_autocast):
+            return legacy_autocast(enabled=False)
     return nullcontext()
 
 
