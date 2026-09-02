@@ -467,7 +467,10 @@ def test_mot_block_shift_odd_spatial_train():
     assert out.shape == x.shape
     assert torch.isfinite(out).all()
 
-    (out.sum() + aux).backward()
+    # GroupNorm centers output channels, so ``out.sum()`` can cancel the
+    # expert path exactly. A squared objective keeps every dense-training
+    # expert branch in the backward graph on all platforms.
+    (out.square().sum() + aux).backward()
     assert _has_grad(block.router)
     for expert in block.experts:
         assert _has_grad(expert)
