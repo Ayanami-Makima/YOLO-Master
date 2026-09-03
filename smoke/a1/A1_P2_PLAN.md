@@ -237,5 +237,6 @@ P0 与 P1 r28 已完成并封存。P1 的效率 profiling 和 dispatch 原型表
 P2 当前主线已切换为 detect 侧 End-to-End 精度诊断：`smoke/a1/p2_e2e_precision_r1/`。
 首轮固定 r28 A/B/C/D checkpoint 和 pilot val512，不改模型，只采集 recall、one-to-one 正样本数、
 匹配 IoU/重叠、未匹配 GT、分类置信度以及 box/DFL/class 误差，确认差距来源后再进行单因素
-assigner/loss pilot。MoE 路由机制目录 `smoke/a1/p2_mechanism_r1/` 保留为辅助证据；其 r1 已完成，
-不能替代 P2-E 的精度主线，也不能把单次死专家写成全局路由坍塌。
+assigner/loss pilot。r1 已在 GPU1 完成三 seed、四格、固定 val512 的只读诊断；MoE 路由机制目录
+`smoke/a1/p2_mechanism_r1/` 保留为辅助证据，不能替代 P2-E 的精度主线，也不能把单次死专家写成
+全局路由坍塌。

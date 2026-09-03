@@ -528,6 +528,27 @@ P2 首轮不重训，使用 r28 三种子 C/D 的正式 `last.pt` 和固定 pilo
 
 因此，r1 暂时排除了“r28 全局路由坍塌”这一简单解释，同时提示第 8 层个别专家负载不均以及 D 的 one-to-one 输出重复率值得继续受控验证。原始证据保存在 `p1_factorial_medium_r28/p2_mechanism_r1/r1_evidence/evidence.json`；该结果仍不是新的 mAP 结论。
 
+### 6.9 P2-E r1：End-to-End 精度归因（固定 val512）
+
+P2-E r1 在 GPU1 对 r28 三 seed 的 A/B/C/D 正式 `last.pt` 做了只读评测，固定 512 张验证图、640×640、
+batch=1 和相同置信度口径；没有改模型、路由、assigner/loss 或训练预算。固定 val512 的 mAP50-95 均值为
+A `0.43391`、B `0.42808`、C `0.43419`、D `0.42875`，与完整 COCO r28 主实验的数值不混用。
+
+诊断信号如下：
+
+| 指标（val512 三 seed 均值） | Dense one-to-many（A/C） | End-to-End one-to-one（B/D） | 解释 |
+| --- | ---: | ---: | --- |
+| 每图 assigner 正样本数 | `60.57` | `6.88` | one-to-one 监督显著稀疏 |
+| assigner matched IoU | `0.8174–0.8177` | `0.8382–0.8383` | 一对一匹配质量不低，问题不只是框定位 |
+| assignment overlap rate | `0.884` | `0.000` | one-to-one 无重复 GT 分配 |
+| cls loss | `1.081–1.081` | `1.305` | 分类监督项明显更高，优先排查 |
+| box loss | `0.978–0.980` | `1.062` | 定位项也更高，但幅度小于分类项 |
+| validator recall（最佳 F1 阈值） | `0.5261–0.5278` | `0.5225–0.5304` | 跨 seed 波动，不能只凭一次 recall 下结论 |
+
+当前只形成“one-to-one 正样本数量大幅减少，分类/定位 loss 较高，recall 轻微下降”的归因线索，
+尚不能宣称某个 assigner/loss 改动有效。逐图原始 CSV 和完整证据保存在
+`p1_factorial_medium_r28/p2_e2e_precision_r1/`；下一步才是固定一个因素的短程受控 pilot。
+
 ---
 
 ## 7. 建议下一步
@@ -537,7 +558,7 @@ End-to-End 精度差距诊断与 one-to-one assigner/loss 改进；MoE 路由机
 seg/pose 扩展暂不作为第一优先级。
 
 1. **P1 效率闭环已完成。** 已补齐同设备四组 model-forward、显存、吞吐和 Router/dispatch 分解；完整端到端 latency 仍以第 6.5 节为准。
-2. **P2-E 精度诊断已列为主线。** 固定 r28 A/B/C/D checkpoint 和 pilot val512，先采集 recall、one-to-one 正样本数、匹配 IoU/重叠、未匹配 GT、分类置信度以及 box/DFL/class 误差，再决定 one-to-one assigner/loss 的单因素受控改动。
+2. **P2-E r1 已完成。** 固定 r28 A/B/C/D checkpoint 和 pilot val512，已采集 recall、one-to-one 正样本数、匹配 IoU/重叠、未匹配 GT、分类置信度以及 box/DFL/class 误差；结果指向 one-to-one 监督稀疏及分类/定位 loss 偏高，下一步才做单因素受控改动。
 3. **P2-B r1 保留为辅助证据。** 已从 r28 原始 C/D checkpoint 采集路由负载、熵、Gini、Top-K 和候选重复率；该结果用于排除简单的全局路由坍塌解释，不替代 End-to-End 精度主线。
 4. **P2 go/no-go。** 只有当 assigner/loss pilot 在固定 seed 下明确改善 recall、匹配质量或定位误差且不破坏 NMS-free 闭环，才扩大到三 seed；否则记录无效缓解，不把 MoE 代理筛选或单次死专家写成正式收益/负结果。
 
@@ -568,6 +589,8 @@ P1：
 - `smoke/a1/p2_mechanism_r1/r1_evidence/evidence.json`
 - `smoke/a1/p2_e2e_precision_r1/PROTOCOL.md`
 - `smoke/a1/p2_e2e_precision_r1/protocol.json`
+- `smoke/a1/p2_e2e_precision_r1/evidence.json`
+- `scripts/a1/run_p2_e2e_precision_diagnostics_r1.py`
 - `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`
 - `r23-final-audit/result_summary.json`
