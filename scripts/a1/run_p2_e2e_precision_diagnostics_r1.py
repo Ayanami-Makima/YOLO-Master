@@ -298,8 +298,13 @@ def main() -> None:
     parser.add_argument("--seeds", default=",".join(str(seed) for seed in SEEDS))
     parser.add_argument("--cells", default=",".join(CELLS))
     args = parser.parse_args()
-    if args.output.exists() and any(args.output.iterdir()):
-        raise FileExistsError(f"refusing to overwrite non-empty output: {args.output}")
+    existing_evidence = args.output / "evidence.json"
+    if existing_evidence.is_file():
+        prior = json.loads(existing_evidence.read_text(encoding="utf-8"))
+        if prior.get("status") == "completed":
+            raise FileExistsError(f"refusing to overwrite completed output: {args.output}")
+    else:
+        prior = None
     args.output.mkdir(parents=True, exist_ok=True)
     seeds = [int(value) for value in args.seeds.split(",") if value]
     cells = [value.strip().lower() for value in args.cells.split(",") if value.strip()]
@@ -308,7 +313,7 @@ def main() -> None:
     val_list = args.data.parent / "val2017.txt"
     if not val_list.is_file() or len([line for line in val_list.read_text(encoding="utf-8").splitlines() if line.strip()]) != 512:
         raise ValueError(f"expected fixed 512-image val2017.txt next to data YAML: {val_list}")
-    evidence = {
+    evidence = prior or {
         "schema": "a1-p2-e2e-precision-r1/v1",
         "status": "running",
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -325,9 +330,13 @@ def main() -> None:
         "batch": 1,
         "cells": {},
     }
+    evidence.setdefault("cells", {})
     for seed in seeds:
-        evidence["cells"][str(seed)] = {}
+        evidence["cells"].setdefault(str(seed), {})
         for cell in cells:
+            if cell in evidence["cells"][str(seed)] and evidence["cells"][str(seed)][cell].get("metrics"):
+                print(f"[p2-e2e-r1] resume: seed={seed} cell={cell} already completed", flush=True)
+                continue
             checkpoint = find_checkpoint(args.checkpoint_root, seed, cell)
             print(f"[p2-e2e-r1] seed={seed} cell={cell} checkpoint={checkpoint}", flush=True)
             evidence["cells"][str(seed)][cell] = run_cell(
