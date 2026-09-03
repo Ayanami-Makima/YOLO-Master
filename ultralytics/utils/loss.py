@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import os
 from pathlib import Path
 from typing import Any
 
@@ -362,6 +363,9 @@ class v8DetectionLoss:
         self.device = device
 
         self.use_dfl = m.reg_max > 1
+        # Optional P2 controlled pilot knob. It is deliberately environment-only
+        # so the locked P1 behavior remains exactly unchanged when unset.
+        self.cls_gain = 1.0
 
         # Class weights for handling imbalanced datasets
         self.class_weights = getattr(model, "class_weights", None)
@@ -462,7 +466,7 @@ class v8DetectionLoss:
             )
 
         loss[0] *= self.hyp.box  # box gain
-        loss[1] *= self.hyp.cls  # cls gain
+        loss[1] *= self.hyp.cls * self.cls_gain  # cls gain
         loss[2] *= self.hyp.dfl  # dfl gain
         return (
             (fg_mask, target_gt_idx, target_bboxes, anchor_points, stride_tensor),
@@ -1203,6 +1207,14 @@ class E2ELoss:
         """Initialize E2ELoss with one-to-many and one-to-one detection losses using the provided model."""
         self.one2many = loss_fn(model, tal_topk=10)
         self.one2one = loss_fn(model, tal_topk=7, tal_topk2=1)
+        # P2-E r2 changes only the one-to-one classification-loss multiplier.
+        # An unset/invalid value is treated as the locked neutral multiplier.
+        try:
+            self.one2one.cls_gain = float(os.environ.get("A1_E2E_O2O_CLS_GAIN", "1.0"))
+            if not math.isfinite(self.one2one.cls_gain) or self.one2one.cls_gain <= 0:
+                self.one2one.cls_gain = 1.0
+        except (TypeError, ValueError):
+            self.one2one.cls_gain = 1.0
         self.updates = 0
         self.total = 1.0
         # init gain
