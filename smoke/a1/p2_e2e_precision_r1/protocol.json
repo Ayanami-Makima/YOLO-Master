@@ -33,6 +33,7 @@
     "box_dfl_loss_or_iou_error",
     "size_bucket_recall_and_localization"
   ],
-  "status": "protocol_initialized_diagnostic_pending",
-  "next": "implement_r1_metric_collection_then_run_fixed_val512"
+  "status": "r1_completed_r2_pending",
+  "evidence": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/evidence.json",
+  "next": "review_r1_attribution_then_select_one_assigner_or_loss_factor_for_r2"
 }
