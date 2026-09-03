@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -u
+set -euo pipefail
 
 PY=/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python
 ROOT=/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium
