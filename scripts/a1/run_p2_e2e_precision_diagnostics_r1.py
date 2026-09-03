@@ -23,6 +23,10 @@ from pathlib import Path
 import numpy as np
 import torch
 
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 LOCKED_SHA = "acce839c7e895d6b179de7f7093fa879e237cc7b"
 CELLS = ("a", "b", "c", "d")
 SEEDS = (260829, 260830, 260831)

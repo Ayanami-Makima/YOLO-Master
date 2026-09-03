@@ -17,6 +17,14 @@ from pathlib import Path
 
 import torch
 
+# Running ``python scripts/a1/<script>.py`` puts this directory, rather than
+# the repository root, first on sys.path.  Force the checked-out repository
+# ahead of any editable ultralytics install so the experiment uses the exact
+# synchronized source tree.
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from run_p1_bn_frozen import (
     P1_ROUTING_PARAMS,
     R19_EXPLORATION_POLICY,

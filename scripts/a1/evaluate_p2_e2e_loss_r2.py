@@ -14,6 +14,12 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+# Ensure the diagnostic validator imports the synchronized repository source,
+# not a different editable ultralytics checkout on the remote host.
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 from run_p2_e2e_precision_diagnostics_r1 import LOCKED_SHA, git_state, run_cell, sha256
 
 
