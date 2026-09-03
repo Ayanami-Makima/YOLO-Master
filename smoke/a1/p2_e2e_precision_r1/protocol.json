@@ -1,0 +1,38 @@
+{
+  "schema": "a1-p2-e2e-precision-r1/v1",
+  "experiment": "p2_e2e_precision_r1",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "source_experiment": "p1_factorial_medium_r28",
+  "cells": ["a", "b", "c", "d"],
+  "seeds": [260829, 260830, 260831],
+  "data": {
+    "val_manifest": "configs/a1/p1_pretrained/pilot_data/val2017.txt",
+    "images": 512,
+    "fixed_order": true
+  },
+  "device": "GPU1",
+  "imgsz": 640,
+  "batch": 1,
+  "mode": "eval_only_no_model_change",
+  "paths": {
+    "source_remote": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28",
+    "evidence_local": "smoke/a1/p2_e2e_precision_r1"
+  },
+  "metrics": [
+    "map50_95",
+    "map50",
+    "precision",
+    "recall",
+    "per_image_tp_fp_fn",
+    "unmatched_gt_count",
+    "one_to_one_positive_count",
+    "matched_iou_mean_p50_p90",
+    "low_iou_match_fraction",
+    "matching_overlap_conflict_rate",
+    "classification_confidence_and_loss",
+    "box_dfl_loss_or_iou_error",
+    "size_bucket_recall_and_localization"
+  ],
+  "status": "protocol_initialized_diagnostic_pending",
+  "next": "implement_r1_metric_collection_then_run_fixed_val512"
+}

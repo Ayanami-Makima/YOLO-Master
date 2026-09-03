@@ -532,12 +532,14 @@ P2 首轮不重训，使用 r28 三种子 C/D 的正式 `last.pt` 和固定 pilo
 
 ## 7. 建议下一步
 
-不建议直接增加 epochs、专家数或继续盲目调参。P1 已完成，后续转入 A1 P2-B 机制级负结果主线；P2-A 的 seg/pose 扩展暂不作为第一优先级。
+不建议直接增加 epochs、专家数或继续盲目调参。P1 已完成，P2 当前主线转为 detect 侧
+End-to-End 精度差距诊断与 one-to-one assigner/loss 改进；MoE 路由机制分析作为辅助证据，
+seg/pose 扩展暂不作为第一优先级。
 
 1. **P1 效率闭环已完成。** 已补齐同设备四组 model-forward、显存、吞吐和 Router/dispatch 分解；完整端到端 latency 仍以第 6.5 节为准。
-2. **P2-B r1 已完成。** 已从 r28 原始 C/D checkpoint 和固定 pilot val512 采集路由负载、熵、Gini、Top-K 和候选重复率；下一步补充训练/推理漂移及单 batch 梯度范数和零比例。
-3. **建立最小受控验证。** 固定 router 与 one-to-one 设置，比较 one-to-many 主分支、one-to-one 分支、dense fallback 和现有 sparse dispatch，保存原始 CSV/JSON、最小反例及有效或无效缓解结果。
-4. **P2 go/no-go。** 若机制证据可复现，则形成 A1 要求的负结果包；若 detect 结论跨 seed 稳定且资源允许，再考虑 seg/pose 最小扩展。不得把代理筛选结果写成正式精度收益。
+2. **P2-E 精度诊断已列为主线。** 固定 r28 A/B/C/D checkpoint 和 pilot val512，先采集 recall、one-to-one 正样本数、匹配 IoU/重叠、未匹配 GT、分类置信度以及 box/DFL/class 误差，再决定 one-to-one assigner/loss 的单因素受控改动。
+3. **P2-B r1 保留为辅助证据。** 已从 r28 原始 C/D checkpoint 采集路由负载、熵、Gini、Top-K 和候选重复率；该结果用于排除简单的全局路由坍塌解释，不替代 End-to-End 精度主线。
+4. **P2 go/no-go。** 只有当 assigner/loss pilot 在固定 seed 下明确改善 recall、匹配质量或定位误差且不破坏 NMS-free 闭环，才扩大到三 seed；否则记录无效缓解，不把 MoE 代理筛选或单次死专家写成正式收益/负结果。
 
 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
 
@@ -564,6 +566,8 @@ P1：
 - `smoke/a1/p2_mechanism_r1/PROTOCOL.md`
 - `smoke/a1/p2_mechanism_r1/protocol.json`
 - `smoke/a1/p2_mechanism_r1/r1_evidence/evidence.json`
+- `smoke/a1/p2_e2e_precision_r1/PROTOCOL.md`
+- `smoke/a1/p2_e2e_precision_r1/protocol.json`
 - `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`
 - `r23-final-audit/result_summary.json`
@@ -579,8 +583,8 @@ P1：
 
 当前 r28 已完成 A1 P1 的中等规模闭环，但 MoE 在本预算下没有稳定精度收益且推理更慢。建议向导师集中确认以下问题：
 
-1. 是否同意以 P2-B 机制级负结果作为当前主线，而暂缓 seg/pose 扩展？
+1. 是否同意以 detect 侧 End-to-End 精度差距（recall、匹配、分类、定位）作为 P2 当前主线，而将 MoE 路由机制诊断作为辅助、暂缓 seg/pose 扩展？
 2. 是否接受当前证据：MoE 的主要效率损失来自同步/dispatch，而非专家 kernel；dense-gather 和 vmap 原型均不纳入正式实现？
-3. P2 是否优先研究 one-to-one assigner/loss、召回率、匹配、分类、定位误差，并将路由坍塌/梯度稀疏作为并行诊断？
+3. 是否同意优先研究 one-to-one assigner/loss，并按 recall、匹配质量、分类误差、定位误差的归因结果逐项做单因素受控 pilot？
 4. 若 P2 资源只允许一条训练验证，是否锁定固定 pilot val512、单 seed、短程受控对照，再决定是否扩大到三 seed？
 5. B/D 严格 raw ONNX 行级比较的 4 个极低分 TopK 尾部差异，是否接受当前 `partial` 限制，还是要求先完成导出一致性修复？

@@ -4,8 +4,9 @@
 
 ### 核心问题
 
-在固定 YOLO-Master 公共基线、数据、训练预算和评测口径下，验证 MoE 路由能否与 one-to-one
-监督稳定共存，使 end-to-end 检测不依赖 NMS 仍保持可接受精度，并取得可重复的端到端延迟收益。
+在固定 YOLO-Master 公共基线、数据、训练预算和评测口径下，优先解释并缩小 one-to-one
+End-to-End 相对 NMS 路径的精度差距，重点分析召回率、匹配质量、分类误差和定位误差；MoE
+路由只作为兼容性和机制辅助变量，不预设其必须带来收益。
 
 这不是“再造一个检测头”。任务是核验已有 one-to-many / one-to-one、训练、推理、导出和评测
 路径是否构成真正的 NMS-free 闭环，并定位 MoE 路由与一对一监督是否发生冲突。
@@ -18,7 +19,8 @@
 | 主任务 | COCO detect，MoE on/off × NMS on/off 2×2 |
 | 共同变量 | 数据 manifest、imgsz、batch、epoch、优化器、增强、设备、seed、评测脚本 |
 | 主指标 | mAP50-95、GPU/CPU batch=1 端到端延迟及标准差 |
-| P2 目标 | seg/pose 扩展，或机制级、可复现的负结果 |
+| P2 主目标 | detect 侧 End-to-End 精度诊断与 one-to-one assigner/loss 改进 |
+| P2 备选目标 | seg/pose 扩展，或机制级、可复现的负结果 |
 | 禁止项 | 仅写 `nms=False` 不能证明 NMS-free；必须证明 one-to-one end-to-end 输出未隐式回落到 NMS |
 
 `YOLO-Master-v26.08` 可以说明版本来源；代码差异、成员贡献与最终验收均以以上 SHA 为起点。
@@ -42,10 +44,11 @@ forward 时间，必须报告 mean、std、p50、p90、p99 和逐次样本。
 
 ### P2 判定
 
-P1 通过后，完成以下任一条主线：
+P1 通过后，优先完成 detect 侧 End-to-End 精度主线；资源或时间不足时，再选择以下备选主线：
 
-1. 将 detect 侧已验证的 MoE + NMS-free 方案扩展到 `seg` 或 `pose`，并完成最小对照；或
-2. 形成机制级负结果：定位梯度稀疏、匹配冲突、路由坍塌、推理路由漂移或输出重复的具体条件，
+1. 在固定预算下定位并改善 one-to-one 的召回率/匹配/分类/定位差距；
+2. 将 detect 侧已验证的 MoE + NMS-free 方案扩展到 `seg` 或 `pose`，并完成最小对照；或
+3. 形成机制级负结果：定位梯度稀疏、匹配冲突、路由坍塌、推理路由漂移或输出重复的具体条件，
    提供原始数据、最小反例和至少一个受控缓解/无效验证。
 
 ## 3. 2×2 模型矩阵
@@ -130,7 +133,7 @@ NMS 路径证据，以及 CPU/GPU batch=1 延迟原始数据。
 P1 目标：D 相对 C 的 mAP50-95 掉点不超过 2；CPU batch=1 total latency 有可测改善；四格均有
 完整复现实验包。
 
-### Phase P2-A：seg 或 pose 扩展（优先）
+### Phase P2-A：seg 或 pose 扩展（后续候选）
 
 只有 D 的 detect 结论跨 seed 稳定后才开始：
 
@@ -140,7 +143,21 @@ P1 目标：D 相对 C 的 mAP50-95 掉点不超过 2；CPU batch=1 total latenc
 4. 报告 box mAP 与 mask mAP 或 pose mAP；单独计时任务特定后处理和导出。
 5. 比较 detect 与扩展任务的 router 分布、匹配数量、重复框率，判断结论是否跨任务稳定。
 
-### Phase P2-B：机制级负结果（备用主线）
+### Phase P2-E：detect End-to-End 精度主线（当前优先）
+
+P1 已显示 B/D 的 End-to-End 主效应约为 `-0.00734 mAP50-95`，因此 P2 先不扩展任务，
+直接分析 detect 侧 one-to-one 监督与后处理造成的精度差距：
+
+1. 固定 r28 数据、checkpoint、seed、输入尺寸和评测口径，建立 A/B/C/D 的 recall、每图正样本数、
+   matched IoU、未匹配 GT、分类置信度、分类/box/DFL loss 及尺度分档误差基线。
+2. 对比 one-to-many 与 one-to-one assigner 输出，统计正样本数量、匹配重叠、低 IoU 匹配、未匹配 GT
+   和分类置信度分布，先判断差距来自召回、匹配、分类还是定位。
+3. 只修改 one-to-one assigner/loss 的一个因素进行短程受控 pilot；MoE、数据、优化器、预算和
+   NMS-free 推理路径保持不变。
+4. 用固定 seed 的 on/off 对照验证是否改善 recall、匹配质量和定位误差，不能只看单次 mAP。
+5. 只有 pilot 显示明确方向且不破坏 NMS-free 闭环，才扩大到三 seed；否则记录为无效缓解并保留原始证据。
+
+### Phase P2-B：机制级负结果（辅助/备用主线）
 
 若 D 不收敛、掉点超过阈值或无速度收益，停止盲目扫参，转入下表的最小诊断：
 
@@ -196,9 +213,10 @@ smoke/a1/                   # 已完成的准入 Smoke 和原始轻量证据
 | 决策点 | Go 条件 | No-Go / 降级 |
 | --- | --- | --- |
 | P0 | A/B 可训可测，NMS-free 断言成立 | 先修复 head/validator/postprocess，不进入 MoE |
-| P1 pilot | D 收敛且 router 无明显坍塌 | 转入 P2-B 诊断，不扩大数据 |
-| P1 main | 精度差与延迟收益达到门槛 | 形成负结果与受控缓解对照 |
-| P2-A | detect 结论跨 seed 稳定 | 不扩展任务，完成 P2-B 负结果包 |
+| P1 pilot | D 收敛且 router 无明显坍塌 | 转入 P2-E 精度诊断，不扩大数据 |
+| P1 main | 精度差与延迟收益达到门槛 | 形成差距归因与受控缓解对照 |
+| P2-E | recall/匹配/分类/定位差距有可复现归因 | 记录无效缓解，转备选 P2-A/P2-B |
+| P2-A/B | P2-E 无明确改进方向或资源不足 | 仅在 P2-E 证据封存后选择扩展或机制负结果 |
 | 发布 | diff、证据、限制、脚本齐全 | 标为 experimental，不宣称生产可用 |
 
 ## 9. 最终交付清单
@@ -216,7 +234,8 @@ smoke/a1/                   # 已完成的准入 Smoke 和原始轻量证据
 P0 与 P1 r28 已完成并封存。P1 的效率 profiling 和 dispatch 原型表明，MoE 的主要开销来自
 路由同步、Python dispatch、索引和聚合；当前没有可直接合入的加速实现。
 
-当前已启动 P2-B 机制级负结果主线：`smoke/a1/p2_mechanism_r1/`。r1 使用固定 pilot val512
-完成三 seed C/D 的路由负载、熵、Gini、死专家和重复框诊断。下一步依次进行真实标签单 batch
-反向梯度稀疏性、one-to-many/one-to-one 匹配冲突、训练/评估路由漂移和受控缓解验证。只有机制
-在多个 seed 中复现并有原始数据、最小反例和受控验证，才能形成 P2 负结果。
+P2 当前主线已切换为 detect 侧 End-to-End 精度诊断：`smoke/a1/p2_e2e_precision_r1/`。
+首轮固定 r28 A/B/C/D checkpoint 和 pilot val512，不改模型，只采集 recall、one-to-one 正样本数、
+匹配 IoU/重叠、未匹配 GT、分类置信度以及 box/DFL/class 误差，确认差距来源后再进行单因素
+assigner/loss pilot。MoE 路由机制目录 `smoke/a1/p2_mechanism_r1/` 保留为辅助证据；其 r1 已完成，
+不能替代 P2-E 的精度主线，也不能把单次死专家写成全局路由坍塌。
