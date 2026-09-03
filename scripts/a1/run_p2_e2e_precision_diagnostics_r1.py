@@ -247,12 +247,18 @@ def git_state(root: Path) -> dict:
 
 def run_cell(checkpoint: Path, data_yaml: Path, output: Path, device: str) -> dict:
     from ultralytics import YOLO
+    from ultralytics.cfg import get_cfg
     from ultralytics.models.yolo.detect.val import DetectionValidator
 
     class PrecisionValidator(PrecisionValidatorMixin, DetectionValidator):
         pass
 
     yolo = YOLO(str(checkpoint), task="detect")
+    # Checkpoints keep train_args as a plain dict, while the native loss expects
+    # attribute access (box/cls/dfl). Convert only the in-memory view used for
+    # diagnostics; no state_dict or checkpoint file is changed.
+    if isinstance(getattr(yolo.model, "args", None), dict):
+        yolo.model.args = get_cfg(overrides=yolo.model.args)
     args = {
         "data": str(data_yaml),
         "model": str(checkpoint),
