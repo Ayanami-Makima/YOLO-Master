@@ -1039,6 +1039,11 @@ class OptimizedMOEImproved(nn.Module):
         # Expert dropout: periodically disable experts to prevent uniform routing
         self.expert_dropout_rate = 0.15  # 15% dropout during training
         self.dropout_interval = 100  # Apply every 100 steps
+        # Experimental inference switch.  ``sparse`` is the P1 default.  The
+        # ``dense_gather`` mode computes experts as one device-side stack and
+        # gathers Top-K outputs without Python ``mask.any()`` dispatch; it is a
+        # diagnostic baseline for future fused/grouped kernels, not a P1 change.
+        self.experimental_dispatch_mode = "sparse"
 
     def _init_weights(self):
         for m in self.modules():
@@ -1059,6 +1064,35 @@ class OptimizedMOEImproved(nn.Module):
             nn.init.normal_(last_conv.weight, mean=0, std=0.05)
             if last_conv.bias is not None:
                 nn.init.constant_(last_conv.bias, 0)
+
+    def _vmap_grouped_dispatch(self, x, weights_flat, indices_flat, expert_output):
+        """Run the selected expert modules with device-side vmap dispatch.
+
+        This inference-only prototype assumes every expert has the same module
+        structure (true for the P1 checkpoint).  Parameters are stacked once
+        and indexed by the CUDA routing ids; no Python expert loop or scalar
+        ``mask.any()`` synchronization is used.
+        """
+        from torch.func import functional_call, stack_module_state
+
+        if not hasattr(self, "_vmap_expert_state"):
+            self._vmap_expert_state = stack_module_state(tuple(self.experts))
+            self._vmap_expert_template = self.experts[0]
+        params, buffers = self._vmap_expert_state
+        B, K = indices_flat.shape
+        batch_ids = torch.arange(B, device=x.device).view(B, 1).expand(B, K).reshape(-1)
+        expert_ids = indices_flat.reshape(-1)
+        inputs = x[:, None, :, :, :].expand(B, K, *x.shape[1:]).reshape(-1, *x.shape[1:])
+        selected_params = {name: value.index_select(0, expert_ids) for name, value in params.items()}
+        selected_buffers = {name: value.index_select(0, expert_ids) for name, value in buffers.items()}
+
+        def call_one(p, b, inp):
+            return functional_call(self._vmap_expert_template, (p, b), (inp.unsqueeze(0),)).squeeze(0)
+
+        outputs = torch.vmap(call_one, in_dims=(0, 0, 0))(selected_params, selected_buffers, inputs)
+        weights = weights_flat.reshape(-1, 1, 1, 1).to(expert_output.dtype)
+        expert_output.index_add_(0, batch_ids, outputs.to(expert_output.dtype) * weights)
+        return expert_output
 
     def _update_sparsity(self):
         """Progressive Sparsity Scheduling"""
@@ -1126,9 +1160,18 @@ class OptimizedMOEImproved(nn.Module):
         if getattr(self, "detach_routing", False):
             weights_flat = weights_flat.detach()
 
-        if torch.onnx.is_in_onnx_export():
+        dispatch_mode = getattr(self, "experimental_dispatch_mode", "sparse")
+        if dispatch_mode == "vmap_grouped" and not self.training and not torch.onnx.is_in_onnx_export():
+            expert_output = self._vmap_grouped_dispatch(x, weights_flat, indices_flat, expert_output)
+        dense_gather = dispatch_mode == "dense_gather"
+        if dispatch_mode == "vmap_grouped" and not self.training and not torch.onnx.is_in_onnx_export():
+            pass
+        elif torch.onnx.is_in_onnx_export() or (dense_gather and not self.training):
             # ONNX tracing cannot capture ``if mask.any()`` skips.
-            # Dense path: compute all experts, gather Top-K, weighted-sum.
+            # Dense-gather diagnostic path: compute all experts, gather Top-K,
+            # weighted-sum.  All routing tensors remain on-device and there is
+            # no Python scalar check; this is intentionally a correctness and
+            # synchronization baseline until a true fused sparse kernel exists.
             all_outs = torch.stack([self.experts[i](x) for i in range(self.num_experts)], dim=1)  # [B, E, out_C, H, W]
             for k in range(adaptive_top_k):
                 idx_k = indices_flat[:, k]  # [B]

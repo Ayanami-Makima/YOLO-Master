@@ -213,10 +213,10 @@ smoke/a1/                   # 已完成的准入 Smoke 和原始轻量证据
 
 ## 10. 当前下一步
 
-已完成：官方基线锁定、隔离环境、Agent quick 36/36、COCO8 单 epoch End-to-End Smoke，以及
-使用统一预训练权重的完整 COCO val P0。P0 证据见 `smoke/a1/P0_PRETRAINED_REPORT.md` 和
-`smoke/a1/p0_pretrained/`。
+P0 与 P1 r28 已完成并封存。P1 的效率 profiling 和 dispatch 原型表明，MoE 的主要开销来自
+路由同步、Python dispatch、索引和聚合；当前没有可直接合入的加速实现。
 
-从随机初始化开始的 full-COCO 30-epoch 训练已暂停并保留现场。下一项工作是在确认预训练权重
-到 A/B/C/D 的统一迁移规则后，使用固定的中等规模 COCO 子集短程微调，再在完整 COCO val 上
-完成 P1 2×2 对照；在迁移规则未审计前不重启 C/D。
+当前已启动 P2-B 机制级负结果主线：`smoke/a1/p2_mechanism_r1/`。r1 使用固定 pilot val512
+完成三 seed C/D 的路由负载、熵、Gini、死专家和重复框诊断。下一步依次进行真实标签单 batch
+反向梯度稀疏性、one-to-many/one-to-one 匹配冲突、训练/评估路由漂移和受控缓解验证。只有机制
+在多个 seed 中复现并有原始数据、最小反例和受控验证，才能形成 P2 负结果。

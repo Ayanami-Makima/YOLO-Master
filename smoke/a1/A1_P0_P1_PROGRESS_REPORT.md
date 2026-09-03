@@ -1,6 +1,6 @@
 # A1 P0 / P1 实验进展报告
 
-更新日期：2026-09-02
+更新日期：2026-09-03
 
 ## 1. 当前总体进展
 
@@ -499,15 +499,45 @@ r28 使用固定 20,000 张 train2017、完整 5,000 张 val2017、15 epochs 和
 
 跨三种子平均的内部阶段计时如下（C/D 的 MoE factor）：Router 约 1.502 ms，shared expert 约 0.229 ms，已选专家计算约 0.778 ms，专家 dispatch/索引/聚合剩余约 2.600 ms，MoE 子模块合计约 5.109 ms。也就是说，Router + dispatch/聚合约占 MoE 子模块时间的 80%，真正选中的专家卷积只占约 15%。Dense factor 约 4.120 ms，而 MoE factor 约 9.829 ms；因此当前主要瓶颈是逐专家 dispatch、索引和聚合，而不是冻结 base 本身。该结果支持后续优先做 grouped/fused dispatch profiling，不应先增加专家数或盲目延长训练。
 
+### 6.7 r28 同设备效率筛选与 dispatch 原型
+
+为满足同设备、batch=1 的效率筛选要求，使用 GPU1（RTX 4090）、640×640、20 次预热和 60 次采样补测四组 model-forward：
+
+| 单元 | mean (ms) | p50 (ms) | p99 (ms) | 吞吐 (img/s) | 峰值显存 (MiB) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| A Dense + NMS | 5.809 | 5.795 | 6.326 | 172.1 | 686.9 |
+| B Dense + End-to-End | 6.236 | 6.226 | 6.355 | 160.4 | 687.5 |
+| C MoE + NMS | 13.004 | 12.947 | 13.823 | 76.9 | 695.5 |
+| D MoE + End-to-End | 13.879 | 13.779 | 14.534 | 72.0 | 696.1 |
+
+Top-1 只改善约 2%～3%；简单限制专家数量没有稳定收益；仅后层 MoE 的推理延迟可接近 Dense，但该结果只是推理代理，不能代替独立训练精度结论。`cap2/cap4` 代理保留原 checkpoint 权重并重映射路由，不作为正式模型结论。
+
+随后实现两个仅用于诊断的设备端 dispatch 原型：`dense_gather` 的 C/D 输出最大误差均为 0，但 clean repeat 延迟分别为 C 14.439 ms、D 14.376 ms，未优于 sparse 路径；`vmap_grouped` 的单个 MoE block 误差约 `4.4e-3` 以内，但全模型等价性检查出现 C `5.5e-1`、D `6.76e+2` 的误差，未通过门禁，未采用。P1 默认路径保持 sparse 不变。
+
+### 6.8 P2-B r1 固定 val512 机制诊断
+
+P2 首轮不重训，使用 r28 三种子 C/D 的正式 `last.pt` 和固定 pilot val512（共 512 张）进行无噪声 hard Top-2 推理诊断。4 专家和 8 专家模块的选择分布较均衡；16 专家模块的熵和 Gini 随层、seed 变化，但没有跨 seed 的统一坍塌模式。seed 260829 的一个 16 专家模块出现 1 个零选择专家，seed 260830/260831 未复现，因此按任务书只能作为诊断记录，不能单独写成“路由坍塌”结论。
+
+| 观察项 | r1 结果 | 当前解释 |
+| --- | --- | --- |
+| max selection fraction | 0.183–0.395 | 未接近 0.8 集中阈值 |
+| normalized entropy | 0.611–0.992 | 均高于 0.5 |
+| dead expert | 仅 seed260829 一个 16-expert module 出现 1 个 | 非跨 seed 可复现机制 |
+| C 同类高 IoU 重复率 | 0–0.00000 | 未见明显重复 |
+| D 同类高 IoU 重复率 | 0.01026–0.01689 | 需与 B 做匹配/后处理对照 |
+
+因此，r1 暂时排除了“r28 全局路由坍塌”这一简单解释，同时提示第 8 层个别专家负载不均以及 D 的 one-to-one 输出重复率值得继续受控验证。原始证据保存在 `p1_factorial_medium_r28/p2_mechanism_r1/r1_evidence/evidence.json`；该结果仍不是新的 mAP 结论。
+
 ---
 
 ## 7. 建议下一步
 
-不建议直接增加 epochs、专家数或继续盲目调参。后续按以下三步推进：
+不建议直接增加 epochs、专家数或继续盲目调参。P1 已完成，后续转入 A1 P2-B 机制级负结果主线；P2-A 的 seg/pose 扩展暂不作为第一优先级。
 
-1. **先做统一效率剖析。** 补齐 A/B/C/D 在同一设备、batch=1 下的 preprocess、model inference、postprocess、total latency、显存峰值和吞吐量，定位耗时主要来自 Router、专家 dispatch/聚合，还是冻结 base + factor 双路径。
-2. **再做小规模效率筛选。** 只在后层加入 MoE，对比 Top-1/Top-2、2/4 experts，并加入等参数或等 FLOPs 的 Dense 对照；只有精度不降且延迟可接受的配置，才建立新 protocol 进入长训。该阶段必须使用新实验目录和原始 initializer，不修改或续训 r28。
-3. **P2 优先解决 End-to-End 精度差距。** 分解召回率、匹配质量、分类误差和定位误差，优先研究 one-to-one assigner/loss；不把“证明 MoE 一定有效”作为预设结论。
+1. **P1 效率闭环已完成。** 已补齐同设备四组 model-forward、显存、吞吐和 Router/dispatch 分解；完整端到端 latency 仍以第 6.5 节为准。
+2. **P2-B r1 已完成。** 已从 r28 原始 C/D checkpoint 和固定 pilot val512 采集路由负载、熵、Gini、Top-K 和候选重复率；下一步补充训练/推理漂移及单 batch 梯度范数和零比例。
+3. **建立最小受控验证。** 固定 router 与 one-to-one 设置，比较 one-to-many 主分支、one-to-one 分支、dense fallback 和现有 sparse dispatch，保存原始 CSV/JSON、最小反例及有效或无效缓解结果。
+4. **P2 go/no-go。** 若机制证据可复现，则形成 A1 要求的负结果包；若 detect 结论跨 seed 稳定且资源允许，再考虑 seg/pose 最小扩展。不得把代理筛选结果写成正式精度收益。
 
 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
 
@@ -528,6 +558,12 @@ P1：
 - `smoke/a1/p1_factorial_medium_r28/closure_r1/closure_result_summary.json`
 - `smoke/a1/p1_factorial_medium_r28/closure_r1/cpu_latency_low_contention_r1/`
 - `smoke/a1/p1_factorial_medium_r28/efficiency_profile_r4_consolidated/`（同设备 batch-1 内部阶段、显存和吞吐 profiling）
+- `smoke/a1/p1_factorial_medium_r28/EFFICIENCY_SCREEN_R7_SUMMARY.md`
+- `smoke/a1/p1_factorial_medium_r28/efficiency_screen_r7_{a,b,c,d}_evidence.json`
+- `smoke/a1/p1_factorial_medium_r28/dispatch_mode_benchmark_r9/r10_evidence.json`
+- `smoke/a1/p2_mechanism_r1/PROTOCOL.md`
+- `smoke/a1/p2_mechanism_r1/protocol.json`
+- `smoke/a1/p2_mechanism_r1/r1_evidence/evidence.json`
 - `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`
 - `r23-final-audit/result_summary.json`
@@ -543,8 +579,8 @@ P1：
 
 当前 r28 已完成 A1 P1 的中等规模闭环，但 MoE 在本预算下没有稳定精度收益且推理更慢。建议向导师集中确认以下问题：
 
-1. 是否同意按“统一 latency/显存/吞吐 profiling → 小规模效率筛选 → P2 优先修复 End-to-End 精度”的三步顺序推进？
-2. 效率 profiling 是否锁定 GPU0、batch=1、50 次预热/200 次采样，并要求同时保存四阶段 latency 原始样本？
-3. 小规模筛选是否采用“后层 MoE × Top-1/Top-2 × 2/4 experts + 等参数/等 FLOPs Dense 对照”的最小网格？
-4. P2 是否优先研究 one-to-one assigner/loss 和召回率、匹配、分类、定位误差，而暂缓 seg/pose 扩展？
+1. 是否同意以 P2-B 机制级负结果作为当前主线，而暂缓 seg/pose 扩展？
+2. 是否接受当前证据：MoE 的主要效率损失来自同步/dispatch，而非专家 kernel；dense-gather 和 vmap 原型均不纳入正式实现？
+3. P2 是否优先研究 one-to-one assigner/loss、召回率、匹配、分类、定位误差，并将路由坍塌/梯度稀疏作为并行诊断？
+4. 若 P2 资源只允许一条训练验证，是否锁定固定 pilot val512、单 seed、短程受控对照，再决定是否扩大到三 seed？
 5. B/D 严格 raw ONNX 行级比较的 4 个极低分 TopK 尾部差异，是否接受当前 `partial` 限制，还是要求先完成导出一致性修复？

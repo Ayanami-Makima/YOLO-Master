@@ -1,0 +1,54 @@
+{
+  "schema": "a1-p2-dispatch-mode-benchmark/v1",
+  "status": "completed",
+  "timestamp_utc": "2026-09-03T07:33:59.170130+00:00",
+  "cells": {
+    "c": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+      "modes": {
+        "sparse": {
+          "mean_ms": 13.167107200622558,
+          "p50_ms": 13.042688369750977,
+          "p99_ms": 13.368288040161133,
+          "throughput_images_per_s": 75.94682603880666,
+          "peak_allocated_bytes": 740132352,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.0
+        },
+        "dense_gather": {
+          "mean_ms": 24.89916286468506,
+          "p50_ms": 14.903519630432129,
+          "p99_ms": 85.9002914428711,
+          "throughput_images_per_s": 40.161992812148654,
+          "peak_allocated_bytes": 742813696,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.0
+        }
+      }
+    },
+    "d": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+      "modes": {
+        "sparse": {
+          "mean_ms": 33.83917868932088,
+          "p50_ms": 14.341119766235352,
+          "p99_ms": 108.19174194335938,
+          "throughput_images_per_s": 29.55154465127679,
+          "peak_allocated_bytes": 743388672,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.0
+        },
+        "dense_gather": {
+          "mean_ms": 30.496609052022297,
+          "p50_ms": 18.697216033935547,
+          "p99_ms": 86.4010238647461,
+          "throughput_images_per_s": 32.790530851943615,
+          "peak_allocated_bytes": 739989504,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.0
+        }
+      }
+    }
+  },
+  "completed_timestamp_utc": "2026-09-03T07:34:04.376030+00:00"
+}
