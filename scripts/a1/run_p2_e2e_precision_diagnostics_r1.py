@@ -131,9 +131,10 @@ class PrecisionValidatorMixin:
         raw_dict = raw[1] if isinstance(raw, (list, tuple)) and len(raw) > 1 else raw
         if getattr(self.native_model, "criterion", None) is None:
             try:
-                # Initialises the checkpoint-native criterion without a backward pass. The model
-                # remains in eval mode and no parameter or routing state is changed.
-                self.native_model.loss(batch, raw_dict)
+                # Initialise the checkpoint-native criterion without executing a loss call on
+                # this first image. The model remains in eval mode and no parameter or routing
+                # state is changed.
+                self.native_model.criterion = self.native_model.init_criterion()
             except Exception as exc:
                 return {"assigner_branch": "unavailable", "criterion_init_error": f"{type(exc).__name__}: {exc}"}
         branch, branch_pred, branch_name = self._assignment_branch(raw)
