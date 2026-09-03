@@ -486,6 +486,19 @@ r28 使用固定 20,000 张 train2017、完整 5,000 张 val2017、15 epochs 和
 
 相对同一因子分支去除 NMS：GPU 上 B−A 为 −0.447 ms（约 −3.6%），D−C 为 +0.231 ms（约 +0.9%）；CPU 上 B−A 为 −18.900 ms（−0.369%），D−C 为 −16.183 ms（−0.224%）。因此，A1 要求的 CPU total latency 可测改善满足，但改善很小，不能表述为显著部署加速。MoE 相比 Dense 的 GPU 延迟增加约 13–14 ms，说明当前逐专家 dispatch、索引聚合和 shared expert 的实现开销超过了 Top-2 的理论稀疏收益。此前 GPU1 并行测量受到背景任务影响，仅作为补充对照，不用于主结论。
 
+### 6.6 r28 内部效率 profiling
+
+为定位 MoE 延迟来源，另在同一张无背景 GPU0、batch=1、同一 640×640 空间变化输入上完成 3 个种子 × 4 个单元的 profiling（50 次预热、200 次采样）。本节是 DetectionModel 的 model-forward 口径，不包含 preprocess/postprocess；完整端到端 latency 仍以 6.5 为准。seed 260831 的首次 D 测量出现机器级瞬时长尾，已用同协议的 clean repeat 替换；原始两次运行均保留在远端实验目录，汇总只使用无异常的 consolidated evidence。
+
+| 单元 | model forward 均值 (ms) | 吞吐 (img/s) | 峰值显存 (MiB) |
+| --- | ---: | ---: | ---: |
+| A Dense + NMS | 5.686 | 175.9 | 686.6 |
+| B Dense + End-to-End | 6.154 | 162.5 | 686.6 |
+| C MoE + NMS | 13.180 | 75.9 | 695.5 |
+| D MoE + End-to-End | 14.078 | 71.0 | 696.1 |
+
+跨三种子平均的内部阶段计时如下（C/D 的 MoE factor）：Router 约 1.502 ms，shared expert 约 0.229 ms，已选专家计算约 0.778 ms，专家 dispatch/索引/聚合剩余约 2.600 ms，MoE 子模块合计约 5.109 ms。也就是说，Router + dispatch/聚合约占 MoE 子模块时间的 80%，真正选中的专家卷积只占约 15%。Dense factor 约 4.120 ms，而 MoE factor 约 9.829 ms；因此当前主要瓶颈是逐专家 dispatch、索引和聚合，而不是冻结 base 本身。该结果支持后续优先做 grouped/fused dispatch profiling，不应先增加专家数或盲目延长训练。
+
 ---
 
 ## 7. 建议下一步
@@ -514,6 +527,7 @@ P1：
 - `smoke/a1/P1_FACTORIAL_MEDIUM_R28_CLOSURE_REPORT.md`
 - `smoke/a1/p1_factorial_medium_r28/closure_r1/closure_result_summary.json`
 - `smoke/a1/p1_factorial_medium_r28/closure_r1/cpu_latency_low_contention_r1/`
+- `smoke/a1/p1_factorial_medium_r28/efficiency_profile_r4_consolidated/`（同设备 batch-1 内部阶段、显存和吞吐 profiling）
 - `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`
 - `r23-final-audit/result_summary.json`
