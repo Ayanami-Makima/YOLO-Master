@@ -490,10 +490,13 @@ r28 使用固定 20,000 张 train2017、完整 5,000 张 val2017、15 epochs 和
 
 ## 7. 建议下一步
 
-1. 封存并保留 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据，不覆盖或续训。
-2. 将 r28 作为 A1 P1 的中等规模可复现实验基线；r23/r24/r25 继续仅作历史审计证据。
-3. 若启动 full-COCO 长周期实验，必须建立独立 protocol、initializer、准入与审计，不能续训 r28。
-4. 如需提升导出数值一致性，应单独研究 B/D 极低分 TopK 尾部差异，不能抹去严格 raw ONNX 的 `partial` 限制。
+不建议直接增加 epochs、专家数或继续盲目调参。后续按以下三步推进：
+
+1. **先做统一效率剖析。** 补齐 A/B/C/D 在同一设备、batch=1 下的 preprocess、model inference、postprocess、total latency、显存峰值和吞吐量，定位耗时主要来自 Router、专家 dispatch/聚合，还是冻结 base + factor 双路径。
+2. **再做小规模效率筛选。** 只在后层加入 MoE，对比 Top-1/Top-2、2/4 experts，并加入等参数或等 FLOPs 的 Dense 对照；只有精度不降且延迟可接受的配置，才建立新 protocol 进入长训。该阶段必须使用新实验目录和原始 initializer，不修改或续训 r28。
+3. **P2 优先解决 End-to-End 精度差距。** 分解召回率、匹配质量、分类误差和定位误差，优先研究 one-to-one assigner/loss；不把“证明 MoE 一定有效”作为预设结论。
+
+r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
 
 ## 8. 主要证据文件
 
@@ -526,8 +529,8 @@ P1：
 
 当前 r28 已完成 A1 P1 的中等规模闭环，但 MoE 在本预算下没有稳定精度收益且推理更慢。建议向导师集中确认以下问题：
 
-1. 是否将 r28 作为 P1 的正式阶段结论：End-to-End 路径成立，MoE 主效应接近 0，当前实现没有速度收益？
-2. 下一步优先验证“训练不足”还是“dispatch 实现开销”：是否新建独立 r29，从原始 initializer 重新跑 50/100 epochs，而不是续训 r28？
-3. 若优先做性能，是否允许进入 MoE grouped/fused dispatch、Triton/CUDA kernel 或专家剪枝优化，并以新协议重新测 latency？
-4. 若按任务书推进 P2，是否选择 seg/pose 下游扩展，还是选择“无速度收益”的机制级负结果路线？
-5. 对 B/D 严格 raw ONNX 行级比较的 4 个极低分 TopK 尾部差异，是否接受当前 `partial` 限制，还是要求先完成导出一致性修复？
+1. 是否同意按“统一 latency/显存/吞吐 profiling → 小规模效率筛选 → P2 优先修复 End-to-End 精度”的三步顺序推进？
+2. 效率 profiling 是否锁定 GPU0、batch=1、50 次预热/200 次采样，并要求同时保存四阶段 latency 原始样本？
+3. 小规模筛选是否采用“后层 MoE × Top-1/Top-2 × 2/4 experts + 等参数/等 FLOPs Dense 对照”的最小网格？
+4. P2 是否优先研究 one-to-one assigner/loss 和召回率、匹配、分类、定位误差，而暂缓 seg/pose 扩展？
+5. B/D 严格 raw ONNX 行级比较的 4 个极低分 TopK 尾部差异，是否接受当前 `partial` 限制，还是要求先完成导出一致性修复？
