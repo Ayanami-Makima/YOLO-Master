@@ -33,6 +33,10 @@ def _kernels(model):
     ]
 
 
+def _reductions(model):
+    return [m.reduction for _, m in model.named_modules() if isinstance(m, ES_MOE)]
+
+
 def _build_reduced(num_experts):
     """Build a model whose ES_MOE blocks each have ``num_experts`` (stand-in for a pruned model)."""
     d = yaml.safe_load(open(CFG))
@@ -42,13 +46,13 @@ def _build_reduced(num_experts):
     return DetectionModel(d, ch=3, nc=10, verbose=False)
 
 
-def _build_with_kernels(num_experts, kernels):
+def _build_with_kernels(num_experts, kernels, reduction=8):
     """Stand-in for a pruned model that kept experts with non-default kernel sizes."""
     d = yaml.safe_load(open(CFG))
     for layer in d["backbone"]:
         if layer[2] == "ES_MOE":
             out_ch = layer[3][0]
-            layer[3] = [out_ch, num_experts, 8, num_experts, True, 0.4, 15, list(kernels)]
+            layer[3] = [out_ch, num_experts, reduction, num_experts, True, 0.4, 15, list(kernels)]
     return DetectionModel(d, ch=3, nc=10, verbose=False)
 
 
@@ -74,12 +78,15 @@ def test_sync_preserves_pruned_experts():
 
 def test_sync_preserves_expert_kernels():
     """The fix also writes per-expert kernel sizes so heterogeneous kept experts survive."""
-    reduced = _build_with_kernels(2, [5, 9])
+    reduced = _build_with_kernels(2, [5, 9], reduction=4)
     before = _kernels(reduced)
+    reductions_before = _reductions(reduced)
     assert all(k == [5, 9] for k in before), f"stand-in kernels not built: {before}"
+    assert reductions_before == [4, 4, 4, 4]
     reduced.yaml = yaml.safe_load(open(CFG))  # un-synced yaml would rebuild default [3, 5]
     MoEPruner._sync_yaml_num_experts(type("D", (), {})(), reduced)
     es_args = [layer[3] for layer in reduced.yaml["backbone"] if layer[2] == "ES_MOE"]
     assert all(a[-1] == [5, 9] for a in es_args), f"kernels not synced: {es_args}"
     rebuilt = DetectionModel(reduced.yaml, ch=3, nc=10, verbose=False)
     assert _kernels(rebuilt) == before, "expert kernel sizes must survive the rebuild"
+    assert _reductions(rebuilt) == reductions_before, "routing reduction must survive the rebuild"

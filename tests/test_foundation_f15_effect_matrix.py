@@ -1,5 +1,7 @@
 """Tests for the reproducible F15 seed/KD-weight matrix wrapper."""
 
+from __future__ import annotations
+
 import json
 
 from scripts import foundation_f15_effect_matrix as matrix

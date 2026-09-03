@@ -1,0 +1,43 @@
+{
+  "schema": "a1-p1-r28-final-result-summary/v1",
+  "status": "completed_and_recovery_aware_audited",
+  "budget": {
+    "train_images": 20000,
+    "val_images": 5000,
+    "epochs": 15,
+    "batch": 4,
+    "seeds": [260829, 260830, 260831]
+  },
+  "map50_95_epoch15": {
+    "260829": {"A": 0.40192, "B": 0.39512, "C": 0.40247, "D": 0.39452},
+    "260830": {"A": 0.40177, "B": 0.39481, "C": 0.40182, "D": 0.39492},
+    "260831": {"A": 0.40232, "B": 0.39472, "C": 0.40236, "D": 0.39451}
+  },
+  "mean": {"A": 0.4020033333333333, "B": 0.39488333333333336, "C": 0.40221666666666667, "D": 0.39465},
+  "sample_sd": {"A": 0.000284312035153866, "B": 0.00020984120980717201, "C": 0.00034789845261703464, "D": 0.000233880311270523},
+  "effects": {
+    "moe_under_nms_C_minus_A": 0.00021333333333334314,
+    "moe_under_end2end_D_minus_B": -0.00023333333333336315,
+    "end2end_dense_B_minus_A": -0.00711999999999996,
+    "end2end_moe_D_minus_C": -0.007566666666666666,
+    "moe_main": -0.000010000000000065512,
+    "end2end_main": -0.007343333333333257,
+    "interaction": -0.0004466666666667063
+  },
+  "audit": {
+    "original_formal_checkpoint_audit": {
+      "status": "failed_recovery_metadata_incompatibility",
+      "sha256": "db0645bd67d460d3082bbc73f85fe5214b0e68f708984c3c6b66ab3a52f11f14"
+    },
+    "recovery_aware_supplement": {
+      "status": "passed",
+      "failed_cells": [],
+      "sha256": "355e3c6c13cb2885130de45724f227fd47c257e5c67aa4125727caf4f835f54c"
+    },
+    "formal_admission_sha256": "153d5a9080d60dc9ea030934f882586b0c704b8ffce7249edf175f6eb053f27c",
+    "hard_top2_routing_sha256": "6fb7431c0f5b2deadc062b3f84e72b6f1ac926171fd65c1051cb48ce89e34f9e",
+    "residual_activity_sha256": "0d28dcdd1d3a13157789d81aebb17c1d504f1346560506e2c8a9a06f9f82fff4",
+    "recovery_aware_auditor_sha256": "b7b257fefa61dca6eb96a07c03cdd3b064050b93f8dc6c548f1fe41c58b11dfd"
+  },
+  "conclusion": "Under the locked medium-budget P1 protocol, MoE has near-zero main effect, while end-to-end is consistently worse than NMS by about 0.00734 mAP50-95."
+}

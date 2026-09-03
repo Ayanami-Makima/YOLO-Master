@@ -1,0 +1,861 @@
+{
+  "schema": "a1-p1-r28-closure-protocol/v1",
+  "status": "prepared",
+  "mutates_formal_experiment": false,
+  "checkpoint_selection": "epoch-15 last.pt for all 12 formal cells; no best-epoch cherry-picking",
+  "repo": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium",
+  "git": {
+    "head": "f1ac1f5c012615cf03c66d9dafa593215bf63759",
+    "status_porcelain": ""
+  },
+  "source_protocol": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_factorial_medium_r28/protocol.json",
+    "sha256": "7db904ea64e677bb62031473d39ae5a95df3fa60f1e8a91450433203b31234ce",
+    "bytes": 32176
+  },
+  "recovery_aware_audit": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/audits/formal_checkpoints_recovery_aware_v2.json",
+    "sha256": "355e3c6c13cb2885130de45724f227fd47c257e5c67aa4125727caf4f835f54c",
+    "bytes": 72715
+  },
+  "runtime_files": {
+    "ultralytics": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/__init__.py",
+      "sha256": "d71461cea4c6fb2817e4bd92d554592dd8677a3603f8de390e9d9e98c1842e8c",
+      "bytes": 1302
+    },
+    "ultralytics.nn.modules.moe.factor_adapter": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/factor_adapter.py",
+      "sha256": "9dd7aafe55df339c0b12f960986b9a5c8da11ea2370f05de9ad632244cd77053",
+      "bytes": 5271
+    },
+    "ultralytics.nn.modules.moe.modules": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/modules.py",
+      "sha256": "0454b829984bd7b6311fd83a6c141482d38e3f53d173980cb87b01a7fd7451b8",
+      "bytes": 76506
+    },
+    "ultralytics.nn.modules.moe.routers": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/routers.py",
+      "sha256": "3863663d5ef18271166cf53550bc309cd6cf863717724c9498494d903ac31a7f",
+      "bytes": 27514
+    },
+    "ultralytics.nn.tasks": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/tasks.py",
+      "sha256": "28039d7174069734b9a12d78f3206b804c1227f462456cbf653951e675c012ce",
+      "bytes": 98464
+    },
+    "implementation:ultralytics/cfg/default.yaml": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/cfg/default.yaml",
+      "sha256": "b1ddd50f3149453efc630d0fdf6e7a42cdd5bba804422a44390ca9627034bf5e",
+      "bytes": 28993
+    },
+    "implementation:ultralytics/cfg/__init__.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/cfg/__init__.py",
+      "sha256": "7b835f09aa5bb5b09bb73ebcf013bf0666eb4f7cf9a01e9f968d6ad0cbf70cc7",
+      "bytes": 70102
+    },
+    "implementation:ultralytics/engine/model.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/engine/model.py",
+      "sha256": "8ce19b1345f6dcb57ba318e2991a78fd4609e60d4b3f7f26105b9648a0778473",
+      "bytes": 60773
+    },
+    "implementation:ultralytics/engine/trainer.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/engine/trainer.py",
+      "sha256": "044e2e64fb020570f965aa11dbc220e73f690ef7fa4725e5d00c15ea456ee91e",
+      "bytes": 94309
+    },
+    "implementation:ultralytics/models/yolo/detect/train.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/models/yolo/detect/train.py",
+      "sha256": "257f81fcbce922e9032f6d3908378f6e1d1b0648169d72f4a37f1448d2afb81e",
+      "bytes": 12903
+    },
+    "implementation:ultralytics/utils/loss.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/utils/loss.py",
+      "sha256": "e0f594c20c4c79eec3b5f31d70f53fa4da467283b3bd8fd5d67e7667b30b327a",
+      "bytes": 83141
+    },
+    "implementation:ultralytics/utils/torch_utils.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/utils/torch_utils.py",
+      "sha256": "9eb5347a2cc9d07d6755f754e72507e3776b97a68cf055cbfef15d16f6b59f0c",
+      "bytes": 49780
+    },
+    "implementation:ultralytics/nn/modules/moe/__init__.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/__init__.py",
+      "sha256": "8f170ebc5ef8e24e07c9496a67b699d5c7ad0ab73f15441d52c6ad6657f4af1c",
+      "bytes": 9008
+    },
+    "implementation:ultralytics/nn/modules/moe/_common.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/_common.py",
+      "sha256": "7f4035ab72c1094fc795e25e553c97356adba383312ca5330be552f85cc0297c",
+      "bytes": 9814
+    },
+    "implementation:ultralytics/nn/modules/moe/_gated_visual.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/_gated_visual.py",
+      "sha256": "43f52c2bc88db193a24ae7d87b8c2aa59798cde67062e13b6fd10061a3639419",
+      "bytes": 3723
+    },
+    "implementation:ultralytics/nn/modules/moe/_helpers.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/_helpers.py",
+      "sha256": "50632470a32962b48a705d401832a5b794661bb4fddb49f995a3382ef8ac083c",
+      "bytes": 1029
+    },
+    "implementation:ultralytics/nn/modules/moe/advanced.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/advanced.py",
+      "sha256": "6a18de2687bb2523bf7396c49983af24b4b07d187f781cc8a4380a930edc98c5",
+      "bytes": 1193
+    },
+    "implementation:ultralytics/nn/modules/moe/analysis.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/analysis.py",
+      "sha256": "fbf37c43a464fc28eb84951aef980393f685827b91d87dc672163936b02fdc4b",
+      "bytes": 22933
+    },
+    "implementation:ultralytics/nn/modules/moe/api.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/api.py",
+      "sha256": "5edf1dc19de0cfaf90aa30b81d8f470abbc49f0a763b8a591a3c39c1296d2f9e",
+      "bytes": 7709
+    },
+    "implementation:ultralytics/nn/modules/moe/base.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/base.py",
+      "sha256": "2b29519af37f845a701a5d4f6af4b126557087ef9b11cf6dd04616b750d2c52e",
+      "bytes": 783
+    },
+    "implementation:ultralytics/nn/modules/moe/blocks_advanced.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/blocks_advanced.py",
+      "sha256": "519a50b9a42331335072f60d815d6c4a7cc0f0b85aae91bceb11794feba7471e",
+      "bytes": 191
+    },
+    "implementation:ultralytics/nn/modules/moe/config.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/config.py",
+      "sha256": "e0dcbcb7a61d9d7523cf6828b23a534b620683732a0dbe0f4c17aae6e26679f5",
+      "bytes": 17400
+    },
+    "implementation:ultralytics/nn/modules/moe/diagnostics.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/diagnostics.py",
+      "sha256": "73bc5aaebdaeaffccdb857c92e00694d813e3161538513f6a0857cf7ca5643bf",
+      "bytes": 5844
+    },
+    "implementation:ultralytics/nn/modules/moe/experts.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/experts.py",
+      "sha256": "de5b54f0f39e0835bdd0b2eb06614febdf18082a9240cc6fab715c5101aa8857",
+      "bytes": 14506
+    },
+    "implementation:ultralytics/nn/modules/moe/experts_advanced.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/experts_advanced.py",
+      "sha256": "f8ce831634d05d83f64333125dc991e9f5e1d1ede712954f1d11fac3aed84974",
+      "bytes": 193
+    },
+    "implementation:ultralytics/nn/modules/moe/factor_adapter.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/factor_adapter.py",
+      "sha256": "9dd7aafe55df339c0b12f960986b9a5c8da11ea2370f05de9ad632244cd77053",
+      "bytes": 5271
+    },
+    "implementation:ultralytics/nn/modules/moe/gated.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/gated.py",
+      "sha256": "5e73e35fa6c53ee45381b934771585314e68e66fb3e6f66786a6ce68af8f4727",
+      "bytes": 111511
+    },
+    "implementation:ultralytics/nn/modules/moe/history.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/history.py",
+      "sha256": "23ebf14fbdbcd2f6224391637670ffbbeacaf9174fd40ae0ce54eda465285dab",
+      "bytes": 12070
+    },
+    "implementation:ultralytics/nn/modules/moe/hooks.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/hooks.py",
+      "sha256": "9f8ea9a1171181dd4f86c99e921949f537735d7c15712010e8b33240c34e4622",
+      "bytes": 4510
+    },
+    "implementation:ultralytics/nn/modules/moe/hybrid.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/hybrid.py",
+      "sha256": "37c28eae182076143a329c4014999d579cbf414fdc2b8c3f28d2108902086146",
+      "bytes": 1223
+    },
+    "implementation:ultralytics/nn/modules/moe/integration.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/integration.py",
+      "sha256": "f272f7c49f5a5244deb1c5169f74a6e0d296b8e2e7d15e3713ba259fda90ddf2",
+      "bytes": 603
+    },
+    "implementation:ultralytics/nn/modules/moe/loss.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/loss.py",
+      "sha256": "fc492ebd9af8c3a10dd57be221e8d110f7a13761da9ff1c900d6d17e5208f3b4",
+      "bytes": 18706
+    },
+    "implementation:ultralytics/nn/modules/moe/modules.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/modules.py",
+      "sha256": "0454b829984bd7b6311fd83a6c141482d38e3f53d173980cb87b01a7fd7451b8",
+      "bytes": 76506
+    },
+    "implementation:ultralytics/nn/modules/moe/protocol.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/protocol.py",
+      "sha256": "9c6af0e908c3abf8151ce47d047f245b35ea9f91b039b4686647f65e3233a485",
+      "bytes": 3943
+    },
+    "implementation:ultralytics/nn/modules/moe/pruning.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/pruning.py",
+      "sha256": "9ec9137ea7dbd7c7dba34424a97e8c19a3e811707e9cf0fcf49981d7df831748",
+      "bytes": 26661
+    },
+    "implementation:ultralytics/nn/modules/moe/quantize.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/quantize.py",
+      "sha256": "4f24d245cafa7545bf30b3a9bc401cb8a87563408ad363cc359ad01943e91491",
+      "bytes": 9047
+    },
+    "implementation:ultralytics/nn/modules/moe/routers.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/routers.py",
+      "sha256": "3863663d5ef18271166cf53550bc309cd6cf863717724c9498494d903ac31a7f",
+      "bytes": 27514
+    },
+    "implementation:ultralytics/nn/modules/moe/routers_advanced.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/routers_advanced.py",
+      "sha256": "2cee494f52e95e95fb12cac806b69ad757c8bf2c056a5fee8787a8c822a3da41",
+      "bytes": 225
+    },
+    "implementation:ultralytics/nn/modules/moe/schedule.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/schedule.py",
+      "sha256": "6e207f84ca315e545a92d63c1dfd6e0d7ec866f6be777399bc4f6a2c50e986fa",
+      "bytes": 2005
+    },
+    "implementation:ultralytics/nn/modules/moe/scheduler.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/scheduler.py",
+      "sha256": "972ec1f101e184e4c380282d920bf6fb3baddfdb623c0a1bf365eaba38474690",
+      "bytes": 7879
+    },
+    "implementation:ultralytics/nn/modules/moe/shared_expert_moe.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/shared_expert_moe.py",
+      "sha256": "9b438b9fb6693b60931d349594ae284e7292b0a0f089562513293aeb77068c80",
+      "bytes": 4848
+    },
+    "implementation:ultralytics/nn/modules/moe/utils.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/utils.py",
+      "sha256": "8788814a3328c3302066b2cbc2bda542e77087113ce1e403b51ae3e283a41b1b",
+      "bytes": 9631
+    },
+    "implementation:ultralytics/nn/modules/moe/viz.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/viz.py",
+      "sha256": "8d506612b8be4093e9324cde43337581f0069454007e63a849cb14c4656abfe9",
+      "bytes": 9150
+    },
+    "implementation:ultralytics/nn/modules/moe/weight_verify.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/moe/weight_verify.py",
+      "sha256": "87580a2b95eb5d8ff93c505caa47f954bea717efec4a7b831d23602d03bc35cb",
+      "bytes": 9805
+    },
+    "implementation:ultralytics/nn/modules/__init__.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/modules/__init__.py",
+      "sha256": "7bd9cd8a80930907bcb535f3c0cac55019d58c2e4a4a5f8cb3afc1565de6785d",
+      "bytes": 5376
+    },
+    "implementation:ultralytics/nn/tasks.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/nn/tasks.py",
+      "sha256": "28039d7174069734b9a12d78f3206b804c1227f462456cbf653951e675c012ce",
+      "bytes": 98464
+    },
+    "implementation:scripts/a1/prepare_p1_residual_factor_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/prepare_p1_residual_factor_r28.py",
+      "sha256": "cf36c984f3d40c1a7a14f668703604b56aef7390653f47fe6fca83aeb9366cba",
+      "bytes": 29692
+    },
+    "implementation:scripts/a1/prepare_p1_medium_data_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/prepare_p1_medium_data_r28.py",
+      "sha256": "a3d7680da6ec30bb5114638195ee82b10da2b8784a08696b13abc5525679d50b",
+      "bytes": 4368
+    },
+    "implementation:scripts/a1/p1_r28_integrity.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/p1_r28_integrity.py",
+      "sha256": "7946c39394a1f43deacc23c55f693bc1f3fb7b587d1fad282f5db4cafab44daf",
+      "bytes": 2877
+    },
+    "implementation:scripts/a1/p1_r28_runtime.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/p1_r28_runtime.py",
+      "sha256": "1137d0146e9e07de68d9fef83335186db70a5c0e91608756526b2ed45a699de8",
+      "bytes": 3473
+    },
+    "implementation:scripts/a1/prepare_p1_factorial.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/prepare_p1_factorial.py",
+      "sha256": "77a69c5cd519b0892fd0d0bedd49f2ff5152ac911fd627dc83413186b2bedc7a",
+      "bytes": 8958
+    },
+    "implementation:scripts/a1/build_p1_residual_factor_initializers_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/build_p1_residual_factor_initializers_r28.py",
+      "sha256": "b880828ac9efd11338214d70ebfa6efc91401c3072bc7ed3b35513ded35fe795",
+      "bytes": 27831
+    },
+    "implementation:scripts/a1/build_p1_residual_factor_initializers.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/build_p1_residual_factor_initializers.py",
+      "sha256": "49d5bfe917ba33151b82310cb7a6db1906cc065b57f6011e0a047bc58777c753",
+      "bytes": 22748
+    },
+    "implementation:scripts/a1/run_p1_bn_frozen_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/run_p1_bn_frozen_r28.py",
+      "sha256": "d8ce20214366be29c2662cf03d7efce44bb59345c804b8b46e93035ffff5af22",
+      "bytes": 33860
+    },
+    "implementation:scripts/a1/run_p1_factorial_multiseed_2gpu_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/run_p1_factorial_multiseed_2gpu_r28.py",
+      "sha256": "f3a18ead9af349de3e1605fcd628f6f384495a79309bbb5e68165163c7dc8b44",
+      "bytes": 26618
+    },
+    "implementation:scripts/a1/audit_p1_checkpoints_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/audit_p1_checkpoints_r28.py",
+      "sha256": "9eebfdbed8e84bb94c876c155a5f8cbdd4076ca55e3f5e14345bb23c5afd4290",
+      "bytes": 14816
+    },
+    "implementation:scripts/a1/audit_p1_residual_factor_checkpoints.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/audit_p1_residual_factor_checkpoints.py",
+      "sha256": "2f17d9bdf39fdc69a7fde033de3e05b4eb21be600f0cf48dd9e5a97e3664e4ab",
+      "bytes": 15201
+    },
+    "implementation:scripts/a1/audit_p1_routing_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/audit_p1_routing_r28.py",
+      "sha256": "6206c786f9eb870e0b6e5216d74f3bdcdb9e1bd06fde1a116dbbd12c18ef3e5f",
+      "bytes": 10229
+    },
+    "implementation:scripts/a1/audit_p1_preflight_routing.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/audit_p1_preflight_routing.py",
+      "sha256": "5653b822878981ceaa88e8ce142fac647a5438d9b7347a3b529db9a3d92af9a9",
+      "bytes": 5630
+    },
+    "implementation:scripts/a1/audit_p1_routing.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/audit_p1_routing.py",
+      "sha256": "952f3a007d81d4dd8087d6acb8fc8008b0fc4b36b14a85e14e66aa2bcacafb79",
+      "bytes": 4737
+    },
+    "implementation:scripts/a1/evaluate_p1_matrix.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/evaluate_p1_matrix.py",
+      "sha256": "5a962fa2db76c430a074fa618fffc4d021432fdc907d47b411533c9fa2e265ec",
+      "bytes": 85403
+    },
+    "implementation:scripts/a1/audit_p1_residual_activity_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/audit_p1_residual_activity_r28.py",
+      "sha256": "1c2a0aaac931b7276ea4c12fc332024ad91b18727b791b30470325aef1e9a121",
+      "bytes": 27997
+    },
+    "implementation:scripts/a1/audit_p1_formal_admission_r28.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/audit_p1_formal_admission_r28.py",
+      "sha256": "0a82a77611cadf1416e251d4b0c331e9e4e7f51fc27e6035b17486789e62ed46",
+      "bytes": 38668
+    },
+    "implementation:scripts/a1/verify_p1_r28_migration.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/verify_p1_r28_migration.py",
+      "sha256": "37353d21f1f709e2a83e3ecc9ba7ab7f1632196b41550f8efd461114004f8e9f",
+      "bytes": 12079
+    },
+    "implementation:tests/test_p1_residual_factor.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/tests/test_p1_residual_factor.py",
+      "sha256": "85e2c7319e35f1f23966c55ea9f6c8e07b40f5c0310fc51f9207e522ada164ed",
+      "bytes": 10795
+    },
+    "implementation:tests/test_moe_router_boundaries.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/tests/test_moe_router_boundaries.py",
+      "sha256": "aa6e5f7d979cc72e8ce218e0920733c83deecf2fb35142a2e99389eca34b1f20",
+      "bytes": 26900
+    },
+    "implementation:tests/test_peft_optimizer_policy.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/tests/test_peft_optimizer_policy.py",
+      "sha256": "b0b33b4ae3b90f9800aa9a8a508aeced2647082aa200102361aec0dba72126da",
+      "bytes": 6686
+    },
+    "implementation:tests/test_p1_r28_protocol.py": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/tests/test_p1_r28_protocol.py",
+      "sha256": "d9de0b8392d3f9b31b5fb9520a06e96516d30d0ac5a21f363597f88531d3ab23",
+      "bytes": 18945
+    }
+  },
+  "tools": {
+    "closure": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/closure_r1/tools/evaluate_p1_r28_closure.py",
+      "sha256": "f1ced910c62a581c85b3c96a625232b0e28f9e80a543119a52327083108d6eac",
+      "bytes": 23446
+    },
+    "base_evaluator": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/scripts/a1/evaluate_p1_matrix.py",
+      "sha256": "5a962fa2db76c430a074fa618fffc4d021432fdc907d47b411533c9fa2e265ec",
+      "bytes": 85403
+    }
+  },
+  "checkpoints": {
+    "260829": {
+      "a": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/a_formal_seed260829_15ep/weights/last.pt",
+        "sha256": "dce906840c103c8e7e4e01c12ed621b65f4d532b24b22217a850c462dd3ec8a7",
+        "bytes": 6411473,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "8208.92",
+          "train/box_loss": "1.06174",
+          "train/cls_loss": "0.99044",
+          "train/dfl_loss": "0.00966",
+          "metrics/precision(B)": "0.64719",
+          "metrics/recall(B)": "0.52513",
+          "metrics/mAP50(B)": "0.56177",
+          "metrics/mAP50-95(B)": "0.40192",
+          "val/box_loss": "1.08968",
+          "val/cls_loss": "1.10326",
+          "val/dfl_loss": "0.01101",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "b": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/b_formal_seed260829_15ep/weights/last.pt",
+        "sha256": "352b4ce33152cd7a0b094f9f904049e64db5b497bf6508f0dc0a6e1a5651e373",
+        "bytes": 6772153,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "1408.56",
+          "train/box_loss": "1.2839",
+          "train/cls_loss": "1.34022",
+          "train/dfl_loss": "0.00918",
+          "metrics/precision(B)": "0.66182",
+          "metrics/recall(B)": "0.50474",
+          "metrics/mAP50(B)": "0.55289",
+          "metrics/mAP50-95(B)": "0.39512",
+          "val/box_loss": "1.30491",
+          "val/cls_loss": "1.46223",
+          "val/dfl_loss": "0.0104",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "c": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+        "sha256": "bdfe8a0283d133c9317da05f1ad5a82aae08367e810ba68547de7713de49f999",
+        "bytes": 11629801,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "11749.4",
+          "train/box_loss": "1.06197",
+          "train/cls_loss": "0.99167",
+          "train/dfl_loss": "0.00968",
+          "train/mixture_aux_loss": "0.99999",
+          "metrics/precision(B)": "0.65369",
+          "metrics/recall(B)": "0.52197",
+          "metrics/mAP50(B)": "0.56301",
+          "metrics/mAP50-95(B)": "0.40247",
+          "val/box_loss": "1.08922",
+          "val/cls_loss": "1.10305",
+          "val/dfl_loss": "0.01101",
+          "val/mixture_aux_loss": "0",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "d": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+        "sha256": "b2cd9b61fbc924c725f82f9cc1346f4e5828cb69468f6c639ab4f5c089f678c1",
+        "bytes": 11990729,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "12431.3",
+          "train/box_loss": "1.28515",
+          "train/cls_loss": "1.33864",
+          "train/dfl_loss": "0.00932",
+          "train/mixture_aux_loss": "0.99999",
+          "metrics/precision(B)": "0.66459",
+          "metrics/recall(B)": "0.50399",
+          "metrics/mAP50(B)": "0.55089",
+          "metrics/mAP50-95(B)": "0.39452",
+          "val/box_loss": "1.304",
+          "val/cls_loss": "1.46369",
+          "val/dfl_loss": "0.0104",
+          "val/mixture_aux_loss": "0",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      }
+    },
+    "260830": {
+      "a": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/a_formal_seed260830_15ep/weights/last.pt",
+        "sha256": "62c9fe9d31b5dfb6754dca6cfbe18fa58857965f3615ce2e9e5498892a0ad389",
+        "bytes": 6411473,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "3111.53",
+          "train/box_loss": "1.06152",
+          "train/cls_loss": "0.99009",
+          "train/dfl_loss": "0.00963",
+          "metrics/precision(B)": "0.64155",
+          "metrics/recall(B)": "0.52473",
+          "metrics/mAP50(B)": "0.56189",
+          "metrics/mAP50-95(B)": "0.40177",
+          "val/box_loss": "1.09048",
+          "val/cls_loss": "1.10435",
+          "val/dfl_loss": "0.01102",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "b": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/b_formal_seed260830_15ep/weights/last.pt",
+        "sha256": "a557a581a21d74b8850e2820ab0a5c81744b73f2c54bba876f60edb8af280020",
+        "bytes": 6772153,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "652.614",
+          "train/box_loss": "1.27555",
+          "train/cls_loss": "1.33411",
+          "train/dfl_loss": "0.00923",
+          "metrics/precision(B)": "0.66243",
+          "metrics/recall(B)": "0.5035",
+          "metrics/mAP50(B)": "0.55161",
+          "metrics/mAP50-95(B)": "0.39481",
+          "val/box_loss": "1.30467",
+          "val/cls_loss": "1.46468",
+          "val/dfl_loss": "0.01042",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "c": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/c_formal_seed260830_15ep/weights/last.pt",
+        "sha256": "4568f65e73fb05d0996eb431c01374bf8bb2988d4ac44d3fba3e1dc2230ce1b6",
+        "bytes": 11629865,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "7251.36",
+          "train/box_loss": "1.06155",
+          "train/cls_loss": "0.99557",
+          "train/dfl_loss": "0.00971",
+          "train/mixture_aux_loss": "1",
+          "metrics/precision(B)": "0.64692",
+          "metrics/recall(B)": "0.5212",
+          "metrics/mAP50(B)": "0.56226",
+          "metrics/mAP50-95(B)": "0.40182",
+          "val/box_loss": "1.09046",
+          "val/cls_loss": "1.10392",
+          "val/dfl_loss": "0.01102",
+          "val/mixture_aux_loss": "0",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "d": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/d_formal_seed260830_15ep/weights/last.pt",
+        "sha256": "b5f294a896f3a53aec8c412a2b3ebec0a3dddf69de00da428453e6173d3a147d",
+        "bytes": 11990729,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "4672.58",
+          "train/box_loss": "1.28722",
+          "train/cls_loss": "1.34186",
+          "train/dfl_loss": "0.00924",
+          "train/mixture_aux_loss": "0.99999",
+          "metrics/precision(B)": "0.66891",
+          "metrics/recall(B)": "0.5002",
+          "metrics/mAP50(B)": "0.55143",
+          "metrics/mAP50-95(B)": "0.39492",
+          "val/box_loss": "1.30423",
+          "val/cls_loss": "1.46546",
+          "val/dfl_loss": "0.01039",
+          "val/mixture_aux_loss": "0",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      }
+    },
+    "260831": {
+      "a": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/a_formal_seed260831_15ep/weights/last.pt",
+        "sha256": "df9c6397be4027de5c8653021cadf65d0eee6612e747694bdace604afee476b8",
+        "bytes": 6411158,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "10043.2",
+          "train/box_loss": "1.06258",
+          "train/cls_loss": "0.9937",
+          "train/dfl_loss": "0.0097",
+          "metrics/precision(B)": "0.65679",
+          "metrics/recall(B)": "0.51835",
+          "metrics/mAP50(B)": "0.56214",
+          "metrics/mAP50-95(B)": "0.40232",
+          "val/box_loss": "1.09017",
+          "val/cls_loss": "1.10369",
+          "val/dfl_loss": "0.01101",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "b": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/b_formal_seed260831_15ep/weights/last.pt",
+        "sha256": "da33e8bac9ebf9a9f89a99bae7e70611ef57139ee8f730f0a2da29b91f6f01fd",
+        "bytes": 6771838,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "12989.6",
+          "train/box_loss": "1.28756",
+          "train/cls_loss": "1.345",
+          "train/dfl_loss": "0.00933",
+          "metrics/precision(B)": "0.66439",
+          "metrics/recall(B)": "0.50248",
+          "metrics/mAP50(B)": "0.55115",
+          "metrics/mAP50-95(B)": "0.39472",
+          "val/box_loss": "1.30294",
+          "val/cls_loss": "1.4654",
+          "val/dfl_loss": "0.01038",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "c": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/c_formal_seed260831_15ep/weights/last.pt",
+        "sha256": "a8eb4af047b278a876e1dfe775d698e453478161f1a9907e98f735f5fc863ef1",
+        "bytes": 11629801,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "14030.4",
+          "train/box_loss": "1.06266",
+          "train/cls_loss": "0.99444",
+          "train/dfl_loss": "0.0097",
+          "train/mixture_aux_loss": "0.99999",
+          "metrics/precision(B)": "0.65935",
+          "metrics/recall(B)": "0.51813",
+          "metrics/mAP50(B)": "0.56264",
+          "metrics/mAP50-95(B)": "0.40236",
+          "val/box_loss": "1.08959",
+          "val/cls_loss": "1.10339",
+          "val/dfl_loss": "0.011",
+          "val/mixture_aux_loss": "0",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      },
+      "d": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/d_formal_seed260831_15ep/weights/last.pt",
+        "sha256": "183efe3cd626d02ec0ca2adb13459493def87d17bad8c0edfaba27f000a65cdd",
+        "bytes": 11990729,
+        "selection": "formal epoch-15 last.pt",
+        "final_metrics": {
+          "epoch": "15",
+          "time": "13706",
+          "train/box_loss": "1.28763",
+          "train/cls_loss": "1.34475",
+          "train/dfl_loss": "0.00933",
+          "train/mixture_aux_loss": "0.99999",
+          "metrics/precision(B)": "0.66217",
+          "metrics/recall(B)": "0.50379",
+          "metrics/mAP50(B)": "0.55084",
+          "metrics/mAP50-95(B)": "0.39451",
+          "val/box_loss": "1.30387",
+          "val/cls_loss": "1.46392",
+          "val/dfl_loss": "0.01039",
+          "val/mixture_aux_loss": "0",
+          "lr/pg0": "2.53333e-05",
+          "lr/pg1": "2.53333e-05",
+          "lr/pg2": "2.53333e-05",
+          "lr/pg3": "2.53333e-05",
+          "lr/pg4": "5.06667e-05",
+          "lr/pg5": "0.00253333"
+        }
+      }
+    }
+  },
+  "formal_val": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_medium_data_r28/coco.yaml",
+    "sha256": "6f946c606cdef98fc951e9a45ab1a166748d3b035cb7c343ac06db5499e8f9d2",
+    "lists": {
+      "train": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_medium_data_r28/train2017_20000_seed260829.txt",
+        "sha256": "df673beac157477b840592d560c3ca4bd9098d0c88857da6d806c2af70337b03",
+        "images": 20000,
+        "integrity": "ordered_list_sha256_count_and_image_label_content_sha256",
+        "content": {
+          "samples": 20000,
+          "image_files": 20000,
+          "label_files": 20000,
+          "ordered_image_label_content_sha256": "a42363e608ea037a5ed4eb27cdf89e50be24da65ace80b19b9d48299f2e6c61d"
+        }
+      },
+      "val": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_medium_data_r28/val2017_5000.txt",
+        "sha256": "bf4ee8bc36f2fdec2c07bbbead970ee9e3187082dd9564a4a589bf7e14022d77",
+        "images": 5000,
+        "integrity": "ordered_list_sha256_count_and_image_label_content_sha256",
+        "content": {
+          "samples": 5000,
+          "image_files": 5000,
+          "label_files": 5000,
+          "ordered_image_label_content_sha256": "ee1ca2a43210dc4952abb29668bf2afe416b0f1821641f8ace55a2f02e5199b6"
+        }
+      }
+    }
+  },
+  "selected_images": [
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000139.jpg",
+      "sha256": "ffe0f0cec3b2e27aab1967229cdf0a0d7751dcdd5800322f0b8ac0dffb3b8a8d",
+      "bytes": 161811
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000285.jpg",
+      "sha256": "f3a2974ce3686332609124c70e3e6a2e3aca43fccf1cd1bd7c5c03820977f57d",
+      "bytes": 335861
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000632.jpg",
+      "sha256": "a4cd7f45ac1ce27eaafb254b23af7c0b18a064be08870ceaaf03b2147f2ce550",
+      "bytes": 155667
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000724.jpg",
+      "sha256": "5c0e559c75d3969c8e3e297b61f61063f78045c9d4802b526ba616361f3823fd",
+      "bytes": 130107
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000776.jpg",
+      "sha256": "1dd31e9059c491992be2f562624eb4093e17aee08b4f7baf5ff9ea24543b0a33",
+      "bytes": 176410
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000785.jpg",
+      "sha256": "83981537a7baeafbeb9c8cb67b3484dc26433f574b3685d021fa537e277e4726",
+      "bytes": 133674
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000802.jpg",
+      "sha256": "d5b79e7fa716f85ca86f46e5f518da9b6c5e26414925624d76e6476861aec495",
+      "bytes": 62406
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000872.jpg",
+      "sha256": "c2aa138ee3a59b057a7ba6fc5a6a18e62af531aa7dab78a7bfd33c1cd7e55eb6",
+      "bytes": 317669
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000885.jpg",
+      "sha256": "1c67b783f78b18ddb5dd20aaba4d4aacaf98e5277051688a96da096afa9cdf1f",
+      "bytes": 111441
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001000.jpg",
+      "sha256": "24bb77a31928404e45a0454b06f6a0bd54a8db103590c9d7917288a1e0269f05",
+      "bytes": 321136
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001268.jpg",
+      "sha256": "8e85a2e71ee512fe748a3a3be9bb40b8591e8c501c0f3896efcb5be5999ec236",
+      "bytes": 180751
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001296.jpg",
+      "sha256": "34a98da7c11bc8811e6eec445145bb16f3d5f4338945ba116edcc1fe554d181b",
+      "bytes": 204829
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001353.jpg",
+      "sha256": "1cccef217a1e5eec2acc74d7c08a105da3ef6fdb8514e221cdea9b0b373b60ea",
+      "bytes": 83033
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001425.jpg",
+      "sha256": "71a37c25cdf944cf0a88b66d00a66cf899a88bd55c7ac80fcf1c76329d617e6c",
+      "bytes": 111309
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001490.jpg",
+      "sha256": "a044804a0b0186a1267acae34975932f14ede96c4a2b78fcee74e6c2fbd8414d",
+      "bytes": 101098
+    },
+    {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001503.jpg",
+      "sha256": "06c721f0a62bcb9fcb2d2d0cc0b9edd63092084a8773a18c4b5a7bd6fb4f095d",
+      "bytes": 15259
+    }
+  ],
+  "predict": {
+    "images": 16,
+    "imgsz": 640,
+    "batch": 1,
+    "conf": 0.001,
+    "iou": 0.7,
+    "max_det": 300,
+    "half": false,
+    "real_suppression_kernels_instrumented": true
+  },
+  "latency": {
+    "images_in_ram": 16,
+    "imgsz": 640,
+    "batch": 1,
+    "conf": 0.25,
+    "iou": 0.7,
+    "max_det": 300,
+    "half": false,
+    "warmup": 50,
+    "samples": 200,
+    "threads": 4,
+    "cpu_affinity": "28,29,30,31",
+    "scope": "RAM image -> preprocess -> inference -> postprocess -> Results; excludes disk I/O/model load"
+  },
+  "export": {
+    "images": 4,
+    "format": "onnx",
+    "imgsz": 640,
+    "batch": 1,
+    "opset": 17,
+    "half": false,
+    "dynamic": false,
+    "simplify": false,
+    "nms": false,
+    "atol": 0.0001,
+    "rtol": 0.001
+  },
+  "environment": {
+    "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+    "executable": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35"
+  }
+}

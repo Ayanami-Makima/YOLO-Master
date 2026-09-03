@@ -1,0 +1,588 @@
+{
+  "schema_version": 8,
+  "name": "A1 P1 full-COCO equal-budget 2x2 factorial r25 residual-factor",
+  "experiment_tag": "r25",
+  "locked_official_baseline_sha": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "locked_official_baseline_ancestor_verified": true,
+  "implementation_head": "d5351773fef5f1adecb31dada1f4b3456915d4fb",
+  "implementation_branch": "a1-p1-full-r25",
+  "runtime_binding": {
+    "repo_root": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full",
+    "interpreter": {
+      "executable": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+      "prefix": "/data/data2/TuJiajun/A1-smoke-r4/.venv",
+      "base_prefix": "/usr",
+      "version": "3.10.12",
+      "virtualenv": true
+    },
+    "torch": {
+      "path": "/data/data2/TuJiajun/A1-smoke/.venv-r4-torch210/lib/python3.10/site-packages/torch/__init__.py",
+      "sha256": "51c90fe34a7cf869517d1bab4cd114498790e169ec668f1a154c35ec64117a5e",
+      "version": "2.10.0+cu128",
+      "cuda_version": "12.8"
+    },
+    "modules": {
+      "ultralytics": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/ultralytics/__init__.py",
+        "sha256": "d71461cea4c6fb2817e4bd92d554592dd8677a3603f8de390e9d9e98c1842e8c"
+      },
+      "ultralytics.nn.modules.moe.factor_adapter": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/ultralytics/nn/modules/moe/factor_adapter.py",
+        "sha256": "9dd7aafe55df339c0b12f960986b9a5c8da11ea2370f05de9ad632244cd77053"
+      },
+      "ultralytics.nn.modules.moe.modules": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/ultralytics/nn/modules/moe/modules.py",
+        "sha256": "0454b829984bd7b6311fd83a6c141482d38e3f53d173980cb87b01a7fd7451b8"
+      },
+      "ultralytics.nn.modules.moe.routers": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/ultralytics/nn/modules/moe/routers.py",
+        "sha256": "3863663d5ef18271166cf53550bc309cd6cf863717724c9498494d903ac31a7f"
+      },
+      "ultralytics.nn.tasks": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/ultralytics/nn/tasks.py",
+        "sha256": "28039d7174069734b9a12d78f3206b804c1227f462456cbf653951e675c012ce"
+      }
+    }
+  },
+  "source_checkpoint": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+    "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef",
+    "lineage": "official_yolo26n_only; never any P1 initializer or trained checkpoint"
+  },
+  "parent": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/ultralytics/cfg/models/26/yolo26.yaml",
+    "sha256": "b1d1fa0c69eced64f9939536038bd8d697c32e72200b34187a767de431af7ef0"
+  },
+  "implementation": {
+    "ultralytics/cfg/default.yaml": "b1ddd50f3149453efc630d0fdf6e7a42cdd5bba804422a44390ca9627034bf5e",
+    "ultralytics/cfg/__init__.py": "7b835f09aa5bb5b09bb73ebcf013bf0666eb4f7cf9a01e9f968d6ad0cbf70cc7",
+    "ultralytics/engine/model.py": "8ce19b1345f6dcb57ba318e2991a78fd4609e60d4b3f7f26105b9648a0778473",
+    "ultralytics/engine/trainer.py": "044e2e64fb020570f965aa11dbc220e73f690ef7fa4725e5d00c15ea456ee91e",
+    "ultralytics/models/yolo/detect/train.py": "257f81fcbce922e9032f6d3908378f6e1d1b0648169d72f4a37f1448d2afb81e",
+    "ultralytics/utils/loss.py": "e0f594c20c4c79eec3b5f31d70f53fa4da467283b3bd8fd5d67e7667b30b327a",
+    "ultralytics/utils/torch_utils.py": "9eb5347a2cc9d07d6755f754e72507e3776b97a68cf055cbfef15d16f6b59f0c",
+    "ultralytics/nn/modules/moe/__init__.py": "8f170ebc5ef8e24e07c9496a67b699d5c7ad0ab73f15441d52c6ad6657f4af1c",
+    "ultralytics/nn/modules/moe/_common.py": "7f4035ab72c1094fc795e25e553c97356adba383312ca5330be552f85cc0297c",
+    "ultralytics/nn/modules/moe/_gated_visual.py": "43f52c2bc88db193a24ae7d87b8c2aa59798cde67062e13b6fd10061a3639419",
+    "ultralytics/nn/modules/moe/_helpers.py": "50632470a32962b48a705d401832a5b794661bb4fddb49f995a3382ef8ac083c",
+    "ultralytics/nn/modules/moe/advanced.py": "6a18de2687bb2523bf7396c49983af24b4b07d187f781cc8a4380a930edc98c5",
+    "ultralytics/nn/modules/moe/analysis.py": "fbf37c43a464fc28eb84951aef980393f685827b91d87dc672163936b02fdc4b",
+    "ultralytics/nn/modules/moe/api.py": "5edf1dc19de0cfaf90aa30b81d8f470abbc49f0a763b8a591a3c39c1296d2f9e",
+    "ultralytics/nn/modules/moe/base.py": "2b29519af37f845a701a5d4f6af4b126557087ef9b11cf6dd04616b750d2c52e",
+    "ultralytics/nn/modules/moe/blocks_advanced.py": "519a50b9a42331335072f60d815d6c4a7cc0f0b85aae91bceb11794feba7471e",
+    "ultralytics/nn/modules/moe/config.py": "e0dcbcb7a61d9d7523cf6828b23a534b620683732a0dbe0f4c17aae6e26679f5",
+    "ultralytics/nn/modules/moe/diagnostics.py": "73bc5aaebdaeaffccdb857c92e00694d813e3161538513f6a0857cf7ca5643bf",
+    "ultralytics/nn/modules/moe/experts.py": "de5b54f0f39e0835bdd0b2eb06614febdf18082a9240cc6fab715c5101aa8857",
+    "ultralytics/nn/modules/moe/experts_advanced.py": "f8ce831634d05d83f64333125dc991e9f5e1d1ede712954f1d11fac3aed84974",
+    "ultralytics/nn/modules/moe/factor_adapter.py": "9dd7aafe55df339c0b12f960986b9a5c8da11ea2370f05de9ad632244cd77053",
+    "ultralytics/nn/modules/moe/gated.py": "5e73e35fa6c53ee45381b934771585314e68e66fb3e6f66786a6ce68af8f4727",
+    "ultralytics/nn/modules/moe/history.py": "23ebf14fbdbcd2f6224391637670ffbbeacaf9174fd40ae0ce54eda465285dab",
+    "ultralytics/nn/modules/moe/hooks.py": "9f8ea9a1171181dd4f86c99e921949f537735d7c15712010e8b33240c34e4622",
+    "ultralytics/nn/modules/moe/hybrid.py": "37c28eae182076143a329c4014999d579cbf414fdc2b8c3f28d2108902086146",
+    "ultralytics/nn/modules/moe/integration.py": "f272f7c49f5a5244deb1c5169f74a6e0d296b8e2e7d15e3713ba259fda90ddf2",
+    "ultralytics/nn/modules/moe/loss.py": "fc492ebd9af8c3a10dd57be221e8d110f7a13761da9ff1c900d6d17e5208f3b4",
+    "ultralytics/nn/modules/moe/modules.py": "0454b829984bd7b6311fd83a6c141482d38e3f53d173980cb87b01a7fd7451b8",
+    "ultralytics/nn/modules/moe/protocol.py": "9c6af0e908c3abf8151ce47d047f245b35ea9f91b039b4686647f65e3233a485",
+    "ultralytics/nn/modules/moe/pruning.py": "9ec9137ea7dbd7c7dba34424a97e8c19a3e811707e9cf0fcf49981d7df831748",
+    "ultralytics/nn/modules/moe/quantize.py": "4f24d245cafa7545bf30b3a9bc401cb8a87563408ad363cc359ad01943e91491",
+    "ultralytics/nn/modules/moe/routers.py": "3863663d5ef18271166cf53550bc309cd6cf863717724c9498494d903ac31a7f",
+    "ultralytics/nn/modules/moe/routers_advanced.py": "2cee494f52e95e95fb12cac806b69ad757c8bf2c056a5fee8787a8c822a3da41",
+    "ultralytics/nn/modules/moe/schedule.py": "6e207f84ca315e545a92d63c1dfd6e0d7ec866f6be777399bc4f6a2c50e986fa",
+    "ultralytics/nn/modules/moe/scheduler.py": "972ec1f101e184e4c380282d920bf6fb3baddfdb623c0a1bf365eaba38474690",
+    "ultralytics/nn/modules/moe/shared_expert_moe.py": "9b438b9fb6693b60931d349594ae284e7292b0a0f089562513293aeb77068c80",
+    "ultralytics/nn/modules/moe/utils.py": "8788814a3328c3302066b2cbc2bda542e77087113ce1e403b51ae3e283a41b1b",
+    "ultralytics/nn/modules/moe/viz.py": "8d506612b8be4093e9324cde43337581f0069454007e63a849cb14c4656abfe9",
+    "ultralytics/nn/modules/moe/weight_verify.py": "87580a2b95eb5d8ff93c505caa47f954bea717efec4a7b831d23602d03bc35cb",
+    "ultralytics/nn/modules/__init__.py": "7bd9cd8a80930907bcb535f3c0cac55019d58c2e4a4a5f8cb3afc1565de6785d",
+    "ultralytics/nn/tasks.py": "28039d7174069734b9a12d78f3206b804c1227f462456cbf653951e675c012ce",
+    "scripts/a1/prepare_p1_residual_factor_r25.py": "814168f861b4836587d32f6f9246b9edbca06b5eb1e35602d5b0596d8e341d5d",
+    "scripts/a1/p1_r25_integrity.py": "fa1a4cbd2ef282d09785fd24b06e37517afbc072051494f00ebcd6cd354e23b3",
+    "scripts/a1/p1_r25_runtime.py": "7b761c85c96aeef7daa79234f3827034c61e35fa14700d061a11dc7f5b2e253b",
+    "scripts/a1/prepare_p1_factorial.py": "77a69c5cd519b0892fd0d0bedd49f2ff5152ac911fd627dc83413186b2bedc7a",
+    "scripts/a1/build_p1_residual_factor_initializers_r25.py": "b8825a2979274f2ad144cd3ab7e7f1ec70596773b092ff15403267646f77e873",
+    "scripts/a1/build_p1_residual_factor_initializers.py": "49d5bfe917ba33151b82310cb7a6db1906cc065b57f6011e0a047bc58777c753",
+    "scripts/a1/run_p1_bn_frozen_r25.py": "8559ea5324fe3f9203ea68615d1df0b6a039066dfc39313a1c1dbc931a6e82be",
+    "scripts/a1/run_p1_factorial_multiseed_2gpu_r25.py": "93aa411055756f3dfb306112847c6959a289a879f1e667eabfab4c1321252a86",
+    "scripts/a1/audit_p1_checkpoints_r25.py": "4a5cd54185ae545593dc1d87bff9a0ca3035720ddec56d15b29ce811b5d40cce",
+    "scripts/a1/audit_p1_residual_factor_checkpoints.py": "2f17d9bdf39fdc69a7fde033de3e05b4eb21be600f0cf48dd9e5a97e3664e4ab",
+    "scripts/a1/audit_p1_routing_r25.py": "fae20e0cc6516ca1d0b459eef6a100e8e065a41f0761836e0074b37a8a26a236",
+    "scripts/a1/audit_p1_preflight_routing.py": "5653b822878981ceaa88e8ce142fac647a5438d9b7347a3b529db9a3d92af9a9",
+    "scripts/a1/audit_p1_routing.py": "952f3a007d81d4dd8087d6acb8fc8008b0fc4b36b14a85e14e66aa2bcacafb79",
+    "scripts/a1/evaluate_p1_matrix.py": "5a962fa2db76c430a074fa618fffc4d021432fdc907d47b411533c9fa2e265ec",
+    "scripts/a1/audit_p1_residual_activity_r25.py": "6c6aa63ed2203f5284bc59ebe30eb200ed4d34f78a1bc86003d61134c7c5b7cf",
+    "scripts/a1/audit_p1_formal_admission_r25.py": "acbb32ab4dbcaa727d3990749b1ec433a89bd1ec8366c60e12cd1931ca43118f",
+    "scripts/a1/verify_p1_r25_migration.py": "5853e8b0a295dfc0b4e77dbfa6e805662b3861c5067c90b9c991fcfef68f36c0",
+    "tests/test_p1_residual_factor.py": "85e2c7319e35f1f23966c55ea9f6c8e07b40f5c0310fc51f9207e522ada164ed",
+    "tests/test_moe_router_boundaries.py": "aa6e5f7d979cc72e8ce218e0920733c83deecf2fb35142a2e99389eca34b1f20",
+    "tests/test_peft_optimizer_policy.py": "b0b33b4ae3b90f9800aa9a8a508aeced2647082aa200102361aec0dba72126da",
+    "tests/test_p1_r25_protocol.py": "487c082ce8ef231b0f357ab52775857480b02dd31a56dec3ec0ec5ef55169555"
+  },
+  "data": {
+    "preflight": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/coco.yaml",
+      "sha256": "5cff596be05e9a902d16ddcea380098711e5152fbe02588e5304dbd0f9cb9c14",
+      "lists": {
+        "train": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/train2017.txt",
+          "sha256": "565e51e347d8448aa4892dd660a002bb3bdc800ce5bdcda60780b50226f1ab0b",
+          "images": 256,
+          "integrity": "ordered_list_sha256_count_and_image_label_content_sha256",
+          "content": {
+            "samples": 256,
+            "image_files": 256,
+            "label_files": 256,
+            "ordered_image_label_content_sha256": "e87850ca8643577c4dac978e230b791b0c2356f0e272d8936620a13dd0be9630"
+          }
+        },
+        "val": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/val2017.txt",
+          "sha256": "73ba70f0f3dc06b6b2d9b1fc2fafef7e2f801f018184fe22520ba0c0ee20d4d5",
+          "images": 128,
+          "integrity": "ordered_list_sha256_count_and_image_label_content_sha256",
+          "content": {
+            "samples": 128,
+            "image_files": 128,
+            "label_files": 128,
+            "ordered_image_label_content_sha256": "399654b370e97465908404b38495945c0da069716bb8dae228a1b043bba10f4a"
+          }
+        }
+      }
+    },
+    "pilot": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+      "sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+      "lists": {
+        "train": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/train2017.txt",
+          "sha256": "93c6aa7b80c64e0746516bb29fd81c4b1fa3d66f202a4e2640132ff70f839073",
+          "images": 5000,
+          "integrity": "ordered_list_sha256_count_and_image_label_content_sha256",
+          "content": {
+            "samples": 5000,
+            "image_files": 5000,
+            "label_files": 5000,
+            "ordered_image_label_content_sha256": "bcb08a48dcb9c2eaab344f96fda491b8598356df756936452eddd25c89576e08"
+          }
+        },
+        "val": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/val2017.txt",
+          "sha256": "634d62f74fe1342c8430f83a2424b07a3d93a71db80e4988d49344c7ba8de324",
+          "images": 512,
+          "integrity": "ordered_list_sha256_count_and_image_label_content_sha256",
+          "content": {
+            "samples": 512,
+            "image_files": 512,
+            "label_files": 512,
+            "ordered_image_label_content_sha256": "306bbe401051c111b9cf981f612ca4257fb95cb902be58d06060184e81c1e320"
+          }
+        }
+      }
+    },
+    "formal": {
+      "path": "/data/data2/TuJiajun/COCO2017/coco/coco2017.yaml",
+      "sha256": "fadd46a0ceb946a0e4439f072eccc19b6af92b4de545d601dfac367be7adef92",
+      "lists": {
+        "train": {
+          "path": "/data/data2/TuJiajun/COCO2017/coco/train2017.txt",
+          "sha256": "b96750603f3f266013d0e86559a1b96f79649698ccdca576ff2b66d94cecfb63",
+          "images": 118287,
+          "integrity": "ordered_list_sha256_and_exact_count"
+        },
+        "val": {
+          "path": "/data/data2/TuJiajun/COCO2017/coco/val2017.txt",
+          "sha256": "871449eca4739d5561af5998320883b132fc565aff00ad6fc383458e8d4b4c73",
+          "images": 5000,
+          "integrity": "ordered_list_sha256_and_exact_count"
+        }
+      }
+    }
+  },
+  "configs": {
+    "a": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/models/a_matched.yaml",
+      "sha256": "9829c5792fab61ce2f12d1448573b48b2b6df6a245d6ce415dcd554cf4ff8aed",
+      "moe": false,
+      "end2end": false
+    },
+    "b": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/models/b_matched.yaml",
+      "sha256": "06bfda03673042faecd6646c6977f23cf1d2fb61bfc21feae32e2a6ec0f426fb",
+      "moe": false,
+      "end2end": true
+    },
+    "c": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/models/c_matched.yaml",
+      "sha256": "aaa4a1066f3e0a248e98266a248df85eeb928a5e6f6644f6649490559c391558",
+      "moe": true,
+      "end2end": false
+    },
+    "d": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/models/d_matched.yaml",
+      "sha256": "5e213d144522e2627a1b44c088548bc0b8b2c78ba9e83d02a88d4a0025686771",
+      "moe": true,
+      "end2end": true
+    }
+  },
+  "requests": {
+    "preflight": {
+      "260829": {
+        "a": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260829/a.json",
+          "sha256": "35b37f2d0b1320904cf5335e0042753c3b7bb4c01ef877cbdd8d052dbf566e38"
+        },
+        "b": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260829/b.json",
+          "sha256": "9f7af7448246815da2fbdeac3aaf82f7a1372e78b3cb5049dce354ec543ad530"
+        },
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260829/c.json",
+          "sha256": "445f9390263382d4862f9f80eb58ae945f853e40d5544b84fc621214aaa26168"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260829/d.json",
+          "sha256": "0ace6e2e3c3bb8d2f82404810ab0bc9aa23f716cd538e8c5af3365bbc67b03b5"
+        }
+      },
+      "260830": {
+        "a": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260830/a.json",
+          "sha256": "c1671fb9ec7f6106d471b656c0f9b2210bbeb68a00818c812be49a9921444a53"
+        },
+        "b": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260830/b.json",
+          "sha256": "60e0ca73983a5e0d77575c6516b152045a2aeacc66cc04078e3a0c4016e84455"
+        },
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260830/c.json",
+          "sha256": "d7af2910cb54b18e49ac66980dfe209ea90e0537b710e8e3eb81e9d83af3f2c8"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260830/d.json",
+          "sha256": "2f33968cef9714598474201b4b9977577482a9c47536fd73c182bdf5fcf0142d"
+        }
+      },
+      "260831": {
+        "a": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260831/a.json",
+          "sha256": "04ea3c4a896bd93a2670dd544be17671be73d60b440f350390227d4ff1b16d2a"
+        },
+        "b": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260831/b.json",
+          "sha256": "56db7a174e20ae9cf73210990b8bfdee7ae34f9c1a04ed4a0ba5c8fd5e8189e9"
+        },
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260831/c.json",
+          "sha256": "829b3aa01997956bd5d664a70ba3c21de0c4cb36246ab5827253e74b10826e93"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/preflight/seed260831/d.json",
+          "sha256": "6c11c0e5a4b2ad4749e1f7d9a4eb85aa6fbafc52f7d9ef5fa6f8fc79c98d0cdd"
+        }
+      }
+    },
+    "routing_probe": {
+      "260829": {
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/routing_probe/seed260829/c.json",
+          "sha256": "72192b47aa4926f108ee4295178802c7cef18e3a50a4c4285fbff433c9cc691b"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/routing_probe/seed260829/d.json",
+          "sha256": "c77688dd67dd56063931eda0e7769f8dea7f6e64ef82c9871eea2fd66794c918"
+        }
+      },
+      "260830": {
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/routing_probe/seed260830/c.json",
+          "sha256": "c4c174bcd86831c14e3bfd5afaa7a1c4feee23d7441722da1c63bfedc05115f9"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/routing_probe/seed260830/d.json",
+          "sha256": "c5fd18ef57619d1eb94a8cbc8ac4f9660b6fb9ba359720a0f49878c76c8148d4"
+        }
+      },
+      "260831": {
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/routing_probe/seed260831/c.json",
+          "sha256": "81606aa550dce102db2732b50d5e315ce812c0920757ce94f11fef411026ca90"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/routing_probe/seed260831/d.json",
+          "sha256": "ec2ec208d30171b9709ae855acbe0fd988e32e2cf45ce8fd81f1c25b41ed4c4b"
+        }
+      }
+    },
+    "formal": {
+      "260829": {
+        "a": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260829/a.json",
+          "sha256": "928d45ab73db1f271e08ae4d2e89c205d36759f76bd3ed6cf324d68b5c274944"
+        },
+        "b": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260829/b.json",
+          "sha256": "cdf1ad2e3c09df37149b8fda8c0d66b30c6cfba0128793fe6cb1a7d030c17a90"
+        },
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260829/c.json",
+          "sha256": "8f4244c36440bd6df4ffaadc008ed301585f83a55fc888828268fdb4818c495b"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260829/d.json",
+          "sha256": "845ef2e7cb3b5a03a6f12d8415e626577401a02665a110a0b0a3c19b4ec8fa9b"
+        }
+      },
+      "260830": {
+        "a": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260830/a.json",
+          "sha256": "c8df42afd6982699eddf92c7692eb024ea1243f378346dc8411f44f059c596ff"
+        },
+        "b": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260830/b.json",
+          "sha256": "af9c9571419e77eda81f4fc08ee72657ebf6e1313422d065f6c4ee3c40076be1"
+        },
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260830/c.json",
+          "sha256": "ac315f3200b32392d5b140cb2ff79025a8c430dbeaeb831d4511088568308123"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260830/d.json",
+          "sha256": "c961b6e97830cbe03f9fbfbe14019d36a550812b16706b461af140da1eecb76a"
+        }
+      },
+      "260831": {
+        "a": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260831/a.json",
+          "sha256": "65912275ff0a8a1270e02bd0ee4cbae9d2fea19c90dcad5d78d897f994131866"
+        },
+        "b": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260831/b.json",
+          "sha256": "775431a3157ddf94ea59e90cd406d0c347ce3f1fe17be70dd194664e0ea893eb"
+        },
+        "c": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260831/c.json",
+          "sha256": "dc937a2507ed66bd1263fc878a685d8117a2d26442d04c870c911d9bf79848eb"
+        },
+        "d": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/requests/formal/seed260831/d.json",
+          "sha256": "50c60b59abbd9de5257ee1b5c46eabbfd555117138258c14aa58150222ac5fc4"
+        }
+      }
+    }
+  },
+  "request_count": 30,
+  "run_root": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_full_r25",
+  "seeds": [
+    260829,
+    260830,
+    260831
+  ],
+  "train_layers": [
+    4,
+    6,
+    8,
+    23
+  ],
+  "freeze": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    7,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+  ],
+  "factor_base": "native official P0 C3k2 frozen inside ResidualFactorAdapter",
+  "factor_base_expected_parameters": 459232,
+  "factor_gain_optimizer": {
+    "lr": 0.01,
+    "weight_decay": 0.0,
+    "warmup": false
+  },
+  "batch_norm": {
+    "calibration_split": "formal COCO train2017 only",
+    "selection": "first 512 paths in the immutable full-COCO train list",
+    "source_list": "/data/data2/TuJiajun/COCO2017/coco/train2017.txt",
+    "image_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r25-full/configs/a1/p1_factorial_full_r25/bn_calibration_train512.txt",
+    "image_list_sha256": "f1d605515cec80eb97a0866b38d0d1241b11d2551a525a4f1c8c56508ce5a87c",
+    "images": 512,
+    "batch": 4,
+    "imgsz": 640,
+    "augment": false,
+    "shuffle": false,
+    "grad": false,
+    "post_calibration_training_policy": "all BatchNorm affine parameters and running statistics frozen"
+  },
+  "router_initialization": {
+    "scheme": "native_iid_normal_final_projection_std_0.05",
+    "std": 0.05,
+    "simplex_override": false,
+    "c_d_tensor_parity_within_seed": true
+  },
+  "routing": {
+    "semantics": "hard_top2_from_step_zero_private_exploration_clean_aux",
+    "top_k": 2,
+    "progressive_sparsity": false,
+    "expert_dropout_rate": 0.0,
+    "generic_moe_noise_std": 0.0,
+    "train_only_private_exploration": {
+      "sigma_source": "train512_median_per_image_logit_std_clipped",
+      "sigma_min": 0.01,
+      "sigma_max": 0.05,
+      "hold_through_microbatch": 625,
+      "decay_to_zero_microbatch": 1000,
+      "private_seed_stride": 10000,
+      "evaluation_noise_std": 0.0
+    },
+    "auxiliary_objective": {
+      "enabled": true,
+      "runtime_semantics": "clean_hard_top2_balance_with_noisy_dispatch",
+      "dispatch_source": "train_only_private_noisy_logits",
+      "dispatch_operator": "hard_top2",
+      "balance_probability_source": "clean_logits_softmax",
+      "balance_assignment_source": "clean_logits_hard_top2",
+      "z_loss_source": "clean_logits",
+      "evaluation_source": "clean_logits_hard_top2",
+      "adds_parameters": false,
+      "changes_inference": false
+    },
+    "validation_audit_export_noise_std": 0.0
+  },
+  "model_change_inherited_from_r20": {
+    "scope": "C/D routers only, identically for every layer and seed",
+    "change": "balance and z losses consume clean routing tensors; noisy hard-Top2 dispatch is unchanged",
+    "a_b_tensor_and_output_invariance_required": true,
+    "c_d_policy_parity_required": true
+  },
+  "runtime_provenance_inherited_from_r21": {
+    "scope": "all versioned initializer, runner, driver, and audit entrypoints",
+    "change": "pin and attest the isolated worktree modules actually loaded by every process",
+    "shared_virtualenv_editable_install_changed": false
+  },
+  "r25_full_coco_extension": {
+    "scope": "full-COCO formal budget plus user-authorized shared-GPU execution; authorized before any r25 training",
+    "change": "replace the 5000/512 five-epoch formal pilot with full COCO train2017/val2017 for 30 epochs",
+    "authorization": "user explicitly requested full-COCO P1 on 2026-08-30",
+    "r23_initializers_or_trained_weights_reused": false,
+    "r24_initializers_or_trained_weights_reused": false,
+    "model_or_routing_semantics_changed_from_r23": false,
+    "dead_expert_diagnostic_target_changed": false,
+    "dead_expert_blocking_semantics_changed": false,
+    "budget_changed": true,
+    "formal_train_images": 118287,
+    "formal_validation_images": 5000,
+    "formal_epochs": 30,
+    "formal_data_integrity": "YAML SHA256 plus ordered train/val list SHA256 and exact counts",
+    "per_file_content_hashing_required": false,
+    "per_file_content_hashing_reason": "not required by A1 and disproportionate for full COCO",
+    "inference_changed": false
+  },
+  "routing_gate": {
+    "sample": "fixed pilot val 512",
+    "dead_experts": {
+      "target": 0,
+      "blocking": false,
+      "role": "reported_diagnostic_only"
+    },
+    "maximum_image_selection_fraction": 0.8,
+    "minimum_normalized_entropy": 0.5,
+    "applies_to": "every router in C and D for every seed"
+  },
+  "routing_gate_scope": "A1-aligned collapse admission: entropy and concentration remain blocking; fixed-val512 dead-expert coverage is reported but non-blocking",
+  "residual_activity_gate": {
+    "checkpoint": "routing-probe last.pt",
+    "sample": "same fixed pilot val 512 as hard-Top2 routing audit",
+    "scope": "every layer 4, 6, and 8 in C and D for every seed",
+    "metric": "sqrt(sum((gain * factor(base(x)))^2) / sum(base(x)^2)) over all sampled activations",
+    "minimum_inclusive": 0.0001,
+    "maximum_exclusive": 0.1
+  },
+  "preflight_policy": "all 12 runs start from their seed initializer; discard all weights",
+  "routing_probe_policy": "C/D x 3 seeds start independently from original r25 initializers; discard all weights",
+  "formal_policy": "start only after combined admission passes; each run starts from its original initializer",
+  "formal_budget": {
+    "train_images": 118287,
+    "validation_images": 5000,
+    "epochs": 30,
+    "imgsz": 640,
+    "physical_batch": 4,
+    "nbs": 16,
+    "accumulate": 4,
+    "optimizer": "SGD",
+    "lr0": 0.0001,
+    "amp": false,
+    "workers": 0
+  },
+  "gpu_policy": {
+    "mode": "two independent shared one-GPU jobs; never DDP; request-visible device is logical 0",
+    "seed_to_physical_gpu": {
+      "260829": "0",
+      "260830": "1",
+      "260831": "0"
+    },
+    "within_seed_order": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "routing_probe_within_seed_order": [
+      "c",
+      "d"
+    ],
+    "gpu0_seed_order": [
+      260829,
+      260831
+    ],
+    "gpu1_seed_order": [
+      260830
+    ],
+    "co_location": {
+      "authorized": true,
+      "authorization": "user explicitly requested immediate shared-GPU execution on 2026-08-30",
+      "minimum_free_memory_mib_per_gpu_at_stage_start": 12000,
+      "preexisting_compute_processes": "allowed_and_recorded",
+      "oom_policy": "fail_closed_no_resume_no_budget_change",
+      "accuracy_caveat": "foreign GPU load may change wall-clock time but not the locked optimization budget"
+    }
+  },
+  "formal_admission": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_full_r25/audits/formal_admission.json",
+    "must_bind": [
+      "protocol_and_implementation_hashes",
+      "exact_virtualenv_and_child_runtime_preflight",
+      "official_source_checkpoint",
+      "all_three_initializer_manifests",
+      "all_12_preflight_checkpoints",
+      "all_6_routing_probe_checkpoints",
+      "fixed_val512_hard_top2_collapse_gate_36_of_36_with_dead_expert_diagnostic",
+      "residual_activity_gate_18_of_18",
+      "a_b_invariance",
+      "c_d_clean_aux_parity",
+      "formal_request_initializer_lineage",
+      "gpu_schedule",
+      "formal_directory_absent"
+    ]
+  },
+  "primary_checkpoint": "last.pt",
+  "secondary_checkpoint": "best.pt",
+  "comparisons": {
+    "end2end_dense": "B-A",
+    "end2end_moe": "D-C",
+    "moe_non_end2end": "C-A",
+    "moe_end2end": "D-B",
+    "interaction": "(D-C)-(B-A)"
+  }
+}

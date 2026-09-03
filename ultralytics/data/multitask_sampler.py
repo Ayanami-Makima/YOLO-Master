@@ -9,8 +9,13 @@ import torch
 from torch.utils.data import Dataset, Sampler
 
 
-class MultiTaskBatchSampler(Sampler[list[tuple[str, int]]]):
-    """Schedule task/source samples with a resumable deterministic state."""
+class MultiTaskBatchSampler(Sampler):
+    """Schedule task/source samples with a resumable deterministic state.
+
+    Keep the runtime base unparameterized: Python 3.8 cannot evaluate the
+    built-in ``list[...]`` generic used by newer Python versions during class
+    creation. Method annotations remain deferred by ``__future__``.
+    """
 
     schema_version = 1
 
