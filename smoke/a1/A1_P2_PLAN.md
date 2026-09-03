@@ -240,3 +240,8 @@ P2 当前主线已切换为 detect 侧 End-to-End 精度诊断：`smoke/a1/p2_e2
 assigner/loss pilot。r1 已在 GPU1 完成三 seed、四格、固定 val512 的只读诊断；MoE 路由机制目录
 `smoke/a1/p2_mechanism_r1/` 保留为辅助证据，不能替代 P2-E 的精度主线，也不能把单次死专家写成
 全局路由坍塌。
+
+随后发现首版 `p2_e2e_loss_r2` 的脚本导入了远端另一个 editable checkout，导致 one-to-one
+分类增益处理组实际上与中性对照完全相同；该目录已封存并标记为无效。修正版
+`p2_e2e_loss_r2_corrected` 已强制当前仓库根目录位于 `sys.path[0]`，并通过单 batch 梯度审计
+确认 `gain=1.0` 与 `gain=1.2` 真正产生不同 loss/梯度，正在按同一四组序列重新运行。

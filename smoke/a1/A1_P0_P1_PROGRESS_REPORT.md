@@ -549,6 +549,11 @@ A `0.43391`、B `0.42808`、C `0.43419`、D `0.42875`，与完整 COCO r28 主�
 尚不能宣称某个 assigner/loss 改动有效。逐图原始 CSV 和完整证据保存在
 `p1_factorial_medium_r28/p2_e2e_precision_r1/`；下一步才是固定一个因素的短程受控 pilot。
 
+首版 P2-E r2 的事后审计发现，脚本执行时 Python 优先使用了远端另一个 editable checkout，
+使 `gain=1.2` 未进入实际损失；B/D 的控制与处理 checkpoint 张量完全相同，因此该目录只作
+无效实验审计证据。已修正 runner/evaluator 的导入隔离，并在单 batch 上验证两种增益的 loss
+与 one-to-one 分类头梯度不同。修正版实验目录为 `p2_e2e_loss_r2_corrected/`，当前重新运行中。
+
 ---
 
 ## 7. 建议下一步
