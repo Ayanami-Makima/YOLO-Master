@@ -347,7 +347,11 @@ class v8DetectionLoss:
     """Criterion class for computing training losses for YOLOv8 object detection."""
 
     def __init__(
-        self, model: torch.nn.Module, tal_topk: int = 10, tal_topk2: int | None = None
+        self,
+        model: torch.nn.Module,
+        tal_topk: int = 10,
+        tal_topk2: int | None = None,
+        conflict_metric: str = "overlap",
     ):  # model must be de-paralleled
         """Initialize v8DetectionLoss with model parameters and task-aligned assignment settings."""
         device = next(model.parameters()).device  # get model device
@@ -379,6 +383,7 @@ class v8DetectionLoss:
             beta=6.0,
             stride=self.stride.tolist(),
             topk2=tal_topk2,
+            conflict_metric=conflict_metric,
         )
         self.bbox_loss = BboxLoss(m.reg_max).to(device)
         self.proj = torch.arange(m.reg_max, dtype=torch.float, device=device)
@@ -1215,7 +1220,17 @@ class E2ELoss:
                 one2one_topk2 = 1
         except (TypeError, ValueError):
             one2one_topk2 = 1
-        self.one2one = loss_fn(model, tal_topk=7, tal_topk2=one2one_topk2)
+        one2one_kwargs = {"tal_topk": 7, "tal_topk2": one2one_topk2}
+        # P2-E r4 changes only the one-to-one conflict resolution metric. The
+        # native overlap-based rule remains the default and non-detection loss
+        # classes keep their original constructor contract.
+        if loss_fn is v8DetectionLoss:
+            conflict_metric = os.environ.get("A1_E2E_O2O_CONFLICT_METRIC", "overlap").strip().lower()
+            if conflict_metric not in {"overlap", "align"}:
+                conflict_metric = "overlap"
+            one2one_kwargs["conflict_metric"] = conflict_metric
+        self.one2one = loss_fn(model, **one2one_kwargs)
+        self.one2one_conflict_metric = getattr(self.one2one.assigner, "conflict_metric", "overlap")
         self.one2one_topk2 = one2one_topk2
         # P2-E r2 changes only the one-to-one classification-loss multiplier.
         # An unset/invalid value is treated as the locked neutral multiplier.

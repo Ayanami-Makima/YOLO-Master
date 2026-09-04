@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Run a short, frozen-budget P2-E one-to-one loss pilot.
 
-The runner supports the r2 classification gain and r3 ``tal_topk2`` positive-budget
-factor.  Defaults are neutral (gain 1.0, topk2 1), so the locked P1 behavior is unchanged.
+The runner supports the r2 classification gain, r3 ``tal_topk2`` positive-budget factor, and r4
+one-to-one conflict-resolution metric. Defaults are neutral, so the locked P1 behavior remains unchanged.
 """
 
 from __future__ import annotations
@@ -82,10 +82,15 @@ def build_request(args: argparse.Namespace) -> dict:
     # r3 includes an explicit topk2=1 control run; infer the protocol from
     # the run name as well so its manifest/status is not mislabeled as r2.
     is_r3 = args.topk2 != 1 or "topk2" in args.name
+    is_r4 = args.conflict_metric != "overlap" or "conflict" in args.name
     return {
-        "schema": "a1-p2-e2e-assigner-budget-r3/v1" if is_r3 else "a1-p2-e2e-cls-gain-r2/v1",
+        "schema": "a1-p2-e2e-conflict-resolution-r4/v1"
+        if is_r4
+        else ("a1-p2-e2e-assigner-budget-r3/v1" if is_r3 else "a1-p2-e2e-cls-gain-r2/v1"),
         "request_id": f"{args.name}_seed{args.seed}_{args.epochs}ep_gain{args.gain:g}_topk2{args.topk2}",
-        "factor": "one_to_one_tal_topk2" if is_r3 else "one_to_one_classification_loss_gain",
+        "factor": "one_to_one_conflict_resolution_metric"
+        if is_r4
+        else ("one_to_one_tal_topk2" if is_r3 else "one_to_one_classification_loss_gain"),
         "gain": args.gain,
         "control_gain": 1.0,
         "tal_topk2": args.topk2,
@@ -100,6 +105,7 @@ def build_request(args: argparse.Namespace) -> dict:
             "router_exploration": {**R19_EXPLORATION_POLICY, "base_seed": args.seed, "enabled": False},
             "e2e_o2o_cls_gain": args.gain,
             "e2e_o2o_tal_topk2": args.topk2,
+            "e2e_o2o_conflict_metric": args.conflict_metric,
         },
     }
 
@@ -114,6 +120,7 @@ def main() -> None:
     parser.add_argument("--epochs", type=int, default=5)
     parser.add_argument("--gain", type=float, default=1.0)
     parser.add_argument("--topk2", type=int, default=1)
+    parser.add_argument("--conflict-metric", choices=("overlap", "align"), default="overlap")
     parser.add_argument("--device", default="1")
     args = parser.parse_args()
     if args.gain <= 0:
@@ -136,6 +143,7 @@ def main() -> None:
             {
                 "A1_E2E_O2O_CLS_GAIN": args.gain,
                 "A1_E2E_O2O_TAL_TOPK2": args.topk2,
+                "A1_E2E_O2O_CONFLICT_METRIC": args.conflict_metric,
                 "created_at": utc_now(),
             },
             indent=2,
@@ -145,6 +153,7 @@ def main() -> None:
     )
     os.environ["A1_E2E_O2O_CLS_GAIN"] = str(args.gain)
     os.environ["A1_E2E_O2O_TAL_TOPK2"] = str(args.topk2)
+    os.environ["A1_E2E_O2O_CONFLICT_METRIC"] = args.conflict_metric
     from ultralytics import YOLO
 
     model = YOLO(str(args.model), task="detect")
@@ -162,6 +171,11 @@ def main() -> None:
         observed = getattr(observed, "topk2", None)
         if observed != args.topk2:
             raise RuntimeError(f"one-to-one tal_topk2 mismatch: expected {args.topk2}, observed {observed}")
+        observed_metric = getattr(getattr(getattr(native, "one2one", None), "assigner", None), "conflict_metric", None)
+        if observed_metric != args.conflict_metric:
+            raise RuntimeError(
+                f"one-to-one conflict metric mismatch: expected {args.conflict_metric}, observed {observed_metric}"
+            )
         (Path(trainer.save_dir) / "p1_runtime_policy_pretrain.json").write_text(
             json.dumps(runtime_policy_payload(trainer, request["request_id"]), indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8",
@@ -170,9 +184,13 @@ def main() -> None:
     model.add_callback("on_pretrain_routine_end", prepare_training)
     model.add_callback("on_train_batch_start", enforce_and_schedule_p1_policy)
     status = {
-        "schema": "a1-p2-e2e-assigner-budget-r3-status/v1"
-        if args.topk2 != 1 or "topk2" in args.name
-        else "a1-p2-e2e-cls-gain-r2-status/v1",
+        "schema": "a1-p2-e2e-conflict-resolution-r4-status/v1"
+        if args.conflict_metric != "overlap" or "conflict" in args.name
+        else (
+            "a1-p2-e2e-assigner-budget-r3-status/v1"
+            if args.topk2 != 1 or "topk2" in args.name
+            else "a1-p2-e2e-cls-gain-r2-status/v1"
+        ),
         "status": "running",
         "started_at": utc_now(),
         "request": request,

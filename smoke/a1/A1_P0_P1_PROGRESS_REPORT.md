@@ -605,6 +605,26 @@ MoE 相对匹配 Dense 的精度差最大仅 `0.000424`，但 E2E 慢 `45.7%–4
 
 6. **P2-F r1 小规模效率筛选已完成。** 六组晚层变体的固定 val512 mAP50-95 几乎相同，但 MoE E2E 延迟比匹配 Dense 慢 45.7%～47.7%，吞吐下降 31.7%～33.7%，显存仅增加 0.3～1.3 MiB。因此本轮 MoE 全部不进入长训；若要继续，先做设备端路由融合/编译优化，否则转回 one-to-one assigner/loss 精度主线。
 
+### 6.11 P2-E r4：one-to-one 冲突消解单因素 pilot（已完成）
+
+在固定 r28 B/D initializer、seed=260829、5 epoch、5000/512 pilot、GPU1 和全部训练超参不变的
+条件下，仅改变 one-to-one TaskAlignedAssigner 在多个 GT 竞争同一 anchor 时的冲突优先级：
+`overlap` 为原生 IoU 优先，`align` 为 task-aligned metric 优先。四组均从原始 initializer
+独立启动，并在固定 val512 上记录候选正样本、冲突 anchor、冲突后正样本和最终正样本数。
+
+| 模型 | 冲突指标 | mAP50-95 | precision | recall | assignment matched IoU | 最终正样本/图 |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| B | overlap | 0.425601 | 0.622710 | 0.536556 | 0.837884 | 6.8789 |
+| B | align | 0.424558 | 0.622397 | 0.536221 | 0.837191 | 6.8789 |
+| D | overlap | 0.425896 | 0.629765 | 0.531780 | 0.837987 | 6.8789 |
+| D | align | 0.425849 | 0.642872 | 0.529913 | 0.837386 | 6.8750 |
+
+`align` 相对 `overlap` 的 mAP 变化为 B `-0.001043`、D `-0.000047`。候选正样本约 45.6/图、
+冲突 anchor 约 1.26～1.29/图，冲突后和最终正样本几乎不变，匹配 IoU 略降；因此该单因素没有
+改善 one-to-one 的正样本稀疏或定位质量，不能支持收益声明，也不扩大到三 seed。r4 结论是
+拒绝 `align`、保留官方默认 `overlap`，后续优先研究候选覆盖与置信度校准。完整证据见
+`smoke/a1/p2_e2e_conflict_r4/`。
+
 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
 
 ## 8. 主要证据文件
@@ -639,6 +659,12 @@ P1：
 - `smoke/a1/p2_efficiency_screen_r1/benchmark/benchmark_evidence.json`
 - `smoke/a1/p2_efficiency_screen_r1/benchmark/samples.csv`
 - `scripts/a1/run_p2_e2e_precision_diagnostics_r1.py`
+- `smoke/a1/p2_e2e_conflict_r4/RESULT_SUMMARY.md`
+- `smoke/a1/p2_e2e_conflict_r4/result_summary.json`
+- `smoke/a1/p2_e2e_conflict_r4/eval_fixed_val512_corrected/evidence.json`
+- `scripts/a1/run_p2_e2e_conflict_r4_sequence.sh`
+- `scripts/a1/evaluate_p2_e2e_conflict_r4.py`
+- `tests/test_p2_e2e_assigner.py`
 - `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`
 - `r23-final-audit/result_summary.json`

@@ -144,6 +144,10 @@ class PrecisionValidatorMixin:
         branch, branch_pred, branch_name = self._assignment_branch(raw)
         if branch is None:
             return {"assigner_branch": "unavailable"}
+        assigner = getattr(branch, "assigner", None)
+        if assigner is not None:
+            assigner.audit_enabled = True
+            assigner.last_audit = None
         try:
             assigned, loss, loss_detached = branch.get_assigned_targets_and_loss(branch_pred, batch)
         except Exception as exc:  # diagnostics must identify unsupported checkpoint APIs explicitly
@@ -178,6 +182,9 @@ class PrecisionValidatorMixin:
             "cls_loss": float(loss_values[1]) if len(loss_values) > 1 else None,
             "dfl_loss": float(loss_values[2]) if len(loss_values) > 2 else None,
         }
+        if assigner is not None:
+            row["assigner_conflict_metric"] = getattr(assigner, "conflict_metric", "overlap")
+            row.update({f"assigner_{key}": value for key, value in (assigner.last_audit or {}).items()})
         return row
 
     def update_metrics(self, preds, batch):
@@ -296,6 +303,7 @@ def run_cell(checkpoint: Path, data_yaml: Path, output: Path, device: str) -> di
         "per_image_metrics": str(cell_output / "per_image_metrics.csv"),
         "assignment_metrics": str(cell_output / "assignment_metrics.csv"),
         "assigner_branches": sorted({row.get("assign_assigner_branch") for row in validator.precision_rows}),
+        "assigner_conflict_metrics": sorted({row.get("assign_assigner_conflict_metric") for row in validator.precision_rows}),
     }
     return result
 
