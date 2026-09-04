@@ -572,6 +572,8 @@ seg/pose 扩展暂不作为第一优先级。
 3. **P2-B r1 保留为辅助证据。** 已从 r28 原始 C/D checkpoint 采集路由负载、熵、Gini、Top-K 和候选重复率；该结果用于排除简单的全局路由坍塌解释，不替代 End-to-End 精度主线。
 4. **P2 go/no-go。** 只有当 assigner/loss pilot 在固定 seed 下明确改善 recall、匹配质量或定位误差且不破坏 NMS-free 闭环，才扩大到三 seed；否则记录无效缓解，不把 MoE 代理筛选或单次死专家写成正式收益/负结果。
 
+5. **P2-E r3 机制诊断已完成。** B/D 分别比较 one-to-one `topk2=1` 与 `topk2=2`，固定 seed=260829、5 epoch、pilot val512。`topk2=2` 在 506～509/512 图像上未增加正样本，四组重复正样本和重叠率均为 0；匹配 IoU 略升、框/DFL 损失未恶化，但分类损失上升 19%～23%，预测数和 FP 增加约 29%～32%，mAP50-95 下降 0.032789（B）和 0.023616（D）。因此下降主要来自分类分数校准与假阳性增加，不是定位匹配恶化。r3 处理组已拒绝，详细统计见 `smoke/a1/p2_e2e_assigner_r3/MECHANISM_DIAGNOSIS.md`；后续若继续 P2，只先增加 assigner 中间量审计并做单因素候选生成/冲突消解实验。
+
 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
 
 ## 8. 主要证据文件

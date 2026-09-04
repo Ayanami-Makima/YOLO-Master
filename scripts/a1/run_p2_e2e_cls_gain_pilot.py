@@ -79,7 +79,9 @@ def build_request(args: argparse.Namespace) -> dict:
         "name": args.name,
         **P1_ROUTING_PARAMS,
     }
-    is_r3 = args.topk2 != 1
+    # r3 includes an explicit topk2=1 control run; infer the protocol from
+    # the run name as well so its manifest/status is not mislabeled as r2.
+    is_r3 = args.topk2 != 1 or "topk2" in args.name
     return {
         "schema": "a1-p2-e2e-assigner-budget-r3/v1" if is_r3 else "a1-p2-e2e-cls-gain-r2/v1",
         "request_id": f"{args.name}_seed{args.seed}_{args.epochs}ep_gain{args.gain:g}_topk2{args.topk2}",
@@ -169,7 +171,7 @@ def main() -> None:
     model.add_callback("on_train_batch_start", enforce_and_schedule_p1_policy)
     status = {
         "schema": "a1-p2-e2e-assigner-budget-r3-status/v1"
-        if args.topk2 != 1
+        if args.topk2 != 1 or "topk2" in args.name
         else "a1-p2-e2e-cls-gain-r2-status/v1",
         "status": "running",
         "started_at": utc_now(),
