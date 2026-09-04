@@ -1,0 +1,24 @@
+{
+  "schema": "a1-p2-e2e-cls-gain-r2-c-results/v1",
+  "status": "completed",
+  "seed": 260829,
+  "train_images": 5000,
+  "val_images": 512,
+  "epochs": 5,
+  "batch": 4,
+  "factor": "one_to_one_classification_loss_gain",
+  "control": 1.0,
+  "treatment": 1.2,
+  "fixed_val512": {
+    "b_gain1p0_seed260829_5ep": {"precision": 0.622710, "recall": 0.536556, "map50": 0.576315, "map50_95": 0.425601},
+    "b_gain1p2_seed260829_5ep": {"precision": 0.624659, "recall": 0.535979, "map50": 0.575451, "map50_95": 0.424845},
+    "d_gain1p0_seed260829_5ep": {"precision": 0.629765, "recall": 0.531780, "map50": 0.575077, "map50_95": 0.425896},
+    "d_gain1p2_seed260829_5ep": {"precision": 0.627901, "recall": 0.535084, "map50": 0.576686, "map50_95": 0.426207}
+  },
+  "delta_treatment_minus_control": {
+    "b_map50_95": -0.000756,
+    "d_map50_95": 0.000311
+  },
+  "decision": "no_formal_gain_claim_single_seed_pilot",
+  "evidence": "eval_fixed_val512/evidence.json"
+}

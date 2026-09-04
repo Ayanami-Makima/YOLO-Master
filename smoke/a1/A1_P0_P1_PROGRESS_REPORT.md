@@ -553,6 +553,11 @@ A `0.43391`、B `0.42808`、C `0.43419`、D `0.42875`，与完整 COCO r28 主�
 使 `gain=1.2` 未进入实际损失；B/D 的控制与处理 checkpoint 张量完全相同，因此该目录只作
 无效实验审计证据。已修正 runner/evaluator 的导入隔离，并在单 batch 上验证两种增益的 loss
 与 one-to-one 分类头梯度不同。修正版实验目录为 `p2_e2e_loss_r2_corrected/`，当前重新运行中。
+修正版 r2-c 已完成四组训练和固定 val512 诊断。B 的分类增益处理组相对中性组 mAP50-95 为
+`-0.000756`，D 为 `+0.000311`；正样本数、匹配 IoU 和 overlap 基本不变。该结果只说明增益
+已真正生效，但不支持单 seed、5 epoch 下的正式收益结论。完整汇总见
+`smoke/a1/p2_e2e_loss_r2_corrected/RESULT_SUMMARY.md`，后续应转向新的 one-to-one assigner/loss
+因素筛选。
 
 ---
 
