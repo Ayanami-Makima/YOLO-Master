@@ -1,0 +1,39 @@
+{
+  "schema": "a1-p2-e2e-assigner-budget-r3/v1",
+  "experiment": "p2_e2e_assigner_r3",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "source_experiment": "p1_factorial_medium_r28",
+  "source_policy": "original_initializer_only",
+  "cells": ["b", "d"],
+  "seed": 260829,
+  "device": "GPU1",
+  "data": {"train_images": 5000, "val_images": 512, "manifest_fixed_order": true},
+  "training": {
+    "epochs": 5,
+    "imgsz": 640,
+    "batch": 4,
+    "optimizer": "SGD",
+    "lr0": 0.0001,
+    "amp": false,
+    "mosaic": 0.0,
+    "mixup": 0.0,
+    "copy_paste": 0.0,
+    "freeze_policy": "P1 BN + residual-factor base frozen",
+    "routing": "hard Top-2 from step zero, deterministic noise-free"
+  },
+  "factor": {
+    "name": "one_to_one_tal_topk2",
+    "control": 1,
+    "treatment": 2,
+    "implementation": "A1_E2E_O2O_TAL_TOPK2 environment knob",
+    "classification_gain": 1.0
+  },
+  "runs": [
+    {"cell": "b", "topk2": 1},
+    {"cell": "b", "topk2": 2},
+    {"cell": "d", "topk2": 1},
+    {"cell": "d", "topk2": 2}
+  ],
+  "status": "ready_to_run",
+  "next": "run_corrected_sequence_then_evaluate_fixed_val512"
+}

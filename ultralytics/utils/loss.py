@@ -1206,7 +1206,17 @@ class E2ELoss:
     def __init__(self, model: torch.nn.Module, loss_fn=v8DetectionLoss):
         """Initialize E2ELoss with one-to-many and one-to-one detection losses using the provided model."""
         self.one2many = loss_fn(model, tal_topk=10)
-        self.one2one = loss_fn(model, tal_topk=7, tal_topk2=1)
+        # P2-E r3 optionally relaxes the one-to-one positive budget.  The
+        # default remains exactly one positive candidate per GT, preserving
+        # the locked P1 behavior when the environment variable is unset.
+        try:
+            one2one_topk2 = int(os.environ.get("A1_E2E_O2O_TAL_TOPK2", "1"))
+            if one2one_topk2 < 1:
+                one2one_topk2 = 1
+        except (TypeError, ValueError):
+            one2one_topk2 = 1
+        self.one2one = loss_fn(model, tal_topk=7, tal_topk2=one2one_topk2)
+        self.one2one_topk2 = one2one_topk2
         # P2-E r2 changes only the one-to-one classification-loss multiplier.
         # An unset/invalid value is treated as the locked neutral multiplier.
         try:

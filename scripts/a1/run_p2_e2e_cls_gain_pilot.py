@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Run a short, frozen-budget P2-E one-to-one classification-loss pilot.
+"""Run a short, frozen-budget P2-E one-to-one loss pilot.
 
-The only experimental factor is ``A1_E2E_O2O_CLS_GAIN``. Gain 1.0 is the neutral control;
-the treatment value is recorded in the run manifest. This runner reuses the P1 freeze and
-hard-Top-2 policy checks and writes a resumable status file beside the training output.
+The runner supports the r2 classification gain and r3 ``tal_topk2`` positive-budget
+factor.  Defaults are neutral (gain 1.0, topk2 1), so the locked P1 behavior is unchanged.
 """
 
 from __future__ import annotations
@@ -80,12 +79,15 @@ def build_request(args: argparse.Namespace) -> dict:
         "name": args.name,
         **P1_ROUTING_PARAMS,
     }
+    is_r3 = args.topk2 != 1
     return {
-        "schema": "a1-p2-e2e-cls-gain-r2/v1",
-        "request_id": f"{args.name}_seed{args.seed}_{args.epochs}ep_gain{args.gain:g}",
-        "factor": "one_to_one_classification_loss_gain",
+        "schema": "a1-p2-e2e-assigner-budget-r3/v1" if is_r3 else "a1-p2-e2e-cls-gain-r2/v1",
+        "request_id": f"{args.name}_seed{args.seed}_{args.epochs}ep_gain{args.gain:g}_topk2{args.topk2}",
+        "factor": "one_to_one_tal_topk2" if is_r3 else "one_to_one_classification_loss_gain",
         "gain": args.gain,
         "control_gain": 1.0,
+        "tal_topk2": args.topk2,
+        "control_tal_topk2": 1,
         "inputs": {"model": str(args.model), "data": str(args.data), "task": "detect"},
         "params": params,
         "a1_policy": {
@@ -95,6 +97,7 @@ def build_request(args: argparse.Namespace) -> dict:
             "expert_dropout_rate": 0.0,
             "router_exploration": {**R19_EXPLORATION_POLICY, "base_seed": args.seed, "enabled": False},
             "e2e_o2o_cls_gain": args.gain,
+            "e2e_o2o_tal_topk2": args.topk2,
         },
     }
 
@@ -107,11 +110,14 @@ def main() -> None:
     parser.add_argument("--name", required=True)
     parser.add_argument("--seed", type=int, default=260829)
     parser.add_argument("--epochs", type=int, default=5)
-    parser.add_argument("--gain", type=float, required=True)
+    parser.add_argument("--gain", type=float, default=1.0)
+    parser.add_argument("--topk2", type=int, default=1)
     parser.add_argument("--device", default="1")
     args = parser.parse_args()
     if args.gain <= 0:
         raise ValueError("--gain must be positive")
+    if args.topk2 < 1:
+        raise ValueError("--topk2 must be >= 1")
     if not args.model.is_file() or not args.data.is_file():
         raise FileNotFoundError(f"missing model/data: {args.model}, {args.data}")
     save_dir = args.project / args.name
@@ -124,10 +130,19 @@ def main() -> None:
     request = build_request(args)
     manifest_path.write_text(json.dumps(request, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     env_path.write_text(
-        json.dumps({"A1_E2E_O2O_CLS_GAIN": args.gain, "created_at": utc_now()}, indent=2) + "\n",
+        json.dumps(
+            {
+                "A1_E2E_O2O_CLS_GAIN": args.gain,
+                "A1_E2E_O2O_TAL_TOPK2": args.topk2,
+                "created_at": utc_now(),
+            },
+            indent=2,
+        )
+        + "\n",
         encoding="utf-8",
     )
     os.environ["A1_E2E_O2O_CLS_GAIN"] = str(args.gain)
+    os.environ["A1_E2E_O2O_TAL_TOPK2"] = str(args.topk2)
     from ultralytics import YOLO
 
     model = YOLO(str(args.model), task="detect")
@@ -136,6 +151,15 @@ def main() -> None:
         configure_r19_exploration(trainer, request)
         enforce_p1_freeze_policy(trainer)
         validate_runtime_p1_policy(trainer)
+        criterion = getattr(trainer.model, "criterion", None)
+        if criterion is None and hasattr(trainer.model, "init_criterion"):
+            criterion = trainer.model.init_criterion()
+            trainer.model.criterion = criterion
+        native = getattr(criterion, "native_criterion", criterion)
+        observed = getattr(getattr(native, "one2one", None), "assigner", None)
+        observed = getattr(observed, "topk2", None)
+        if observed != args.topk2:
+            raise RuntimeError(f"one-to-one tal_topk2 mismatch: expected {args.topk2}, observed {observed}")
         (Path(trainer.save_dir) / "p1_runtime_policy_pretrain.json").write_text(
             json.dumps(runtime_policy_payload(trainer, request["request_id"]), indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8",
@@ -143,7 +167,14 @@ def main() -> None:
 
     model.add_callback("on_pretrain_routine_end", prepare_training)
     model.add_callback("on_train_batch_start", enforce_and_schedule_p1_policy)
-    status = {"schema": "a1-p2-e2e-cls-gain-r2-status/v1", "status": "running", "started_at": utc_now(), "request": request}
+    status = {
+        "schema": "a1-p2-e2e-assigner-budget-r3-status/v1"
+        if args.topk2 != 1
+        else "a1-p2-e2e-cls-gain-r2-status/v1",
+        "status": "running",
+        "started_at": utc_now(),
+        "request": request,
+    }
     status_path.write_text(json.dumps(status, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     try:
         results = model.train(data=str(args.data), **request["params"])
