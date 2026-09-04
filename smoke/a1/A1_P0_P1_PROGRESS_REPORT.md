@@ -625,6 +625,40 @@ MoE 相对匹配 Dense 的精度差最大仅 `0.000424`，但 E2E 慢 `45.7%–4
 拒绝 `align`、保留官方默认 `overlap`，后续优先研究候选覆盖与置信度校准。完整证据见
 `smoke/a1/p2_e2e_conflict_r4/`。
 
+### 6.12 P2-A seg extension r1：分割任务小规模闭环（已完成）
+
+在完成 P2-F 效率筛选和 P2-E r4 诊断后，按“先做可复现任务扩展”的方向启动独立 seg pilot。
+本轮不是新的 P1 2×2，也不替代 detect 侧 End-to-End 精度主线；为控制资源，仅保留 A/B/D 三格：
+A=`Dense + NMS`、B=`Dense + End-to-End`、D=`MoE + End-to-End`，用 B/D 检查 NMS-free 与 MoE
+在分割头上的迁移，用 A 作为非端到端对照。
+
+固定设置：COCO pilot train 5000 / val 512（有效实例分别 36,404 / 3,536，跳过 0），
+`yolo26-seg.yaml`、640×640、batch=4、5 epochs、seed=260829、GPU1、SGD、`lr0=1e-4`、
+AMP off、workers=0、mosaic/mixup/copy-paste=0；只训练层 4/6/8/23，其他层、所有 BN 和
+ResidualFactor 官方 C3k2 base 冻结。层 4/6/8 采用 gain=0 的 `C3k2ResidualFactor`，层 23 为
+`Segment26`；共享 backbone/neck 特征保存前和重载后最大误差均为 `0.0`，冻结 base 参数为
+`459,232`。分割专用 mask/proto 张量按形状匹配规则初始化，不把随机 mask 头误写成“官方基座保持”。
+
+固定 val512 的最终评测与 GPU1 batch=1 forward 性能如下（只读评测，不与 P1 detect mAP 混用）：
+
+| 格 | head / 模式 | 参数 | box mAP50-95 | mask mAP50-95 | mask recall | p50 forward (ms) | 吞吐 (img/s) | 峰值显存 (MiB) |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| A | Segment26 / NMS | 3,387,228 | 0.435484 | 0.052940 | 0.236831 | 5.884 | 169.82 | 700.3 |
+| B | Segment26 / End-to-End | 3,702,280 | 0.426187 | 0.043418 | 0.202388 | 6.116 | 163.30 | 812.7 |
+| D | Segment26 / End-to-End + MoE | 6,133,176 | 0.425863 | 0.028643 | 0.169557 | 11.732 | 84.74 | 804.8 |
+
+三组训练日志均正常结束；A/B/D 的 ONNX 导出均返回 `passed`。D 的 512 图像 hard Top-2 路由审计
+记录到 6 个零选择专家（两个 8-expert 子模块各 2 个、一个 16-expert 子模块 2 个）；但各模块的
+最大选择占比分别为 `0.500/0.342/0.373/0.289/0.175/0.169`，归一化熵为 `0.733–0.914`，均未
+超过集中度阈值、也未低于熵阈值。由于存在零选择专家，本轮路由检查整体记为 `all_checks_passed=false`；
+这是单 seed 的机制记录，不足以构成“全局路由坍塌”或正式 P2 负结果。
+
+本轮只证明 seg 训练、验证、E2E head 和导出链路可复现，未观察到 MoE 分割收益：D 的 mask
+mAP50-95 比 B 低 `0.014775`，p50 forward 约慢 `92%`、吞吐约低 `48%`。因此不直接增加 epoch、
+专家数或启动三 seed 长训；若继续 seg，应先单因素检查 mask/proto 初始化、mask loss 与后层路由
+开销，并保持 A/B 对照。原始证据见 `smoke/a1/p2_seg_r1/`；服务器完整日志、checkpoint 和
+ONNX 保存在 `/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/`。
+
 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
 
 ## 8. 主要证据文件
@@ -665,6 +699,16 @@ P1：
 - `scripts/a1/run_p2_e2e_conflict_r4_sequence.sh`
 - `scripts/a1/evaluate_p2_e2e_conflict_r4.py`
 - `tests/test_p2_e2e_assigner.py`
+- `smoke/a1/p2_seg_r1/protocol.json`
+- `smoke/a1/p2_seg_r1/initialization_manifest.json`
+- `smoke/a1/p2_seg_r1/evaluation_evidence.json`
+- `smoke/a1/p2_seg_r1/route_audit.json`
+- `smoke/a1/p2_seg_r1/{a,b,d}_results.csv`
+- `scripts/a1/prepare_p2_seg_r1.py`
+- `scripts/a1/build_p2_seg_initializers.py`
+- `scripts/a1/run_p2_seg_r1_sequence.sh`
+- `scripts/a1/evaluate_p2_seg_r1.py`
+- `scripts/a1/audit_p2_seg_routes_r1.py`
 - `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`
 - `r23-final-audit/result_summary.json`

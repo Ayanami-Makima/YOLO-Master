@@ -226,7 +226,7 @@ smoke/a1/                   # 已完成的准入 Smoke 和原始轻量证据
 - [ ] 三 seed 原始结果与准确率/延迟/显存汇总表
 - [ ] ONNX 导出与 PyTorch/ONNX 一致性报告
 - [ ] router、匹配、重复框、梯度诊断原始数据及绘图脚本
-- [ ] seg/pose 扩展结果，或机制级负结果包
+- [x] seg 扩展 pilot 结果（P2-A r1）或机制级负结果包
 - [ ] `README.md`、`limitations.md` 与独立复现说明
 
 ## 10. 当前下一步
@@ -293,3 +293,27 @@ pilot val512。`topk2=2` 没有形成预期的正样本增加（每图正样本�
 改善 one-to-one 的正样本稀疏或定位质量，不能支持收益声明，也不值得扩大到三 seed。r4 结论为
 拒绝 `align`、保留官方默认 `overlap`；下一候选应聚焦候选覆盖/置信度校准，而不是继续改变
 罕见冲突的 tie-break。完整证据见 `smoke/a1/p2_e2e_conflict_r4/`。
+
+### P2-A：seg extension r1（已完成，用户授权的任务扩展）
+
+为验证 P1 的残差因子、MoE 路由和 NMS-free head 能否迁移到实例分割，启动固定 val512 的小规模
+seg 闭环。该轮不是新的 P1 2×2，且不把单 seed pilot 当作正式 P2 收益；仅运行 A/B/D 三格：
+A=`Dense+NMS`、B=`Dense+End-to-End`、D=`MoE+End-to-End`。
+
+实验保持 A1 的预训练基座与冻结口径：COCO train 5000 / val 512、640×640、batch 4、5 epochs、
+seed 260829、GPU1、SGD `lr0=1e-4`、AMP off、workers 0、无 mosaic/mixup/copy-paste；仅训练
+层 4/6/8/23，冻结其余层、所有 BN 和 ResidualFactor 的官方 C3k2 base。共享特征在保存/重载前后
+最大误差均为 `0.0`，冻结 base 参数 `459,232`，head 为 `Segment26`。
+
+固定 val512 结果为：A box/mask mAP50-95=`0.435484/0.052940`，B=`0.426187/0.043418`，
+D=`0.425863/0.028643`。GPU1 batch=1 forward p50 分别为 `5.884/6.116/11.732 ms`，吞吐
+`169.82/163.30/84.74 img/s`；三组 ONNX 导出均通过。D 相对 B 没有 mask 精度收益，且 p50
+约慢 92%。
+
+D 的 512 图像 hard Top-2 路由审计出现 6 个零选择专家，但所有模块最大选择占比为
+`0.169–0.500`、归一化熵为 `0.733–0.914`；因此记录为单 seed 局部负载不均，不写成全局路由
+坍塌结论。该扩展证明 seg 训练/验证/E2E/导出链路可复现，但不支持继续盲目增加 epoch、专家数
+或三 seed 长训。若继续 seg，应先对 mask/proto 初始化、mask loss 和后层 dispatch 做单因素
+受控验证；否则回到 detect one-to-one assigner/loss 主线。
+
+原始证据：`smoke/a1/p2_seg_r1/`；服务器完整目录：`/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/`。

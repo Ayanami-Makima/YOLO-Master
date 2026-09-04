@@ -1,0 +1,72 @@
+{
+  "schema": "a1-p2-seg-extension-r1/v1",
+  "status": "prepared",
+  "locked_sha": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "source_checkpoint": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+    "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef"
+  },
+  "parent": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/cfg/models/26/yolo26-seg.yaml",
+    "sha256": "53c0348a36a3e19bbc3bd4f695f50cbbfc97a3059f62e9b251f278ad74fdd7cb"
+  },
+  "data": {
+    "yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/pilot_data/coco-seg.yaml",
+    "yaml_sha256": "d4f977b25d02763262553819367f29987c2f423ae513b3a7952e17a5b5ed42e4",
+    "train_stats": {
+      "images": 5000,
+      "valid_instances": 36404,
+      "skipped_without_polygon": 0
+    },
+    "val_stats": {
+      "images": 512,
+      "valid_instances": 3536,
+      "skipped_without_polygon": 0
+    }
+  },
+  "configs": {
+    "a": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/a_seg.yaml",
+      "sha256": "59d321d3f82ed2043c968e11cd069e215d0bc3804f556442ed7cfe66360fd437",
+      "moe": false,
+      "end2end": false
+    },
+    "b": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/b_seg.yaml",
+      "sha256": "42851349dcedd7f23a03d6ec7648f2697742d84a4d653ea9a2d2a2619e6e3dd4",
+      "moe": false,
+      "end2end": true
+    },
+    "d": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/d_seg.yaml",
+      "sha256": "1f41331309faf9de5695c875217e6398da105d94b7eddb78c8744e55ba939116",
+      "moe": true,
+      "end2end": true
+    }
+  },
+  "requests": {
+    "a": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/a_request.json",
+      "sha256": "c38dd53995bfc3d4aca927964dcc9b6abbfc8544de1900776c6b05fcd484ba11"
+    },
+    "b": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/b_request.json",
+      "sha256": "6680c3d40b29e4e3d97d9c1dd871175859683af39fe257a4bd20989222c078e9"
+    },
+    "d": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/d_request.json",
+      "sha256": "6af4a88b7618792acfe1c6192b91a0bea57d860064a00c1c65985bd897167be6"
+    }
+  },
+  "run_root": "/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1",
+  "task": "segment",
+  "pilot_budget": "5000 train / 512 val, batch 4, 5 epochs, seed 260829, GPU1",
+  "train_layers": [
+    4,
+    6,
+    8,
+    23
+  ],
+  "freeze": "all other model layers; all BatchNorm; residual-factor base",
+  "initializer_policy": "shared pretrained backbone/head tensors where shapes match; zero residual gain; segmentation-specific mask tensors remain newly initialized"
+}
