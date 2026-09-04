@@ -574,6 +574,37 @@ seg/pose 扩展暂不作为第一优先级。
 
 5. **P2-E r3 机制诊断已完成。** B/D 分别比较 one-to-one `topk2=1` 与 `topk2=2`，固定 seed=260829、5 epoch、pilot val512。`topk2=2` 在 506～509/512 图像上未增加正样本，四组重复正样本和重叠率均为 0；匹配 IoU 略升、框/DFL 损失未恶化，但分类损失上升 19%～23%，预测数和 FP 增加约 29%～32%，mAP50-95 下降 0.032789（B）和 0.023616（D）。因此下降主要来自分类分数校准与假阳性增加，不是定位匹配恶化。r3 处理组已拒绝，详细统计见 `smoke/a1/p2_e2e_assigner_r3/MECHANISM_DIAGNOSIS.md`；后续若继续 P2，只先增加 assigner 中间量审计并做单因素候选生成/冲突消解实验。
 
+### 6.10 P2-F r1：小规模效率筛选（已完成）
+
+为落实 P2“先做效率筛选，再决定是否长训”的步骤，固定同一预训练 C3k2 基座、数据和 seed，
+仅在 backbone 层 8 加入 MoE，层 4/6 保留 Dense residual factor。六组为 Dense ratio 4/6
+等活动 MLP 计算对照，以及 2/4 experts × Top-1/Top-2；每组 1 epoch、5000/512 pilot，
+随后在 GPU1 固定 val512 复评，并以 batch=1、30 warmup + 100 samples 同时测 E2E/NMS 延迟、
+吞吐、峰值显存和辅助 THOP。
+
+固定 val512 的 mAP50-95 如下（该 pilot 不替代正式长训指标）：
+
+| 变体 | mAP50-95 | GPU1 E2E mean (ms) | 吞吐 (img/s) | 峰值显存 (MiB) |
+| --- | ---: | ---: | ---: | ---: |
+| late_dense_eq_top1 | 0.427076 | 6.2423 | 160.20 | 688.0 |
+| late_dense_eq_top2 | 0.426884 | 6.3690 | 157.01 | 688.5 |
+| late_moe_2e_top1 | 0.427138 | 9.0944 | 109.96 | 688.3 |
+| late_moe_2e_top2 | 0.426774 | 9.3136 | 107.37 | 688.3 |
+| late_moe_4e_top1 | 0.427500 | 9.1488 | 109.30 | 689.3 |
+| late_moe_4e_top2 | 0.426750 | 9.4054 | 106.32 | 689.3 |
+
+MoE 相对匹配 Dense 的精度差最大仅 `0.000424`，但 E2E 慢 `45.7%–47.7%`、吞吐下降
+`31.7%–33.7%`；显存只增加 `0.3–1.3 MiB`。2→4 experts 几乎不改善延迟，Top-2 相对
+同 experts Top-1 仅增加约 `0.22–0.26 ms`。结合 P1 Router/dispatch 分解，当前效率瓶颈
+仍是路由同步、索引/分发和聚合，而不是专家 kernel。
+
+本轮筛选门禁：精度通过、效率不通过；四个 late-layer MoE 变体不进入长训，Dense 对照和
+全部原始证据封存于 `smoke/a1/p2_efficiency_screen_r1/`。详细表格和 checkpoint/样本哈希见
+该目录的 `RESULT_SUMMARY.md`、`eval_fixed_val512/evaluation_evidence.json` 和
+`benchmark/benchmark_evidence.json`。
+
+6. **P2-F r1 小规模效率筛选已完成。** 六组晚层变体的固定 val512 mAP50-95 几乎相同，但 MoE E2E 延迟比匹配 Dense 慢 45.7%～47.7%，吞吐下降 31.7%～33.7%，显存仅增加 0.3～1.3 MiB。因此本轮 MoE 全部不进入长训；若要继续，先做设备端路由融合/编译优化，否则转回 one-to-one assigner/loss 精度主线。
+
 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
 
 ## 8. 主要证据文件
@@ -602,6 +633,11 @@ P1：
 - `smoke/a1/p2_e2e_precision_r1/PROTOCOL.md`
 - `smoke/a1/p2_e2e_precision_r1/protocol.json`
 - `smoke/a1/p2_e2e_precision_r1/evidence.json`
+- `smoke/a1/p2_efficiency_screen_r1/RESULT_SUMMARY.md`
+- `smoke/a1/p2_efficiency_screen_r1/result_summary.json`
+- `smoke/a1/p2_efficiency_screen_r1/eval_fixed_val512/evaluation_evidence.json`
+- `smoke/a1/p2_efficiency_screen_r1/benchmark/benchmark_evidence.json`
+- `smoke/a1/p2_efficiency_screen_r1/benchmark/samples.csv`
 - `scripts/a1/run_p2_e2e_precision_diagnostics_r1.py`
 - `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`

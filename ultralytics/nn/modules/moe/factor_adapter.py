@@ -80,8 +80,14 @@ class C3k2ResidualFactor(ResidualFactorAdapter):
         attn: bool = False,
         g: int = 1,
         shortcut: bool = True,
+        factor_mlp_ratio: float = 2.0,
     ) -> None:
-        """Construct a native base and a matched dense or sparse residual."""
+        """Construct a native base and a matched dense or sparse residual.
+
+        ``factor_mlp_ratio`` changes only the learnable residual factor width;
+        the native C3k2 base keeps the original constructor arguments and can
+        therefore remain frozen for controlled efficiency screens.
+        """
         base = C3k2(c1, c2, n=n, c3k=c3k, e=e, attn=attn, g=g, shortcut=shortcut)
         factor_args = {
             "c1": c2,
@@ -90,7 +96,7 @@ class C3k2ResidualFactor(ResidualFactorAdapter):
             "a2": True,
             "area": 1,
             "residual": False,
-            "mlp_ratio": 2.0,
+            "mlp_ratio": factor_mlp_ratio,
             "e": 0.5,
             "g": 1,
             "shortcut": True,
@@ -122,6 +128,7 @@ class C3k2ResidualFactor(ResidualFactorAdapter):
                         routing.noise_std = 0.0
                         routing.p1_balance_on_clean_routes = True
         self.moe = moe
+        self.factor_mlp_ratio = float(factor_mlp_ratio)
         self.num_experts = num_experts if moe else 0
         self.top_k = top_k if moe else 0
         self.routing_schedule = "hard_top_k_from_step_zero" if moe else "not_applicable"

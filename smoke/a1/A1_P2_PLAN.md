@@ -256,3 +256,20 @@ pilot val512。`topk2=2` 没有形成预期的正样本增加（每图正样本�
 校准受到扰动，而不是定位匹配变差。完整诊断见 `smoke/a1/p2_e2e_assigner_r3/`；该处理组
 被拒绝，当前保留 `topk2=1` 基线。下一步若继续，只增加 assigner 中间量审计并做单因素候选
 生成/冲突消解实验，不直接长训。
+
+### P2-F：小规模效率筛选（r1，已完成）
+
+为判断 MoE 是否值得进入下一轮长训，固定 GPU1、batch=1 性能口径，新增仅在 backbone 层 8
+使用 MoE 的六组筛选：Dense ratio 4/6 等活动 MLP 计算对照，以及 2/4 experts × Top-1/Top-2。
+六组均从同一零增益 initializer 进行 1 epoch、5000/512 pilot，并在固定 val512 上复评。
+
+固定 val512 mAP50-95 为 `0.426750–0.427500`，相对匹配 Dense 的最大绝对差仅 `0.000424`，
+故没有可辨识的精度差异；但 GPU1 E2E batch=1 中 Dense 为 `6.242–6.369 ms`，MoE 为
+`9.094–9.405 ms`，慢 `45.7%–47.7%`，吞吐下降约三分之一，峰值显存仅增加 `0.3–1.3 MiB`。
+2→4 experts 几乎不改善延迟，Top-2 只额外增加约 `0.22–0.26 ms`。这与 P1 内部 profiling
+一致，表明 Router、索引/分发和聚合是主要成本，而非专家矩阵乘法。
+
+因此 r1 的效率门禁结论为：Dense 对照保留；四个 late-layer MoE 变体全部拒绝进入长训。
+该结论是效率筛选结论，不把 1 epoch 的近似等精度写成 MoE 正式收益；原始证据见
+`smoke/a1/p2_efficiency_screen_r1/`。若后续继续 MoE，必须先做设备端路由融合/编译优化并
+重新通过同一 benchmark，否则 P2 继续 one-to-one assigner/loss 精度主线。
