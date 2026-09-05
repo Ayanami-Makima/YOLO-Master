@@ -1220,7 +1220,12 @@ class E2ELoss:
                 one2one_topk2 = 1
         except (TypeError, ValueError):
             one2one_topk2 = 1
-        one2one_kwargs = {"tal_topk": 7, "tal_topk2": one2one_topk2}
+        try:
+            one2one_topk = int(os.environ.get("A1_E2E_O2O_TAL_TOPK", "7"))
+        except (TypeError, ValueError):
+            one2one_topk = 7
+        one2one_topk = max(one2one_topk, 1)
+        one2one_kwargs = {"tal_topk": one2one_topk, "tal_topk2": one2one_topk2}
         # P2-E r4 changes only the one-to-one conflict resolution metric. The
         # native overlap-based rule remains the default and non-detection loss
         # classes keep their original constructor contract.
@@ -1230,6 +1235,7 @@ class E2ELoss:
                 conflict_metric = "overlap"
             one2one_kwargs["conflict_metric"] = conflict_metric
         self.one2one = loss_fn(model, **one2one_kwargs)
+        self.one2one_topk = one2one_topk
         self.one2one_conflict_metric = getattr(self.one2one.assigner, "conflict_metric", "overlap")
         self.one2one_topk2 = one2one_topk2
         # P2-E r2 changes only the one-to-one classification-loss multiplier.

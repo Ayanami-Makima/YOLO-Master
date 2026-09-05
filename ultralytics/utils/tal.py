@@ -135,6 +135,7 @@ class TaskAlignedAssigner(nn.Module):
             pd_scores, pd_bboxes, gt_labels, gt_bboxes, anc_points, mask_gt
         )
         candidate_positive_count = int(mask_pos.sum().item()) if self.audit_enabled else None
+        candidate_gt_count = int(mask_pos.any(-1).sum().item()) if self.audit_enabled else None
 
         target_gt_idx, fg_mask, mask_pos = self.select_highest_overlaps(
             mask_pos, overlaps, self.n_max_boxes, align_metric
@@ -142,7 +143,9 @@ class TaskAlignedAssigner(nn.Module):
         if self.audit_enabled:
             audit = dict(self.last_audit or {})
             audit["candidate_positive_count"] = candidate_positive_count
+            audit["candidate_gt_count"] = candidate_gt_count
             audit["final_positive_count"] = int(fg_mask.sum().item())
+            audit["final_gt_count"] = int(mask_pos.any(-1).sum().item())
             self.last_audit = audit
 
         # Assigned target
@@ -360,6 +363,7 @@ class TaskAlignedAssigner(nn.Module):
                 "conflict_metric": self.conflict_metric,
                 "conflict_anchor_count": conflict_anchor_count,
                 "post_conflict_positive_count": int(fg_mask.sum().item()),
+                "post_conflict_gt_count": int(mask_pos.any(-1).sum().item()),
             }
 
         if self.topk2 != self.topk:
@@ -372,8 +376,10 @@ class TaskAlignedAssigner(nn.Module):
             fg_mask = mask_pos.sum(-2)
             if self.audit_enabled:
                 self.last_audit["post_secondary_topk_positive_count"] = int(fg_mask.sum().item())
+                self.last_audit["post_secondary_topk_gt_count"] = int(mask_pos.any(-1).sum().item())
         elif self.audit_enabled:
             self.last_audit["post_secondary_topk_positive_count"] = int(fg_mask.sum().item())
+            self.last_audit["post_secondary_topk_gt_count"] = int(mask_pos.any(-1).sum().item())
         # Find each grid serve which gt(index)
         target_gt_idx = mask_pos.argmax(-2)  # (b, h*w)
         return target_gt_idx, fg_mask, mask_pos

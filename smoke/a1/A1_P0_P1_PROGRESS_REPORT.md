@@ -659,6 +659,32 @@ mAP50-95 比 B 低 `0.014775`，p50 forward 约慢 `92%`、吞吐约低 `48%`。
 开销，并保持 A/B 对照。原始证据见 `smoke/a1/p2_seg_r1/`；服务器完整日志、checkpoint 和
 ONNX 保存在 `/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/`。
 
+### 6.13 P2-E r5：one-to-one 候选预算单因素 pilot（已完成）
+
+为验证 one-to-one 精度差距是否来自候选生成预算，在固定 r28 B/D 原始 initializer、seed=260829、
+5 epoch、5000/512 pilot、GPU1、batch=4、640×640、SGD `lr0=1e-4`、AMP off、冻结策略和
+`topk2=1` 全部不变的条件下，仅将 TaskAlignedAssigner 的 one-to-one `tal_topk` 从官方默认 7
+改为 10。四组均独立重启：B/D 各有 `topk=7` 对照和 `topk=10` 处理；训练、评测和逐图像审计均正常
+完成，无 Traceback、OOM 或 NaN。
+
+固定 val512（512 图像、3536 GT）结果如下。评测使用各组 `last.pt`，batch=1、GPU1，并通过新增
+assigner 中间量记录候选 GT/正样本和冲突后匹配：
+
+| 格 | tal_topk | mAP50-95 | precision | recall | 候选正样本/图 | 最终正样本/图 | 候选 GT 覆盖 | 最终 GT 覆盖 | 冲突 anchor/图 | matched IoU |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| B control | 7 | 0.426536 | 0.632169 | 0.533208 | 45.6063 | 6.9350 | 0.998303 | 0.996324 | 1.2598 | 0.837826 |
+| B candidate10 | 10 | 0.426536 | 0.632169 | 0.533208 | 63.0669 | 6.9331 | 0.998303 | 0.996041 | 2.1614 | 0.837910 |
+| D control | 7 | 0.425947 | 0.641006 | 0.531202 | 45.6063 | 6.9311 | 0.998303 | 0.995758 | 1.3012 | 0.837997 |
+| D candidate10 | 10 | 0.425947 | 0.641006 | 0.531202 | 63.0650 | 6.9291 | 0.998303 | 0.995475 | 2.1909 | 0.837951 |
+
+`tal_topk=10` 使候选正样本增加约 `38.3%`，但候选 GT 覆盖已从 `0.998303` 接近饱和，最终 one-to-one
+匹配正样本、recall、mAP、FP/FN 和 loss 均未改善；冲突 anchor 反而增加约 `67%–72%`，最终 GT 覆盖
+略降。B/D 的处理组与各自对照在固定评测中数值完全一致（mAP 差为 `0.0`），因此本因素不能解释
+End-to-End 精度差距，也不值得扩大到三 seed 或长训。r5 结论：保留官方 `tal_topk=7, topk2=1`，
+后续应转向候选质量/置信度校准或 one-to-one loss 权重等因素；不再盲目扩大候选数。完整证据见
+`smoke/a1/p2_e2e_candidate_r5/`，服务器运行目录为
+`/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/`。
+
 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
 
 ## 8. 主要证据文件
@@ -709,6 +735,14 @@ P1：
 - `scripts/a1/run_p2_seg_r1_sequence.sh`
 - `scripts/a1/evaluate_p2_seg_r1.py`
 - `scripts/a1/audit_p2_seg_routes_r1.py`
+- `smoke/a1/p2_e2e_candidate_r5/protocol.json`
+- `smoke/a1/p2_e2e_candidate_r5/RESULT_SUMMARY.md`
+- `smoke/a1/p2_e2e_candidate_r5/evaluation/evidence.json`
+- `smoke/a1/p2_e2e_candidate_r5/evaluation/{b_control,b_candidate10,d_control,d_candidate10}/validator/{per_image_metrics.csv,assignment_metrics.csv}`
+- `smoke/a1/p2_e2e_candidate_r5/training/{b_control,b_candidate10,d_control,d_candidate10}_results.csv`
+- `scripts/a1/prepare_p2_e2e_candidate_r5.py`
+- `scripts/a1/run_p2_e2e_candidate_r5_sequence.sh`
+- `scripts/a1/evaluate_p2_e2e_candidate_r5.py`
 - `r23-final-audit/`（历史 pilot 审计）
 - `r23-final-audit/P1_FACTORIAL_R23_REPORT.md`
 - `r23-final-audit/result_summary.json`
