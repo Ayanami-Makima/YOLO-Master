@@ -139,3 +139,26 @@ as invalid or negative historical evidence. P1 r28 supports a constrained
 accuracy conclusion, not a general claim of MoE benefit or material latency
 acceleration; any full-COCO long-schedule follow-up must start as an
 independent protocol.
+
+## P2 stage closure (completed)
+
+P2 used the permitted mechanism-analysis route and a minimal `seg` extension.
+The detect-side End-to-End studies covered gradient flow, one-to-one matching,
+candidate coverage, conflict statistics, precision/recall and high-IoU PR
+behavior. The `seg` pilot completed train/validation/ONNX export for A/B/D;
+pose was not required because the A1 task allows `seg` or `pose` as the task
+extension, or an evidence-backed mechanism negative result.
+
+The final corrected candidate-budget check retrained B/D from the original
+initializers with `tal_topk=7` controls and `tal_topk=10` treatments under the
+same seed, budget and data. Runtime audits confirmed the treatment actually
+used `topk=10, topk2=1`. On fixed val512, B changed from 0.425601 to 0.426193
+mAP50-95, while D changed from 0.425896 to 0.424645; candidate GT coverage was
+already about 99.86% at `topk=7` and final GT coverage did not improve. The
+candidate-budget direction is therefore archived as a controlled negative
+result, not a claim that larger top-k is universally ineffective.
+
+See [`A1_P2_STAGE_DELIVERY_REPORT.md`](A1_P2_STAGE_DELIVERY_REPORT.md) for the
+complete evidence boundaries, protocols, hashes and limitations. P2 does not
+claim a universal MoE gain, a single proven root cause for every End-to-End
+gap, or production-ready latency improvements.
