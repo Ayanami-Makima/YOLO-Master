@@ -264,12 +264,6 @@ class _MoTRouter(FP32RouterMixin, nn.Module):
         # TorchScript/ONNX tracing must retain the same hard Top-K policy as
         # eager evaluation so exported numerics are comparable.  The block's
         # dense expert loop remains export-safe; only the weights are sparse.
-        tracing = torch.jit.is_tracing()
-        onnx_exporting = torch.onnx.is_in_onnx_export()
-        # TorchScript tracing must numerically match eager evaluation.  Keep
-        # the same hard Top-K weights during tracing; ONNX alone retains the
-        # dense fallback because its exporter has stricter scatter/alias rules.
-        exporting = tracing or onnx_exporting
         # Top-K mask
         if self.top_k < self.num_experts:
             # get top-k indices [B, K, H, W]
