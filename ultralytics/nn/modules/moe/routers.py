@@ -305,7 +305,11 @@ class BaseRouter(nn.Module):
             soft_surrogate = torch.zeros_like(hard_weights)
             soft_surrogate[:, 0] = fallback_surrogate
             normalized_vals = normalized_vals.clone()
-            normalized_vals[overflow_mask] = hard_weights + soft_surrogate - soft_surrogate.detach()
+            straight_through = hard_weights + soft_surrogate - soft_surrogate.detach()
+            # Correct the tiny fp32 cancellation residue while preserving the
+            # surrogate derivative through ``soft_surrogate``.
+            straight_through = straight_through + (hard_weights - straight_through).detach()
+            normalized_vals[overflow_mask] = straight_through
         topk_vals = normalized_vals
 
         # 5) Collect loss-related info (train only)

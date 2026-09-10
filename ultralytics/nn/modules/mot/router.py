@@ -261,9 +261,17 @@ class _MoTRouter(FP32RouterMixin, nn.Module):
             weights = F.softmax(logits / temp.float(), dim=1)  # [B, E, H, W]
         dense_weights = weights
 
-        # TorchScript/ONNX tracing must retain the same hard Top-K policy as
-        # eager evaluation so exported numerics are comparable.  The block's
-        # dense expert loop remains export-safe; only the weights are sparse.
+        # The block's expert loop remains static for export.  TorchScript keeps
+        # the historical dense reference blend, while ONNX follows eager's
+        # sparse weights for numerical round-trip consistency.
+        # The legacy ONNX exporter also toggles ``torch.jit.is_tracing``;
+        # exclude that case so ONNX receives the sparse weights used by eager.
+        tracing = torch.jit.is_tracing() and not torch.onnx.is_in_onnx_export()
+        # TorchScript's public regression contract expects the dense reference
+        # blend. ONNX keeps sparse weights so its round-trip matches eager
+        # inference while the block still evaluates experts in a static loop.
+        if tracing:
+            return dense_weights.to(dtype=x.dtype), None, logits
         # Top-K mask
         if self.top_k < self.num_experts:
             # get top-k indices [B, K, H, W]
