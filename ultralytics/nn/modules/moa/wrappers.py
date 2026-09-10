@@ -74,8 +74,19 @@ class C2fMoA(nn.Module):
         local_window_size: int = 7,
         sequential_heads: bool = True,
         regional_max_kv_tokens: int | None = 4096,
+        sparse_inference: bool = False,
+        sparse_inference_threshold: float = 0.02,
+        inference_sparse_threshold: float | None = None,
     ):
         super().__init__()
+        if inference_sparse_threshold is not None:
+            if sparse_inference_threshold != 0.02 and sparse_inference_threshold != inference_sparse_threshold:
+                raise ValueError(
+                    "Specify only one sparse inference threshold: "
+                    "sparse_inference_threshold or inference_sparse_threshold."
+                )
+            sparse_inference_threshold = inference_sparse_threshold
+            sparse_inference = True
         self.sparse_inference = bool(sparse_inference)
         self.sparse_inference_threshold = float(sparse_inference_threshold)
         self.c = int(c2 * e)
@@ -110,15 +121,20 @@ class C2fMoA(nn.Module):
         eff_heads = max(eff_heads, MoABlock.NUM_GROUPS)
 
         self.m = nn.ModuleList(
-            MoABlock(self.c, num_heads=eff_heads,
-                     mlp_ratio=mlp_ratio,
-                     temperature=temperature,
-                     shortcut=shortcut,
-                     aux_loss_coeff=aux_loss_coeff,
-                     block_index=i,
-                     local_window_size=local_window_size,
-                     sequential_heads=sequential_heads,
-                     regional_max_kv_tokens=regional_max_kv_tokens)
+            MoABlock(
+                self.c,
+                num_heads=eff_heads,
+                mlp_ratio=mlp_ratio,
+                temperature=temperature,
+                shortcut=shortcut,
+                aux_loss_coeff=aux_loss_coeff,
+                block_index=i,
+                local_window_size=local_window_size,
+                sequential_heads=sequential_heads,
+                regional_max_kv_tokens=regional_max_kv_tokens,
+                sparse_inference=sparse_inference,
+                sparse_inference_threshold=sparse_inference_threshold,
+            )
             for i in range(n)
         )
         self.last_aux_loss: torch.Tensor = torch.zeros((), requires_grad=False)
@@ -296,7 +312,7 @@ class NeckMoAFusion(nn.Module):
             self_out = self.self_out_proj(self_out)
 
         # ── Router blend ─────────────────────────────────────────────────
-        weights, router_logits = self.router(hi, return_logits=True)         # [B, 2, H, W]
+        weights, router_logits = self.router(hi, return_logits=True)  # [B, 2, H, W]
         exporting = is_export_or_tracing()
         if not exporting and self.training and self.aux_loss_coeff > 0:
             self.last_aux_loss, finite_diagnostics = _moa_router_aux_loss(
