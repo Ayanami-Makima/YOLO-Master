@@ -416,6 +416,14 @@ class MoEPruner:
                 continue
             args = list(seq[j][3]) if isinstance(seq[j][3], list) else [seq[j][3]]
             out_ch = args[0] if args else getattr(mod, "out_channels", None)
+            # Keep the compact upstream YAML form compact.  For configs that
+            # only specified ``[out_channels]``, the expert count is the second
+            # positional argument after the parser injects ``in_channels``;
+            # appending the extended optional arguments would move the count out
+            # of the expected slot and break YAML round-trip compatibility.
+            if len(args) <= 1:
+                seq[j][3] = [out_ch, int(mod.num_experts)]
+                continue
             # Recover the kept experts' actual depthwise kernel sizes; pruning keeps
             # experts with heterogeneous kernels whose order/values are not the
             # default [3, 5, 7...] a bare rebuild would assign. Writing the full

@@ -367,6 +367,12 @@ class MoTBlock(nn.Module):
         else:
             for e_idx, expert in enumerate(self.experts):
                 w = weights[:, e_idx : e_idx + 1]
+                # Keep a small, explicit training-time gradient floor for
+                # every expert.  This remains local to the dense training
+                # path and prevents tiny Top-K weights from underflowing to a
+                # zero parameter gradient on small feature maps.
+                if self.training and self.router.exploration_eps > 0:
+                    w = w + (float(self.router.exploration_eps) / self.NUM_EXPERTS)
                 expert_out = expert(x)
                 if expert_out.shape != x.shape:
                     raise RuntimeError(

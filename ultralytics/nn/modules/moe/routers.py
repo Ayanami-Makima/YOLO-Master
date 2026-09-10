@@ -263,10 +263,18 @@ class BaseRouter(nn.Module):
                 topk_vals = topk_vals.masked_fill(assignment_overflow_mask, 0.0)
                 overflow_mask = assignment_overflow_mask.all(dim=1)
                 if overflow_mask.any():
-                    # Keep the established deterministic default-expert fallback.
+                    # Distribute rows whose complete Top-K assignment overflowed
+                    # in a deterministic round-robin pattern.  This avoids
+                    # concentrating all fallback traffic on expert 0 while still
+                    # retaining a straight-through gradient surrogate below.
                     topk_indices = topk_indices.clone()
-                    topk_indices[overflow_mask, 0] = 0
-                    fallback_surrogate = probs[overflow_mask, 0]
+                    fallback_indices = torch.arange(
+                        int(overflow_mask.sum()), device=topk_indices.device
+                    ) % self.num_experts
+                    topk_indices[overflow_mask, 0] = fallback_indices
+                    fallback_surrogate = probs[overflow_mask].gather(
+                        1, fallback_indices.unsqueeze(1)
+                    ).squeeze(1)
                     topk_vals = topk_vals.clone()
                     topk_vals[overflow_mask, 0] = fallback_surrogate
 
@@ -309,7 +317,11 @@ class BaseRouter(nn.Module):
                 overflow_count = int(assignment_overflow_mask.sum().item())
                 loss_dict["overflow_count"] = overflow_count
                 loss_dict["overflow_fraction"] = overflow_count / max(B * effective_top_k, 1)
-                loss_dict["overflow_mask"] = assignment_overflow_mask.detach().clone()
+                # Public overflow_mask is token-level (one boolean per row),
+                # matching the fallback rows consumed by callers.  Preserve
+                # the per-assignment detail under its explicit name.
+                loss_dict["overflow_mask"] = overflow_mask.detach().clone()
+                loss_dict["assignment_overflow_mask"] = assignment_overflow_mask.detach().clone()
                 loss_dict["token_overflow_mask"] = overflow_mask.detach().clone()
                 loss_dict["capacity_limit"] = int(capacity)
                 loss_dict["overflow_policy"] = "per_expert_default_straight_through"

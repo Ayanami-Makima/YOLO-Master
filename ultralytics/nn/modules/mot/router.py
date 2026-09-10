@@ -264,8 +264,13 @@ class _MoTRouter(FP32RouterMixin, nn.Module):
         # ONNX and TorchScript tracing use dense blending. Besides being the
         # documented export semantics, avoiding Top-K/scatter here prevents a
         # PyTorch 2.9 legacy-exporter alias-analysis failure on bool scatter_.
-        exporting = torch.jit.is_tracing() or torch.onnx.is_in_onnx_export()
-        if exporting:
+        tracing = torch.jit.is_tracing()
+        onnx_exporting = torch.onnx.is_in_onnx_export()
+        # TorchScript tracing must numerically match eager evaluation.  Keep
+        # the same hard Top-K weights during tracing; ONNX alone retains the
+        # dense fallback because its exporter has stricter scatter/alias rules.
+        exporting = tracing or onnx_exporting
+        if onnx_exporting:
             indices = None
         # Top-K mask
         elif self.top_k < self.num_experts:
