@@ -1,8 +1,8 @@
 """Router and auxiliary-loss utilities for Mixture-of-Attention."""
+
 from __future__ import annotations
 import math
 import torch
-import torch.distributed as dist
 import torch.nn as nn
 import torch.nn.functional as F
 from ultralytics.nn.modules._numeric import (
@@ -11,13 +11,20 @@ from ultralytics.nn.modules._numeric import (
     disabled_autocast,
     fp_clamp_floor,
 )
-from ultralytics.nn.modules.moa._constants import DEFAULT_MIN_TEMPERATURE, DEFAULT_TEMPERATURE_ANNEAL_FACTOR, ROUTER_ENTROPY_FLOOR, ROUTER_LOGIT_LIMIT, ROUTER_Z_LOSS_LIMIT
+from ultralytics.nn.modules.moa._constants import (
+    DEFAULT_MIN_TEMPERATURE,
+    DEFAULT_TEMPERATURE_ANNEAL_FACTOR,
+    ROUTER_ENTROPY_FLOOR,
+    ROUTER_LOGIT_LIMIT,
+    ROUTER_Z_LOSS_LIMIT,
+)
 from ultralytics.nn.modules.routing_protocol import graph_connected_finite_zero
 from ultralytics.nn.modules.routing_protocol import routing_finite_diagnostics
 from ultralytics.nn.modules.utils import get_safe_groups as _safe_groups
 
 _all_reduce_mean = all_reduce_mean
 _fp_min = fp_clamp_floor
+
 
 class _MoARouter(FP32RouterMixin, nn.Module):
     """Lightweight soft-router: assigns each spatial token a weight over M head-groups.
@@ -26,8 +33,7 @@ class _MoARouter(FP32RouterMixin, nn.Module):
     Output: [B, M, H, W] soft gate probabilities (sum-to-one over M).
     """
 
-    def __init__(self, dim: int, num_groups: int, reduction: int = 8,
-                 temperature: float = 1.0):
+    def __init__(self, dim: int, num_groups: int, reduction: int = 8, temperature: float = 1.0):
         super().__init__()
         self.temperature = max(temperature, 0.1)
         hidden = max(dim // reduction, num_groups * 2)
@@ -55,6 +61,7 @@ class _MoARouter(FP32RouterMixin, nn.Module):
             return probs, logits
         return probs
 
+
 def _moa_router_aux_loss(
     weights: torch.Tensor,
     logits: torch.Tensor,
@@ -75,10 +82,11 @@ def _moa_router_aux_loss(
     if reduce_ddp:
         global_sum = _all_reduce_mean(local_sum.detach().clone())
         global_count = _all_reduce_mean(local_count.detach().clone())
-        # DDP averages parameter gradients by world size. Scale the local Jacobian
-        # by R/N while exposing the exact detached global value S/N.
+        # ``_all_reduce_mean`` makes ``global_count`` equal N/R. DDP later averages
+        # parameter gradients by R, so 1/global_count already gives the required
+        # local Jacobian R/N; multiplying by world size again would over-scale it.
         importance = global_sum / global_count.clamp_min(1.0)
-        local_grad = (local_sum - local_sum.detach()) * (dist.get_world_size() / global_count.clamp_min(1.0))
+        local_grad = (local_sum - local_sum.detach()) / global_count.clamp_min(1.0)
         importance = importance + local_grad
     else:
         importance = local_sum / local_count.clamp_min(1.0)
@@ -91,7 +99,7 @@ def _moa_router_aux_loss(
     # Stabilize z-loss: clip logits before logsumexp to prevent overflow (logsumexp of >88 -> inf in float32)
     safe_logits = logits.float().clamp(min=-ROUTER_LOGIT_LIMIT, max=ROUTER_LOGIT_LIMIT)
     log_z = torch.logsumexp(safe_logits, dim=1)
-    z_loss = (log_z ** 2).clamp(max=ROUTER_Z_LOSS_LIMIT).mean()
+    z_loss = (log_z**2).clamp(max=ROUTER_Z_LOSS_LIMIT).mean()
     # Guard: clamp importance to finite before entropy computation
     importance_safe = importance.clamp(min=0.0, max=1.0)
     entropy = -(importance_safe * torch.log(importance_safe.clamp_min(ROUTER_ENTROPY_FLOOR))).sum()
@@ -106,6 +114,7 @@ def _moa_router_aux_loss(
         result = graph_connected_finite_zero(weights, logits, result)
     return (result, diagnostics) if return_diagnostics else result
 
+
 def anneal_moa_temperature(
     model: nn.Module,
     factor: float = DEFAULT_TEMPERATURE_ANNEAL_FACTOR,
@@ -119,5 +128,6 @@ def anneal_moa_temperature(
     for m in model.modules():
         if isinstance(m, _MoARouter):
             m.temperature = max(m.temperature * factor, min_temp)
+
 
 __all__ = ("_MoARouter", "_moa_router_aux_loss", "anneal_moa_temperature")
