@@ -333,7 +333,13 @@ class MoTBlock(nn.Module):
             ddp_active=ddp_active,
             ddp_sparse_safe=ddp_sparse_safe,
         )
-        use_sparse = (not self.training or (sparse_train_ready and ddp_sparse_safe)) and not exporting
+        # Top-1 inference remains sparse; Top-2+ uses dense soft blending so
+        # eager output exactly matches TorchScript/ONNX export numerics.
+        use_sparse = (
+            self.top_k == 1
+            and (not self.training or (sparse_train_ready and ddp_sparse_safe))
+            and not exporting
+        )
         warmup_step = int(self._sparse_train_step.item())
         B = x.shape[0]
         route_ids = indices if indices is not None else weights.argmax(dim=1, keepdim=True)

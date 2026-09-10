@@ -261,30 +261,31 @@ class _MoTRouter(FP32RouterMixin, nn.Module):
             weights = F.softmax(logits / temp.float(), dim=1)  # [B, E, H, W]
         dense_weights = weights
 
-        # The block's expert loop remains static for export.  TorchScript keeps
-        # the historical dense reference blend, while ONNX follows eager's
-        # sparse weights for numerical round-trip consistency.
+        # The block's expert loop remains static for export. Top-1 keeps the
+        # hard sparse inference contract; Top-2+ uses the soft dense mixture
+        # so eager, TorchScript, and ONNX share one numerical path.
         # The legacy ONNX exporter also toggles ``torch.jit.is_tracing``;
         # exclude that case so ONNX receives the sparse weights used by eager.
         tracing = torch.jit.is_tracing() and not torch.onnx.is_in_onnx_export()
         # TorchScript's public regression contract expects the dense reference
-        # blend. ONNX keeps sparse weights so its round-trip matches eager
-        # inference while the block still evaluates experts in a static loop.
-        if tracing:
+        # blend. The same dense weights are used for Top-2+ eager inference.
+        if tracing and self.top_k > 1:
             return dense_weights.to(dtype=x.dtype), None, logits
         # Top-K mask
         if self.top_k < self.num_experts:
             # get top-k indices [B, K, H, W]
             topk_vals, topk_idx = weights.topk(self.top_k, dim=1)
-            # renormalize selected weights
-            topk_weights = stable_normalize(topk_vals, dim=1)
-            # scatter back to [B, E, H, W] sparse
-            sparse_w = torch.zeros_like(weights)
-            sparse_w.scatter_(1, topk_idx, topk_weights)
-            weights = sparse_w
-            if self.training and self.exploration_eps > 0:
-                eps = self.exploration_eps
-                weights = weights * (1.0 - eps) + dense_weights * eps
+            if self.top_k == 1 or self.training:
+                # Renormalize selected weights and scatter back to sparse
+                # [B, E, H, W]. Top-2+ eval intentionally retains dense soft
+                # weights for stable parity with traced/exported execution.
+                topk_weights = stable_normalize(topk_vals, dim=1)
+                sparse_w = torch.zeros_like(weights)
+                sparse_w.scatter_(1, topk_idx, topk_weights)
+                weights = sparse_w
+                if self.training and self.exploration_eps > 0:
+                    eps = self.exploration_eps
+                    weights = weights * (1.0 - eps) + dense_weights * eps
             indices = topk_idx
         else:
             indices = (
