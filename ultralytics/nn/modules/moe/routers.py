@@ -331,10 +331,14 @@ class BaseRouter(nn.Module):
                 overflow_count = int(assignment_overflow_mask.sum().item())
                 loss_dict["overflow_count"] = overflow_count
                 loss_dict["overflow_fraction"] = overflow_count / max(B * effective_top_k, 1)
-                # Public overflow_mask is token-level (one boolean per row),
-                # matching the fallback rows consumed by callers.  Preserve
-                # the per-assignment detail under its explicit name.
-                loss_dict["overflow_mask"] = overflow_mask.detach().clone()
+                # Top-1 callers historically consumed a token-level mask;
+                # retain that contract for deterministic fallback rows.  For
+                # Top-2+ preserve the legacy per-assignment shape while also
+                # publishing the token-level view explicitly below.
+                public_overflow_mask = (
+                    overflow_mask if effective_top_k == 1 else assignment_overflow_mask
+                )
+                loss_dict["overflow_mask"] = public_overflow_mask.detach().clone()
                 loss_dict["assignment_overflow_mask"] = assignment_overflow_mask.detach().clone()
                 loss_dict["token_overflow_mask"] = overflow_mask.detach().clone()
                 loss_dict["capacity_limit"] = int(capacity)
