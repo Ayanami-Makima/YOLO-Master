@@ -1,5 +1,6 @@
 # 🐧Please note that this file has been modified by Tencent on 2026/02/07. All Tencent Modifications are Copyright (C) 2026 Tencent.
 """Efficient routers for Mixture-of-Experts models"""
+
 import math
 import torch
 import torch.nn as nn
@@ -48,10 +49,7 @@ def _validate_router_input(x: torch.Tensor, expected_channels: int, context: str
             context=context or "router input",
         )
     if torch.isnan(x).any() or torch.isinf(x).any():
-        raise MoERouterError(
-            "Router input contains NaN/Inf values"
-            + (f" [{context}]" if context else "")
-        )
+        raise MoERouterError("Router input contains NaN/Inf values" + (f" [{context}]" if context else ""))
 
 
 # ==========================================
@@ -68,8 +66,9 @@ class UltraEfficientRouter(nn.Module):
     Expected FLOPs reduction: ~95% vs a local router baseline.
     """
 
-    def __init__(self, in_channels, num_experts, reduction=16, top_k=2,
-                 noise_std=1.0, temperature: float = 1.0, pool_scale=8):
+    def __init__(
+        self, in_channels, num_experts, reduction=16, top_k=2, noise_std=1.0, temperature: float = 1.0, pool_scale=8
+    ):
         super().__init__()
         self.num_experts = num_experts
         self.top_k = top_k
@@ -91,12 +90,13 @@ class UltraEfficientRouter(nn.Module):
             nn.GroupNorm(get_safe_groups(reduced_channels, 4), reduced_channels),
             nn.SiLU(inplace=False),
             # Expert projection
-            nn.Conv2d(reduced_channels, num_experts, 1, bias=True)
+            nn.Conv2d(reduced_channels, num_experts, 1, bias=True),
         )
         self.softmax = nn.Softmax(dim=1)
 
-    def forward(self, x, top_k: Optional[int] = None) -> Tuple[
-        torch.Tensor, torch.Tensor, Optional[torch.Tensor], Optional[torch.Tensor], Optional[torch.Tensor]]:
+    def forward(
+        self, x, top_k: Optional[int] = None
+    ) -> Tuple[torch.Tensor, torch.Tensor, Optional[torch.Tensor], Optional[torch.Tensor], Optional[torch.Tensor]]:
         _validate_router_input(x, _get_router_in_channels(self.router), context="UltraEfficientRouter")
         B, C, H, W = x.shape
         current_top_k = max(1, min(int(self.top_k if top_k is None else top_k), self.num_experts))
@@ -128,9 +128,9 @@ class UltraEfficientRouter(nn.Module):
         # 6) Softmax + TopK (fused operation)
         weights = F.softmax(scaled_logits.float(), dim=1).type_as(x)
         pooled_weights = weights.mean(dim=[2, 3], keepdim=True)
-        
+
         topk_vals, topk_indices = torch.topk(pooled_weights, current_top_k, dim=1)
-        
+
         # Out-of-place normalization preserves the Top-K autograd graph.
         topk_vals = topk_vals / topk_vals.sum(dim=1, keepdim=True).clamp_min(1e-6)
 
@@ -168,10 +168,11 @@ class UltraEfficientRouter(nn.Module):
 class BaseRouter(nn.Module):
     """Base router with optional capacity factor support (P1-5 fix).
 
-    Capacity factor controls the maximum number of tokens each expert can handle
-    per step. When a batch has more tokens than ``capacity_factor * num_experts``,
-    excess tokens are routed to a deterministic round-robin overflow expert.
-    This prevents OOM when a single expert gets overloaded.
+    Capacity factor controls the maximum number of token assignments each expert
+    can handle per step. Capacity follows the standard Top-K convention:
+    ``ceil(capacity_factor * tokens * top_k / num_experts)``. Assignments beyond
+    an expert's capacity are removed, then tokens with no surviving assignment
+    fall back to expert 0. This prevents a biased router from overloading one expert.
     """
 
     def __init__(self, num_experts, top_k, capacity_factor: Optional[float] = None):
@@ -180,10 +181,38 @@ class BaseRouter(nn.Module):
         self.top_k = top_k
         self.capacity_factor = capacity_factor  # P1-5: optional token-level overflow guard
         self.softmax = nn.Softmax(dim=1)
+        # P1 experiments may opt into a short, deterministic exploration
+        # schedule without consuming the process-global Torch RNG.  ``sigma0``
+        # is a persistent calibration result; the seed and step are reset by
+        # the request runner at the start of every independent run.
+        self.register_buffer("p1_noise_sigma0", torch.tensor(0.0, dtype=torch.float32), persistent=True)
+        self.p1_noise_seed: Optional[int] = None
+        self.p1_noise_step = 0
+        # Opt-in used only by the A1 P1 residual MoE.  Dispatch may explore
+        # with private training noise while the auxiliary objective observes
+        # the clean hard-Top-K policy that validation/auditing uses.  Keep the
+        # default False so every non-P1 caller retains the historical contract.
+        self.p1_balance_on_clean_routes = False
 
-    def _process_logits(self, logits: torch.Tensor, noise_std: float, training: bool,
-                        top_k: Optional[int] = None) -> Tuple[
-        torch.Tensor, torch.Tensor, Dict]:
+    def configure_p1_private_noise(self, seed: Optional[int], *, reset_step: bool = True) -> None:
+        """Configure an optional private RNG stream for training-time logit noise."""
+        self.p1_noise_seed = None if seed is None else int(seed)
+        if reset_step:
+            self.p1_noise_step = 0
+
+    def _sample_p1_private_noise(self, logits: torch.Tensor) -> torch.Tensor:
+        """Sample device-independent noise without advancing Torch's global RNG."""
+        if self.p1_noise_seed is None:
+            return torch.randn_like(logits)
+        generator = torch.Generator(device="cpu")
+        generator.manual_seed(self.p1_noise_seed + self.p1_noise_step)
+        self.p1_noise_step += 1
+        noise = torch.randn(logits.shape, generator=generator, device="cpu", dtype=torch.float32)
+        return noise.to(device=logits.device, dtype=logits.dtype)
+
+    def _process_logits(
+        self, logits: torch.Tensor, noise_std: float, training: bool, top_k: Optional[int] = None
+    ) -> Tuple[torch.Tensor, torch.Tensor, Dict]:
         """Unified logic to process logits into Top-K selection.
 
         P1-5: When capacity_factor is set, excess tokens beyond the capacity limit
@@ -194,67 +223,96 @@ class BaseRouter(nn.Module):
 
         # Guard: detect NaN/Inf in logits early (catches upstream corruption)
         if torch.isnan(logits).any() or torch.isinf(logits).any():
+            raise MoERouterError(f"Router logits contain NaN/Inf before softmax (B={logits.shape[0]})")
+        clean_aux_enabled = getattr(self, "p1_balance_on_clean_routes", False)
+        if clean_aux_enabled and self.capacity_factor is not None:
             raise MoERouterError(
-                f"Router logits contain NaN/Inf before softmax (B={logits.shape[0]})"
+                "p1_balance_on_clean_routes is incompatible with capacity_factor; "
+                "P1 requires unmodified clean hard-Top-K auxiliary selections"
             )
 
+        # Keep an explicit pre-noise view.  P1 can train the balance/z losses
+        # against this clean policy without changing the noisy sparse dispatch.
+        clean_logits = logits
+
         # 1) Add noise during training (simplified Gumbel-Softmax trick)
+        dispatch_logits = clean_logits
         if training and noise_std > 0:
-            logits = logits + torch.randn_like(logits) * noise_std
+            dispatch_logits = clean_logits + self._sample_p1_private_noise(clean_logits) * noise_std
 
         # 2) Keep routing probability math in fp32.  Under CUDA autocast the
         # router logits can be fp16; retaining fp32 through Top-K normalization
         # avoids quantized small probabilities and a low-precision reduction.
-        probs = F.softmax(logits.float(), dim=1)
+        probs = F.softmax(dispatch_logits.float(), dim=1)
 
         # 3) Select Top-K in fp32
         topk_vals, topk_indices = torch.topk(probs, effective_top_k, dim=1)
 
-        # P1-5: Apply capacity factor constraint if configured
+        # P1-5: Limit each expert independently using standard Top-K capacity.
         overflow_mask = None
+        assignment_overflow_mask = None
+        fallback_surrogate = None
+        capacity = None
         if self.capacity_factor is not None and training:
-            max_tokens = int(self.capacity_factor * self.num_experts)
-            if B > max_tokens:
-                capacity_mask = torch.zeros(B, dtype=torch.bool, device=logits.device)
-                # Use a rank-independent selection so DDP replicas make the
-                # same capacity decision for identical local batch shapes.
-                indices = torch.arange(max_tokens, device=logits.device)
-                capacity_mask[indices] = True
-                overflow_mask = ~capacity_mask
-                # Spread overflow tokens across experts instead of forcing all
-                # of them onto expert 0, which amplifies load imbalance.
-                topk_indices = topk_indices.clone()
-                overflow_indices = torch.nonzero(overflow_mask, as_tuple=False).flatten()
-                topk_indices[overflow_indices] = (
-                    torch.arange(overflow_indices.numel(), device=logits.device) % self.num_experts
-                ).unsqueeze(1)
+            if not math.isfinite(float(self.capacity_factor)) or self.capacity_factor <= 0:
+                raise MoERouterError("capacity_factor must be finite and > 0")
+            capacity = max(1, math.ceil(self.capacity_factor * B * effective_top_k / self.num_experts))
+            expert_positions = F.one_hot(topk_indices, num_classes=self.num_experts).cumsum(dim=0)
+            assignment_overflow_mask = expert_positions.gather(2, topk_indices.unsqueeze(-1)).squeeze(-1) > capacity
+            if assignment_overflow_mask.any():
+                topk_vals = topk_vals.masked_fill(assignment_overflow_mask, 0.0)
+                overflow_mask = assignment_overflow_mask.all(dim=1)
+                if overflow_mask.any():
+                    # Keep the established deterministic default-expert fallback.
+                    topk_indices = topk_indices.clone()
+                    topk_indices[overflow_mask, 0] = 0
+                    fallback_surrogate = probs[overflow_mask, 0]
+                    topk_vals = topk_vals.clone()
+                    topk_vals[overflow_mask, 0] = fallback_surrogate
 
-        # 4) Normalize weights
-        sum_vals = topk_vals.sum(dim=1, keepdim=True) + 1e-6
-        topk_vals = topk_vals / sum_vals
-        if overflow_mask is not None:
-            # Preserve the established hard round-robin forward assignment but
-            # use assigned router probabilities as a straight-through surrogate
-            # so overflow samples still train the router.
-            assigned_probs = probs.gather(1, topk_indices)
-            hard_weights = torch.zeros_like(assigned_probs)
+        # 4) Normalize weights. Zeroed overflow assignments stay synchronized
+        # with indices; fallback rows use hard-forward/soft-backward weights.
+        sum_vals = topk_vals.sum(dim=1, keepdim=True).clamp_min(1e-6)
+        normalized_vals = topk_vals / sum_vals
+        if overflow_mask is not None and overflow_mask.any():
+            hard_weights = torch.zeros_like(normalized_vals[overflow_mask])
             hard_weights[:, 0] = 1
-            straight_through = hard_weights + (assigned_probs - assigned_probs.detach())
-            topk_vals = torch.where(overflow_mask[:, None], straight_through, topk_vals)
+            # Normalizing a single fallback probability would be identically one
+            # and erase its derivative. Use the unnormalized default-expert
+            # probability as the straight-through surrogate instead.
+            soft_surrogate = torch.zeros_like(hard_weights)
+            soft_surrogate[:, 0] = fallback_surrogate
+            normalized_vals = normalized_vals.clone()
+            normalized_vals[overflow_mask] = hard_weights + soft_surrogate - soft_surrogate.detach()
+        topk_vals = normalized_vals
 
         # 5) Collect loss-related info (train only)
         loss_dict = {}
         if training:
-            loss_dict['router_logits'] = logits
-            loss_dict['router_probs'] = probs
-            loss_dict['topk_indices'] = topk_indices
-            if overflow_mask is not None:
-                overflow_count = int(B - max_tokens)
-                loss_dict['overflow_count'] = overflow_count
-                loss_dict['overflow_fraction'] = overflow_count / max(B, 1)
-                loss_dict['overflow_mask'] = overflow_mask.detach().clone()
-                loss_dict['capacity_limit'] = int(max_tokens)
-                loss_dict['overflow_policy'] = 'round_robin_straight_through'
+            if clean_aux_enabled:
+                clean_probs = F.softmax(clean_logits.float(), dim=1)
+                clean_topk_indices = torch.topk(clean_probs, effective_top_k, dim=1).indices
+                # Existing keys remain the MoELoss interface.  Under the P1
+                # opt-in they deliberately describe the clean policy.
+                loss_dict["router_logits"] = clean_logits
+                loss_dict["router_probs"] = clean_probs
+                loss_dict["topk_indices"] = clean_topk_indices
+                # Preserve the actual dispatch view for telemetry/snapshots.
+                loss_dict["dispatch_router_logits"] = dispatch_logits
+                loss_dict["dispatch_router_probs"] = probs
+                loss_dict["dispatch_topk_indices"] = topk_indices
+            else:
+                loss_dict["router_logits"] = dispatch_logits
+                loss_dict["router_probs"] = probs
+                loss_dict["topk_indices"] = topk_indices
+            if assignment_overflow_mask is not None:
+                overflow_count = int(assignment_overflow_mask.sum().item())
+                loss_dict["overflow_count"] = overflow_count
+                loss_dict["overflow_fraction"] = overflow_count / max(B * effective_top_k, 1)
+                loss_dict["overflow_mask"] = assignment_overflow_mask.detach().clone()
+                loss_dict["token_overflow_mask"] = overflow_mask.detach().clone()
+                loss_dict["capacity_limit"] = int(capacity)
+                loss_dict["overflow_policy"] = "per_expert_default_straight_through"
 
         return topk_vals, topk_indices, loss_dict
 
@@ -271,7 +329,7 @@ class EfficientSpatialRouter(BaseRouter):
             nn.BatchNorm2d(reduced_channels),
             nn.SiLU(inplace=False),
             nn.Conv2d(reduced_channels, num_experts, 1, bias=False),
-            nn.BatchNorm2d(num_experts)  # numerical stability
+            nn.BatchNorm2d(num_experts),  # numerical stability
         )
 
     def forward(self, x, top_k: Optional[int] = None):
@@ -315,7 +373,7 @@ class AdaptiveRoutingLayer(BaseRouter):
             nn.BatchNorm2d(reduced_channels),
             nn.SiLU(inplace=False),
             nn.Conv2d(reduced_channels, num_experts, 1, bias=False),
-            nn.BatchNorm2d(num_experts)
+            nn.BatchNorm2d(num_experts),
         )
 
     def forward(self, x, top_k: Optional[int] = None):
@@ -342,7 +400,7 @@ class LocalRoutingLayer(BaseRouter):
             nn.BatchNorm2d(reduced_channels),
             nn.SiLU(inplace=False),
             nn.Conv2d(reduced_channels, num_experts, 1, bias=False),
-            nn.BatchNorm2d(num_experts)
+            nn.BatchNorm2d(num_experts),
         )
 
     def forward(self, x, top_k: Optional[int] = None):
@@ -438,7 +496,7 @@ class DynamicRoutingLayer(nn.Module):
         self.in_channels = in_channels
         self.num_experts = num_experts
         self.top_k = min(top_k, num_experts) if top_k is not None else num_experts
-        self.use_top_k = (top_k is not None)  # whether to enable Top-K
+        self.use_top_k = top_k is not None  # whether to enable Top-K
 
         self.global_pool = nn.AdaptiveAvgPool2d(1)
 
@@ -507,7 +565,7 @@ class DynamicRoutingLayer(nn.Module):
 
         # Apply mask and re-normalize
         weights = stable_normalize(weights * mask_one_hot, dim=1)
-        
+
         return weights.view(B, E, H, W)
 
     def _hard_top_k(self, logits):
