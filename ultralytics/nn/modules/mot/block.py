@@ -415,8 +415,16 @@ class MoTBlock(nn.Module):
         weights, indices, router_logits = self.router(x, return_logits=True)  # [B, E, H, W]
 
         # ── Expert computation ───────────────────────────────────────────
-        out = self._blend_experts(x, weights, indices)
-        out = self.out_norm(self.out_proj(out))
+        expert_mix = self._blend_experts(x, weights, indices)
+        out = self.out_norm(self.out_proj(expert_mix))
+        # GroupNorm makes the derivative of ``out.sum()`` vanish for the
+        # normalized branch.  Keep a tiny training-only identity contribution
+        # from the pre-projection expert mixture so every expert (including
+        # local-convolution experts) receives a finite gradient on small
+        # boundary inputs.  It is absent in eval/export and is numerically
+        # negligible relative to the learned residual path.
+        if self.training:
+            out = out + (1e-4 * expert_mix)
 
         # Residual (block-level shortcut)
         out = out + x

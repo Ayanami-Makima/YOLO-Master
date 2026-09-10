@@ -267,7 +267,7 @@ class _WindowTransformerExpert(nn.Module):
         # ONNX Runtime support across versions).
         shift = self.shift_size
         if shift > 0:
-            if torch.jit.is_tracing() or torch.onnx.is_in_onnx_export():
+            if torch.onnx.is_in_onnx_export():
                 x = _roll_via_cat(x, -shift, dims=(1, 2))
             else:
                 x = torch.roll(x, shifts=(-shift, -shift), dims=(1, 2))
@@ -290,7 +290,7 @@ class _WindowTransformerExpert(nn.Module):
 
         # Reverse shift
         if shift > 0:
-            if torch.jit.is_tracing() or torch.onnx.is_in_onnx_export():
+            if torch.onnx.is_in_onnx_export():
                 attn_out = _roll_via_cat(attn_out, shift, dims=(1, 2))
             else:
                 attn_out = torch.roll(attn_out, shifts=(shift, shift), dims=(1, 2))
@@ -302,7 +302,7 @@ class _WindowTransformerExpert(nn.Module):
         # Without this, the shifted input x is added to the un-shifted attention
         # output, causing a cyclic spatial misalignment in all shifted blocks.
         if shift > 0:
-            if torch.jit.is_tracing() or torch.onnx.is_in_onnx_export():
+            if torch.onnx.is_in_onnx_export():
                 x = _roll_via_cat(x, shift, dims=(1, 2))
             else:
                 x = torch.roll(x, shifts=(shift, shift), dims=(1, 2))

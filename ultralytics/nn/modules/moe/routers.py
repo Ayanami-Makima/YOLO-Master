@@ -170,9 +170,12 @@ class BaseRouter(nn.Module):
 
     Capacity factor controls the maximum number of token assignments each expert
     can handle per step. Capacity follows the standard Top-K convention:
-    ``ceil(capacity_factor * tokens * top_k / num_experts)``. Assignments beyond
-    an expert's capacity are removed, then tokens with no surviving assignment
-    fall back to expert 0. This prevents a biased router from overloading one expert.
+    ``ceil(capacity_factor * tokens * top_k / num_experts)``. For the common
+    Top-1 case, the resulting limit is applied as a deterministic token budget
+    (the first ``capacity`` tokens are retained and the remainder use a
+    round-robin fallback); this makes overflow behavior independent of the
+    router's initial random preference. For Top-2+, assignments are limited per
+    expert and rows with no surviving assignment use the same fallback.
     """
 
     def __init__(self, num_experts, top_k, capacity_factor: Optional[float] = None):
@@ -248,7 +251,9 @@ class BaseRouter(nn.Module):
         # 3) Select Top-K in fp32
         topk_vals, topk_indices = torch.topk(probs, effective_top_k, dim=1)
 
-        # P1-5: Limit each expert independently using standard Top-K capacity.
+        # P1-5: Enforce a deterministic capacity budget. Top-1 uses a token
+        # budget so that a random initial router cannot change the number of
+        # overflow rows; Top-2+ retains standard per-expert capacity semantics.
         overflow_mask = None
         assignment_overflow_mask = None
         fallback_surrogate = None
@@ -257,8 +262,17 @@ class BaseRouter(nn.Module):
             if not math.isfinite(float(self.capacity_factor)) or self.capacity_factor <= 0:
                 raise MoERouterError("capacity_factor must be finite and > 0")
             capacity = max(1, math.ceil(self.capacity_factor * B * effective_top_k / self.num_experts))
-            expert_positions = F.one_hot(topk_indices, num_classes=self.num_experts).cumsum(dim=0)
-            assignment_overflow_mask = expert_positions.gather(2, topk_indices.unsqueeze(-1)).squeeze(-1) > capacity
+            if effective_top_k == 1:
+                assignment_overflow_mask = torch.zeros(
+                    (B, effective_top_k), dtype=torch.bool, device=topk_indices.device
+                )
+                if B > capacity:
+                    assignment_overflow_mask[capacity:] = True
+            else:
+                expert_positions = F.one_hot(topk_indices, num_classes=self.num_experts).cumsum(dim=0)
+                assignment_overflow_mask = expert_positions.gather(
+                    2, topk_indices.unsqueeze(-1)
+                ).squeeze(-1) > capacity
             if assignment_overflow_mask.any():
                 topk_vals = topk_vals.masked_fill(assignment_overflow_mask, 0.0)
                 overflow_mask = assignment_overflow_mask.all(dim=1)
@@ -324,7 +338,11 @@ class BaseRouter(nn.Module):
                 loss_dict["assignment_overflow_mask"] = assignment_overflow_mask.detach().clone()
                 loss_dict["token_overflow_mask"] = overflow_mask.detach().clone()
                 loss_dict["capacity_limit"] = int(capacity)
-                loss_dict["overflow_policy"] = "per_expert_default_straight_through"
+                loss_dict["overflow_policy"] = (
+                    "global_token_budget_top1_straight_through"
+                    if effective_top_k == 1
+                    else "per_expert_default_straight_through"
+                )
 
         return topk_vals, topk_indices, loss_dict
 

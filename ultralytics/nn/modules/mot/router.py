@@ -261,19 +261,17 @@ class _MoTRouter(FP32RouterMixin, nn.Module):
             weights = F.softmax(logits / temp.float(), dim=1)  # [B, E, H, W]
         dense_weights = weights
 
-        # ONNX and TorchScript tracing use dense blending. Besides being the
-        # documented export semantics, avoiding Top-K/scatter here prevents a
-        # PyTorch 2.9 legacy-exporter alias-analysis failure on bool scatter_.
+        # TorchScript/ONNX tracing must retain the same hard Top-K policy as
+        # eager evaluation so exported numerics are comparable.  The block's
+        # dense expert loop remains export-safe; only the weights are sparse.
         tracing = torch.jit.is_tracing()
         onnx_exporting = torch.onnx.is_in_onnx_export()
         # TorchScript tracing must numerically match eager evaluation.  Keep
         # the same hard Top-K weights during tracing; ONNX alone retains the
         # dense fallback because its exporter has stricter scatter/alias rules.
         exporting = tracing or onnx_exporting
-        if onnx_exporting:
-            indices = None
         # Top-K mask
-        elif self.top_k < self.num_experts:
+        if self.top_k < self.num_experts:
             # get top-k indices [B, K, H, W]
             topk_vals, topk_idx = weights.topk(self.top_k, dim=1)
             # renormalize selected weights
