@@ -468,6 +468,7 @@ jobs:
         env:
           ULTRALYTICS_ISOLATED_VENVS: ${{ runner.temp }}/venvs
           YOLO_AUTOINSTALL: "false"
+          UV_HTTP_RETRIES: "5"
         run: |
           slow_arg=""
           if [[ "${{ github.event_name }}" == "schedule" || "${{ github.event_name }}" == "workflow_dispatch" ]]; then

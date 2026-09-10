@@ -9,7 +9,7 @@ from unittest import mock
 import pytest
 import torch
 
-from tests import MODEL, SOURCE, TASK_MODEL_DATA
+from tests import MODEL, SOURCE, TASK_MODEL_DATA_ALL
 from ultralytics import YOLO
 from ultralytics.cfg import get_cfg
 from ultralytics.engine.exporter import Exporter
@@ -171,7 +171,7 @@ def _tiny_coco_multitask_yaml(root: Path) -> str:
     return str(yaml_file)
 
 
-@pytest.mark.parametrize("task,weight,data", TASK_MODEL_DATA)
+@pytest.mark.parametrize("task,weight,data", TASK_MODEL_DATA_ALL)
 def test_resume_incomplete(task, weight, data, tmp_path):
     """Test training resumes from an incomplete checkpoint."""
     if task == "multitask":

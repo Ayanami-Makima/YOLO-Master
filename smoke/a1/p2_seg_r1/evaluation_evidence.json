@@ -1,0 +1,126 @@
+{
+  "schema": "a1-p2-seg-extension-r1-evaluation/v1",
+  "status": "completed",
+  "created_at": "2026-09-04T16:27:44.221689+00:00",
+  "protocol": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/protocol.json",
+  "protocol_sha256": "e9bd29884ae50b29b0ad4aa6cfdfb98cd01b57a0bca9c772739b85e01062d4bd",
+  "data": {
+    "yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_seg_r1/pilot_data/coco-seg.yaml",
+    "yaml_sha256": "d4f977b25d02763262553819367f29987c2f423ae513b3a7952e17a5b5ed42e4",
+    "images": 512
+  },
+  "device": "cuda:1",
+  "input": [
+    1,
+    3,
+    640,
+    640
+  ],
+  "warmup": 10,
+  "samples": 30,
+  "runs": {
+    "a": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/train/a_seg_pilot_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "f0a4426c1642148fd6cc8f4f088c85e016e2aba7df8634444a4339ed9ad5d47e",
+      "head_class": "Segment26",
+      "end2end": false,
+      "parameters": 3387228,
+      "val_metrics": {
+        "metrics/precision(B)": 0.6767928000862306,
+        "metrics/recall(B)": 0.5303427366939786,
+        "metrics/mAP50(B)": 0.5896955301108775,
+        "metrics/mAP50-95(B)": 0.4354844565680921,
+        "metrics/precision(M)": 0.23975267287107824,
+        "metrics/recall(M)": 0.2368310377175201,
+        "metrics/mAP50(M)": 0.15803504199705004,
+        "metrics/mAP50-95(M)": 0.052939820921829084,
+        "fitness": 0.4884242774899212
+      },
+      "forward_batch1": {
+        "mean_ms": 5.888711484273275,
+        "p50_ms": 5.883903980255127,
+        "p90_ms": 5.896908617019653,
+        "throughput_images_per_s": 169.81643652786462,
+        "peak_allocated_bytes": 733914624
+      },
+      "prediction_sanity": {
+        "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001000.jpg",
+        "boxes": 299,
+        "masks": 299
+      },
+      "onnx_export": {
+        "status": "passed",
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/train/a_seg_pilot_seed260829_5ep/weights/last.onnx"
+      }
+    },
+    "b": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/train/b_seg_pilot_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "8915e2f4cd2677f04cd393fb53d19763e2f5c67256901052f9f10bdfa63cabca",
+      "head_class": "Segment26",
+      "end2end": true,
+      "parameters": 3702280,
+      "val_metrics": {
+        "metrics/precision(B)": 0.6117505377170355,
+        "metrics/recall(B)": 0.5491717001036222,
+        "metrics/mAP50(B)": 0.5778101596073681,
+        "metrics/mAP50-95(B)": 0.42618712891533517,
+        "metrics/precision(M)": 0.20530731799174262,
+        "metrics/recall(M)": 0.20238833819857982,
+        "metrics/mAP50(M)": 0.12819272306256235,
+        "metrics/mAP50-95(M)": 0.04341849517496575,
+        "fitness": 0.46960562409030093
+      },
+      "forward_batch1": {
+        "mean_ms": 6.1235680103302,
+        "p50_ms": 6.116304159164429,
+        "p90_ms": 6.169318294525146,
+        "throughput_images_per_s": 163.30348553540065,
+        "peak_allocated_bytes": 852121088
+      },
+      "prediction_sanity": {
+        "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001000.jpg",
+        "boxes": 292,
+        "masks": 292
+      },
+      "onnx_export": {
+        "status": "passed",
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/train/b_seg_pilot_seed260829_5ep/weights/last.onnx"
+      }
+    },
+    "d": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/train/d_seg_pilot_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "6e55d36ec9735c5e0292df010cf36d5488a4856b07ba92d9de267c0b1b28462f",
+      "head_class": "Segment26",
+      "end2end": true,
+      "parameters": 6133176,
+      "val_metrics": {
+        "metrics/precision(B)": 0.6071385570701994,
+        "metrics/recall(B)": 0.5511753681189451,
+        "metrics/mAP50(B)": 0.5777264220927488,
+        "metrics/mAP50-95(B)": 0.4258630063484247,
+        "metrics/precision(M)": 0.1971465811148138,
+        "metrics/recall(M)": 0.16955705321873749,
+        "metrics/mAP50(M)": 0.11039466484805134,
+        "metrics/mAP50-95(M)": 0.02864328160770012,
+        "fitness": 0.45450628795612485
+      },
+      "forward_batch1": {
+        "mean_ms": 11.801458136240642,
+        "p50_ms": 11.7324800491333,
+        "p90_ms": 11.992652702331544,
+        "throughput_images_per_s": 84.73529189830693,
+        "peak_allocated_bytes": 843540480
+      },
+      "prediction_sanity": {
+        "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001000.jpg",
+        "boxes": 299,
+        "masks": 299
+      },
+      "onnx_export": {
+        "status": "passed",
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/train/d_seg_pilot_seed260829_5ep/weights/last.onnx"
+      }
+    }
+  },
+  "completed_at": "2026-09-04T16:28:08.358976+00:00"
+}

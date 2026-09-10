@@ -26,6 +26,7 @@ from .experts import (  # noqa: F401 - preserve historical module attributes
     OptimizedSimpleExpert,
     FusedGhostExpert,
     SimpleExpert,
+    DenseMLPExpert,
     GhostExpert,
     InvertedResidualExpert,
     EfficientExpertGroup,
@@ -432,10 +433,7 @@ class ES_MOE(nn.Module):
             use_sparse_inference: Enable sparse Top-K expert computation during inference
             dynamic_threshold: Optional threshold for pruning low-confidence experts during inference
             max_kernel_size: Largest odd depthwise kernel assigned to an expert
-            expert_kernel_sizes: Optional explicit per-expert depthwise kernel sizes
-                (length must equal ``num_experts``). When ``None`` the kernels are
-                derived from defaults; pruned checkpoints set this so retraining
-                rebuilds the exact kept-expert kernels and reloads their weights.
+            expert_kernel_sizes: Optional exact per-expert depthwise kernels for checkpoint-compatible rebuilds
         """
         super(ES_MOE, self).__init__()
 
@@ -471,25 +469,23 @@ class ES_MOE(nn.Module):
         # Dynamic routing (Top-K supported)
         self.routing = DynamicRoutingLayer(in_channels, num_experts, reduction, top_k)
 
-        # Expert group (original design). ``expert_kernel_sizes`` lets a pruned
-        # checkpoint reconstruct its kept experts' heterogeneous kernels so that
-        # ``YOLO(pruned.pt).train()`` reloads expert weights instead of dropping
-        # them on a kernel-shape mismatch (prune -> LoRA/full fine-tune recovery).
+        # Expert group (original design)
         if expert_kernel_sizes is not None:
             if len(expert_kernel_sizes) != num_experts:
-                raise ValueError(f"expert_kernel_sizes must have {num_experts} entries, got {len(expert_kernel_sizes)}")
-            ks = []
-            for k in expert_kernel_sizes:
-                k = int(k)
-                if k % 2 == 0:
-                    k -= 1
-                ks.append(min(k, max_kernel_size))
+                raise ValueError(
+                    "expert_kernel_sizes must provide one kernel per expert: "
+                    f"expected {num_experts}, got {len(expert_kernel_sizes)}"
+                )
+            ks = [int(kernel) for kernel in expert_kernel_sizes]
+            if any(kernel < 3 or kernel % 2 == 0 for kernel in ks):
+                raise ValueError("expert_kernel_sizes must contain odd kernel sizes of at least 3")
         else:
             default_kernel_sizes = [3, 5, 7]
             if num_experts <= len(default_kernel_sizes):
                 ks = [min(k, max_kernel_size) for k in default_kernel_sizes[:num_experts]]
             else:
                 ks = [min(3 + 2 * i, max_kernel_size) for i in range(num_experts)]
+        self.expert_kernel_sizes = tuple(ks)
         self.experts = nn.ModuleList([EfficientExpertGroup(in_channels, out_channels, kernel_size=k) for k in ks])
 
         # Output normalization (original design)
@@ -914,14 +910,18 @@ class OptimizedMOE(nn.Module):
                 loss_info["router_probs"], loss_info["router_logits"], loss_info["topk_indices"]
             )
             _registry_set(self, aux_loss)
+            has_dispatch_snapshot = "dispatch_topk_indices" in loss_info
+            snapshot_probs = loss_info.get("dispatch_router_probs", loss_info.get("router_probs"))
+            snapshot_indices = loss_info.get("dispatch_topk_indices", loss_info.get("topk_indices"))
+            snapshot_usage = None
+            if not has_dispatch_snapshot and isinstance(snapshot_probs, torch.Tensor):
+                snapshot_usage = snapshot_probs.detach().mean(dim=0)
             _record_moe_snapshot(
                 self,
-                expert_usage=loss_info["router_probs"].detach().mean(dim=0)
-                if isinstance(loss_info.get("router_probs"), torch.Tensor)
-                else None,
-                topk_indices=loss_info.get("topk_indices"),
+                expert_usage=snapshot_usage,
+                topk_indices=snapshot_indices,
                 topk_weights=routing_weights,
-                router_probs=loss_info.get("router_probs"),
+                router_probs=snapshot_probs,
                 aux_loss=aux_loss,
             )
 
@@ -1003,7 +1003,10 @@ class OptimizedMOEImproved(nn.Module):
         # 2) Instantiate Experts
         self.experts = nn.ModuleList()
         kwargs = {}
-        if expert_type == "ghost":
+        if expert_type == "dense_mlp":
+            expert_cls = DenseMLPExpert
+            kwargs["expand_ratio"] = expert_expand_ratio
+        elif expert_type == "ghost":
             expert_cls = GhostExpert
             kwargs["ratio"] = int(expert_expand_ratio)
         elif expert_type == "inverted":
@@ -1036,6 +1039,11 @@ class OptimizedMOEImproved(nn.Module):
         # Expert dropout: periodically disable experts to prevent uniform routing
         self.expert_dropout_rate = 0.15  # 15% dropout during training
         self.dropout_interval = 100  # Apply every 100 steps
+        # Experimental inference switch.  ``sparse`` is the P1 default.  The
+        # ``dense_gather`` mode computes experts as one device-side stack and
+        # gathers Top-K outputs without Python ``mask.any()`` dispatch; it is a
+        # diagnostic baseline for future fused/grouped kernels, not a P1 change.
+        self.experimental_dispatch_mode = "sparse"
 
     def _init_weights(self):
         for m in self.modules():
@@ -1057,6 +1065,35 @@ class OptimizedMOEImproved(nn.Module):
             if last_conv.bias is not None:
                 nn.init.constant_(last_conv.bias, 0)
 
+    def _vmap_grouped_dispatch(self, x, weights_flat, indices_flat, expert_output):
+        """Run the selected expert modules with device-side vmap dispatch.
+
+        This inference-only prototype assumes every expert has the same module
+        structure (true for the P1 checkpoint).  Parameters are stacked once
+        and indexed by the CUDA routing ids; no Python expert loop or scalar
+        ``mask.any()`` synchronization is used.
+        """
+        from torch.func import functional_call, stack_module_state
+
+        if not hasattr(self, "_vmap_expert_state"):
+            self._vmap_expert_state = stack_module_state(tuple(self.experts))
+            self._vmap_expert_template = self.experts[0]
+        params, buffers = self._vmap_expert_state
+        B, K = indices_flat.shape
+        batch_ids = torch.arange(B, device=x.device).view(B, 1).expand(B, K).reshape(-1)
+        expert_ids = indices_flat.reshape(-1)
+        inputs = x[:, None, :, :, :].expand(B, K, *x.shape[1:]).reshape(-1, *x.shape[1:])
+        selected_params = {name: value.index_select(0, expert_ids) for name, value in params.items()}
+        selected_buffers = {name: value.index_select(0, expert_ids) for name, value in buffers.items()}
+
+        def call_one(p, b, inp):
+            return functional_call(self._vmap_expert_template, (p, b), (inp.unsqueeze(0),)).squeeze(0)
+
+        outputs = torch.vmap(call_one, in_dims=(0, 0, 0))(selected_params, selected_buffers, inputs)
+        weights = weights_flat.reshape(-1, 1, 1, 1).to(expert_output.dtype)
+        expert_output.index_add_(0, batch_ids, outputs.to(expert_output.dtype) * weights)
+        return expert_output
+
     def _update_sparsity(self):
         """Progressive Sparsity Scheduling"""
         if self._training_step < self.warmup_steps:
@@ -1069,8 +1106,12 @@ class OptimizedMOEImproved(nn.Module):
     def forward(self, x):
         B, C, H, W = x.shape
 
-        if self.training and self.progressive_sparsity:
-            self._update_sparsity()
+        if self.training:
+            if self.progressive_sparsity:
+                self._update_sparsity()
+            # Keep the training clock independent of the Top-K schedule. P1
+            # disables progressive sparsity, but expert dropout still uses this
+            # counter and would otherwise repeat the step-zero drop set forever.
             self._training_step += 1
 
         # Use current_top_k for routing
@@ -1096,7 +1137,12 @@ class OptimizedMOEImproved(nn.Module):
         # Only after warmup so it doesn't fight progressive-sparsity scheduling.
         active_experts = list(range(self.num_experts))
         _step = self._training_step
-        if self.training and _step >= self.warmup_steps and _step % self.dropout_interval == 0:
+        if (
+            self.training
+            and self.expert_dropout_rate > 0
+            and _step >= self.warmup_steps
+            and _step % self.dropout_interval == 0
+        ):
             num_drop = max(1, int(self.num_experts * self.expert_dropout_rate))
             # Draw the drop set on a fixed-seed generator keyed by the global
             # step so every DDP rank disables the *same* experts. Without this,
@@ -1114,9 +1160,18 @@ class OptimizedMOEImproved(nn.Module):
         if getattr(self, "detach_routing", False):
             weights_flat = weights_flat.detach()
 
-        if torch.onnx.is_in_onnx_export():
+        dispatch_mode = getattr(self, "experimental_dispatch_mode", "sparse")
+        if dispatch_mode == "vmap_grouped" and not self.training and not torch.onnx.is_in_onnx_export():
+            expert_output = self._vmap_grouped_dispatch(x, weights_flat, indices_flat, expert_output)
+        dense_gather = dispatch_mode == "dense_gather"
+        if dispatch_mode == "vmap_grouped" and not self.training and not torch.onnx.is_in_onnx_export():
+            pass
+        elif torch.onnx.is_in_onnx_export() or (dense_gather and not self.training):
             # ONNX tracing cannot capture ``if mask.any()`` skips.
-            # Dense path: compute all experts, gather Top-K, weighted-sum.
+            # Dense-gather diagnostic path: compute all experts, gather Top-K,
+            # weighted-sum.  All routing tensors remain on-device and there is
+            # no Python scalar check; this is intentionally a correctness and
+            # synchronization baseline until a true fused sparse kernel exists.
             all_outs = torch.stack([self.experts[i](x) for i in range(self.num_experts)], dim=1)  # [B, E, out_C, H, W]
             for k in range(adaptive_top_k):
                 idx_k = indices_flat[:, k]  # [B]
@@ -1164,14 +1219,18 @@ class OptimizedMOEImproved(nn.Module):
                 loss_dict["router_probs"], loss_dict["router_logits"], loss_dict["topk_indices"]
             )
             _registry_set(self, aux_loss)
+            has_dispatch_snapshot = "dispatch_topk_indices" in loss_dict
+            snapshot_probs = loss_dict.get("dispatch_router_probs", loss_dict.get("router_probs"))
+            snapshot_indices = loss_dict.get("dispatch_topk_indices", loss_dict.get("topk_indices"))
+            snapshot_usage = None
+            if not has_dispatch_snapshot and isinstance(snapshot_probs, torch.Tensor):
+                snapshot_usage = snapshot_probs.detach().mean(dim=0)
             _record_moe_snapshot(
                 self,
-                expert_usage=loss_dict.get("router_probs").detach().mean(dim=0)
-                if isinstance(loss_dict.get("router_probs"), torch.Tensor)
-                else None,
-                topk_indices=loss_dict.get("topk_indices"),
+                expert_usage=snapshot_usage,
+                topk_indices=snapshot_indices,
                 topk_weights=routing_weights,
-                router_probs=loss_dict.get("router_probs"),
+                router_probs=snapshot_probs,
                 aux_loss=aux_loss,
             )
         else:

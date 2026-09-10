@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "experiment_tag": "r28",
+  "selection": "random.Random(seed).sample without replacement; emitted order is fixed",
+  "seed": 260829,
+  "source_yaml": "/data/data2/TuJiajun/COCO2017/coco/coco2017.yaml",
+  "source_yaml_sha256": "fadd46a0ceb946a0e4439f072eccc19b6af92b4de545d601dfac367be7adef92",
+  "source_train_list": "/data/data2/TuJiajun/COCO2017/coco/train2017.txt",
+  "source_train_list_sha256": "b96750603f3f266013d0e86559a1b96f79649698ccdca576ff2b66d94cecfb63",
+  "source_train_images": 118287,
+  "source_val_list": "/data/data2/TuJiajun/COCO2017/coco/val2017.txt",
+  "source_val_list_sha256": "871449eca4739d5561af5998320883b132fc565aff00ad6fc383458e8d4b4c73",
+  "train_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_medium_data_r28/train2017_20000_seed260829.txt",
+  "train_list_sha256": "df673beac157477b840592d560c3ca4bd9098d0c88857da6d806c2af70337b03",
+  "train_images": 20000,
+  "val_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_medium_data_r28/val2017_5000.txt",
+  "val_list_sha256": "bf4ee8bc36f2fdec2c07bbbead970ee9e3187082dd9564a4a589bf7e14022d77",
+  "validation_images": 5000,
+  "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_medium_data_r28/coco.yaml",
+  "data_yaml_sha256": "6f946c606cdef98fc951e9a45ab1a166748d3b035cb7c343ac06db5499e8f9d2"
+}

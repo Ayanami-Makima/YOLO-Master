@@ -1,5 +1,7 @@
 """Regression tests for strict multi-seed MoT ablation aggregation."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
 import pytest

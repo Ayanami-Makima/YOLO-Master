@@ -216,8 +216,8 @@ def test_moe_snapshot_tensors_remain_on_source_device():
     aux_loss = router_probs.sum()
 
     usage, counts = _compute_usage_from_topk(topk_indices, module.num_experts)
-    assert usage.device == device
-    assert counts.device == device
+    assert usage.device == topk_indices.device
+    assert counts.device == topk_indices.device
 
     for _ in range(MOE_SNAPSHOT_INTERVAL):
         _record_moe_snapshot(
@@ -232,7 +232,7 @@ def test_moe_snapshot_tensors_remain_on_source_device():
     for key in ("expert_usage", "topk_counts", "mean_router_probs", "mean_topk_weight", "aux_loss"):
         value = snapshot[key]
         if isinstance(value, torch.Tensor):
-            assert value.device == device
+            assert value.device == topk_indices.device
 
 
 # ---------------------------------------------------------------------------

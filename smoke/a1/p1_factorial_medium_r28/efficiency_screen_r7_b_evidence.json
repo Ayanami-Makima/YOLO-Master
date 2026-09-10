@@ -1,0 +1,121 @@
+{
+  "schema": "a1-p1-r28-efficiency-screen/v1",
+  "status": "completed",
+  "timestamp_utc": "2026-09-03T07:28:16.887584+00:00",
+  "protocol": {
+    "device": "cuda:0",
+    "cell": "b",
+    "seed": "260829",
+    "batch": 1,
+    "image_size": 640,
+    "warmup": 20,
+    "samples": 60,
+    "scope": "model forward only"
+  },
+  "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/b_formal_seed260829_15ep/weights/last.pt",
+  "variants": {
+    "top2": {
+      "adapter_count": 3,
+      "moe_count": 0,
+      "variant_note": "Dense checkpoint baseline; variant label is ignored",
+      "timing": {
+        "n": 60,
+        "mean_ms": 6.2357503573099775,
+        "p50_ms": 6.225600004196167,
+        "p90_ms": 6.301625680923462,
+        "p99_ms": 6.3551547765731815,
+        "min_ms": 6.155263900756836,
+        "max_ms": 6.358911991119385
+      },
+      "throughput_images_per_s": 160.36562445572102,
+      "peak_allocated_bytes": 720909312,
+      "peak_reserved_bytes": 754974720
+    },
+    "top1": {
+      "adapter_count": 3,
+      "moe_count": 0,
+      "variant_note": "Dense checkpoint baseline; variant label is ignored",
+      "timing": {
+        "n": 60,
+        "mean_ms": 6.223365871111552,
+        "p50_ms": 6.222111940383911,
+        "p90_ms": 6.281392049789429,
+        "p99_ms": 6.310951199531555,
+        "min_ms": 6.161312103271484,
+        "max_ms": 6.321184158325195
+      },
+      "throughput_images_per_s": 160.6847517421293,
+      "peak_allocated_bytes": 720909312,
+      "peak_reserved_bytes": 754974720
+    },
+    "cap4_top2": {
+      "adapter_count": 3,
+      "moe_count": 0,
+      "variant_note": "Dense checkpoint baseline; variant label is ignored",
+      "timing": {
+        "n": 60,
+        "mean_ms": 6.234362157185872,
+        "p50_ms": 6.2618560791015625,
+        "p90_ms": 6.283139228820801,
+        "p99_ms": 6.372442893981933,
+        "min_ms": 6.168799877166748,
+        "max_ms": 6.49183988571167
+      },
+      "throughput_images_per_s": 160.4013329330534,
+      "peak_allocated_bytes": 720909312,
+      "peak_reserved_bytes": 754974720
+    },
+    "cap4_top1": {
+      "adapter_count": 3,
+      "moe_count": 0,
+      "variant_note": "Dense checkpoint baseline; variant label is ignored",
+      "timing": {
+        "n": 60,
+        "mean_ms": 6.225347717603047,
+        "p50_ms": 6.239807844161987,
+        "p90_ms": 6.264025402069092,
+        "p99_ms": 6.300191965103149,
+        "min_ms": 6.17139196395874,
+        "max_ms": 6.317183971405029
+      },
+      "throughput_images_per_s": 160.6335975695557,
+      "peak_allocated_bytes": 720909312,
+      "peak_reserved_bytes": 754974720
+    },
+    "cap2_top1": {
+      "adapter_count": 3,
+      "moe_count": 0,
+      "variant_note": "Dense checkpoint baseline; variant label is ignored",
+      "timing": {
+        "n": 60,
+        "mean_ms": 6.274523719151815,
+        "p50_ms": 6.255631923675537,
+        "p90_ms": 6.305510330200195,
+        "p99_ms": 6.618775572776794,
+        "min_ms": 6.210559844970703,
+        "max_ms": 6.66812801361084
+      },
+      "throughput_images_per_s": 159.37464654849998,
+      "peak_allocated_bytes": 720909312,
+      "peak_reserved_bytes": 754974720
+    },
+    "late_top2": {
+      "adapter_count": 3,
+      "moe_count": 0,
+      "variant_note": "Dense checkpoint baseline; variant label is ignored",
+      "timing": {
+        "n": 60,
+        "mean_ms": 6.229565318425497,
+        "p50_ms": 6.222912073135376,
+        "p90_ms": 6.280902290344239,
+        "p99_ms": 6.319163966178894,
+        "min_ms": 6.175936222076416,
+        "max_ms": 6.330624103546143
+      },
+      "throughput_images_per_s": 160.5248438510228,
+      "peak_allocated_bytes": 720909312,
+      "peak_reserved_bytes": 754974720
+    }
+  },
+  "completed_timestamp_utc": "2026-09-03T07:28:20.612439+00:00"
+}

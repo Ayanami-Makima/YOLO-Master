@@ -1,0 +1,10 @@
+{
+  "stage": "train",
+  "status": "running",
+  "pid": 139715,
+  "cell": "b_alpha0p0_seed260829",
+  "child_pid": 139718,
+  "log": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_pilot_r2/logs/train_b_alpha0p0_seed260829.log",
+  "attempt": 1,
+  "time": "2026-09-06T20:21:45+0800"
+}

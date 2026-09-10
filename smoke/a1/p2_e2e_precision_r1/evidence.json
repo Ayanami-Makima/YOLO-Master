@@ -1,0 +1,233 @@
+{
+  "schema": "a1-p2-e2e-precision-r1/v1",
+  "status": "completed",
+  "created_at": "2026-09-03T09:57:34.225901+00:00",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+  "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+  "device": "cuda:1",
+  "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+  "data_yaml_sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+  "val_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/val2017.txt",
+  "val_list_sha256": "634d62f74fe1342c8430f83a2424b07a3d93a71db80e4988d49344c7ba8de324",
+  "images": 512,
+  "imgsz": 640,
+  "batch": 1,
+  "cells": {
+    "260829": {
+      "a": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/a_formal_seed260829_15ep/weights/last.pt",
+        "checkpoint_sha256": "dce906840c103c8e7e4e01c12ed621b65f4d532b24b22217a850c462dd3ec8a7",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6464661512603891,
+          "metrics/recall(B)": 0.5357171881160145,
+          "metrics/mAP50(B)": 0.5899199501129289,
+          "metrics/mAP50-95(B)": 0.43431946244505637,
+          "fitness": 0.43431946244505637
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260829/a/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260829/a/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2many"
+        ]
+      },
+      "b": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/b_formal_seed260829_15ep/weights/last.pt",
+        "checkpoint_sha256": "352b4ce33152cd7a0b094f9f904049e64db5b497bf6508f0dc0a6e1a5651e373",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6663739139258141,
+          "metrics/recall(B)": 0.5200333505583734,
+          "metrics/mAP50(B)": 0.5770906051988938,
+          "metrics/mAP50-95(B)": 0.42831277450135685,
+          "fitness": 0.42831277450135685
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260829/b/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260829/b/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2one"
+        ]
+      },
+      "c": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+        "checkpoint_sha256": "bdfe8a0283d133c9317da05f1ad5a82aae08367e810ba68547de7713de49f999",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.653167100097233,
+          "metrics/recall(B)": 0.5332107139937824,
+          "metrics/mAP50(B)": 0.5892433949578381,
+          "metrics/mAP50-95(B)": 0.4347861095947378,
+          "fitness": 0.4347861095947378
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260829/c/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260829/c/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2many"
+        ]
+      },
+      "d": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+        "checkpoint_sha256": "b2cd9b61fbc924c725f82f9cc1346f4e5828cb69468f6c639ab4f5c089f678c1",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6665062924384964,
+          "metrics/recall(B)": 0.5182961768438589,
+          "metrics/mAP50(B)": 0.5773137776787532,
+          "metrics/mAP50-95(B)": 0.42726308888505726,
+          "fitness": 0.42726308888505726
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260829/d/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260829/d/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2one"
+        ]
+      }
+    },
+    "260830": {
+      "a": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/a_formal_seed260830_15ep/weights/last.pt",
+        "checkpoint_sha256": "62c9fe9d31b5dfb6754dca6cfbe18fa58857965f3615ce2e9e5498892a0ad389",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6786069698884744,
+          "metrics/recall(B)": 0.5234459982525599,
+          "metrics/mAP50(B)": 0.5908904911575754,
+          "metrics/mAP50-95(B)": 0.43474993186985095,
+          "fitness": 0.43474993186985095
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260830/a/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260830/a/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2many"
+        ]
+      },
+      "b": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/b_formal_seed260830_15ep/weights/last.pt",
+        "checkpoint_sha256": "a557a581a21d74b8850e2820ab0a5c81744b73f2c54bba876f60edb8af280020",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6145777900513313,
+          "metrics/recall(B)": 0.5426638759514832,
+          "metrics/mAP50(B)": 0.5759873593278215,
+          "metrics/mAP50-95(B)": 0.42790291164563987,
+          "fitness": 0.42790291164563987
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260830/b/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260830/b/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2one"
+        ]
+      },
+      "c": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/c_formal_seed260830_15ep/weights/last.pt",
+        "checkpoint_sha256": "4568f65e73fb05d0996eb431c01374bf8bb2988d4ac44d3fba3e1dc2230ce1b6",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6744069390781707,
+          "metrics/recall(B)": 0.5282082043677093,
+          "metrics/mAP50(B)": 0.5920357713982084,
+          "metrics/mAP50-95(B)": 0.4344433005007363,
+          "fitness": 0.4344433005007363
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260830/c/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260830/c/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2many"
+        ]
+      },
+      "d": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260830/d_formal_seed260830_15ep/weights/last.pt",
+        "checkpoint_sha256": "b5f294a896f3a53aec8c412a2b3ebec0a3dddf69de00da428453e6173d3a147d",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6446160443741761,
+          "metrics/recall(B)": 0.5268115069803251,
+          "metrics/mAP50(B)": 0.5773758388218582,
+          "metrics/mAP50-95(B)": 0.4293826377756947,
+          "fitness": 0.4293826377756947
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260830/d/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260830/d/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2one"
+        ]
+      }
+    },
+    "260831": {
+      "a": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/a_formal_seed260831_15ep/weights/last.pt",
+        "checkpoint_sha256": "df9c6397be4027de5c8653021cadf65d0eee6612e747694bdace604afee476b8",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6832224918359623,
+          "metrics/recall(B)": 0.5190183002164288,
+          "metrics/mAP50(B)": 0.5893093913545793,
+          "metrics/mAP50-95(B)": 0.43266582017031285,
+          "fitness": 0.43266582017031285
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260831/a/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260831/a/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2many"
+        ]
+      },
+      "b": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/b_formal_seed260831_15ep/weights/last.pt",
+        "checkpoint_sha256": "da33e8bac9ebf9a9f89a99bae7e70611ef57139ee8f730f0a2da29b91f6f01fd",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6502209146099106,
+          "metrics/recall(B)": 0.5283547524469447,
+          "metrics/mAP50(B)": 0.5778972729162151,
+          "metrics/mAP50-95(B)": 0.4280294613261744,
+          "fitness": 0.4280294613261744
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260831/b/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260831/b/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2one"
+        ]
+      },
+      "c": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/c_formal_seed260831_15ep/weights/last.pt",
+        "checkpoint_sha256": "a8eb4af047b278a876e1dfe775d698e453478161f1a9907e98f735f5fc863ef1",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6708922660043196,
+          "metrics/recall(B)": 0.5219881309679723,
+          "metrics/mAP50(B)": 0.5888496193376305,
+          "metrics/mAP50-95(B)": 0.43334906429563547,
+          "fitness": 0.43334906429563547
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260831/c/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260831/c/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2many"
+        ]
+      },
+      "d": {
+        "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/d_formal_seed260831_15ep/weights/last.pt",
+        "checkpoint_sha256": "183efe3cd626d02ec0ca2adb13459493def87d17bad8c0edfaba27f000a65cdd",
+        "images": 512,
+        "metrics": {
+          "metrics/precision(B)": 0.6618280343430649,
+          "metrics/recall(B)": 0.5222719842574276,
+          "metrics/mAP50(B)": 0.5790685967087972,
+          "metrics/mAP50-95(B)": 0.429600906921964,
+          "fitness": 0.429600906921964
+        },
+        "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260831/d/validator/per_image_metrics.csv",
+        "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_precision_r1/seed260831/d/validator/assignment_metrics.csv",
+        "assigner_branches": [
+          "one2one"
+        ]
+      }
+    }
+  },
+  "git": {
+    "commit": "f1ac1f5c012615cf03c66d9dafa593215bf63759",
+    "diff_stat": "smoke/a1/A1_P0_P1_PROGRESS_REPORT.md  | 1039 ++++++++++++++++++---------------\n smoke/a1/A1_P2_PLAN.md                |  457 ++++++++-------\n ultralytics/nn/modules/moe/modules.py |   69 ++-\n 3 files changed, 858 insertions(+), 707 deletions(-)"
+  },
+  "completed_at": "2026-09-03T09:59:38.973533+00:00"
+}

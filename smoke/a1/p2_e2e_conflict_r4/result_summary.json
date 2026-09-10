@@ -1,0 +1,57 @@
+{
+  "schema": "a1-p2-e2e-conflict-resolution-r4-summary/v1",
+  "status": "completed_invalid_mitigation",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "factor": "one_to_one_conflict_resolution_metric",
+  "control": "overlap",
+  "treatment": "align",
+  "seed": 260829,
+  "val_images": 512,
+  "runs": {
+    "b_overlap": {
+      "map50_95": 0.425600620002,
+      "precision": 0.622709777892,
+      "recall": 0.536556404848,
+      "positive_per_image": 6.87890625,
+      "matched_iou": 0.837883580067,
+      "candidate_positive_per_image": 45.627952755906,
+      "conflict_anchor_per_image": 1.279527559055,
+      "post_conflict_positive_per_image": 44.273622047244,
+      "post_secondary_topk_positive_per_image": 6.933070866142
+    },
+    "b_align": {
+      "map50_95": 0.424558009143,
+      "precision": 0.622397448413,
+      "recall": 0.536220952252,
+      "positive_per_image": 6.87890625,
+      "matched_iou": 0.837190647157,
+      "candidate_positive_per_image": 45.616141732283,
+      "conflict_anchor_per_image": 1.261811023622,
+      "post_conflict_positive_per_image": 44.279527559055,
+      "post_secondary_topk_positive_per_image": 6.933070866142
+    },
+    "d_overlap": {
+      "map50_95": 0.425896086721,
+      "precision": 0.629765029960,
+      "recall": 0.531779946895,
+      "positive_per_image": 6.87890625,
+      "matched_iou": 0.837986940269,
+      "candidate_positive_per_image": 45.614173228346,
+      "conflict_anchor_per_image": 1.287401574803,
+      "post_conflict_positive_per_image": 44.251968503937,
+      "post_secondary_topk_positive_per_image": 6.933070866142
+    },
+    "d_align": {
+      "map50_95": 0.425849102875,
+      "precision": 0.642871702916,
+      "recall": 0.529912725690,
+      "positive_per_image": 6.875,
+      "matched_iou": 0.837385884677,
+      "candidate_positive_per_image": 45.616141732283,
+      "conflict_anchor_per_image": 1.273622047244,
+      "post_conflict_positive_per_image": 44.269685039370,
+      "post_secondary_topk_positive_per_image": 6.929133858268
+    }
+  },
+  "decision": "reject_align_treatment; retain_overlap_baseline; do_not_expand_to_three_seeds"
+}

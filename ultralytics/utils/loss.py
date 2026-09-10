@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import os
 from pathlib import Path
 from typing import Any
 
@@ -346,7 +347,11 @@ class v8DetectionLoss:
     """Criterion class for computing training losses for YOLOv8 object detection."""
 
     def __init__(
-        self, model: torch.nn.Module, tal_topk: int = 10, tal_topk2: int | None = None
+        self,
+        model: torch.nn.Module,
+        tal_topk: int = 10,
+        tal_topk2: int | None = None,
+        conflict_metric: str = "overlap",
     ):  # model must be de-paralleled
         """Initialize v8DetectionLoss with model parameters and task-aligned assignment settings."""
         device = next(model.parameters()).device  # get model device
@@ -362,6 +367,9 @@ class v8DetectionLoss:
         self.device = device
 
         self.use_dfl = m.reg_max > 1
+        # Optional P2 controlled pilot knob. It is deliberately environment-only
+        # so the locked P1 behavior remains exactly unchanged when unset.
+        self.cls_gain = 1.0
 
         # Class weights for handling imbalanced datasets
         self.class_weights = getattr(model, "class_weights", None)
@@ -375,6 +383,7 @@ class v8DetectionLoss:
             beta=6.0,
             stride=self.stride.tolist(),
             topk2=tal_topk2,
+            conflict_metric=conflict_metric,
         )
         self.bbox_loss = BboxLoss(m.reg_max).to(device)
         self.proj = torch.arange(m.reg_max, dtype=torch.float, device=device)
@@ -462,7 +471,7 @@ class v8DetectionLoss:
             )
 
         loss[0] *= self.hyp.box  # box gain
-        loss[1] *= self.hyp.cls  # cls gain
+        loss[1] *= self.hyp.cls * self.cls_gain  # cls gain
         loss[2] *= self.hyp.dfl  # dfl gain
         return (
             (fg_mask, target_gt_idx, target_bboxes, anchor_points, stride_tensor),
@@ -1202,7 +1211,41 @@ class E2ELoss:
     def __init__(self, model: torch.nn.Module, loss_fn=v8DetectionLoss):
         """Initialize E2ELoss with one-to-many and one-to-one detection losses using the provided model."""
         self.one2many = loss_fn(model, tal_topk=10)
-        self.one2one = loss_fn(model, tal_topk=7, tal_topk2=1)
+        # P2-E r3 optionally relaxes the one-to-one positive budget.  The
+        # default remains exactly one positive candidate per GT, preserving
+        # the locked P1 behavior when the environment variable is unset.
+        try:
+            one2one_topk2 = int(os.environ.get("A1_E2E_O2O_TAL_TOPK2", "1"))
+            if one2one_topk2 < 1:
+                one2one_topk2 = 1
+        except (TypeError, ValueError):
+            one2one_topk2 = 1
+        try:
+            one2one_topk = int(os.environ.get("A1_E2E_O2O_TAL_TOPK", "7"))
+        except (TypeError, ValueError):
+            one2one_topk = 7
+        one2one_topk = max(one2one_topk, 1)
+        one2one_kwargs = {"tal_topk": one2one_topk, "tal_topk2": one2one_topk2}
+        # P2-E r4 changes only the one-to-one conflict resolution metric. The
+        # native overlap-based rule remains the default and non-detection loss
+        # classes keep their original constructor contract.
+        if loss_fn is v8DetectionLoss:
+            conflict_metric = os.environ.get("A1_E2E_O2O_CONFLICT_METRIC", "overlap").strip().lower()
+            if conflict_metric not in {"overlap", "align"}:
+                conflict_metric = "overlap"
+            one2one_kwargs["conflict_metric"] = conflict_metric
+        self.one2one = loss_fn(model, **one2one_kwargs)
+        self.one2one_topk = one2one_topk
+        self.one2one_conflict_metric = getattr(self.one2one.assigner, "conflict_metric", "overlap")
+        self.one2one_topk2 = one2one_topk2
+        # P2-E r2 changes only the one-to-one classification-loss multiplier.
+        # An unset/invalid value is treated as the locked neutral multiplier.
+        try:
+            self.one2one.cls_gain = float(os.environ.get("A1_E2E_O2O_CLS_GAIN", "1.0"))
+            if not math.isfinite(self.one2one.cls_gain) or self.one2one.cls_gain <= 0:
+                self.one2one.cls_gain = 1.0
+        except (TypeError, ValueError):
+            self.one2one.cls_gain = 1.0
         self.updates = 0
         self.total = 1.0
         # init gain

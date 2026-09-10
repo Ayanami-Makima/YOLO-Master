@@ -1,0 +1,186 @@
+{
+  "status": "completed",
+  "source": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_pilot_r3/single_side_capture_r3",
+  "source_evidence_sha256": "b5f3c21890208f8076f022d581960ef781553c95bc7238362649deeaca52ff62",
+  "script_sha256": "acd35bc86e1591152c7d53e09dcf7e533bad4dedbd728462625c043a064f2aed",
+  "cells": {
+    "d_alpha0p0_seed260829": {
+      "summary": {
+        "images": 512,
+        "gt_total": 3536,
+        "reasons": {
+          "square_only": {
+            "evaluation_match_competition": 2,
+            "score_threshold": 103,
+            "wrong_class_overlap": 0,
+            "localization_threshold": 0,
+            "joint_score_localization": 0,
+            "wrong_class_nearby": 0,
+            "no_near_retained_candidate": 0
+          },
+          "rect_only": {
+            "evaluation_match_competition": 2,
+            "score_threshold": 84,
+            "wrong_class_overlap": 0,
+            "localization_threshold": 0,
+            "joint_score_localization": 0,
+            "wrong_class_nearby": 0,
+            "no_near_retained_candidate": 0
+          }
+        },
+        "sizes": {
+          "square_only": {
+            "large": 37,
+            "medium": 51,
+            "small": 17
+          },
+          "rect_only": {
+            "small": 14,
+            "medium": 35,
+            "large": 37
+          }
+        },
+        "score_sweep_iou50": {
+          "0.1": {
+            "square_tp": 2172,
+            "rect_tp": 2176,
+            "square_predictions": 4338,
+            "square_fp": 2166,
+            "rect_predictions": 4264,
+            "rect_fp": 2088
+          },
+          "0.2": {
+            "square_tp": 1926,
+            "rect_tp": 1895,
+            "square_predictions": 2894,
+            "square_fp": 968,
+            "rect_predictions": 2864,
+            "rect_fp": 969
+          },
+          "0.25": {
+            "square_tp": 1813,
+            "rect_tp": 1794,
+            "square_predictions": 2508,
+            "square_fp": 695,
+            "rect_predictions": 2469,
+            "rect_fp": 675
+          },
+          "0.3": {
+            "square_tp": 1703,
+            "rect_tp": 1703,
+            "square_predictions": 2216,
+            "square_fp": 513,
+            "rect_predictions": 2206,
+            "rect_fp": 503
+          },
+          "0.5": {
+            "square_tp": 1346,
+            "rect_tp": 1350,
+            "square_predictions": 1545,
+            "square_fp": 199,
+            "rect_predictions": 1531,
+            "rect_fp": 181
+          }
+        }
+      },
+      "input_sha256": [
+        "bab461b1b933b84f827c884113f9eb47da6a0f6bbba78e0ccb8c133a3dbf188a",
+        "874749aa9037631668ee08ca95a52156c6eacab6dfdaec7658ac9871618b2ed4"
+      ]
+    },
+    "d_alpha0p1_seed260829": {
+      "summary": {
+        "images": 512,
+        "gt_total": 3536,
+        "reasons": {
+          "square_only": {
+            "evaluation_match_competition": 2,
+            "score_threshold": 114,
+            "wrong_class_overlap": 0,
+            "localization_threshold": 1,
+            "joint_score_localization": 1,
+            "wrong_class_nearby": 0,
+            "no_near_retained_candidate": 0
+          },
+          "rect_only": {
+            "evaluation_match_competition": 2,
+            "score_threshold": 84,
+            "wrong_class_overlap": 0,
+            "localization_threshold": 1,
+            "joint_score_localization": 0,
+            "wrong_class_nearby": 0,
+            "no_near_retained_candidate": 0
+          }
+        },
+        "sizes": {
+          "square_only": {
+            "large": 43,
+            "medium": 54,
+            "small": 21
+          },
+          "rect_only": {
+            "medium": 34,
+            "large": 33,
+            "small": 20
+          }
+        },
+        "score_sweep_iou50": {
+          "0.1": {
+            "square_tp": 2184,
+            "rect_tp": 2165,
+            "square_predictions": 4282,
+            "square_fp": 2098,
+            "rect_predictions": 4261,
+            "rect_fp": 2096
+          },
+          "0.2": {
+            "square_tp": 1920,
+            "rect_tp": 1886,
+            "square_predictions": 2876,
+            "square_fp": 956,
+            "rect_predictions": 2842,
+            "rect_fp": 956
+          },
+          "0.25": {
+            "square_tp": 1814,
+            "rect_tp": 1783,
+            "square_predictions": 2501,
+            "square_fp": 687,
+            "rect_predictions": 2463,
+            "rect_fp": 680
+          },
+          "0.3": {
+            "square_tp": 1715,
+            "rect_tp": 1687,
+            "square_predictions": 2230,
+            "square_fp": 515,
+            "rect_predictions": 2176,
+            "rect_fp": 489
+          },
+          "0.5": {
+            "square_tp": 1356,
+            "rect_tp": 1336,
+            "square_predictions": 1557,
+            "square_fp": 201,
+            "rect_predictions": 1519,
+            "rect_fp": 183
+          }
+        }
+      },
+      "input_sha256": [
+        "52c3ca9ab0ca8af9ad736451e79ed384b7a64ddf99360fd0ebb645d503097417",
+        "e3ba31aaa49d747e03eee83b0557537d8f385ce77f91b26b60f527af36e805d1"
+      ]
+    }
+  },
+  "reason_priority": [
+    "evaluation_match_competition",
+    "score_threshold",
+    "wrong_class_overlap",
+    "localization_threshold",
+    "joint_score_localization",
+    "wrong_class_nearby",
+    "no_near_retained_candidate"
+  ],
+  "limits": "Descriptive retained-candidate analysis, not TIDE or causal attribution. Native top-300, score floor .001. Overlapping flags retained. Threshold sweep is diagnostic, not a new tuned deployment setting."
+}

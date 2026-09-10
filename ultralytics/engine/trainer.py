@@ -697,15 +697,20 @@ class BaseTrainer:
                     xi = [0, nw]  # x interp
                     self.accumulate = max(1, int(np.interp(ni, xi, [1, self.args.nbs / self.batch_size]).round()))
                     for x in self.optimizer.param_groups:
-                        # Bias lr falls from 0.1 to lr0, all other lrs rise from 0.0 to lr0
+                        # Bias lr falls from 0.1 to lr0, all other lrs rise from 0.0 to lr0.
+                        # Explicit no-warmup groups start at their scheduled LR.
+                        target_lr = x["initial_lr"] * self.lf(epoch)
+                        if x.get("p1_no_warmup"):
+                            start_lr = target_lr
+                        elif x.get("param_group") == "bias":
+                            start_lr = self.args.warmup_bias_lr
+                        else:
+                            start_lr = 0.0
                         x["lr"] = float(
                             np.interp(
                                 ni,
                                 xi,
-                                [
-                                    self.args.warmup_bias_lr if x.get("param_group") == "bias" else 0.0,
-                                    x["initial_lr"] * self.lf(epoch),
-                                ],
+                                [start_lr, target_lr],
                             )
                         )
                         if "momentum" in x:
@@ -1581,12 +1586,13 @@ class BaseTrainer:
         Returns:
             (torch.optim.Optimizer): The constructed optimizer.
         """
-        g = [{}, {}, {}, {}, {}, {}]  # decay, normalization, bias, Muon, router, adapter groups
+        g = [{}, {}, {}, {}, {}, {}, {}]  # decay, normalization, bias, Muon, router, adapter, P1 gain
         bn = tuple(v for k, v in nn.__dict__.items() if "Norm" in k)  # normalization layers, i.e. BatchNorm2d()
         from ultralytics.utils.lora.api import _is_adapter_param
 
         router_lr_scale = float(getattr(self.args, "moe_router_lr_scale", 0.5) or 0.5)
         adapter_lr_mult = float(getattr(self.args, "lora_lr_mult", 1.0) or 1.0)
+        gain_lr_scales = set()
         adapter_model = unwrap_model(model)
         adapter_controller = getattr(self, "adapter_controller", None)
         adapter_active = bool(getattr(adapter_controller, "active", False)) or bool(
@@ -1622,7 +1628,18 @@ class BaseTrainer:
         for module_name, module in unwrap_model(model).named_modules():
             for param_name, param in module.named_parameters(recurse=False):
                 fullname = f"{module_name}.{param_name}" if module_name else param_name
-                if _is_adapter_param(fullname):
+                if (
+                    param_name == "gain"
+                    and hasattr(module, "base")
+                    and hasattr(module, "factor")
+                    and hasattr(module, "p1_gain_lr_scale")
+                ):
+                    gain_lr_scale = float(module.p1_gain_lr_scale)
+                    if not math.isfinite(gain_lr_scale) or gain_lr_scale <= 0:
+                        raise ValueError(f"invalid P1 residual gain LR scale {gain_lr_scale!r} for {fullname}")
+                    gain_lr_scales.add(gain_lr_scale)
+                    g[6][fullname] = param
+                elif _is_adapter_param(fullname):
                     g[5][fullname] = param
                 elif "routing" in fullname.lower() or "router" in fullname.lower():
                     g[4][fullname] = param
@@ -1651,12 +1668,15 @@ class BaseTrainer:
                 "optimizer trainable-parameter partition is incomplete: "
                 f"missing={missing[:8]}, duplicated={duplicated[:8]}"
             )
-        num_params = [len(g[0]), len(g[1]), len(g[2]), len(g[4]), len(g[5])]  # parameters by policy
+        if len(gain_lr_scales) > 1:
+            raise ValueError(f"P1 residual gains requested inconsistent LR scales: {sorted(gain_lr_scales)}")
+        gain_lr_scale = next(iter(gain_lr_scales), 1.0)
+        num_params = [len(g[0]), len(g[1]), len(g[2]), len(g[4]), len(g[5]), len(g[6])]
         if use_muon:
-            router_index, adapter_index = 4, 5
+            router_index, adapter_index, gain_index = 4, 5, 6
         else:
-            g = [g[0].values(), g[1].values(), g[2].values(), g[4].values(), g[5].values()]
-            router_index, adapter_index = 3, 4
+            g = [g[0].values(), g[1].values(), g[2].values(), g[4].values(), g[5].values(), g[6].values()]
+            router_index, adapter_index, gain_index = 3, 4, 5
 
         optimizers = {"Adam", "Adamax", "AdamW", "NAdam", "RAdam", "RMSProp", "SGD", "MuSGD", "auto"}
         name = {x.lower(): x for x in optimizers}.get(str(name).lower(), str(name))
@@ -1689,6 +1709,14 @@ class BaseTrainer:
             "weight_decay": 0.0,
             "param_group": "adapter",
         }
+        g[gain_index] = {
+            "params": g[gain_index],
+            **optim_args,
+            "lr": lr * gain_lr_scale,
+            "weight_decay": 0.0,
+            "param_group": "residual_gain",
+            "p1_no_warmup": True,
+        }
         muon, sgd = (0.2, 1.0)
         if use_muon:
             num_params[0] = len(g[3])  # update number of params
@@ -1711,7 +1739,8 @@ class BaseTrainer:
             f"{colorstr('optimizer:')} {type(optimizer).__name__}(lr={lr}, momentum={momentum}) with parameter groups "
             f"{num_params[1]} weight(decay=0.0), {num_params[0]} weight(decay={decay}), "
             f"{num_params[2]} bias(decay=0.0), {num_params[3]} router(lr={router_lr_scale:g}x), "
-            f"{num_params[4]} adapter(lr={adapter_lr_mult:g}x)"
+            f"{num_params[4]} adapter(lr={adapter_lr_mult:g}x), "
+            f"{num_params[5]} residual_gain(lr={gain_lr_scale:g}x, decay=0.0, warmup=off)"
         )
         return optimizer
 

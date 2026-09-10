@@ -1,0 +1,132 @@
+{
+  "status": "completed",
+  "device": 1,
+  "batch": 1,
+  "imgsz": 640,
+  "precision": "FP32",
+  "cells": {
+    "d_alpha0p0_seed260829": {
+      "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+      "passes": {
+        "rect0": {
+          "metrics": {
+            "metrics/precision(B)": 0.6162793417095465,
+            "metrics/recall(B)": 0.5384527249048585,
+            "metrics/mAP50(B)": 0.5728302320639027,
+            "metrics/mAP50-95(B)": 0.4243096482648621,
+            "fitness": 0.4243096482648621
+          }
+        },
+        "rect1": {
+          "metrics": {
+            "metrics/precision(B)": 0.5856184298310201,
+            "metrics/recall(B)": 0.540863982078019,
+            "metrics/mAP50(B)": 0.5749171614763725,
+            "metrics/mAP50-95(B)": 0.42386755967524103,
+            "fitness": 0.42386755967524103
+          }
+        }
+      },
+      "summary": {
+        "images": 512,
+        "same_content_images": 512,
+        "tp_delta_rect_minus_square": -19,
+        "fp_delta_rect_minus_square": -20,
+        "features": {
+          "layer4": {
+            "mean_cosine": 0.9880938704892326,
+            "p10_cosine": 0.9754724069225512,
+            "mean_delta": 0.019264473965449724,
+            "mean_abs_delta": 0.019398209791688714
+          },
+          "layer6": {
+            "mean_cosine": 0.9899835981194767,
+            "p10_cosine": 0.9811259383558335,
+            "mean_delta": 0.012085705123539014,
+            "mean_abs_delta": 0.013642327268556187
+          },
+          "layer8": {
+            "mean_cosine": 0.9938849899893285,
+            "p10_cosine": 0.9899742270963274,
+            "mean_delta": 0.007419008732540533,
+            "mean_abs_delta": 0.007500172330765054
+          },
+          "head_input": [
+            {
+              "mean_cosine": 0.9975287612730386
+            },
+            {
+              "mean_cosine": 0.9939550188723418
+            },
+            {
+              "mean_cosine": 0.9810320302402291
+            }
+          ]
+        }
+      }
+    },
+    "d_alpha0p1_seed260829": {
+      "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+      "passes": {
+        "rect0": {
+          "metrics": {
+            "metrics/precision(B)": 0.6004809400232605,
+            "metrics/recall(B)": 0.5481008735603037,
+            "metrics/mAP50(B)": 0.5758332740098919,
+            "metrics/mAP50-95(B)": 0.4256950176080504,
+            "fitness": 0.4256950176080504
+          }
+        },
+        "rect1": {
+          "metrics": {
+            "metrics/precision(B)": 0.588449292378014,
+            "metrics/recall(B)": 0.5352189335008838,
+            "metrics/mAP50(B)": 0.5718320354769127,
+            "metrics/mAP50-95(B)": 0.42202441960778797,
+            "fitness": 0.42202441960778797
+          }
+        }
+      },
+      "summary": {
+        "images": 512,
+        "same_content_images": 512,
+        "tp_delta_rect_minus_square": -31,
+        "fp_delta_rect_minus_square": -7,
+        "features": {
+          "layer4": {
+            "mean_cosine": 0.9880408574860006,
+            "p10_cosine": 0.9754758355041333,
+            "mean_delta": 0.019297071576147573,
+            "mean_abs_delta": 0.019432497796515236
+          },
+          "layer6": {
+            "mean_cosine": 0.9896456697935827,
+            "p10_cosine": 0.980445018748069,
+            "mean_delta": 0.011968345111853296,
+            "mean_abs_delta": 0.01352117028929456
+          },
+          "layer8": {
+            "mean_cosine": 0.9937673823009718,
+            "p10_cosine": 0.98981607643836,
+            "mean_delta": 0.007951565639814362,
+            "mean_abs_delta": 0.008022273745154962
+          },
+          "head_input": [
+            {
+              "mean_cosine": 0.9975142782184047
+            },
+            {
+              "mean_cosine": 0.99387077031898
+            },
+            {
+              "mean_cosine": 0.981261373084528
+            }
+          ]
+        }
+      }
+    }
+  },
+  "script_sha256": "053d7c77106eaf4eacef218ee7576a75c3c2f7faaabd7ec40b796c7dbfbe431f",
+  "note": "Read-only feature/matching mechanism diagnostic; no training or checkpoint mutation.",
+  "updated_at": "2026-09-07T11:08:24.090429+00:00"
+}

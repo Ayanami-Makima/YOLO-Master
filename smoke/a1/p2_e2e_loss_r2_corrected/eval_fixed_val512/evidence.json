@@ -1,0 +1,94 @@
+{
+  "schema": "a1-p2-e2e-loss-r2-eval/v1",
+  "status": "completed",
+  "created_at": "2026-09-03T14:11:01.417329+00:00",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "device": "cuda:1",
+  "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+  "data_yaml_sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+  "val_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/val2017.txt",
+  "val_list_sha256": "634d62f74fe1342c8430f83a2424b07a3d93a71db80e4988d49344c7ba8de324",
+  "images": 512,
+  "imgsz": 640,
+  "batch": 1,
+  "checkpoint_kind": "last",
+  "runs": {
+    "b_gain1p0_seed260829_5ep": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/b_gain1p0_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "67a7055d3dd6e9493cd98038ca878e0c2e474b6fc98bec35f50b25b9e66a311f",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.622709777891676,
+        "metrics/recall(B)": 0.5365564048477208,
+        "metrics/mAP50(B)": 0.5763147686390122,
+        "metrics/mAP50-95(B)": 0.4256006200019091,
+        "fitness": 0.4256006200019091
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/eval_fixed_val512/b_gain1p0_seed260829_5ep/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/eval_fixed_val512/b_gain1p0_seed260829_5ep/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "run_name": "b_gain1p0_seed260829_5ep"
+    },
+    "b_gain1p2_seed260829_5ep": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/b_gain1p2_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "d1fed7dda540b9e18fbfc9b62c214db1b450180facdbfaf6fe057ce53c3da5f9",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6246585176913897,
+        "metrics/recall(B)": 0.5359786230126327,
+        "metrics/mAP50(B)": 0.5754506234373764,
+        "metrics/mAP50-95(B)": 0.42484519362722994,
+        "fitness": 0.42484519362722994
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/eval_fixed_val512/b_gain1p2_seed260829_5ep/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/eval_fixed_val512/b_gain1p2_seed260829_5ep/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "run_name": "b_gain1p2_seed260829_5ep"
+    },
+    "d_gain1p0_seed260829_5ep": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/d_gain1p0_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "74cae43d056c7e16be5e11d4901a3ced1235e165d8b38b7a078f42ab39920248",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6297650299601678,
+        "metrics/recall(B)": 0.5317799468945973,
+        "metrics/mAP50(B)": 0.5750769833550112,
+        "metrics/mAP50-95(B)": 0.4258960867211151,
+        "fitness": 0.4258960867211151
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/eval_fixed_val512/d_gain1p0_seed260829_5ep/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/eval_fixed_val512/d_gain1p0_seed260829_5ep/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "run_name": "d_gain1p0_seed260829_5ep"
+    },
+    "d_gain1p2_seed260829_5ep": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/d_gain1p2_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "4092c39a441dfc428a462cbd578f70a64492bfbdeee3d298edbd810cec90e339",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6279011590878001,
+        "metrics/recall(B)": 0.5350837049044259,
+        "metrics/mAP50(B)": 0.5766855616900615,
+        "metrics/mAP50-95(B)": 0.4262069281921924,
+        "fitness": 0.4262069281921924
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/eval_fixed_val512/d_gain1p2_seed260829_5ep/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2_corrected/eval_fixed_val512/d_gain1p2_seed260829_5ep/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "run_name": "d_gain1p2_seed260829_5ep"
+    }
+  },
+  "git": {
+    "commit": "f1ac1f5c012615cf03c66d9dafa593215bf63759",
+    "diff_stat": "smoke/a1/A1_P0_P1_PROGRESS_REPORT.md  | 1059 ++++++++++++++++++---------------\n smoke/a1/A1_P2_PLAN.md                |  463 +++++++-------\n ultralytics/nn/modules/moe/modules.py |   69 ++-\n ultralytics/utils/loss.py             |   14 +-\n 4 files changed, 901 insertions(+), 704 deletions(-)"
+  },
+  "completed_at": "2026-09-03T14:11:39.281944+00:00"
+}

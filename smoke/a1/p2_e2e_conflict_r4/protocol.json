@@ -1,0 +1,45 @@
+{
+  "schema": "a1-p2-e2e-conflict-resolution-r4/v1",
+  "status": "prepared",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "factor": "one_to_one_conflict_resolution_metric",
+  "control": "overlap",
+  "treatment": "align",
+  "cells": [
+    "b_conflict_overlap_seed260829_5ep",
+    "b_conflict_align_seed260829_5ep",
+    "d_conflict_overlap_seed260829_5ep",
+    "d_conflict_align_seed260829_5ep"
+  ],
+  "data": {
+    "train_images": 5000,
+    "val_images": 512,
+    "imgsz": 640,
+    "batch": 4,
+    "seed": 260829
+  },
+  "training": {
+    "epochs": 5,
+    "optimizer": "SGD",
+    "lr0": 0.0001,
+    "amp": false,
+    "device": "cuda:1"
+  },
+  "invariants": [
+    "official pretrained C3k2 bases remain frozen",
+    "all BatchNorm affine parameters and running statistics remain frozen",
+    "MoE, data, optimizer, budget and end-to-end postprocess remain unchanged",
+    "original r28 B/D initializers are used independently"
+  ],
+  "audit": [
+    "candidate_positive_count",
+    "conflict_anchor_count",
+    "post_conflict_positive_count",
+    "final_positive_count",
+    "assignment_matched_iou_mean",
+    "recall",
+    "box_loss",
+    "cls_loss",
+    "dfl_loss"
+  ]
+}

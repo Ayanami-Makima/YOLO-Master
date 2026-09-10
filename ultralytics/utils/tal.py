@@ -37,6 +37,7 @@ class TaskAlignedAssigner(nn.Module):
         stride: list | None = None,
         eps: float = 1e-9,
         topk2=None,
+        conflict_metric: str = "overlap",
     ):
         """Initialize a TaskAlignedAssigner object with customizable hyperparameters.
 
@@ -48,6 +49,8 @@ class TaskAlignedAssigner(nn.Module):
             stride (list, optional): List of stride values for different feature levels.
             eps (float, optional): A small value to prevent division by zero.
             topk2 (int, optional): Secondary topk value for additional filtering.
+            conflict_metric (str): Metric used when one anchor is selected by multiple ground truths. ``overlap``
+                preserves the native behavior; ``align`` uses the task-aligned metric.
         """
         super().__init__()
         self.topk = topk
@@ -58,6 +61,11 @@ class TaskAlignedAssigner(nn.Module):
         self.stride = stride if stride is not None else [8, 16, 32]
         self.stride_val = self.stride[1] if len(self.stride) > 1 else self.stride[0]
         self.eps = eps
+        if conflict_metric not in {"overlap", "align"}:
+            raise ValueError(f"conflict_metric must be 'overlap' or 'align', got {conflict_metric!r}")
+        self.conflict_metric = conflict_metric
+        self.audit_enabled = False
+        self.last_audit = None
 
     @torch.no_grad()
     def forward(self, pd_scores, pd_bboxes, anc_points, gt_labels, gt_bboxes, mask_gt):
@@ -126,10 +134,19 @@ class TaskAlignedAssigner(nn.Module):
         mask_pos, align_metric, overlaps = self.get_pos_mask(
             pd_scores, pd_bboxes, gt_labels, gt_bboxes, anc_points, mask_gt
         )
+        candidate_positive_count = int(mask_pos.sum().item()) if self.audit_enabled else None
+        candidate_gt_count = int(mask_pos.any(-1).sum().item()) if self.audit_enabled else None
 
         target_gt_idx, fg_mask, mask_pos = self.select_highest_overlaps(
             mask_pos, overlaps, self.n_max_boxes, align_metric
         )
+        if self.audit_enabled:
+            audit = dict(self.last_audit or {})
+            audit["candidate_positive_count"] = candidate_positive_count
+            audit["candidate_gt_count"] = candidate_gt_count
+            audit["final_positive_count"] = int(fg_mask.sum().item())
+            audit["final_gt_count"] = int(mask_pos.any(-1).sum().item())
+            self.last_audit = audit
 
         # Assigned target
         target_labels, target_bboxes, target_scores = self.get_targets(gt_labels, gt_bboxes, target_gt_idx, fg_mask)
@@ -330,15 +347,24 @@ class TaskAlignedAssigner(nn.Module):
         """
         # Convert (b, n_max_boxes, h*w) -> (b, h*w)
         fg_mask = mask_pos.sum(-2)
+        conflict_anchor_count = int((fg_mask > 1).sum().item()) if self.audit_enabled else None
         if fg_mask.max() > 1:  # one anchor is assigned to multiple gt_bboxes
             mask_multi_gts = (fg_mask.unsqueeze(1) > 1).expand(-1, n_max_boxes, -1)  # (b, n_max_boxes, h*w)
 
-            max_overlaps_idx = overlaps.argmax(1)  # (b, h*w)
+            conflict_source = align_metric if self.conflict_metric == "align" else overlaps
+            max_overlaps_idx = conflict_source.argmax(1)  # (b, h*w)
             is_max_overlaps = torch.zeros(mask_pos.shape, dtype=mask_pos.dtype, device=mask_pos.device)
             is_max_overlaps.scatter_(1, max_overlaps_idx.unsqueeze(1), 1)
             mask_pos = torch.where(mask_multi_gts, is_max_overlaps, mask_pos).float()  # (b, n_max_boxes, h*w)
 
             fg_mask = mask_pos.sum(-2)
+        if self.audit_enabled:
+            self.last_audit = {
+                "conflict_metric": self.conflict_metric,
+                "conflict_anchor_count": conflict_anchor_count,
+                "post_conflict_positive_count": int(fg_mask.sum().item()),
+                "post_conflict_gt_count": int(mask_pos.any(-1).sum().item()),
+            }
 
         if self.topk2 != self.topk:
             align_metric = align_metric * mask_pos  # update overlaps
@@ -348,6 +374,12 @@ class TaskAlignedAssigner(nn.Module):
             topk_idx.scatter_(-1, max_overlaps_idx, 1.0)
             mask_pos *= topk_idx
             fg_mask = mask_pos.sum(-2)
+            if self.audit_enabled:
+                self.last_audit["post_secondary_topk_positive_count"] = int(fg_mask.sum().item())
+                self.last_audit["post_secondary_topk_gt_count"] = int(mask_pos.any(-1).sum().item())
+        elif self.audit_enabled:
+            self.last_audit["post_secondary_topk_positive_count"] = int(fg_mask.sum().item())
+            self.last_audit["post_secondary_topk_gt_count"] = int(mask_pos.any(-1).sum().item())
         # Find each grid serve which gt(index)
         target_gt_idx = mask_pos.argmax(-2)  # (b, h*w)
         return target_gt_idx, fg_mask, mask_pos
