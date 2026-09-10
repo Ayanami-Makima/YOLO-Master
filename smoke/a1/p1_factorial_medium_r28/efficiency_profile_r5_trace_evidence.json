@@ -1,0 +1,1550 @@
+{
+  "schema": "a1-p1-r28-profiler-trace/v1",
+  "status": "completed",
+  "timestamp_utc": "2026-09-03T07:12:48.211551+00:00",
+  "protocol": {
+    "device": "cuda:0",
+    "batch": 1,
+    "image_size": 640,
+    "warmup": 5,
+    "active_steps": 8,
+    "scope": "model forward only; CPU+CUDA activities"
+  },
+  "environment": {
+    "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+    "torch": "2.10.0+cu128",
+    "cuda": "12.8",
+    "gpu_name": "NVIDIA GeForce RTX 4090"
+  },
+  "cells": {
+    "a": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/a_formal_seed260829_15ep/weights/last.pt",
+      "peak_allocated_bytes": 720248320,
+      "peak_reserved_bytes": 752877568,
+      "top_cpu_self": [
+        {
+          "key": "aten::_convolution",
+          "calls": 1104,
+          "self_cpu_ms": 29.09107199999979,
+          "cpu_total_ms": 44.103398999999904,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 7.206930999999742,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::cudnn_batch_norm",
+          "calls": 1056,
+          "self_cpu_ms": 11.849505000000958,
+          "cpu_total_ms": 20.0290080000003,
+          "self_cuda_ms": 2.8226729999998934,
+          "cuda_total_ms": 2.8226729999998934,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::_batch_norm_impl_index",
+          "calls": 1056,
+          "self_cpu_ms": 9.505926999999959,
+          "cpu_total_ms": 29.53493500000026,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 2.8226729999998934,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::batch_norm",
+          "calls": 1056,
+          "self_cpu_ms": 7.985701999999655,
+          "cpu_total_ms": 37.520636999999915,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 2.8226729999998934,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::cudnn_convolution",
+          "calls": 992,
+          "self_cpu_ms": 7.621584000000111,
+          "cpu_total_ms": 13.990145000000167,
+          "self_cuda_ms": 6.106215999999786,
+          "cuda_total_ms": 6.12938399999978,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 836276224
+        },
+        {
+          "key": "cudaLaunchKernel",
+          "calls": 3680,
+          "self_cpu_ms": 6.703982000000328,
+          "cpu_total_ms": 6.932128000000335,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.001184000000008382,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::empty",
+          "calls": 4448,
+          "self_cpu_ms": 5.058870999999636,
+          "cpu_total_ms": 5.058870999999636,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 976101376
+        },
+        {
+          "key": "cudaDeviceSynchronize",
+          "calls": 1,
+          "self_cpu_ms": 4.783184999999998,
+          "cpu_total_ms": 4.783184999999998,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::bmm",
+          "calls": 128,
+          "self_cpu_ms": 3.5783399999997783,
+          "cpu_total_ms": 3.8015969999999215,
+          "self_cuda_ms": 26.648785000000046,
+          "cuda_total_ms": 26.648785000000046,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 5679185920
+        },
+        {
+          "key": "Command Buffer Full",
+          "calls": 2,
+          "self_cpu_ms": 2.846574999999997,
+          "cpu_total_ms": 2.846574999999997,
+          "self_cuda_ms": 0.006656000000002677,
+          "cuda_total_ms": 0.006656000000002677,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::silu_",
+          "calls": 792,
+          "self_cpu_ms": 1.3548060000001423,
+          "cpu_total_ms": 2.974971000000136,
+          "self_cuda_ms": 1.129883999999758,
+          "cuda_total_ms": 1.1310679999997664,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cuLaunchKernel",
+          "calls": 656,
+          "self_cpu_ms": 1.083539999999819,
+          "cpu_total_ms": 3.701968999999808,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.005471999999994296,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "Activity Buffer Request",
+          "calls": 1,
+          "self_cpu_ms": 0.9839049999999988,
+          "cpu_total_ms": 0.9839049999999988,
+          "self_cuda_ms": 0.017695999999999913,
+          "cuda_total_ms": 0.017695999999999913,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::empty_like",
+          "calls": 1168,
+          "self_cpu_ms": 0.9476349999997765,
+          "cpu_total_ms": 2.7170099999997985,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::add",
+          "calls": 344,
+          "self_cpu_ms": 0.8953159999999625,
+          "cpu_total_ms": 1.4767120000002032,
+          "self_cuda_ms": 0.4756930000000721,
+          "cuda_total_ms": 0.4756930000000721,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 220495872
+        },
+        {
+          "key": "aten::cat",
+          "calls": 208,
+          "self_cpu_ms": 0.675101000000097,
+          "cpu_total_ms": 1.086074000000066,
+          "self_cuda_ms": 0.4389489999997313,
+          "cuda_total_ms": 0.4389489999997313,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 325816320
+        },
+        {
+          "key": "aten::view",
+          "calls": 1304,
+          "self_cpu_ms": 0.6274009999998016,
+          "cpu_total_ms": 0.6274009999998016,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::convolution",
+          "calls": 1104,
+          "self_cpu_ms": 0.5656390000001302,
+          "cpu_total_ms": 44.66903800000003,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 7.206930999999742,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::mul",
+          "calls": 96,
+          "self_cpu_ms": 0.41712900000005904,
+          "cpu_total_ms": 0.6168800000001066,
+          "self_cuda_ms": 0.1751080000000511,
+          "cuda_total_ms": 0.1751080000000511,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 74805248
+        },
+        {
+          "key": "aten::conv2d",
+          "calls": 1104,
+          "self_cpu_ms": 0.3992360000002591,
+          "cpu_total_ms": 45.06827400000029,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 7.206930999999742,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::_conv_depthwise2d",
+          "calls": 112,
+          "self_cpu_ms": 0.2828759999998583,
+          "cpu_total_ms": 0.7822429999999149,
+          "self_cuda_ms": 0.9974839999999531,
+          "cuda_total_ms": 0.9974839999999531,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::reshape",
+          "calls": 416,
+          "self_cpu_ms": 0.2822200000000448,
+          "cpu_total_ms": 0.8560230000001611,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.15081700000009732,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::copy_",
+          "calls": 112,
+          "self_cpu_ms": 0.27732300000003307,
+          "cpu_total_ms": 0.4846149999999616,
+          "self_cuda_ms": 0.3302770000001328,
+          "cuda_total_ms": 0.3302770000001328,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::matmul",
+          "calls": 128,
+          "self_cpu_ms": 0.25367600000009405,
+          "cpu_total_ms": 4.411815999999876,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 26.648785000000046,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaLaunchKernelExC",
+          "calls": 104,
+          "self_cpu_ms": 0.20002200000006998,
+          "cpu_total_ms": 0.20002200000006998,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::_softmax",
+          "calls": 64,
+          "self_cpu_ms": 0.19664399999995658,
+          "cpu_total_ms": 0.32585199999994074,
+          "self_cuda_ms": 20.002315000000088,
+          "cuda_total_ms": 20.002315000000088,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 5632000000
+        },
+        {
+          "key": "aten::as_strided",
+          "calls": 1032,
+          "self_cpu_ms": 0.18529300000028162,
+          "cpu_total_ms": 0.18529300000028162,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaFuncGetAttributes",
+          "calls": 104,
+          "self_cpu_ms": 0.1502399999999907,
+          "cpu_total_ms": 0.1502399999999907,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::resize_",
+          "calls": 112,
+          "self_cpu_ms": 0.1385449999999255,
+          "cpu_total_ms": 0.1385449999999255,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 101195776
+        },
+        {
+          "key": "aten::add_",
+          "calls": 48,
+          "self_cpu_ms": 0.11734999999999127,
+          "cpu_total_ms": 0.2028729999999923,
+          "self_cuda_ms": 0.0800630000000092,
+          "cuda_total_ms": 0.0800630000000092,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "memcpy_or_copy_events": [
+        {
+          "key": "aten::copy_",
+          "calls": 112,
+          "self_cpu_ms": 0.27732300000003307,
+          "cpu_total_ms": 0.4846149999999616,
+          "self_cuda_ms": 0.3302770000001328,
+          "cuda_total_ms": 0.3302770000001328,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+          "calls": 112,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.3302770000001328,
+          "cuda_total_ms": 0.3302770000001328,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "sync_or_index_events": [
+        {
+          "key": "cudaDeviceSynchronize",
+          "calls": 1,
+          "self_cpu_ms": 4.783184999999998,
+          "cpu_total_ms": 4.783184999999998,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "table": "-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                     aten::_convolution        28.94%      29.091ms        43.88%      44.103ms      39.949us       0.000us         0.00%       7.207ms       6.528us           0 B           0 B     894.04 MB           0 B          1104  \n                                 aten::cudnn_batch_norm        11.79%      11.850ms        19.93%      20.029ms      18.967us       2.823ms         4.75%       2.823ms       2.673us           0 B           0 B     851.76 MB           0 B          1056  \n                           aten::_batch_norm_impl_index         9.46%       9.506ms        29.38%      29.535ms      27.969us       0.000us         0.00%       2.823ms       2.673us           0 B           0 B     851.76 MB           0 B          1056  \n                                       aten::batch_norm         7.94%       7.986ms        37.33%      37.521ms      35.531us       0.000us         0.00%       2.823ms       2.673us           0 B           0 B     851.76 MB           0 B          1056  \n                                aten::cudnn_convolution         7.58%       7.622ms        13.92%      13.990ms      14.103us       6.106ms        10.28%       6.129ms       6.179us           0 B           0 B     797.54 MB     797.54 MB           992  \n                                       cudaLaunchKernel         6.67%       6.704ms         6.90%       6.932ms       1.884us       0.000us         0.00%       1.184us       0.000us           0 B           0 B           0 B           0 B          3680  \n                                            aten::empty         5.03%       5.059ms         5.03%       5.059ms       1.137us       0.000us         0.00%       0.000us       0.000us           0 B           0 B     930.88 MB     930.88 MB          4448  \n                                  cudaDeviceSynchronize         4.76%       4.783ms         4.76%       4.783ms       4.783ms       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             1  \n                                              aten::bmm         3.56%       3.578ms         3.78%       3.802ms      29.700us      26.649ms        44.88%      26.649ms     208.194us           0 B           0 B       5.29 GB       5.29 GB           128  \n                                    Command Buffer Full         2.83%       2.847ms         2.83%       2.847ms       1.423ms       6.656us         0.01%       6.656us       3.328us           0 B           0 B           0 B           0 B             2  \n                                            aten::silu_         1.35%       1.355ms         2.96%       2.975ms       3.756us       1.130ms         1.90%       1.131ms       1.428us           0 B           0 B           0 B           0 B           792  \n                                         cuLaunchKernel         1.08%       1.084ms         3.68%       3.702ms       5.643us       0.000us         0.00%       5.472us       0.008us           0 B           0 B           0 B           0 B           656  \n                                Activity Buffer Request         0.98%     983.905us         0.98%     983.905us     983.905us      17.696us         0.03%      17.696us      17.696us           0 B           0 B           0 B           0 B             1  \n                                       aten::empty_like         0.94%     947.635us         2.70%       2.717ms       2.326us       0.000us         0.00%       0.000us       0.000us           0 B           0 B     930.88 MB           0 B          1168  \n                                              aten::add         0.89%     895.316us         1.47%       1.477ms       4.293us     475.693us         0.80%     475.693us       1.383us           0 B           0 B     210.28 MB     210.28 MB           344  \n                                              aten::cat         0.67%     675.101us         1.08%       1.086ms       5.222us     438.949us         0.74%     438.949us       2.110us           0 B           0 B     310.72 MB     310.72 MB           208  \n                                             aten::view         0.62%     627.401us         0.62%     627.401us       0.481us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          1304  \n                                      aten::convolution         0.56%     565.639us        44.44%      44.669ms      40.461us       0.000us         0.00%       7.207ms       6.528us           0 B           0 B     894.04 MB           0 B          1104  \n                                              aten::mul         0.41%     417.129us         0.61%     616.880us       6.426us     175.108us         0.29%     175.108us       1.824us           0 B           0 B      71.34 MB      71.34 MB            96  \n                                           aten::conv2d         0.40%     399.236us        44.84%      45.068ms      40.823us       0.000us         0.00%       7.207ms       6.528us           0 B           0 B     894.04 MB           0 B          1104  \n                                aten::_conv_depthwise2d         0.28%     282.876us         0.78%     782.243us       6.984us     997.484us         1.68%     997.484us       8.906us           0 B           0 B      96.51 MB           0 B           112  \n                                          aten::reshape         0.28%     282.220us         0.85%     856.023us       2.058us       0.000us         0.00%     150.817us       0.363us           0 B           0 B      44.75 MB           0 B           416  \n                                            aten::copy_         0.28%     277.323us         0.48%     484.615us       4.327us     330.277us         0.56%     330.277us       2.949us           0 B           0 B           0 B           0 B           112  \n                                           aten::matmul         0.25%     253.676us         4.39%       4.412ms      34.467us       0.000us         0.00%      26.649ms     208.194us           0 B           0 B       5.29 GB           0 B           128  \n                                    cudaLaunchKernelExC         0.20%     200.022us         0.20%     200.022us       1.923us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B           104  \n                                         aten::_softmax         0.20%     196.644us         0.32%     325.852us       5.091us      20.002ms        33.69%      20.002ms     312.536us           0 B           0 B       5.25 GB       5.25 GB            64  \n                                       aten::as_strided         0.18%     185.293us         0.18%     185.293us       0.180us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          1032  \n                                  cudaFuncGetAttributes         0.15%     150.240us         0.15%     150.240us       1.445us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B           104  \n                                          aten::resize_         0.14%     138.545us         0.14%     138.545us       1.237us       0.000us         0.00%       0.000us       0.000us           0 B           0 B      96.51 MB      96.51 MB           112  \n                                             aten::add_         0.12%     117.350us         0.20%     202.873us       4.227us      80.063us         0.13%      80.063us       1.668us           0 B           0 B           0 B           0 B            48  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \nSelf CPU time total: 100.519ms\nSelf CUDA time total: 59.378ms\n"
+    },
+    "b": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/b_formal_seed260829_15ep/weights/last.pt",
+      "peak_allocated_bytes": 720909312,
+      "peak_reserved_bytes": 754974720,
+      "top_cpu_self": [
+        {
+          "key": "cudaStreamSynchronize",
+          "calls": 8,
+          "self_cpu_ms": 25.234693000000004,
+          "cpu_total_ms": 25.234693000000004,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::cudnn_convolution",
+          "calls": 1136,
+          "self_cpu_ms": 8.934297999999941,
+          "cpu_total_ms": 13.223404999999907,
+          "self_cuda_ms": 7.032367000000313,
+          "cuda_total_ms": 7.054575000000313,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 915177472
+        },
+        {
+          "key": "cudaLaunchKernel",
+          "calls": 4456,
+          "self_cpu_ms": 8.323202000000057,
+          "cpu_total_ms": 8.323202000000057,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::empty",
+          "calls": 5128,
+          "self_cpu_ms": 5.864198000000079,
+          "cpu_total_ms": 5.864198000000079,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 1077084160
+        },
+        {
+          "key": "aten::cudnn_batch_norm",
+          "calls": 1200,
+          "self_cpu_ms": 5.26301600000018,
+          "cpu_total_ms": 14.08149099999981,
+          "self_cuda_ms": 3.1356209999998765,
+          "cuda_total_ms": 3.1356209999998765,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::bmm",
+          "calls": 128,
+          "self_cpu_ms": 3.670011000000114,
+          "cpu_total_ms": 3.9029550000000297,
+          "self_cuda_ms": 45.382620999999986,
+          "cuda_total_ms": 45.382620999999986,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 5679185920
+        },
+        {
+          "key": "cudaDeviceSynchronize",
+          "calls": 1,
+          "self_cpu_ms": 2.2861570000000064,
+          "cpu_total_ms": 2.2861570000000064,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::silu_",
+          "calls": 936,
+          "self_cpu_ms": 1.5810859999999423,
+          "cpu_total_ms": 3.2330509999999317,
+          "self_cuda_ms": 1.3191260000001417,
+          "cuda_total_ms": 1.3191260000001417,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::_convolution",
+          "calls": 1296,
+          "self_cpu_ms": 1.5354280000000506,
+          "cpu_total_ms": 16.312918000000018,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 7.990694000000369,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cuLaunchKernel",
+          "calls": 728,
+          "self_cpu_ms": 1.2130079999999939,
+          "cpu_total_ms": 1.2130079999999939,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "Activity Buffer Request",
+          "calls": 1,
+          "self_cpu_ms": 1.0558049999999999,
+          "cpu_total_ms": 1.0558049999999999,
+          "self_cuda_ms": 0.022208000000000085,
+          "cuda_total_ms": 0.022208000000000085,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::add",
+          "calls": 352,
+          "self_cpu_ms": 0.9367960000000739,
+          "cpu_total_ms": 1.5163110000000894,
+          "self_cuda_ms": 0.4709789999999448,
+          "cuda_total_ms": 0.4709789999999448,
+          "self_cpu_memory_bytes": 424,
+          "self_cuda_memory_bytes": 219955200
+        },
+        {
+          "key": "aten::cat",
+          "calls": 248,
+          "self_cpu_ms": 0.8270869999998792,
+          "cpu_total_ms": 1.338475000000016,
+          "self_cuda_ms": 0.5037849999999453,
+          "cuda_total_ms": 0.5037849999999453,
+          "self_cpu_memory_bytes": 768,
+          "self_cuda_memory_bytes": 348459008
+        },
+        {
+          "key": "aten::_batch_norm_impl_index",
+          "calls": 1200,
+          "self_cpu_ms": 0.8044610000001101,
+          "cpu_total_ms": 14.88595199999992,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 3.1356209999998765,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::view",
+          "calls": 1592,
+          "self_cpu_ms": 0.7782269999998684,
+          "cpu_total_ms": 0.7782269999998684,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::batch_norm",
+          "calls": 1200,
+          "self_cpu_ms": 0.718620000000137,
+          "cpu_total_ms": 15.604572000000056,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 3.1356209999998765,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::empty_like",
+          "calls": 1320,
+          "self_cpu_ms": 0.638720999999809,
+          "cpu_total_ms": 2.623186999999877,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::convolution",
+          "calls": 1296,
+          "self_cpu_ms": 0.6262599999998506,
+          "cpu_total_ms": 16.93917799999987,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 7.990694000000369,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::conv2d",
+          "calls": 1296,
+          "self_cpu_ms": 0.432889000000162,
+          "cpu_total_ms": 17.37206700000003,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 7.990694000000369,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::mul",
+          "calls": 96,
+          "self_cpu_ms": 0.426155999999972,
+          "cpu_total_ms": 0.6306260000000277,
+          "self_cuda_ms": 0.1738589999999781,
+          "cuda_total_ms": 0.1738589999999781,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 74805248
+        },
+        {
+          "key": "aten::copy_",
+          "calls": 152,
+          "self_cpu_ms": 0.39857999999998445,
+          "cpu_total_ms": 25.992040999999954,
+          "self_cuda_ms": 0.3910739999999705,
+          "cuda_total_ms": 0.3910739999999705,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::_conv_depthwise2d",
+          "calls": 160,
+          "self_cpu_ms": 0.356568999999844,
+          "cpu_total_ms": 1.0796239999999953,
+          "self_cuda_ms": 0.7754410000000435,
+          "cuda_total_ms": 0.7754410000000435,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::reshape",
+          "calls": 496,
+          "self_cpu_ms": 0.29371500000022865,
+          "cpu_total_ms": 1.0187740000001875,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.1534739999999374,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::topk",
+          "calls": 16,
+          "self_cpu_ms": 0.2657629999999335,
+          "cpu_total_ms": 0.6398830000000016,
+          "self_cuda_ms": 0.6770639999999639,
+          "cuda_total_ms": 0.6770639999999639,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 65536
+        },
+        {
+          "key": "aten::matmul",
+          "calls": 128,
+          "self_cpu_ms": 0.2518099999997569,
+          "cpu_total_ms": 4.515171999999902,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 45.382620999999986,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::as_strided",
+          "calls": 1296,
+          "self_cpu_ms": 0.24150699999989933,
+          "cpu_total_ms": 0.24150699999989933,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::add_",
+          "calls": 96,
+          "self_cpu_ms": 0.22766499999999631,
+          "cpu_total_ms": 0.399495000000019,
+          "self_cuda_ms": 0.16067800000001262,
+          "cuda_total_ms": 0.16067800000001262,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaLaunchKernelExC",
+          "calls": 120,
+          "self_cpu_ms": 0.22219899999997325,
+          "cpu_total_ms": 0.22219899999997325,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::permute",
+          "calls": 264,
+          "self_cpu_ms": 0.2145130000001609,
+          "cpu_total_ms": 0.25231500000003737,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::resize_",
+          "calls": 184,
+          "self_cpu_ms": 0.20728999999997086,
+          "cpu_total_ms": 0.20728999999997086,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 320,
+          "self_cuda_memory_bytes": 155467776
+        }
+      ],
+      "memcpy_or_copy_events": [
+        {
+          "key": "aten::copy_",
+          "calls": 152,
+          "self_cpu_ms": 0.39857999999998445,
+          "cpu_total_ms": 25.992040999999954,
+          "self_cuda_ms": 0.3910739999999705,
+          "cuda_total_ms": 0.3910739999999705,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaMemcpyAsync",
+          "calls": 8,
+          "self_cpu_ms": 0.05934599999999591,
+          "cpu_total_ms": 0.05934599999999591,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+          "calls": 112,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.3330589999999384,
+          "cuda_total_ms": 0.3330589999999384,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1} const&)::{lambda(int)#1})",
+          "calls": 24,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.03427100000001519,
+          "cuda_total_ms": 0.03427100000001519,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "Memcpy HtoD (Pageable -> Device)",
+          "calls": 8,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.009856000000007043,
+          "cuda_total_ms": 0.009856000000007043,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+          "calls": 8,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.013888000000009924,
+          "cuda_total_ms": 0.013888000000009924,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "sync_or_index_events": [
+        {
+          "key": "cudaStreamSynchronize",
+          "calls": 8,
+          "self_cpu_ms": 25.234693000000004,
+          "cpu_total_ms": 25.234693000000004,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaDeviceSynchronize",
+          "calls": 1,
+          "self_cpu_ms": 2.2861570000000064,
+          "cpu_total_ms": 2.2861570000000064,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "table": "-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                  cudaStreamSynchronize        33.03%      25.235ms        33.03%      25.235ms       3.154ms       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             8  \n                                aten::cudnn_convolution        11.69%       8.934ms        17.31%      13.223ms      11.640us       7.032ms         9.67%       7.055ms       6.210us           0 B           0 B     872.78 MB     872.78 MB          1136  \n                                       cudaLaunchKernel        10.89%       8.323ms        10.89%       8.323ms       1.868us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          4456  \n                                            aten::empty         7.67%       5.864ms         7.67%       5.864ms       1.144us       0.000us         0.00%       0.000us       0.000us           0 B           0 B       1.00 GB       1.00 GB          5128  \n                                 aten::cudnn_batch_norm         6.89%       5.263ms        18.43%      14.081ms      11.735us       3.136ms         4.31%       3.136ms       2.613us           0 B           0 B     946.48 MB           0 B          1200  \n                                              aten::bmm         4.80%       3.670ms         5.11%       3.903ms      30.492us      45.383ms        62.42%      45.383ms     354.552us           0 B           0 B       5.29 GB       5.29 GB           128  \n                                  cudaDeviceSynchronize         2.99%       2.286ms         2.99%       2.286ms       2.286ms       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             1  \n                                            aten::silu_         2.07%       1.581ms         4.23%       3.233ms       3.454us       1.319ms         1.81%       1.319ms       1.409us           0 B           0 B           0 B           0 B           936  \n                                     aten::_convolution         2.01%       1.535ms        21.35%      16.313ms      12.587us       0.000us         0.00%       7.991ms       6.166us           0 B           0 B    1021.05 MB           0 B          1296  \n                                         cuLaunchKernel         1.59%       1.213ms         1.59%       1.213ms       1.666us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B           728  \n                                Activity Buffer Request         1.38%       1.056ms         1.38%       1.056ms       1.056ms      22.208us         0.03%      22.208us      22.208us           0 B           0 B           0 B           0 B             1  \n                                              aten::add         1.23%     936.796us         1.98%       1.516ms       4.308us     470.979us         0.65%     470.979us       1.338us         424 B         424 B     209.77 MB     209.77 MB           352  \n                                              aten::cat         1.08%     827.087us         1.75%       1.338ms       5.397us     503.785us         0.69%     503.785us       2.031us         768 B         768 B     332.32 MB     332.32 MB           248  \n                           aten::_batch_norm_impl_index         1.05%     804.461us        19.48%      14.886ms      12.405us       0.000us         0.00%       3.136ms       2.613us           0 B           0 B     946.48 MB           0 B          1200  \n                                             aten::view         1.02%     778.227us         1.02%     778.227us       0.489us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          1592  \n                                       aten::batch_norm         0.94%     718.620us        20.42%      15.605ms      13.004us       0.000us         0.00%       3.136ms       2.613us           0 B           0 B     946.48 MB           0 B          1200  \n                                       aten::empty_like         0.84%     638.721us         3.43%       2.623ms       1.987us       0.000us         0.00%       0.000us       0.000us           0 B           0 B       1.00 GB           0 B          1320  \n                                      aten::convolution         0.82%     626.260us        22.17%      16.939ms      13.070us       0.000us         0.00%       7.991ms       6.166us           0 B           0 B    1021.05 MB           0 B          1296  \n                                           aten::conv2d         0.57%     432.889us        22.74%      17.372ms      13.404us       0.000us         0.00%       7.991ms       6.166us           0 B           0 B    1021.05 MB           0 B          1296  \n                                              aten::mul         0.56%     426.156us         0.83%     630.626us       6.569us     173.859us         0.24%     173.859us       1.811us           0 B           0 B      71.34 MB      71.34 MB            96  \n                                            aten::copy_         0.52%     398.580us        34.02%      25.992ms     171.000us     391.074us         0.54%     391.074us       2.573us           0 B           0 B           0 B           0 B           152  \n                                aten::_conv_depthwise2d         0.47%     356.569us         1.41%       1.080ms       6.748us     775.441us         1.07%     775.441us       4.847us           0 B           0 B     148.27 MB           0 B           160  \n                                          aten::reshape         0.38%     293.715us         1.33%       1.019ms       2.054us       0.000us         0.00%     153.474us       0.309us           0 B           0 B      44.75 MB           0 B           496  \n                                             aten::topk         0.35%     265.763us         0.84%     639.883us      39.993us     677.064us         0.93%     677.064us      42.316us           0 B           0 B      64.00 KB      64.00 KB            16  \n                                           aten::matmul         0.33%     251.810us         5.91%       4.515ms      35.275us       0.000us         0.00%      45.383ms     354.552us           0 B           0 B       5.29 GB           0 B           128  \n                                       aten::as_strided         0.32%     241.507us         0.32%     241.507us       0.186us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          1296  \n                                             aten::add_         0.30%     227.665us         0.52%     399.495us       4.161us     160.678us         0.22%     160.678us       1.674us           0 B           0 B           0 B           0 B            96  \n                                    cudaLaunchKernelExC         0.29%     222.199us         0.29%     222.199us       1.852us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B           120  \n                                          aten::permute         0.28%     214.513us         0.33%     252.315us       0.956us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B           264  \n                                          aten::resize_         0.27%     207.290us         0.27%     207.290us       1.127us       0.000us         0.00%       0.000us       0.000us         320 B         320 B     148.27 MB     148.27 MB           184  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \nSelf CPU time total: 76.409ms\nSelf CUDA time total: 72.701ms\n"
+    },
+    "c": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480,
+      "top_cpu_self": [
+        {
+          "key": "cudaStreamSynchronize",
+          "calls": 1024,
+          "self_cpu_ms": 685.1559519999988,
+          "cpu_total_ms": 685.1559519999988,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaLaunchKernel",
+          "calls": 8272,
+          "self_cpu_ms": 16.17087200000095,
+          "cpu_total_ms": 16.17087200000095,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::set_",
+          "calls": 96,
+          "self_cpu_ms": 14.371990000000277,
+          "cpu_total_ms": 14.371990000000277,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::cudnn_convolution",
+          "calls": 1232,
+          "self_cpu_ms": 12.126315000000467,
+          "cpu_total_ms": 16.992536999999825,
+          "self_cuda_ms": 7.4662609999981,
+          "cuda_total_ms": 7.4880859999981,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 995102720
+        },
+        {
+          "key": "aten::empty",
+          "calls": 5840,
+          "self_cpu_ms": 6.819069999997727,
+          "cpu_total_ms": 6.819069999997727,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 1166516224
+        },
+        {
+          "key": "aten::cudnn_batch_norm",
+          "calls": 1296,
+          "self_cpu_ms": 6.183441999996209,
+          "cpu_total_ms": 16.283055999998442,
+          "self_cuda_ms": 3.3243459999992835,
+          "cuda_total_ms": 3.3243459999992835,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::bmm",
+          "calls": 128,
+          "self_cpu_ms": 4.057235000000927,
+          "cpu_total_ms": 4.3218080000003996,
+          "self_cuda_ms": 29.600734999999645,
+          "cuda_total_ms": 29.600734999999645,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 5679185920
+        },
+        {
+          "key": "aten::eq",
+          "calls": 832,
+          "self_cpu_ms": 2.5046900000017676,
+          "cpu_total_ms": 4.007661000000824,
+          "self_cuda_ms": 0.929266999999094,
+          "cuda_total_ms": 0.929266999999094,
+          "self_cpu_memory_bytes": -64,
+          "self_cuda_memory_bytes": 45391872
+        },
+        {
+          "key": "aten::any",
+          "calls": 640,
+          "self_cpu_ms": 2.4622440000023897,
+          "cpu_total_ms": 3.8174020000007896,
+          "self_cuda_ms": 1.7453689999998743,
+          "cuda_total_ms": 1.7453689999998743,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 327680
+        },
+        {
+          "key": "cudaMemcpyAsync",
+          "calls": 1024,
+          "self_cpu_ms": 2.2332349999985324,
+          "cpu_total_ms": 2.2332349999985324,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::silu_",
+          "calls": 936,
+          "self_cpu_ms": 1.7546120000011733,
+          "cpu_total_ms": 3.4769239999999066,
+          "self_cuda_ms": 1.3783610000010236,
+          "cuda_total_ms": 1.3783610000010236,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::_convolution",
+          "calls": 1344,
+          "self_cpu_ms": 1.7241840000000028,
+          "cpu_total_ms": 19.832391000000033,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 8.184957999997552,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::mul",
+          "calls": 480,
+          "self_cpu_ms": 1.5758669999992163,
+          "cpu_total_ms": 2.4668549999997937,
+          "self_cuda_ms": 0.666375999999213,
+          "cuda_total_ms": 0.666375999999213,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 197177344
+        },
+        {
+          "key": "cuLaunchKernel",
+          "calls": 816,
+          "self_cpu_ms": 1.527460000000253,
+          "cpu_total_ms": 1.527460000000253,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::ne",
+          "calls": 384,
+          "self_cpu_ms": 1.373666999999256,
+          "cpu_total_ms": 2.092344999999531,
+          "self_cuda_ms": 0.44349799999911466,
+          "cuda_total_ms": 0.44349799999911466,
+          "self_cpu_memory_bytes": -16,
+          "self_cuda_memory_bytes": 45162496
+        },
+        {
+          "key": "aten::_local_scalar_dense",
+          "calls": 928,
+          "self_cpu_ms": 1.3566550000025441,
+          "cpu_total_ms": 637.0306989999995,
+          "self_cuda_ms": 0.7900480000011876,
+          "cuda_total_ms": 0.7900480000011876,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::all",
+          "calls": 288,
+          "self_cpu_ms": 1.2766490000006325,
+          "cpu_total_ms": 2.0502299999997113,
+          "self_cuda_ms": 1.415886000000357,
+          "cuda_total_ms": 1.415886000000357,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 147456
+        },
+        {
+          "key": "aten::nonzero",
+          "calls": 96,
+          "self_cpu_ms": 1.2495559999993056,
+          "cpu_total_ms": 68.45095799999999,
+          "self_cuda_ms": 0.6336939999991191,
+          "cuda_total_ms": 0.6336939999991191,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::abs",
+          "calls": 768,
+          "self_cpu_ms": 1.1878749999982983,
+          "cpu_total_ms": 4.848575999999828,
+          "self_cuda_ms": 0.49383199999942917,
+          "cuda_total_ms": 0.9876639999988583,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::index",
+          "calls": 192,
+          "self_cpu_ms": 1.1651100000002261,
+          "cpu_total_ms": 1.810838999999687,
+          "self_cuda_ms": 0.5027960000000822,
+          "cuda_total_ms": 0.5027960000000822,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 86294528
+        },
+        {
+          "key": "aten::view",
+          "calls": 2024,
+          "self_cpu_ms": 1.150239999999648,
+          "cpu_total_ms": 1.150239999999648,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::add",
+          "calls": 392,
+          "self_cpu_ms": 1.0969329999990922,
+          "cpu_total_ms": 1.8213999999988957,
+          "self_cuda_ms": 0.6249709999993188,
+          "cuda_total_ms": 0.6249709999993188,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 247889920
+        },
+        {
+          "key": "Activity Buffer Request",
+          "calls": 1,
+          "self_cpu_ms": 1.056318,
+          "cpu_total_ms": 1.056318,
+          "self_cuda_ms": 0.021824999999999817,
+          "cuda_total_ms": 0.021824999999999817,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::_batch_norm_impl_index",
+          "calls": 1296,
+          "self_cpu_ms": 0.906941000001469,
+          "cpu_total_ms": 17.189996999999913,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 3.3243459999992835,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::convolution",
+          "calls": 1344,
+          "self_cpu_ms": 0.8194809999997599,
+          "cpu_total_ms": 20.65187199999979,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 8.184957999997552,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::cat",
+          "calls": 208,
+          "self_cpu_ms": 0.7630440000011119,
+          "cpu_total_ms": 1.2152150000009385,
+          "self_cuda_ms": 0.48196100000002934,
+          "cuda_total_ms": 0.48196100000002934,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 319262720
+        },
+        {
+          "key": "aten::isfinite",
+          "calls": 288,
+          "self_cpu_ms": 0.6906470000013932,
+          "cpu_total_ms": 6.877528000000149,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 1.333875999997661,
+          "self_cpu_memory_bytes": 16,
+          "self_cuda_memory_bytes": -126868480
+        },
+        {
+          "key": "aten::resize_",
+          "calls": 592,
+          "self_cpu_ms": 0.688243000000436,
+          "cpu_total_ms": 0.688243000000436,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 297967616
+        },
+        {
+          "key": "aten::empty_like",
+          "calls": 1408,
+          "self_cpu_ms": 0.6823440000028117,
+          "cpu_total_ms": 2.9155760000007676,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::batch_norm",
+          "calls": 1296,
+          "self_cpu_ms": 0.6663760000002585,
+          "cpu_total_ms": 17.856373000000172,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 3.3243459999992835,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "memcpy_or_copy_events": [
+        {
+          "key": "cudaMemcpyAsync",
+          "calls": 1024,
+          "self_cpu_ms": 2.2332349999985324,
+          "cpu_total_ms": 2.2332349999985324,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::copy_",
+          "calls": 112,
+          "self_cpu_ms": 0.3423560000001676,
+          "cpu_total_ms": 0.5641289999999408,
+          "self_cuda_ms": 0.33546099999999024,
+          "cuda_total_ms": 0.33546099999999024,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+          "calls": 112,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.33546099999999024,
+          "cuda_total_ms": 0.33546099999999024,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "Memcpy DtoH (Device -> Pinned)",
+          "calls": 1024,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.8724470000010506,
+          "cuda_total_ms": 0.8724470000010506,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "sync_or_index_events": [
+        {
+          "key": "cudaStreamSynchronize",
+          "calls": 1024,
+          "self_cpu_ms": 685.1559519999988,
+          "cpu_total_ms": 685.1559519999988,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaDeviceSynchronize",
+          "calls": 1,
+          "self_cpu_ms": 0.3984969999999739,
+          "cpu_total_ms": 0.3984969999999739,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::where",
+          "calls": 96,
+          "self_cpu_ms": 0.052445000000476284,
+          "cpu_total_ms": 68.9127719999999,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.6336939999991191,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "table": "-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                  cudaStreamSynchronize        87.31%     685.156ms        87.31%     685.156ms     669.098us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          1024  \n                                       cudaLaunchKernel         2.06%      16.171ms         2.06%      16.171ms       1.955us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          8272  \n                                             aten::set_         1.83%      14.372ms         1.83%      14.372ms     149.708us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B            96  \n                                aten::cudnn_convolution         1.55%      12.126ms         2.17%      16.993ms      13.793us       7.466ms        11.54%       7.488ms       6.078us           0 B           0 B     949.00 MB     949.00 MB          1232  \n                                            aten::empty         0.87%       6.819ms         0.87%       6.819ms       1.168us       0.000us         0.00%       0.000us       0.000us           0 B           0 B       1.09 GB       1.09 GB          5840  \n                                 aten::cudnn_batch_norm         0.79%       6.183ms         2.07%      16.283ms      12.564us       3.324ms         5.14%       3.324ms       2.565us           0 B           0 B     991.73 MB           0 B          1296  \n                                              aten::bmm         0.52%       4.057ms         0.55%       4.322ms      33.764us      29.601ms        45.76%      29.601ms     231.256us           0 B           0 B       5.29 GB       5.29 GB           128  \n                                               aten::eq         0.32%       2.505ms         0.51%       4.008ms       4.817us     929.267us         1.44%     929.267us       1.117us         -32 B         -64 B      43.29 MB      43.29 MB           832  \n                                              aten::any         0.31%       2.462ms         0.49%       3.817ms       5.965us       1.745ms         2.70%       1.745ms       2.727us           0 B           0 B     320.00 KB     320.00 KB           640  \n                                        cudaMemcpyAsync         0.28%       2.233ms         0.28%       2.233ms       2.181us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          1024  \n                                            aten::silu_         0.22%       1.755ms         0.44%       3.477ms       3.715us       1.378ms         2.13%       1.378ms       1.473us           0 B           0 B           0 B           0 B           936  \n                                     aten::_convolution         0.22%       1.724ms         2.53%      19.832ms      14.756us       0.000us         0.00%       8.185ms       6.090us           0 B           0 B       1.02 GB           0 B          1344  \n                                              aten::mul         0.20%       1.576ms         0.31%       2.467ms       5.139us     666.376us         1.03%     666.376us       1.388us           0 B           0 B     188.04 MB     188.04 MB           480  \n                                         cuLaunchKernel         0.19%       1.527ms         0.19%       1.527ms       1.872us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B           816  \n                                               aten::ne         0.18%       1.374ms         0.27%       2.092ms       5.449us     443.498us         0.69%     443.498us       1.155us         -16 B         -16 B      43.07 MB      43.07 MB           384  \n                              aten::_local_scalar_dense         0.17%       1.357ms        81.17%     637.031ms     686.455us     790.048us         1.22%     790.048us       0.851us           0 B           0 B           0 B           0 B           928  \n                                              aten::all         0.16%       1.277ms         0.26%       2.050ms       7.119us       1.416ms         2.19%       1.416ms       4.916us           0 B           0 B     144.00 KB     144.00 KB           288  \n                                          aten::nonzero         0.16%       1.250ms         8.72%      68.451ms     713.031us     633.694us         0.98%     633.694us       6.601us           0 B           0 B      48.00 KB           0 B            96  \n                                              aten::abs         0.15%       1.188ms         0.62%       4.849ms       6.313us     493.832us         0.76%     987.664us       1.286us           0 B           0 B     373.22 MB           0 B           768  \n                                            aten::index         0.15%       1.165ms         0.23%       1.811ms       9.431us     502.796us         0.78%     502.796us       2.619us           0 B           0 B      82.30 MB      82.30 MB           192  \n                                             aten::view         0.15%       1.150ms         0.15%       1.150ms       0.568us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          2024  \n                                              aten::add         0.14%       1.097ms         0.23%       1.821ms       4.646us     624.971us         0.97%     624.971us       1.594us           0 B           0 B     236.41 MB     236.41 MB           392  \n                                Activity Buffer Request         0.13%       1.056ms         0.13%       1.056ms       1.056ms      21.825us         0.03%      21.825us      21.825us           0 B           0 B           0 B           0 B             1  \n                           aten::_batch_norm_impl_index         0.12%     906.941us         2.19%      17.190ms      13.264us       0.000us         0.00%       3.324ms       2.565us           0 B           0 B     991.73 MB           0 B          1296  \n                                      aten::convolution         0.10%     819.481us         2.63%      20.652ms      15.366us       0.000us         0.00%       8.185ms       6.090us           0 B           0 B       1.02 GB           0 B          1344  \n                                              aten::cat         0.10%     763.044us         0.15%       1.215ms       5.842us     481.961us         0.75%     481.961us       2.317us           0 B           0 B     304.47 MB     304.47 MB           208  \n                                         aten::isfinite         0.09%     690.647us         0.88%       6.878ms      23.880us       0.000us         0.00%       1.334ms       4.632us           0 B          16 B      84.52 MB    -120.99 MB           288  \n                                          aten::resize_         0.09%     688.243us         0.09%     688.243us       1.163us       0.000us         0.00%       0.000us       0.000us           0 B           0 B     284.16 MB     284.16 MB           592  \n                                       aten::empty_like         0.09%     682.344us         0.37%       2.916ms       2.071us       0.000us         0.00%       0.000us       0.000us           0 B           0 B       1.05 GB           0 B          1408  \n                                       aten::batch_norm         0.08%     666.376us         2.28%      17.856ms      13.778us       0.000us         0.00%       3.324ms       2.565us           0 B           0 B     991.73 MB           0 B          1296  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \nSelf CPU time total: 784.764ms\nSelf CUDA time total: 64.681ms\n"
+    },
+    "d": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480,
+      "top_cpu_self": [
+        {
+          "key": "cudaStreamSynchronize",
+          "calls": 1032,
+          "self_cpu_ms": 765.7059770000012,
+          "cpu_total_ms": 765.7059770000012,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaLaunchKernel",
+          "calls": 9048,
+          "self_cpu_ms": 20.51821600000316,
+          "cpu_total_ms": 20.51821600000316,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::cudnn_convolution",
+          "calls": 1376,
+          "self_cpu_ms": 14.848516999999063,
+          "cpu_total_ms": 20.042045999999324,
+          "self_cuda_ms": 8.374962000002174,
+          "cuda_total_ms": 8.374962000002174,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 1069293568
+        },
+        {
+          "key": "aten::empty",
+          "calls": 6520,
+          "self_cpu_ms": 7.611833999998762,
+          "cpu_total_ms": 7.611833999998762,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 1264222208
+        },
+        {
+          "key": "aten::cudnn_batch_norm",
+          "calls": 1440,
+          "self_cpu_ms": 6.951306999999909,
+          "cpu_total_ms": 18.336161999999362,
+          "self_cuda_ms": 3.653767999999439,
+          "cuda_total_ms": 3.653767999999439,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::bmm",
+          "calls": 128,
+          "self_cpu_ms": 5.342708999999946,
+          "cpu_total_ms": 5.736502000000431,
+          "self_cuda_ms": 17.852910999999896,
+          "cuda_total_ms": 17.852910999999896,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 5679185920
+        },
+        {
+          "key": "cudaMemcpyAsync",
+          "calls": 1032,
+          "self_cpu_ms": 2.7564230000001446,
+          "cpu_total_ms": 2.7564230000001446,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::eq",
+          "calls": 832,
+          "self_cpu_ms": 2.6184749999997603,
+          "cpu_total_ms": 4.327718999999565,
+          "self_cuda_ms": 0.9308350000003566,
+          "cuda_total_ms": 0.9308350000003566,
+          "self_cpu_memory_bytes": -64,
+          "self_cuda_memory_bytes": 45391872
+        },
+        {
+          "key": "aten::any",
+          "calls": 640,
+          "self_cpu_ms": 2.4896210000000223,
+          "cpu_total_ms": 3.9004050000000148,
+          "self_cuda_ms": 1.7284499999998042,
+          "cuda_total_ms": 1.7284499999998042,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 327680
+        },
+        {
+          "key": "aten::_convolution",
+          "calls": 1536,
+          "self_cpu_ms": 2.1975909999992007,
+          "cpu_total_ms": 24.002910999998768,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 9.310628000002149,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::silu_",
+          "calls": 1080,
+          "self_cpu_ms": 2.0513920000007273,
+          "cpu_total_ms": 4.066166000000563,
+          "self_cuda_ms": 1.575371999999597,
+          "cuda_total_ms": 1.575371999999597,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaDeviceSynchronize",
+          "calls": 1,
+          "self_cpu_ms": 2.0244710000000197,
+          "cpu_total_ms": 2.0244710000000197,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::mul",
+          "calls": 480,
+          "self_cpu_ms": 1.8148269999990425,
+          "cpu_total_ms": 2.8552000000003286,
+          "self_cuda_ms": 0.6688699999995256,
+          "cuda_total_ms": 0.6688699999995256,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 197177344
+        },
+        {
+          "key": "cuLaunchKernel",
+          "calls": 888,
+          "self_cpu_ms": 1.7362809999997504,
+          "cpu_total_ms": 1.7362809999997504,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::index",
+          "calls": 200,
+          "self_cpu_ms": 1.5259179999982917,
+          "cpu_total_ms": 10.513552999999355,
+          "self_cuda_ms": 0.5448760000004186,
+          "cuda_total_ms": 0.568107000000331,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 86290432
+        },
+        {
+          "key": "aten::nonzero",
+          "calls": 96,
+          "self_cpu_ms": 1.4765309999992495,
+          "cpu_total_ms": 46.98514099999976,
+          "self_cuda_ms": 0.6243250000001753,
+          "cuda_total_ms": 0.6243250000001753,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::ne",
+          "calls": 384,
+          "self_cpu_ms": 1.4701039999999586,
+          "cpu_total_ms": 2.2830790000005687,
+          "self_cuda_ms": 0.44713600000043197,
+          "cuda_total_ms": 0.44713600000043197,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 45162496
+        },
+        {
+          "key": "aten::view",
+          "calls": 2312,
+          "self_cpu_ms": 1.4439860000014493,
+          "cpu_total_ms": 1.4439860000014493,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::_local_scalar_dense",
+          "calls": 928,
+          "self_cpu_ms": 1.4399079999981383,
+          "cpu_total_ms": 718.0164479999996,
+          "self_cuda_ms": 0.803557999999503,
+          "cuda_total_ms": 0.803557999999503,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::all",
+          "calls": 288,
+          "self_cpu_ms": 1.4226049999998476,
+          "cpu_total_ms": 2.2868060000003423,
+          "self_cuda_ms": 1.4047860000003602,
+          "cuda_total_ms": 1.4047860000003602,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 147456
+        },
+        {
+          "key": "aten::add",
+          "calls": 400,
+          "self_cpu_ms": 1.2789049999986832,
+          "cpu_total_ms": 2.085523999998874,
+          "self_cuda_ms": 0.6492300000011255,
+          "cuda_total_ms": 0.6492300000011255,
+          "self_cpu_memory_bytes": 408,
+          "self_cuda_memory_bytes": 247349248
+        },
+        {
+          "key": "aten::abs",
+          "calls": 768,
+          "self_cpu_ms": 1.2135370000001917,
+          "cpu_total_ms": 5.198861000001303,
+          "self_cuda_ms": 0.5146949999998996,
+          "cuda_total_ms": 1.0293899999997993,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::cat",
+          "calls": 248,
+          "self_cpu_ms": 1.0589349999999529,
+          "cpu_total_ms": 1.6751629999999353,
+          "self_cuda_ms": 0.5348879999990757,
+          "cuda_total_ms": 0.5348879999990757,
+          "self_cpu_memory_bytes": 768,
+          "self_cuda_memory_bytes": 341905408
+        },
+        {
+          "key": "aten::_batch_norm_impl_index",
+          "calls": 1440,
+          "self_cpu_ms": 0.9991519999995189,
+          "cpu_total_ms": 19.335313999998885,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 3.653767999999439,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::topk",
+          "calls": 64,
+          "self_cpu_ms": 0.9374160000015181,
+          "cpu_total_ms": 1.9429679999998917,
+          "self_cuda_ms": 1.0267989999998717,
+          "cuda_total_ms": 1.0267989999998717,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 114688
+        },
+        {
+          "key": "aten::convolution",
+          "calls": 1536,
+          "self_cpu_ms": 0.8832190000029065,
+          "cpu_total_ms": 24.88613000000167,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 9.310628000002149,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::resize_",
+          "calls": 664,
+          "self_cpu_ms": 0.8005410000002212,
+          "cpu_total_ms": 0.8005410000002212,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 392,
+          "self_cuda_memory_bytes": 345686016
+        },
+        {
+          "key": "aten::batch_norm",
+          "calls": 1440,
+          "self_cpu_ms": 0.7393170000003957,
+          "cpu_total_ms": 20.074630999999282,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 3.653767999999439,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::empty_like",
+          "calls": 1560,
+          "self_cpu_ms": 0.7014509999984587,
+          "cpu_total_ms": 3.1605489999993446,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::isfinite",
+          "calls": 288,
+          "self_cpu_ms": 0.6922349999999178,
+          "cpu_total_ms": 7.14601500000048,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 1.3490600000001687,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": -76980224
+        }
+      ],
+      "memcpy_or_copy_events": [
+        {
+          "key": "cudaMemcpyAsync",
+          "calls": 1032,
+          "self_cpu_ms": 2.7564230000001446,
+          "cpu_total_ms": 2.7564230000001446,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::copy_",
+          "calls": 152,
+          "self_cpu_ms": 0.6186740000005618,
+          "cpu_total_ms": 9.057441000000559,
+          "self_cuda_ms": 0.3887399999991935,
+          "cuda_total_ms": 0.3887399999991935,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+          "calls": 112,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.3289959999996822,
+          "cuda_total_ms": 0.3289959999996822,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "Memcpy DtoH (Device -> Pinned)",
+          "calls": 1024,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.8855049999994813,
+          "cuda_total_ms": 0.8855049999994813,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#4}::operator()() const::{lambda(long)#1} const&)::{lambda(int)#1})",
+          "calls": 24,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.03452899999957299,
+          "cuda_total_ms": 0.03452899999957299,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "Memcpy HtoD (Pageable -> Device)",
+          "calls": 8,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.011518999999971129,
+          "cuda_total_ms": 0.011518999999971129,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, 4, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1> >(int, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}, std::array<char*, 2ul>, TrivialOffsetCalculator<1, unsigned int>, TrivialOffsetCalculator<1, unsigned int>, at::native::memory::LoadWithCast<1>, at::native::memory::StoreWithCast<1>)",
+          "calls": 8,
+          "self_cpu_ms": 0.0,
+          "cpu_total_ms": 0.0,
+          "self_cuda_ms": 0.01369599999996717,
+          "cuda_total_ms": 0.01369599999996717,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "sync_or_index_events": [
+        {
+          "key": "cudaStreamSynchronize",
+          "calls": 1032,
+          "self_cpu_ms": 765.7059770000012,
+          "cpu_total_ms": 765.7059770000012,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "cudaDeviceSynchronize",
+          "calls": 1,
+          "self_cpu_ms": 2.0244710000000197,
+          "cpu_total_ms": 2.0244710000000197,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.0,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        },
+        {
+          "key": "aten::where",
+          "calls": 96,
+          "self_cpu_ms": 0.09540600000049744,
+          "cpu_total_ms": 47.546482000000125,
+          "self_cuda_ms": 0.0,
+          "cuda_total_ms": 0.6243250000001753,
+          "self_cpu_memory_bytes": 0,
+          "self_cuda_memory_bytes": 0
+        }
+      ],
+      "table": "-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \n                                  cudaStreamSynchronize        88.02%     765.706ms        88.02%     765.706ms     741.963us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          1032  \n                                       cudaLaunchKernel         2.36%      20.518ms         2.36%      20.518ms       2.268us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          9048  \n                                aten::cudnn_convolution         1.71%      14.849ms         2.30%      20.042ms      14.565us       8.375ms        15.09%       8.375ms       6.086us           0 B           0 B    1019.76 MB    1019.76 MB          1376  \n                                            aten::empty         0.87%       7.612ms         0.87%       7.612ms       1.167us       0.000us         0.00%       0.000us       0.000us           0 B           0 B       1.18 GB       1.18 GB          6520  \n                                 aten::cudnn_batch_norm         0.80%       6.951ms         2.11%      18.336ms      12.733us       3.654ms         6.59%       3.654ms       2.537us           0 B           0 B       1.06 GB           0 B          1440  \n                                              aten::bmm         0.61%       5.343ms         0.66%       5.737ms      44.816us      17.853ms        32.18%      17.853ms     139.476us           0 B           0 B       5.29 GB       5.29 GB           128  \n                                        cudaMemcpyAsync         0.32%       2.756ms         0.32%       2.756ms       2.671us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          1032  \n                                               aten::eq         0.30%       2.618ms         0.50%       4.328ms       5.202us     930.835us         1.68%     930.835us       1.119us         -32 B         -64 B      43.29 MB      43.29 MB           832  \n                                              aten::any         0.29%       2.490ms         0.45%       3.900ms       6.094us       1.728ms         3.12%       1.728ms       2.701us           0 B           0 B     320.00 KB     320.00 KB           640  \n                                     aten::_convolution         0.25%       2.198ms         2.76%      24.003ms      15.627us       0.000us         0.00%       9.311ms       6.062us           0 B           0 B       1.14 GB           0 B          1536  \n                                            aten::silu_         0.24%       2.051ms         0.47%       4.066ms       3.765us       1.575ms         2.84%       1.575ms       1.459us           0 B           0 B           0 B           0 B          1080  \n                                  cudaDeviceSynchronize         0.23%       2.024ms         0.23%       2.024ms       2.024ms       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             1  \n                                              aten::mul         0.21%       1.815ms         0.33%       2.855ms       5.948us     668.870us         1.21%     668.870us       1.393us           0 B           0 B     188.04 MB     188.04 MB           480  \n                                         cuLaunchKernel         0.20%       1.736ms         0.20%       1.736ms       1.955us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B           888  \n                                            aten::index         0.18%       1.526ms         1.21%      10.514ms      52.568us     544.876us         0.98%     568.107us       2.841us           0 B           0 B      82.32 MB      82.29 MB           200  \n                                          aten::nonzero         0.17%       1.477ms         5.40%      46.985ms     489.429us     624.325us         1.13%     624.325us       6.503us           0 B           0 B      48.00 KB           0 B            96  \n                                               aten::ne         0.17%       1.470ms         0.26%       2.283ms       5.946us     447.136us         0.81%     447.136us       1.164us           0 B           0 B      43.07 MB      43.07 MB           384  \n                                             aten::view         0.17%       1.444ms         0.17%       1.444ms       0.625us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B          2312  \n                              aten::_local_scalar_dense         0.17%       1.440ms        82.53%     718.016ms     773.725us     803.558us         1.45%     803.558us       0.866us           0 B           0 B           0 B           0 B           928  \n                                              aten::all         0.16%       1.423ms         0.26%       2.287ms       7.940us       1.405ms         2.53%       1.405ms       4.878us           0 B           0 B     144.00 KB     144.00 KB           288  \n                                              aten::add         0.15%       1.279ms         0.24%       2.086ms       5.214us     649.230us         1.17%     649.230us       1.623us         408 B         408 B     235.89 MB     235.89 MB           400  \n                                              aten::abs         0.14%       1.214ms         0.60%       5.199ms       6.769us     514.695us         0.93%       1.029ms       1.340us           0 B           0 B     373.22 MB           0 B           768  \n                                              aten::cat         0.12%       1.059ms         0.19%       1.675ms       6.755us     534.888us         0.96%     534.888us       2.157us         768 B         768 B     326.07 MB     326.07 MB           248  \n                           aten::_batch_norm_impl_index         0.11%     999.152us         2.22%      19.335ms      13.427us       0.000us         0.00%       3.654ms       2.537us           0 B           0 B       1.06 GB           0 B          1440  \n                                             aten::topk         0.11%     937.416us         0.22%       1.943ms      30.359us       1.027ms         1.85%       1.027ms      16.044us           0 B           0 B     112.00 KB     112.00 KB            64  \n                                      aten::convolution         0.10%     883.219us         2.86%      24.886ms      16.202us       0.000us         0.00%       9.311ms       6.062us           0 B           0 B       1.14 GB           0 B          1536  \n                                          aten::resize_         0.09%     800.541us         0.09%     800.541us       1.206us       0.000us         0.00%       0.000us       0.000us         392 B         392 B     329.67 MB     329.67 MB           664  \n                                       aten::batch_norm         0.08%     739.317us         2.31%      20.075ms      13.941us       0.000us         0.00%       3.654ms       2.537us           0 B           0 B       1.06 GB           0 B          1440  \n                                       aten::empty_like         0.08%     701.451us         0.36%       3.161ms       2.026us       0.000us         0.00%       0.000us       0.000us           0 B           0 B       1.14 GB           0 B          1560  \n                                         aten::isfinite         0.08%     692.235us         0.82%       7.146ms      24.813us       0.000us         0.00%       1.349ms       4.684us           0 B           0 B     108.30 MB     -73.41 MB           288  \n-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  \nSelf CPU time total: 869.970ms\nSelf CUDA time total: 55.483ms\n"
+    }
+  },
+  "completed_timestamp_utc": "2026-09-03T07:13:14.110561+00:00"
+}

@@ -1,0 +1,93 @@
+{
+  "status": "completed",
+  "conclusion": "P0 passed: one pretrained checkpoint reproduces standard-NMS and end-to-end NMS-free paths.",
+  "identity": {
+    "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+    "checkpoint_sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef",
+    "checkpoint_bytes": 5544453,
+    "data": "/data/data2/TuJiajun/COCO2017/coco/coco2017.yaml",
+    "data_sha256": "fadd46a0ceb946a0e4439f072eccc19b6af92b4de545d601dfac367be7adef92",
+    "dataset_manifest": "/data/data2/TuJiajun/COCO2017/coco/dataset_manifest.json",
+    "dataset_manifest_sha256": "f2a2adb80b6f5d20cb02b600b97158ed3dec032a4b3942ff6c3060f5293fa0ac",
+    "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+    "python_executable": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+    "ultralytics": "8.4.101",
+    "cells": {
+      "A": {
+        "model_class": "DetectionModel",
+        "head_class": "Detect",
+        "end2end": false,
+        "has_one2one_cv2": true,
+        "has_one2one_cv3": true,
+        "parameters": 2572280
+      },
+      "B": {
+        "model_class": "DetectionModel",
+        "head_class": "Detect",
+        "end2end": true,
+        "has_one2one_cv2": true,
+        "has_one2one_cv3": true,
+        "parameters": 2572280
+      }
+    },
+    "protocol": "same checkpoint/data/settings; only end2end=False/True differs"
+  },
+  "accuracy": {
+    "A_map50_95": 0.402,
+    "B_map50_95": 0.395,
+    "B_minus_A_ap_points": -0.7000000000000006,
+    "A_map50": 0.562,
+    "B_map50": 0.55,
+    "A_precision": 0.659,
+    "B_precision": 0.656,
+    "A_recall": 0.515,
+    "B_recall": 0.505
+  },
+  "nms": {
+    "A": {
+      "detections": 77,
+      "suppression_kernel_calls": 16,
+      "routes": {
+        "nms": 16
+      }
+    },
+    "B": {
+      "detections": 76,
+      "suppression_kernel_calls": 0,
+      "routes": {
+        "end2end_score_filter": 16
+      }
+    }
+  },
+  "latency": {
+    "0": {
+      "A_mean_ms": 3.289031333345823,
+      "A_std_ms": 0.0886436390323523,
+      "A_p50_ms": 3.259803500441194,
+      "A_p90_ms": 3.446486099710455,
+      "B_mean_ms": 3.2844492330696085,
+      "B_std_ms": 0.09809275558890035,
+      "B_p50_ms": 3.251684499446128,
+      "B_p90_ms": 3.4773643988955882,
+      "B_minus_A_ms": -0.004582100276214529,
+      "B_vs_A_percent": -0.13931458267846253
+    },
+    "cpu": {
+      "A_mean_ms": 20.246005666619265,
+      "A_std_ms": 0.37867982580713816,
+      "A_p50_ms": 20.169110499409726,
+      "A_p90_ms": 20.55665849838988,
+      "B_mean_ms": 20.757012666399532,
+      "B_std_ms": 0.5690030374565294,
+      "B_p50_ms": 20.79447949927271,
+      "B_p90_ms": 21.411841199733317,
+      "B_minus_A_ms": 0.5110069997802675,
+      "B_vs_A_percent": 2.5239892164151456
+    }
+  },
+  "limitations": [
+    "P0 compares two native inference paths in the same pretrained checkpoint; it is not the P1 MoE ablation.",
+    "PyTorch runtime NMS tracing is separate from future ONNX graph auditing."
+  ]
+}

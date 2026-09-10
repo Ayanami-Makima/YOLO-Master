@@ -1,0 +1,393 @@
+{
+  "status": "completed",
+  "cells": {
+    "a": {
+      "status": "completed",
+      "map50_95": 0.000149,
+      "metrics": {
+        "metrics/precision(B)": 0.00155,
+        "metrics/recall(B)": 0.0414,
+        "metrics/mAP50(B)": 0.000471,
+        "metrics/mAP50-95(B)": 0.000149
+      },
+      "evaluation": {
+        "images": 5000,
+        "instances": 36335,
+        "precision": 0.00155,
+        "recall": 0.0414,
+        "map50": 0.000471,
+        "map50_95": 0.000149,
+        "speed_ms": {
+          "preprocess": 0.2,
+          "inference": 4.2,
+          "postprocess": 0.4,
+          "loss": 0.0
+        }
+      },
+      "request": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/a_request.json",
+      "request_sha256": "922b1f016f2e7dd8f2bf7f17ae7b1f3a3ee4eb9370e7e92d958352905a0b8e72",
+      "stdout": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/a_stdout.json",
+      "stderr": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/a_stderr.log",
+      "manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/manifests/a/skill_manifest.json",
+      "source": "fresh native validation of formal best.pt"
+    },
+    "b": {
+      "status": "completed",
+      "map50_95": 0.000134,
+      "metrics": {
+        "metrics/precision(B)": 0.00118,
+        "metrics/recall(B)": 0.0162,
+        "metrics/mAP50(B)": 0.000378,
+        "metrics/mAP50-95(B)": 0.000134
+      },
+      "evaluation": {
+        "images": 5000,
+        "instances": 36335,
+        "precision": 0.00118,
+        "recall": 0.0162,
+        "map50": 0.000378,
+        "map50_95": 0.000134,
+        "speed_ms": {
+          "preprocess": 0.2,
+          "inference": 4.4,
+          "postprocess": 0.1,
+          "loss": 0.0
+        }
+      },
+      "request": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/b_request.json",
+      "request_sha256": "48a9dbd786c8966ce08b43e310c56ea6834be0c1c2936829f060f86fada69ebc",
+      "stdout": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/b_stdout.json",
+      "stderr": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/b_stderr.log",
+      "manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/manifests/b/skill_manifest.json",
+      "source": "fresh native validation of formal best.pt"
+    },
+    "c": {
+      "status": "completed",
+      "map50_95": 3.6e-05,
+      "metrics": {
+        "metrics/precision(B)": 0.000808,
+        "metrics/recall(B)": 0.0194,
+        "metrics/mAP50(B)": 0.000148,
+        "metrics/mAP50-95(B)": 3.6e-05
+      },
+      "evaluation": {
+        "speed_ms": {
+          "preprocess": 0.2,
+          "inference": 10.5,
+          "postprocess": 0.4,
+          "loss": 0.0
+        },
+        "images": 5000,
+        "instances": 36335,
+        "precision": 0.000808,
+        "recall": 0.0194,
+        "map50": 0.000148,
+        "map50_95": 3.6e-05
+      },
+      "request": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/c_request.json",
+      "request_sha256": "6336873294ce13e1c1ed14d7b760833a7e58dee7e2c869e6b9c623c6a967cfd2",
+      "stdout": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/c_stdout.json",
+      "stderr": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/c_stderr.log",
+      "manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/manifests/c/skill_manifest.json",
+      "source": "fresh native validation; strict fallback from completed native CLI all-class row"
+    },
+    "d": {
+      "status": "completed",
+      "map50_95": 0.000244,
+      "metrics": {
+        "metrics/precision(B)": 0.00126,
+        "metrics/recall(B)": 0.0312,
+        "metrics/mAP50(B)": 0.000565,
+        "metrics/mAP50-95(B)": 0.000244
+      },
+      "evaluation": {
+        "images": 5000,
+        "instances": 36335,
+        "precision": 0.00126,
+        "recall": 0.0312,
+        "map50": 0.000565,
+        "map50_95": 0.000244,
+        "speed_ms": {
+          "preprocess": 0.2,
+          "inference": 10.5,
+          "postprocess": 0.1,
+          "loss": 0.0
+        }
+      },
+      "request": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/d_request.json",
+      "request_sha256": "c101107f4876600049c674f7765bef9712ce4fcaf7bc775bf0285ce1312a44ca",
+      "stdout": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/d_stdout.json",
+      "stderr": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/d_stderr.log",
+      "manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2/native_validation/manifests/d/skill_manifest.json",
+      "source": "fresh native validation of formal best.pt"
+    }
+  },
+  "nms_trace": "not instrumented in CLI validation",
+  "identity": {
+    "protocol_sha256": "83afec2749a8fa5c8c57d0113ff48f90de9f27fc885935a6c8580efafa0dcf72",
+    "lanes": {
+      "0": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+        "sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+        "cells": [
+          "c",
+          "a"
+        ],
+        "status": "completed"
+      },
+      "1": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+        "sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+        "cells": [
+          "d",
+          "b"
+        ],
+        "status": "completed"
+      }
+    },
+    "cells": {
+      "a": {
+        "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep",
+        "request_sha256": "6b0de1fb6722f7ee41ce7520aa73498a543829090cd33cb370d9b17a114a9962",
+        "args_sha256": "83a1e6d5d935a163564fa71edeb34dfcb0b803ac3e5144291d836c0b6ad4c525",
+        "results_sha256": "2281d10bee510fae7f3dccbe8e5cc4986ece783116616a8c861312e5a6e11086",
+        "training_manifest_sha256": "ea47482edd01a38284052a7da55d6b15a5ee070b2c53003cc2b8d0422c99648a",
+        "weights": {
+          "best.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/weights/best.pt",
+            "sha256": "c81768c67e62f88ffb2589b2e515ee44e318a91bbb6dc7f7cbc1a5cf51756eb4",
+            "bytes": 5432121
+          },
+          "last.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/weights/last.pt",
+            "sha256": "5b7d5b0d5a16dbe64571800ea47be1c3e631e8e0d79e45ecd3d4cbac4de4c30a",
+            "bytes": 5432121
+          }
+        },
+        "runner": {
+          "lane": "0",
+          "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+          "state_sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+          "logs": [
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stdout.log",
+              "sha256": "f5201cc93b8449a84713894deb6707c4470e8345543abdd6e3db060b6af50489",
+              "bytes": 985107
+            }
+          ]
+        },
+        "epochs": 5,
+        "seed": 260829,
+        "last_epoch_mAP50_95": 0.00039,
+        "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+      },
+      "b": {
+        "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep",
+        "request_sha256": "21d7deddeec0393ae523edc4499ccdd44d078cd1ba2cf73438841f7d9ab75778",
+        "args_sha256": "46c74bce289daf7aa842a8df3beeb81d4668527ff904b17bee3b3edfff848540",
+        "results_sha256": "8c4c32ed6a0d06e4340ec8a06da870f8ae2cb6aefa235e069bc28896952992ef",
+        "training_manifest_sha256": "87c8f665efcf03eed5249f75472ba24962fc2229ca6a0ba3a7e305ad82c497d0",
+        "weights": {
+          "best.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/weights/best.pt",
+            "sha256": "e86013e10d48c930ac37f834155b17fbaf53fbb83287a55885044711f3ba6d73",
+            "bytes": 5792801
+          },
+          "last.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/weights/last.pt",
+            "sha256": "6ce682efe158178c06893772bdaa3d98b682e4d76561373a54c82e0ac0cdd626",
+            "bytes": 5792801
+          }
+        },
+        "runner": {
+          "lane": "1",
+          "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+          "state_sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+          "logs": [
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stdout.log",
+              "sha256": "6091452ba180511f5941d92aabf850449ea15aec34eacee299da48dea5ff1adc",
+              "bytes": 987271
+            }
+          ]
+        },
+        "epochs": 5,
+        "seed": 260829,
+        "last_epoch_mAP50_95": 0.00023,
+        "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+      },
+      "c": {
+        "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep",
+        "request_sha256": "5fe941fca0b4a6aeebfdeb46e489071c96e5f83c87029c68ed81c6a30369a31e",
+        "args_sha256": "5477a9d69a859f96915afe008e56ff28ba2b78ccd37ec6d7f9d67c5f63ffc910",
+        "results_sha256": "e7bcc19147d8b4e38996dc91a3667bd9629784e80f424bc2ddc6dfa86505cfbe",
+        "training_manifest_sha256": "1812634f30338f7cecb1fd166822312b0159fced83bd4f90e93bff029fe0b55c",
+        "weights": {
+          "best.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/weights/best.pt",
+            "sha256": "382ed7399cdb471578517dc536de14ac929631c81c8c2a51a6881580c652c6fa",
+            "bytes": 10486749
+          },
+          "last.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/weights/last.pt",
+            "sha256": "b69e0cb6b4c673154ea98334829e0d46683b6bbe67608cf4cdaa0d0df3255602",
+            "bytes": 10486749
+          }
+        },
+        "runner": {
+          "lane": "0",
+          "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+          "state_sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+          "logs": [
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_full/cli-1adqua94/stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_full/cli-1adqua94/stdout.log",
+              "sha256": "bee397bc50472af74a222934f3354a8f3182ccb48566848d175417a96916f30b",
+              "bytes": 1064410
+            }
+          ]
+        },
+        "epochs": 5,
+        "seed": 260829,
+        "last_epoch_mAP50_95": 8e-05,
+        "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+      },
+      "d": {
+        "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep",
+        "request_sha256": "4688a14124203d00a5bf071db92abaf13ad5621d9d2154e255ba04b40dcaf428",
+        "args_sha256": "e21111e929bdcae2a910925913927a197465135e1b62750cc7952b0d654dce8a",
+        "results_sha256": "cbb79d7b56c6910d80c04c4c76ab9dfdb851906552df2512f341114eab03e60b",
+        "training_manifest_sha256": "fa8f8b4352004a08ae04997464d6da8282563fceb29d3fae321e5df162699009",
+        "weights": {
+          "best.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/weights/best.pt",
+            "sha256": "7d59a593f25882efda134439592984d1ece92a9b902e96693641ac89802266dc",
+            "bytes": 10847613
+          },
+          "last.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/weights/last.pt",
+            "sha256": "4ac76936e9fb71fdabde96a1f1e735cba00d6f040bca2704cad0bc084daee7d0",
+            "bytes": 10847613
+          }
+        },
+        "runner": {
+          "lane": "1",
+          "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+          "state_sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+          "logs": [
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/d_full/cli-0h3p8pby/stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/d_full/cli-0h3p8pby/stdout.log",
+              "sha256": "f50ee6fc67f2c3d8040a60aaa81bd5a97b0faaa0d769bb0cbbdd146b7a088ea8",
+              "bytes": 1064131
+            }
+          ]
+        },
+        "epochs": 5,
+        "seed": 260829,
+        "last_epoch_mAP50_95": 0.0003,
+        "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+      }
+    }
+  },
+  "environment": {
+    "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]",
+    "python_executable": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/../.venv/bin/python",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+    "torch": "2.10.0+cu128",
+    "ultralytics": "8.4.101",
+    "ultralytics_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/ultralytics/__init__.py",
+    "torch_threads": 4,
+    "opencv_threads": 4,
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "load_average": [
+      0.2958984375,
+      1.61767578125,
+      1.93603515625
+    ],
+    "gpu_inspection": "performed",
+    "gpu_names": [
+      "NVIDIA GeForce RTX 4090",
+      "NVIDIA GeForce RTX 4090"
+    ],
+    "gpu_memory_free_total_bytes_before": [
+      [
+        24822022144,
+        25250627584
+      ],
+      [
+        24690688000,
+        25227100160
+      ]
+    ]
+  },
+  "created_at": "2026-08-28T17:51:13.735655+00:00",
+  "images": [],
+  "command": [
+    "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/../.venv/bin/python",
+    "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/scripts/a1/evaluate_p1_matrix.py",
+    "--configs",
+    "configs/a1/p1_pretrained",
+    "--project",
+    "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1",
+    "--output",
+    "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/evidence_r2",
+    "--stage",
+    "validate",
+    "--predict-device",
+    "0",
+    "--threads",
+    "4"
+  ]
+}

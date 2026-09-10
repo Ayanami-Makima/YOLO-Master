@@ -1,0 +1,228 @@
+{
+  "schema": "a1-p2-late-moe-efficiency-screen-benchmark/v1",
+  "status": "completed",
+  "created_at": "2026-09-04T05:00:31.064240+00:00",
+  "protocol": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/protocol.json",
+  "device": "cuda:1",
+  "warmup": 30,
+  "samples": 100,
+  "input": [
+    1,
+    3,
+    640,
+    640
+  ],
+  "variants": {
+    "late_dense_eq_top1": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_dense_eq_top1_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "92efbbbe8b9d1902a9ef7ee2f81d88d875883978704e867c06700277e7d5d2b0",
+      "parameters": 3280376,
+      "moe": false,
+      "experts": 0,
+      "top_k": 0,
+      "factor_mlp_ratio": 4.0,
+      "modes": {
+        "e2e": {
+          "mean_ms": 6.242257585525513,
+          "p50_ms": 6.17743992805481,
+          "p90_ms": 6.433996915817261,
+          "p99_ms": 6.5607332468032835,
+          "throughput_images_per_s": 160.19845164973492,
+          "peak_allocated_bytes": 721441280,
+          "peak_reserved_bytes": 754974720
+        },
+        "nms": {
+          "mean_ms": 5.6493315076828,
+          "p50_ms": 5.613663911819458,
+          "p90_ms": 5.883596801757813,
+          "p99_ms": 5.922128133773804,
+          "throughput_images_per_s": 177.01209402210714,
+          "peak_allocated_bytes": 721441280,
+          "peak_reserved_bytes": 754974720
+        }
+      },
+      "thop_e2e": {
+        "macs": 4074713600.0,
+        "gflops": 8.1494272,
+        "parameters_profiled": 3280376,
+        "note": "static THOP profile; dynamic sparse routing interpretation is auxiliary"
+      }
+    },
+    "late_dense_eq_top2": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_dense_eq_top2_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "d94eb94e7928c17c589acebc56a2a5c4fd524360a657012245f318f5957eac5a",
+      "parameters": 3412472,
+      "moe": false,
+      "experts": 0,
+      "top_k": 0,
+      "factor_mlp_ratio": 6.0,
+      "modes": {
+        "e2e": {
+          "mean_ms": 6.369047698974609,
+          "p50_ms": 6.209535837173462,
+          "p90_ms": 6.485766315460205,
+          "p99_ms": 9.801049337387095,
+          "throughput_images_per_s": 157.00934382403761,
+          "peak_allocated_bytes": 721973760,
+          "peak_reserved_bytes": 754974720
+        },
+        "nms": {
+          "mean_ms": 5.65730462551117,
+          "p50_ms": 5.61356782913208,
+          "p90_ms": 5.8873694896697994,
+          "p99_ms": 5.911002664566041,
+          "throughput_images_per_s": 176.76262216649582,
+          "peak_allocated_bytes": 721973760,
+          "peak_reserved_bytes": 754974720
+        }
+      },
+      "thop_e2e": {
+        "macs": 4127961600.0,
+        "gflops": 8.2559232,
+        "parameters_profiled": 3412472,
+        "note": "static THOP profile; dynamic sparse routing interpretation is auxiliary"
+      }
+    },
+    "late_moe_2e_top1": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_moe_2e_top1_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "f5f72f731041e841062d956ac51c6a5b86762fa16d8306755bc691e118ee4983",
+      "parameters": 3351168,
+      "moe": true,
+      "experts": 2,
+      "top_k": 1,
+      "factor_mlp_ratio": 2.0,
+      "modes": {
+        "e2e": {
+          "mean_ms": 9.094373083114624,
+          "p50_ms": 9.014336109161377,
+          "p90_ms": 9.293184089660645,
+          "p99_ms": 9.334274101257325,
+          "throughput_images_per_s": 109.9581016592209,
+          "peak_allocated_bytes": 721743872,
+          "peak_reserved_bytes": 754974720
+        },
+        "nms": {
+          "mean_ms": 8.369622077941894,
+          "p50_ms": 8.361167907714844,
+          "p90_ms": 8.540467357635498,
+          "p99_ms": 8.58145809173584,
+          "throughput_images_per_s": 119.47970776786876,
+          "peak_allocated_bytes": 721743872,
+          "peak_reserved_bytes": 754974720
+        }
+      },
+      "thop_e2e": {
+        "macs": 4035909200.0,
+        "gflops": 8.0718184,
+        "parameters_profiled": 3351168,
+        "note": "static THOP profile; dynamic sparse routing interpretation is auxiliary"
+      }
+    },
+    "late_moe_2e_top2": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_moe_2e_top2_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "5f9673927f46b8eec0fcf0ff03812c16d9a7e7fe1e7b00b7daf9d7aa3f128b15",
+      "parameters": 3351168,
+      "moe": true,
+      "experts": 2,
+      "top_k": 2,
+      "factor_mlp_ratio": 2.0,
+      "modes": {
+        "e2e": {
+          "mean_ms": 9.313599710464478,
+          "p50_ms": 9.261199951171875,
+          "p90_ms": 9.480192184448242,
+          "p99_ms": 9.654597911834717,
+          "throughput_images_per_s": 107.3698710581721,
+          "peak_allocated_bytes": 721743872,
+          "peak_reserved_bytes": 754974720
+        },
+        "nms": {
+          "mean_ms": 8.574990730285645,
+          "p50_ms": 8.537600040435791,
+          "p90_ms": 8.752918720245361,
+          "p99_ms": 8.830611076354982,
+          "throughput_images_per_s": 116.61820186792069,
+          "peak_allocated_bytes": 721743872,
+          "peak_reserved_bytes": 754974720
+        }
+      },
+      "thop_e2e": {
+        "macs": 4089566800.0,
+        "gflops": 8.1791336,
+        "parameters_profiled": 3351168,
+        "note": "static THOP profile; dynamic sparse routing interpretation is auxiliary"
+      }
+    },
+    "late_moe_4e_top1": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_moe_4e_top1_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "9e7f046a11507a0eab4c0ea43097363bb178299f90cf4ad00de93b1098e94418",
+      "parameters": 3616456,
+      "moe": true,
+      "experts": 4,
+      "top_k": 1,
+      "factor_mlp_ratio": 2.0,
+      "modes": {
+        "e2e": {
+          "mean_ms": 9.148798065185547,
+          "p50_ms": 9.107967853546143,
+          "p90_ms": 9.341391944885254,
+          "p99_ms": 9.466969442367553,
+          "throughput_images_per_s": 109.30397554683802,
+          "peak_allocated_bytes": 722821120,
+          "peak_reserved_bytes": 757071872
+        },
+        "nms": {
+          "mean_ms": 8.346534700393677,
+          "p50_ms": 8.321375846862793,
+          "p90_ms": 8.485989952087403,
+          "p99_ms": 8.685836906433106,
+          "throughput_images_per_s": 119.81020098710347,
+          "peak_allocated_bytes": 722821120,
+          "peak_reserved_bytes": 757071872
+        }
+      },
+      "thop_e2e": {
+        "macs": 4035911200.0,
+        "gflops": 8.0718224,
+        "parameters_profiled": 3616456,
+        "note": "static THOP profile; dynamic sparse routing interpretation is auxiliary"
+      }
+    },
+    "late_moe_4e_top2": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_moe_4e_top2_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "9cf67fa8412d18b476d402a4172028c617c9d00901e98fe2d9ef2f32d6996e41",
+      "parameters": 3616456,
+      "moe": true,
+      "experts": 4,
+      "top_k": 2,
+      "factor_mlp_ratio": 2.0,
+      "modes": {
+        "e2e": {
+          "mean_ms": 9.405443496704102,
+          "p50_ms": 9.408528327941895,
+          "p90_ms": 9.58076524734497,
+          "p99_ms": 9.727255430221557,
+          "throughput_images_per_s": 106.32140848546105,
+          "peak_allocated_bytes": 722821120,
+          "peak_reserved_bytes": 757071872
+        },
+        "nms": {
+          "mean_ms": 8.619814682006837,
+          "p50_ms": 8.574975967407227,
+          "p90_ms": 8.807715129852294,
+          "p99_ms": 8.857437934875488,
+          "throughput_images_per_s": 116.011774834025,
+          "peak_allocated_bytes": 722821120,
+          "peak_reserved_bytes": 757071872
+        }
+      },
+      "thop_e2e": {
+        "macs": 4089568800.0,
+        "gflops": 8.1791376,
+        "parameters_profiled": 3616456,
+        "note": "static THOP profile; dynamic sparse routing interpretation is auxiliary"
+      }
+    }
+  },
+  "completed_at": "2026-09-04T05:00:44.487789+00:00"
+}

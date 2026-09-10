@@ -1,0 +1,121 @@
+{
+  "schema": "a1-p1-r28-efficiency-screen/v1",
+  "status": "completed",
+  "timestamp_utc": "2026-09-03T07:25:40.228333+00:00",
+  "protocol": {
+    "device": "cuda:0",
+    "cell": "d",
+    "seed": "260829",
+    "batch": 1,
+    "image_size": 640,
+    "warmup": 20,
+    "samples": 60,
+    "scope": "model forward only"
+  },
+  "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+  "variants": {
+    "top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 13.879489103953043,
+        "p50_ms": 13.778863906860352,
+        "p90_ms": 14.411225891113281,
+        "p99_ms": 14.534174251556395,
+        "min_ms": 13.458399772644043,
+        "max_ms": 14.58505630493164
+      },
+      "throughput_images_per_s": 72.04876148612618,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 13.45418448448181,
+        "p50_ms": 13.43175983428955,
+        "p90_ms": 13.71760663986206,
+        "p99_ms": 13.946535797119141,
+        "min_ms": 12.975071907043457,
+        "max_ms": 13.982879638671875
+      },
+      "throughput_images_per_s": 74.32631841442414,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap4_top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 14.522794675827026,
+        "p50_ms": 14.179935932159424,
+        "p90_ms": 15.17875165939331,
+        "p99_ms": 18.993796024322506,
+        "min_ms": 13.57209587097168,
+        "max_ms": 19.445632934570312
+      },
+      "throughput_images_per_s": 68.85727040295384,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap4_top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 13.291292301813762,
+        "p50_ms": 13.261791706085205,
+        "p90_ms": 13.715113639831543,
+        "p99_ms": 14.844006481170652,
+        "min_ms": 12.579680442810059,
+        "max_ms": 15.09171199798584
+      },
+      "throughput_images_per_s": 75.23722880306661,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap2_top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 12.721790917714436,
+        "p50_ms": 12.68891191482544,
+        "p90_ms": 12.869763278961182,
+        "p99_ms": 13.334668674468992,
+        "min_ms": 12.516351699829102,
+        "max_ms": 13.923328399658203
+      },
+      "throughput_images_per_s": 78.6052849373237,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "late_top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 6.298717864354452,
+        "p50_ms": 6.190832138061523,
+        "p90_ms": 6.415129470825195,
+        "p99_ms": 7.91560929775238,
+        "min_ms": 6.039552211761475,
+        "max_ms": 7.921631813049316
+      },
+      "throughput_images_per_s": 158.76246905091196,
+      "peak_allocated_bytes": 85371904,
+      "peak_reserved_bytes": 102760448
+    }
+  },
+  "completed_timestamp_utc": "2026-09-03T07:25:47.292313+00:00"
+}

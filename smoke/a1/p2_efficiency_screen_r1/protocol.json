@@ -1,0 +1,133 @@
+{
+  "schema": "a1-p2-late-moe-efficiency-screen/v1",
+  "status": "prepared",
+  "name": "A1 P2 small efficiency screen: late-layer MoE",
+  "locked_sha": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "source_checkpoint": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/yolo26n.pt",
+    "sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef"
+  },
+  "parent": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/cfg/models/26/yolo26.yaml",
+    "sha256": "b1d1fa0c69eced64f9939536038bd8d697c32e72200b34187a767de431af7ef0"
+  },
+  "data": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+    "sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+    "train_images": 5000,
+    "val_images": 512
+  },
+  "run_root": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1",
+  "device": "cuda:1",
+  "budget": {
+    "epochs": 1,
+    "batch": 4,
+    "imgsz": 640,
+    "optimizer": "SGD",
+    "lr0": 0.0001,
+    "seed": 260829
+  },
+  "variants": {
+    "late_dense_eq_top1": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_dense_eq_top1.yaml",
+      "sha256": "91b2dbf142ea2e62795dd6b22b7ffea59986b43a398bde9c54d2a7d7a0ed3d6c",
+      "moe": false,
+      "experts": 0,
+      "top_k": 0,
+      "factor_mlp_ratio": 4.0,
+      "control_for": "top1"
+    },
+    "late_dense_eq_top2": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_dense_eq_top2.yaml",
+      "sha256": "55333b2f619fa038ce3d100742c0edcce41800908c71dc403ae8f8f1df4373f3",
+      "moe": false,
+      "experts": 0,
+      "top_k": 0,
+      "factor_mlp_ratio": 6.0,
+      "control_for": "top2"
+    },
+    "late_moe_2e_top1": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_moe_2e_top1.yaml",
+      "sha256": "23128260cacd640d807408c8698c1873207dba0cb18e9d31343390259bf96db6",
+      "moe": true,
+      "experts": 2,
+      "top_k": 1,
+      "factor_mlp_ratio": 2.0,
+      "control_for": null
+    },
+    "late_moe_2e_top2": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_moe_2e_top2.yaml",
+      "sha256": "f27b3d9d88d2cb6afd85dae7b6b34fb3ca0b6bd501db0339163a2e6edd5c1a3a",
+      "moe": true,
+      "experts": 2,
+      "top_k": 2,
+      "factor_mlp_ratio": 2.0,
+      "control_for": null
+    },
+    "late_moe_4e_top1": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_moe_4e_top1.yaml",
+      "sha256": "3fb3bc84979ec01a3f2e407108043c2d5d9fa42c98dd6f8d3c166282520754ce",
+      "moe": true,
+      "experts": 4,
+      "top_k": 1,
+      "factor_mlp_ratio": 2.0,
+      "control_for": null
+    },
+    "late_moe_4e_top2": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_moe_4e_top2.yaml",
+      "sha256": "dca6a93f4544621450076ec3b480650e8b12d34d6e492deae8bedd43e1691c89",
+      "moe": true,
+      "experts": 4,
+      "top_k": 2,
+      "factor_mlp_ratio": 2.0,
+      "control_for": null
+    }
+  },
+  "requests": {
+    "late_dense_eq_top1": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_dense_eq_top1_request.json",
+      "sha256": "ea3884e858401a662b50696e0bc496d737cd6271fc7ea225e7e53fd53c1a9c18"
+    },
+    "late_dense_eq_top2": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_dense_eq_top2_request.json",
+      "sha256": "e1dcd782e939eec59214cb6c92962ba885e9e01f67b7a3d5940b92eaa0070724"
+    },
+    "late_moe_2e_top1": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_moe_2e_top1_request.json",
+      "sha256": "cae159b1af0f7f369cc3663c189e5fa247f5c3f36b8c69b049bdd32fe67df4b5"
+    },
+    "late_moe_2e_top2": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_moe_2e_top2_request.json",
+      "sha256": "c65914abd3e78dbc922e1d92d10e14a82c0253d4bba880187dbe5a5745633d56"
+    },
+    "late_moe_4e_top1": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_moe_4e_top1_request.json",
+      "sha256": "6606202496cd92fc9806a5c94f594454ca393a87132956f588ff673afd5a9002"
+    },
+    "late_moe_4e_top2": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/late_moe_4e_top2_request.json",
+      "sha256": "2a15802d632dcfef2226c50c54815db4f72391b99cda451a4e9c064ac72134e8"
+    }
+  },
+  "dense_controls": {
+    "late_dense_eq_top1": {
+      "match": "active Top-1 routed MLP compute",
+      "factor_mlp_ratio": 4.0
+    },
+    "late_dense_eq_top2": {
+      "match": "active Top-2 routed MLP compute",
+      "factor_mlp_ratio": 6.0
+    }
+  },
+  "policy": {
+    "only_moe_layer": 8,
+    "dense_layers": [
+      4,
+      6
+    ],
+    "native_base": "official C3k2 copied from yolo26n.pt and frozen",
+    "batch_norm": "all affine parameters and running statistics frozen",
+    "preflight": "one epoch, no long training claim",
+    "gate": "keep only variants with no meaningful val512 AP loss and acceptable measured latency"
+  }
+}

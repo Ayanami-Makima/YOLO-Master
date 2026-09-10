@@ -1,0 +1,92 @@
+{
+  "status": "completed",
+  "device": 1,
+  "batch": 1,
+  "imgsz": 640,
+  "precision": "FP32",
+  "cells": {
+    "d_alpha0p0_seed260829": {
+      "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+      "metrics": {
+        "square": {
+          "metrics/precision(B)": 0.6162793417095465,
+          "metrics/recall(B)": 0.5384527249048585,
+          "metrics/mAP50(B)": 0.5728302320639027,
+          "metrics/mAP50-95(B)": 0.4243096482648621,
+          "fitness": 0.4243096482648621
+        },
+        "rect": {
+          "metrics/precision(B)": 0.5856184298310201,
+          "metrics/recall(B)": 0.540863982078019,
+          "metrics/mAP50(B)": 0.5749171614763725,
+          "metrics/mAP50-95(B)": 0.42386755967524103,
+          "fitness": 0.42386755967524103
+        }
+      },
+      "summary": {
+        "images": 512,
+        "same_images": 1,
+        "scales": [
+          {
+            "mean_square_valid_fraction": 0.7218994205468334,
+            "mean_rect_valid_fraction": 0.9025962143205106,
+            "mean_rect_minus_square": 0.1806967937736772
+          },
+          {
+            "mean_square_valid_fraction": 0.7128418119391426,
+            "mean_rect_valid_fraction": 0.8901836334262043,
+            "mean_rect_minus_square": 0.17734182148706168
+          },
+          {
+            "mean_square_valid_fraction": 0.7503906269557774,
+            "mean_rect_valid_fraction": 0.9891778177116066,
+            "mean_rect_minus_square": 0.23878719075582922
+          }
+        ]
+      }
+    },
+    "d_alpha0p1_seed260829": {
+      "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+      "metrics": {
+        "square": {
+          "metrics/precision(B)": 0.6004809400232605,
+          "metrics/recall(B)": 0.5481008735603037,
+          "metrics/mAP50(B)": 0.5758332740098919,
+          "metrics/mAP50-95(B)": 0.4256950176080504,
+          "fitness": 0.4256950176080504
+        },
+        "rect": {
+          "metrics/precision(B)": 0.588449292378014,
+          "metrics/recall(B)": 0.5352189335008838,
+          "metrics/mAP50(B)": 0.5718320354769127,
+          "metrics/mAP50-95(B)": 0.42202441960778797,
+          "fitness": 0.42202441960778797
+        }
+      },
+      "summary": {
+        "images": 512,
+        "same_images": 1,
+        "scales": [
+          {
+            "mean_square_valid_fraction": 0.7218994205468334,
+            "mean_rect_valid_fraction": 0.9025962143205106,
+            "mean_rect_minus_square": 0.1806967937736772
+          },
+          {
+            "mean_square_valid_fraction": 0.7128418119391426,
+            "mean_rect_valid_fraction": 0.8901836334262043,
+            "mean_rect_minus_square": 0.17734182148706168
+          },
+          {
+            "mean_square_valid_fraction": 0.7503906269557774,
+            "mean_rect_valid_fraction": 0.9891778177116066,
+            "mean_rect_minus_square": 0.23878719075582922
+          }
+        ]
+      }
+    }
+  },
+  "script_sha256": "30f7675ea3d0858c02b5817efaa454effe1d5d9a9be76edd24ea5b4d2878883c",
+  "note": "Read-only anchor-grid/stride valid-region diagnostic; no checkpoint mutation.",
+  "updated_at": "2026-09-07T12:09:54.594842+00:00"
+}

@@ -1,0 +1,23 @@
+{
+  "status": "pilot_executed_acceptance_failed",
+  "protocol_sha256": "83afec2749a8fa5c8c57d0113ff48f90de9f27fc885935a6c8580efafa0dcf72",
+  "seed": 260829,
+  "training": {"images": 5000, "validation_images_per_epoch": 512, "epochs": 5, "imgsz": 640, "batch": 4},
+  "full_coco_val": {
+    "a": {"map50": 0.000471, "map50_95": 0.000149},
+    "b": {"map50": 0.000378, "map50_95": 0.000134},
+    "c": {"map50": 0.000148, "map50_95": 0.000036},
+    "d": {"map50": 0.000565, "map50_95": 0.000244}
+  },
+  "nms_suppression_kernel_calls_on_16_images": {"a": 5, "b": 0, "c": 5, "d": 0},
+  "latency_mean_ms": {
+    "cpu_4_threads": {"a": 136.3409, "b": 136.2085, "c": 145.2252, "d": 145.3704},
+    "gpu0": {"a": 6.1229, "b": 6.1651, "c": 12.2027, "d": 12.3305}
+  },
+  "export": {"onnx_generated": ["a", "b", "c", "d"], "numerical_agreement_passed": ["d"], "status": "partial"},
+  "acceptance_blockers": [
+    "all four full-COCO mAP50-95 values are effectively zero",
+    "A/B/C failed the predeclared PyTorch-to-ONNX agreement on at least one fixed input",
+    "single seed only"
+  ]
+}

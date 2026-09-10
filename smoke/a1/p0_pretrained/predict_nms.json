@@ -1,0 +1,737 @@
+{
+  "status": "completed",
+  "cells": {
+    "A": {
+      "status": "completed",
+      "identity": {
+        "model_class": "DetectionModel",
+        "head_class": "Detect",
+        "end2end": false,
+        "has_one2one_cv2": true,
+        "has_one2one_cv3": true,
+        "parameters": 2572280
+      },
+      "detections": 77,
+      "images_with_detections": 16,
+      "images_with_duplicate_pairs": 0,
+      "duplicate_boxes": 0,
+      "nms": {
+        "status": "passed",
+        "suppression_kernel_calls": 16,
+        "kernel_calls": {
+          "torchvision.ops.nms": 16
+        },
+        "wrapper_calls": 16,
+        "wrapper_routes": {
+          "nms": 16
+        },
+        "events": [
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          },
+          {
+            "raw_shape": [
+              1,
+              84,
+              8400
+            ],
+            "route": "nms"
+          }
+        ],
+        "patched_targets": [
+          "TorchNMS.nms",
+          "TorchNMS.fast_nms",
+          "TorchNMS.batched_nms",
+          "torchvision.ops.nms"
+        ],
+        "warmup_excluded": true,
+        "scope": "actual measured PyTorch predict calls; not validation/export tracing"
+      },
+      "records": [
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000139.jpg",
+          "detections": 14,
+          "duplicates": {
+            "boxes": 14,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 8,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000285.jpg",
+          "detections": 1,
+          "duplicates": {
+            "boxes": 1,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000632.jpg",
+          "detections": 4,
+          "duplicates": {
+            "boxes": 4,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 1,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000724.jpg",
+          "detections": 2,
+          "duplicates": {
+            "boxes": 2,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000776.jpg",
+          "detections": 4,
+          "duplicates": {
+            "boxes": 4,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 6,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000785.jpg",
+          "detections": 2,
+          "duplicates": {
+            "boxes": 2,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000802.jpg",
+          "detections": 2,
+          "duplicates": {
+            "boxes": 2,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000872.jpg",
+          "detections": 3,
+          "duplicates": {
+            "boxes": 3,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 1,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000885.jpg",
+          "detections": 5,
+          "duplicates": {
+            "boxes": 5,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 6,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001000.jpg",
+          "detections": 15,
+          "duplicates": {
+            "boxes": 15,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 79,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001268.jpg",
+          "detections": 7,
+          "duplicates": {
+            "boxes": 7,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 6,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001296.jpg",
+          "detections": 3,
+          "duplicates": {
+            "boxes": 3,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 1,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001353.jpg",
+          "detections": 7,
+          "duplicates": {
+            "boxes": 7,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 11,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001425.jpg",
+          "detections": 2,
+          "duplicates": {
+            "boxes": 2,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001490.jpg",
+          "detections": 1,
+          "duplicates": {
+            "boxes": 1,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001503.jpg",
+          "detections": 5,
+          "duplicates": {
+            "boxes": 5,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 1,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        }
+      ]
+    },
+    "B": {
+      "status": "completed",
+      "identity": {
+        "model_class": "DetectionModel",
+        "head_class": "Detect",
+        "end2end": true,
+        "has_one2one_cv2": true,
+        "has_one2one_cv3": true,
+        "parameters": 2572280
+      },
+      "detections": 76,
+      "images_with_detections": 16,
+      "images_with_duplicate_pairs": 2,
+      "duplicate_boxes": 2,
+      "nms": {
+        "status": "passed",
+        "suppression_kernel_calls": 0,
+        "kernel_calls": {},
+        "wrapper_calls": 16,
+        "wrapper_routes": {
+          "end2end_score_filter": 16
+        },
+        "events": [
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          },
+          {
+            "raw_shape": [
+              1,
+              300,
+              6
+            ],
+            "route": "end2end_score_filter"
+          }
+        ],
+        "patched_targets": [
+          "TorchNMS.nms",
+          "TorchNMS.fast_nms",
+          "TorchNMS.batched_nms",
+          "torchvision.ops.nms"
+        ],
+        "warmup_excluded": true,
+        "scope": "actual measured PyTorch predict calls; not validation/export tracing"
+      },
+      "records": [
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000139.jpg",
+          "detections": 12,
+          "duplicates": {
+            "boxes": 12,
+            "duplicate_pairs": 1,
+            "same_class_pairs": 7,
+            "duplicate_boxes": 1,
+            "duplicate_box_rate": 0.08333333333333333,
+            "duplicate_pair_rate": 0.14285714285714285
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000285.jpg",
+          "detections": 1,
+          "duplicates": {
+            "boxes": 1,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000632.jpg",
+          "detections": 5,
+          "duplicates": {
+            "boxes": 5,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 1,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000724.jpg",
+          "detections": 2,
+          "duplicates": {
+            "boxes": 2,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000776.jpg",
+          "detections": 2,
+          "duplicates": {
+            "boxes": 2,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 1,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000785.jpg",
+          "detections": 2,
+          "duplicates": {
+            "boxes": 2,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000802.jpg",
+          "detections": 2,
+          "duplicates": {
+            "boxes": 2,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000872.jpg",
+          "detections": 3,
+          "duplicates": {
+            "boxes": 3,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 1,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000885.jpg",
+          "detections": 6,
+          "duplicates": {
+            "boxes": 6,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 10,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001000.jpg",
+          "detections": 13,
+          "duplicates": {
+            "boxes": 13,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 56,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001268.jpg",
+          "detections": 7,
+          "duplicates": {
+            "boxes": 7,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 6,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001296.jpg",
+          "detections": 5,
+          "duplicates": {
+            "boxes": 5,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 6,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": 0.0
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001353.jpg",
+          "detections": 8,
+          "duplicates": {
+            "boxes": 8,
+            "duplicate_pairs": 1,
+            "same_class_pairs": 16,
+            "duplicate_boxes": 1,
+            "duplicate_box_rate": 0.125,
+            "duplicate_pair_rate": 0.0625
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001425.jpg",
+          "detections": 3,
+          "duplicates": {
+            "boxes": 3,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001490.jpg",
+          "detections": 1,
+          "duplicates": {
+            "boxes": 1,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        },
+        {
+          "image": "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001503.jpg",
+          "detections": 4,
+          "duplicates": {
+            "boxes": 4,
+            "duplicate_pairs": 0,
+            "same_class_pairs": 0,
+            "duplicate_boxes": 0,
+            "duplicate_box_rate": 0.0,
+            "duplicate_pair_rate": null
+          }
+        }
+      ]
+    }
+  },
+  "images": [
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000139.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000285.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000632.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000724.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000776.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000785.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000802.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000872.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000000885.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001000.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001268.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001296.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001353.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001425.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001490.jpg",
+    "/data/data2/TuJiajun/COCO2017/coco/images/val2017/000000001503.jpg"
+  ]
+}

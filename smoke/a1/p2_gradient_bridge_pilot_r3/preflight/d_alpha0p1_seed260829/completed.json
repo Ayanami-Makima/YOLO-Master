@@ -1,0 +1,12 @@
+{
+  "status": "completed",
+  "alpha": 0.1,
+  "metrics": {
+    "metrics/precision(B)": 0.5555380985727235,
+    "metrics/recall(B)": 0.5642965903188135,
+    "metrics/mAP50(B)": 0.6039022499427227,
+    "metrics/mAP50-95(B)": 0.46991450467014334,
+    "fitness": 0.46991450467014334
+  },
+  "last": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_pilot_r3/preflight/d_alpha0p1_seed260829/weights/last.pt"
+}

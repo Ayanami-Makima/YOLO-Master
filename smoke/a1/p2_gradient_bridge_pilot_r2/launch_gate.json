@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "protocol_sha256": "b22ce35fb2fa353ce722daf05663082c0642c31052173bc848593f5bb0716cf9",
+  "test_results_sha256": "a76b094324133e505607d3023f7c4cdea6665f48f965cc26de65ecc8cbb56a17",
+  "gate_script_sha256": "c59915cca67bb88e0254a20d31875a333ffe6b40a3365ff5e1461d8f1195167f",
+  "holdout": [
+    {
+      "seed": 260829,
+      "router_cosine_mean": 0.5324617779564187,
+      "negative_images": 5,
+      "source_sha256": "7ff536545bfa0b28ae0ba031e5ec888333f9313febac4640ed565697d7a7c762"
+    },
+    {
+      "seed": 260830,
+      "router_cosine_mean": 0.6502155604581993,
+      "negative_images": 4,
+      "source_sha256": "f8360763398b013abf3570f2e7912063e083e78bb0db00188397a92a8dd45311"
+    },
+    {
+      "seed": 260831,
+      "router_cosine_mean": 0.5305298835972198,
+      "negative_images": 5,
+      "source_sha256": "c747fdb64a076e5bcd113c21e99e51a240431580d21c919ff20067f95907b740"
+    }
+  ],
+  "preflight": [
+    {
+      "cell": "b_alpha0p0_seed260829",
+      "alpha": 0.0,
+      "resumed_epoch": 2,
+      "frozen_unchanged_per_segment": true,
+      "runtime_sha256": "0283ce9ecee887dbf12a8425e9b7d5e6ede4e74152114746444c96e51d77e5e9"
+    },
+    {
+      "cell": "b_alpha0p1_seed260829",
+      "alpha": 0.1,
+      "resumed_epoch": 2,
+      "frozen_unchanged_per_segment": true,
+      "runtime_sha256": "e8b3ee9fb0e65344aba24ec25943265f2653faad90036266156f619a63571ee1"
+    },
+    {
+      "cell": "d_alpha0p0_seed260829",
+      "alpha": 0.0,
+      "resumed_epoch": 2,
+      "frozen_unchanged_per_segment": true,
+      "runtime_sha256": "8698a71e514e61824cbb71e65678dabfdb91538f80d0015ba7a4dd196bb677f5"
+    },
+    {
+      "cell": "d_alpha0p1_seed260829",
+      "alpha": 0.1,
+      "resumed_epoch": 2,
+      "frozen_unchanged_per_segment": true,
+      "runtime_sha256": "4abbf916b240db1e5b1c5eb66ce643746ed54c0b4f062a6ff4a6dad94c20b295"
+    }
+  ],
+  "scope": "Correctness and sample-sensitivity checks only; no accuracy efficacy or export-backend claim",
+  "resume_scope": "Actual optimizer/epoch resume checked; numerical equivalence to uninterrupted training not claimed"
+}

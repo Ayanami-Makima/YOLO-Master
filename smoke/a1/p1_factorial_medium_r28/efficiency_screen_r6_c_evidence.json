@@ -1,0 +1,121 @@
+{
+  "schema": "a1-p1-r28-efficiency-screen/v1",
+  "status": "completed",
+  "timestamp_utc": "2026-09-03T07:22:32.762223+00:00",
+  "protocol": {
+    "device": "cuda:0",
+    "cell": "c",
+    "seed": "260829",
+    "batch": 1,
+    "image_size": 640,
+    "warmup": 20,
+    "samples": 60,
+    "scope": "model forward only"
+  },
+  "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+  "variants": {
+    "top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 86.59377250671386,
+        "p50_ms": 86.67460632324219,
+        "p90_ms": 95.71399459838867,
+        "p99_ms": 113.800864944458,
+        "min_ms": 67.33414459228516,
+        "max_ms": 114.615234375
+      },
+      "throughput_images_per_s": 11.54817455172619,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480
+    },
+    "top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 86.79464232126871,
+        "p50_ms": 85.6258544921875,
+        "p90_ms": 112.68310775756837,
+        "p99_ms": 119.56209564208984,
+        "min_ms": 63.431678771972656,
+        "max_ms": 120.49612426757812
+      },
+      "throughput_images_per_s": 11.521448481791296,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap4_top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 131.1523681640625,
+        "p50_ms": 117.27840042114258,
+        "p90_ms": 206.80785675048827,
+        "p99_ms": 225.43757675170897,
+        "min_ms": 68.34585571289062,
+        "max_ms": 226.1432342529297
+      },
+      "throughput_images_per_s": 7.624719355041074,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 763363328
+    },
+    "cap4_top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 132.82077878316244,
+        "p50_ms": 125.25836944580078,
+        "p90_ms": 207.56766815185546,
+        "p99_ms": 224.57259826660155,
+        "min_ms": 68.6899185180664,
+        "max_ms": 229.64633178710938
+      },
+      "throughput_images_per_s": 7.52894245284134,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap2_top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 85.40145842234294,
+        "p50_ms": 88.80025482177734,
+        "p90_ms": 95.60412368774413,
+        "p99_ms": 96.7293857574463,
+        "min_ms": 52.56806564331055,
+        "max_ms": 96.89190673828125
+      },
+      "throughput_images_per_s": 11.709401905698341,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480
+    },
+    "late_top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 36.218156242370604,
+        "p50_ms": 34.32540702819824,
+        "p90_ms": 53.41911163330078,
+        "p99_ms": 56.829365882873525,
+        "min_ms": 25.197568893432617,
+        "max_ms": 58.870880126953125
+      },
+      "throughput_images_per_s": 27.61046126445631,
+      "peak_allocated_bytes": 84710912,
+      "peak_reserved_bytes": 102760448
+    }
+  },
+  "completed_timestamp_utc": "2026-09-03T07:23:23.164605+00:00"
+}

@@ -1,0 +1,68 @@
+{
+  "schema": "a1-p2-e2e-candidate-budget-r5/v1",
+  "status": "prepared",
+  "locked_sha": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "data": {
+    "yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+    "yaml_sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+    "train_images": 5000,
+    "val_images": 512,
+    "val_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/val2017.txt",
+    "val_list_sha256": "634d62f74fe1342c8430f83a2424b07a3d93a71db80e4988d49344c7ba8de324"
+  },
+  "run_root": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5",
+  "factor": "one_to_one_candidate_budget",
+  "control": "official one-to-one tal_topk=7, tal_topk2=1",
+  "treatment": "one-to-one tal_topk=10, tal_topk2=1; only candidate budget changes",
+  "budget": "5000 train / 512 val, batch 4, 5 epochs, seed 260829, GPU1, SGD lr0=1e-4, amp=False",
+  "initializers": {
+    "b": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/initializers/seed260829/b_residual_factor_init.pt",
+      "sha256": "7c95c92c60c3059d8b7e55052ac7fb880d18f707acffb85f2d1c82b5e8be626d"
+    },
+    "d": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/initializers/seed260829/d_residual_factor_init.pt",
+      "sha256": "5789e45f04fe13d9e17f69198bf421f690a09f641dc9207f62c5148f65cd67b2"
+    }
+  },
+  "runs": {
+    "b_control": {
+      "cell": "b",
+      "topk": 7,
+      "initializer": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/initializers/seed260829/b_residual_factor_init.pt"
+    },
+    "b_candidate10": {
+      "cell": "b",
+      "topk": 10,
+      "initializer": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/initializers/seed260829/b_residual_factor_init.pt"
+    },
+    "d_control": {
+      "cell": "d",
+      "topk": 7,
+      "initializer": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/initializers/seed260829/d_residual_factor_init.pt"
+    },
+    "d_candidate10": {
+      "cell": "d",
+      "topk": 10,
+      "initializer": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/initializers/seed260829/d_residual_factor_init.pt"
+    }
+  },
+  "requests": {
+    "b_control": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_e2e_candidate_r5/requests/b_control.json",
+      "sha256": "edc404dbff8bc621fd82e4eeae1d2b128df7682582424eed3e6bd965d597be3a"
+    },
+    "b_candidate10": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_e2e_candidate_r5/requests/b_candidate10.json",
+      "sha256": "262d07ebee250f32215ffbc8fdfad3a0a04f3ade9842a739b4e6b72ed47adad7"
+    },
+    "d_control": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_e2e_candidate_r5/requests/d_control.json",
+      "sha256": "1bf124997ad314103d493c08ec2c1e425645020c5b3d2ad0154523db85e75f7e"
+    },
+    "d_candidate10": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_e2e_candidate_r5/requests/d_candidate10.json",
+      "sha256": "8ffe91396dbcb7f064a07df0aabb085c41132f6904e5794316185e6df1be709e"
+    }
+  }
+}

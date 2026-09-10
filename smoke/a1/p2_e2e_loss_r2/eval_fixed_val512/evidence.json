@@ -1,0 +1,94 @@
+{
+  "schema": "a1-p2-e2e-loss-r2-eval/v1",
+  "status": "completed",
+  "created_at": "2026-09-03T11:19:24.865962+00:00",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "device": "cuda:1",
+  "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+  "data_yaml_sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+  "val_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/val2017.txt",
+  "val_list_sha256": "634d62f74fe1342c8430f83a2424b07a3d93a71db80e4988d49344c7ba8de324",
+  "images": 512,
+  "imgsz": 640,
+  "batch": 1,
+  "checkpoint_kind": "last",
+  "runs": {
+    "b_gain1p0_seed260829_5ep": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/b_gain1p0_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "06f115c474327fdebf14fbc8fe11ad6296cbc8b2cbe6d8d0ba2410d0e675e02d",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6321693551738168,
+        "metrics/recall(B)": 0.5332076800881752,
+        "metrics/mAP50(B)": 0.5757263308082331,
+        "metrics/mAP50-95(B)": 0.4265361430616164,
+        "fitness": 0.4265361430616164
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/eval_fixed_val512/b_gain1p0_seed260829_5ep/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/eval_fixed_val512/b_gain1p0_seed260829_5ep/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "run_name": "b_gain1p0_seed260829_5ep"
+    },
+    "b_gain1p2_seed260829_5ep": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/b_gain1p2_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "61051a5f7b618ecc341ae958d106a3c2e96a1fe9e68d4414d7018a4e34ff6509",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6321693551738168,
+        "metrics/recall(B)": 0.5332076800881752,
+        "metrics/mAP50(B)": 0.5757263308082331,
+        "metrics/mAP50-95(B)": 0.4265361430616164,
+        "fitness": 0.4265361430616164
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/eval_fixed_val512/b_gain1p2_seed260829_5ep/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/eval_fixed_val512/b_gain1p2_seed260829_5ep/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "run_name": "b_gain1p2_seed260829_5ep"
+    },
+    "d_gain1p0_seed260829_5ep": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/d_gain1p0_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "13ccdf802fc11f4748b23dbac6ef146dbf2ec1c671a1f43d72f6d5a0736811ed",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6410059500046704,
+        "metrics/recall(B)": 0.531202041639989,
+        "metrics/mAP50(B)": 0.5755191985204794,
+        "metrics/mAP50-95(B)": 0.4259466341521342,
+        "fitness": 0.4259466341521342
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/eval_fixed_val512/d_gain1p0_seed260829_5ep/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/eval_fixed_val512/d_gain1p0_seed260829_5ep/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "run_name": "d_gain1p0_seed260829_5ep"
+    },
+    "d_gain1p2_seed260829_5ep": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/d_gain1p2_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "ef69fb8058d405dcaf3aa94a19dc1bbf16ed4fdf07e6d44cc11ebcd237c9f823",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6410059500046704,
+        "metrics/recall(B)": 0.531202041639989,
+        "metrics/mAP50(B)": 0.5755191985204794,
+        "metrics/mAP50-95(B)": 0.4259466341521342,
+        "fitness": 0.4259466341521342
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/eval_fixed_val512/d_gain1p2_seed260829_5ep/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/p2_e2e_loss_r2/eval_fixed_val512/d_gain1p2_seed260829_5ep/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "run_name": "d_gain1p2_seed260829_5ep"
+    }
+  },
+  "git": {
+    "commit": "f1ac1f5c012615cf03c66d9dafa593215bf63759",
+    "diff_stat": "smoke/a1/A1_P0_P1_PROGRESS_REPORT.md  | 1052 ++++++++++++++++++---------------\n smoke/a1/A1_P2_PLAN.md                |  458 +++++++-------\n ultralytics/nn/modules/moe/modules.py |   69 ++-\n ultralytics/utils/loss.py             |   14 +-\n 4 files changed, 890 insertions(+), 703 deletions(-)"
+  },
+  "completed_at": "2026-09-03T11:20:02.644633+00:00"
+}

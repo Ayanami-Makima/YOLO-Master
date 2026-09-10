@@ -1,0 +1,111 @@
+{
+  "protocol_sha256": "83afec2749a8fa5c8c57d0113ff48f90de9f27fc885935a6c8580efafa0dcf72",
+  "dataset_manifest_sha256": "f2a2adb80b6f5d20cb02b600b97158ed3dec032a4b3942ff6c3060f5293fa0ac",
+  "audit_sha256": "dc19baf8c64331ddcd52a16321242eece72babfe02e9b3ce6a29ba85b29efa0b",
+  "results": [
+    {
+      "cell": "c",
+      "training_manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_preflight/training_manifest.json",
+      "training_manifest_sha256": "75e59b26b308f62993f9516a1e90d6b6807b1590ce8dbf453dea77195e60fde5",
+      "request_sha256": "7b5b6731da7348faed20a5d9c8151a1808e035d68e39e05f9fba48e20b359f6d",
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_preflight",
+      "epochs": 1,
+      "last_epoch_metrics": {
+        "epoch": "1",
+        "time": "11.6827",
+        "train/box_loss": "3.61633",
+        "train/cls_loss": "6.69095",
+        "train/dfl_loss": "0.05178",
+        "train/mixture_aux_loss": "2.62234",
+        "metrics/precision(B)": "0.00322",
+        "metrics/recall(B)": "0.01178",
+        "metrics/mAP50(B)": "0.0037",
+        "metrics/mAP50-95(B)": "0.001",
+        "val/box_loss": "3.75187",
+        "val/cls_loss": "8.45233",
+        "val/dfl_loss": "0.08005",
+        "val/mixture_aux_loss": "0",
+        "lr/pg0": "0.00063",
+        "lr/pg1": "0.00063",
+        "lr/pg2": "0.00063",
+        "lr/pg3": "0.000315",
+        "lr/pg4": "0.00126"
+      },
+      "checkpoints": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_preflight/weights/best.pt",
+          "sha256": "180b3859cc4bd5cb4db232498eeaa2ce1711e660f51d4b34ae932526693902fa",
+          "bytes": 10486109
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_preflight/weights/last.pt",
+          "sha256": "1d003f8537b7a509c046ef31a64fcae26e1f60cda2cf55443adb129775d0e64b",
+          "bytes": 10486109
+        }
+      },
+      "logs": [
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_preflight/cli-k1r3qahe/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_preflight/cli-k1r3qahe/stdout.log",
+          "sha256": "30811cf3c75ea2b62b85bb8195aa9a94ecc3b58bd3630e99a9f6ecb45d715782",
+          "bytes": 33055
+        }
+      ]
+    },
+    {
+      "cell": "a",
+      "training_manifest": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_preflight/training_manifest.json",
+      "training_manifest_sha256": "55b693e70a9e17094e0f7bc725996cad8748bfbbc6862b47a82f18dfda472cda",
+      "request_sha256": "3ff9940a01b4509ec3ac39452e698f24fa536d21e1092bbc0aa16b0ad8ede5c7",
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_preflight",
+      "epochs": 1,
+      "last_epoch_metrics": {
+        "epoch": "1",
+        "time": "8.91453",
+        "train/box_loss": "3.66906",
+        "train/cls_loss": "6.94213",
+        "train/dfl_loss": "0.05332",
+        "metrics/precision(B)": "0.00023",
+        "metrics/recall(B)": "0.00778",
+        "metrics/mAP50(B)": "0.00014",
+        "metrics/mAP50-95(B)": "3e-05",
+        "val/box_loss": "3.93502",
+        "val/cls_loss": "7.60772",
+        "val/dfl_loss": "0.08347",
+        "lr/pg0": "0.00063",
+        "lr/pg1": "0.00063",
+        "lr/pg2": "0.00063",
+        "lr/pg3": "0.000315",
+        "lr/pg4": "0.00126"
+      },
+      "checkpoints": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_preflight/weights/best.pt",
+          "sha256": "e1d3b70bf9a3e3d6208e2f82804aa7abce41bcc5dbd538e51e166eb30b6bc5f5",
+          "bytes": 5431545
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_preflight/weights/last.pt",
+          "sha256": "3bb92c1f48d12aa17d4c95e577bdd4bab40275b87c77cbeb2220330a7804bd95",
+          "bytes": 5431545
+        }
+      },
+      "logs": [
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_preflight/cli-mw7tenyu/stderr.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_preflight/cli-mw7tenyu/stdout.log",
+          "sha256": "3ea07dccd6819bdf192bddd5a7cca073e9023d13fa488917d71b4bb678da5460",
+          "bytes": 31575
+        }
+      ]
+    }
+  ]
+}

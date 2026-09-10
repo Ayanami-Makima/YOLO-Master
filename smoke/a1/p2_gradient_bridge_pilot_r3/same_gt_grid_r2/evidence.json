@@ -1,0 +1,157 @@
+{
+  "schema": "p2-same-gt-grid-audit/v2",
+  "status": "completed",
+  "device": 1,
+  "batch": 1,
+  "imgsz": 640,
+  "precision": "FP32",
+  "cells": {
+    "d_alpha0p0_seed260829": {
+      "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+      "passes": {
+        "rect0": {
+          "metrics": {
+            "metrics/precision(B)": 0.6162793417095465,
+            "metrics/recall(B)": 0.5384527249048585,
+            "metrics/mAP50(B)": 0.5728302320639027,
+            "metrics/mAP50-95(B)": 0.4243096482648621,
+            "fitness": 0.4243096482648621
+          }
+        },
+        "rect1": {
+          "metrics": {
+            "metrics/precision(B)": 0.5856184298310201,
+            "metrics/recall(B)": 0.540863982078019,
+            "metrics/mAP50(B)": 0.5749171614763725,
+            "metrics/mAP50-95(B)": 0.42386755967524103,
+            "fitness": 0.42386755967524103
+          }
+        }
+      },
+      "checkpoint_sha256_after": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+      "summary_rect_minus_square": {
+        "images": 512,
+        "gt_total": 3536,
+        "gt_identity_max_error_px": 0.0001220703125,
+        "match_conf": 0.25,
+        "match_iou": 0.5,
+        "counts": {
+          "both": 1708,
+          "square_only": 105,
+          "rect_only": 86,
+          "neither": 1637
+        },
+        "common_gt_mean_delta": {
+          "iou": -0.0007139857186645758,
+          "confidence": 0.0022612357341991935,
+          "center_error_norm": 7.540070085477671e-05,
+          "width_log_abs": -0.00043430764587283534,
+          "height_log_abs": 0.0005142999119384119
+        },
+        "common_gt_denominator": 1708,
+        "grid_coordinate_checks": {
+          "square": {
+            "max_anchor_error": 0.0,
+            "max_stride_error": 0.0,
+            "max_decode_error": 0.0,
+            "shape_transitions": 0,
+            "max_inverse_error_px": 4.502593492361484e-05,
+            "mean_valid_anchor_counts": [
+              4614.21875,
+              1140.0,
+              292.265625
+            ]
+          },
+          "rect": {
+            "max_anchor_error": 0.0,
+            "max_stride_error": 0.0,
+            "max_decode_error": 0.0,
+            "shape_transitions": 19,
+            "max_inverse_error_px": 4.502593492361484e-05,
+            "mean_valid_anchor_counts": [
+              4614.21875,
+              1140.0,
+              292.6953125
+            ]
+          }
+        },
+        "limitation": "Common-GT localization is conditional on matching in both passes; it is not a population causal effect. Affine check validates scale_boxes contract, not independent raw annotation provenance."
+      }
+    },
+    "d_alpha0p1_seed260829": {
+      "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+      "passes": {
+        "rect0": {
+          "metrics": {
+            "metrics/precision(B)": 0.6004809400232605,
+            "metrics/recall(B)": 0.5481008735603037,
+            "metrics/mAP50(B)": 0.5758332740098919,
+            "metrics/mAP50-95(B)": 0.4256950176080504,
+            "fitness": 0.4256950176080504
+          }
+        },
+        "rect1": {
+          "metrics": {
+            "metrics/precision(B)": 0.588449292378014,
+            "metrics/recall(B)": 0.5352189335008838,
+            "metrics/mAP50(B)": 0.5718320354769127,
+            "metrics/mAP50-95(B)": 0.42202441960778797,
+            "fitness": 0.42202441960778797
+          }
+        }
+      },
+      "checkpoint_sha256_after": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+      "summary_rect_minus_square": {
+        "images": 512,
+        "gt_total": 3536,
+        "gt_identity_max_error_px": 0.0001220703125,
+        "match_conf": 0.25,
+        "match_iou": 0.5,
+        "counts": {
+          "both": 1696,
+          "square_only": 118,
+          "rect_only": 87,
+          "neither": 1635
+        },
+        "common_gt_mean_delta": {
+          "iou": -0.0011233629061366027,
+          "confidence": 0.0010544526267726466,
+          "center_error_norm": 0.00017470880450168357,
+          "width_log_abs": -7.030338469001367e-05,
+          "height_log_abs": 0.0011687352477859451
+        },
+        "common_gt_denominator": 1696,
+        "grid_coordinate_checks": {
+          "square": {
+            "max_anchor_error": 0.0,
+            "max_stride_error": 0.0,
+            "max_decode_error": 0.0,
+            "shape_transitions": 0,
+            "max_inverse_error_px": 4.502593492361484e-05,
+            "mean_valid_anchor_counts": [
+              4614.21875,
+              1140.0,
+              292.265625
+            ]
+          },
+          "rect": {
+            "max_anchor_error": 0.0,
+            "max_stride_error": 0.0,
+            "max_decode_error": 0.0,
+            "shape_transitions": 19,
+            "max_inverse_error_px": 4.502593492361484e-05,
+            "mean_valid_anchor_counts": [
+              4614.21875,
+              1140.0,
+              292.6953125
+            ]
+          }
+        },
+        "limitation": "Common-GT localization is conditional on matching in both passes; it is not a population causal effect. Affine check validates scale_boxes contract, not independent raw annotation provenance."
+      }
+    }
+  },
+  "script_sha256": "f33e85bde7f9a9f9fcf115a3715ea0ead46ddff08c1d387a76db539f4a514ec1",
+  "note": "Read-only inverse-letterbox and multi-scale head diagnostic; no training or checkpoint mutation.",
+  "updated_at": "2026-09-08T01:47:58.910090+00:00"
+}

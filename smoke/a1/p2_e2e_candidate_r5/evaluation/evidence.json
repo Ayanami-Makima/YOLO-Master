@@ -1,0 +1,188 @@
+{
+  "schema": "a1-p2-e2e-candidate-budget-r5-eval/v1",
+  "status": "completed",
+  "created_at": "2026-09-05T04:25:10.362108+00:00",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "protocol": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_e2e_candidate_r5/protocol.json",
+  "protocol_sha256": "5aec78b14ba1608d7d7aa300b9b4320979edfe1203be97dbce3f4e56858cfc65",
+  "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+  "data_yaml_sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+  "val_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/val2017.txt",
+  "val_list_sha256": "634d62f74fe1342c8430f83a2424b07a3d93a71db80e4988d49344c7ba8de324",
+  "images": 512,
+  "imgsz": 640,
+  "batch": 1,
+  "device": "cuda:1",
+  "factor": "one_to_one_tal_topk",
+  "runs": {
+    "b_control": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/b_control_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "c4fb998fc21d33611e15fd9aa5e4426c258c3a649c84ca82b056e73692ad18ee",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6321693551738168,
+        "metrics/recall(B)": 0.5332076800881752,
+        "metrics/mAP50(B)": 0.5757263308082331,
+        "metrics/mAP50-95(B)": 0.4265361430616164,
+        "fitness": 0.4265361430616164
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/eval_fixed_val512/b_control/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/eval_fixed_val512/b_control/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "assigner_conflict_metrics": [
+        "overlap"
+      ],
+      "run_name": "b_control",
+      "cell": "b",
+      "topk": 7,
+      "topk2": 1,
+      "assignment_summary": {
+        "images": 512,
+        "total_gt": 3536,
+        "candidate_positive_per_image": 45.60629921259842,
+        "post_conflict_positive_per_image": 44.26377952755905,
+        "final_positive_per_image": 6.93503937007874,
+        "candidate_gt_coverage": 0.9983031674208145,
+        "final_gt_coverage": 0.9963235294117647,
+        "conflict_anchor_per_image": 1.2598425196850394,
+        "matched_iou_mean": 0.8378264491836012,
+        "cls_loss_mean": 1.3101011652834131,
+        "box_loss_mean": 1.0644928065376007,
+        "dfl_loss_mean": 0.01051250273462756,
+        "prediction_per_image": 147.59765625,
+        "fp_iou50_per_image": 141.6953125,
+        "fn_iou50_per_image": 1.00390625
+      }
+    },
+    "b_candidate10": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/b_candidate10_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "cd317c17886a2d9a63b057e44b6a193ad7450792ed6a1680b58735267415fd72",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6321693551738168,
+        "metrics/recall(B)": 0.5332076800881752,
+        "metrics/mAP50(B)": 0.5757263308082331,
+        "metrics/mAP50-95(B)": 0.4265361430616164,
+        "fitness": 0.4265361430616164
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/eval_fixed_val512/b_candidate10/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/eval_fixed_val512/b_candidate10/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "assigner_conflict_metrics": [
+        "overlap"
+      ],
+      "run_name": "b_candidate10",
+      "cell": "b",
+      "topk": 10,
+      "topk2": 1,
+      "assignment_summary": {
+        "images": 512,
+        "total_gt": 3536,
+        "candidate_positive_per_image": 63.06692913385827,
+        "post_conflict_positive_per_image": 60.77952755905512,
+        "final_positive_per_image": 6.933070866141732,
+        "candidate_gt_coverage": 0.9983031674208145,
+        "final_gt_coverage": 0.9960407239819005,
+        "conflict_anchor_per_image": 2.161417322834646,
+        "matched_iou_mean": 0.8379099436177206,
+        "cls_loss_mean": 1.310312469569908,
+        "box_loss_mean": 1.0640940688099363,
+        "dfl_loss_mean": 0.010509225385931131,
+        "prediction_per_image": 147.59765625,
+        "fp_iou50_per_image": 141.6953125,
+        "fn_iou50_per_image": 1.00390625
+      }
+    },
+    "d_control": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/d_control_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "6a7c235fd2f56f6752b918faec37c10a5b98a506a4e1f08896dc991f8255b194",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6410059500046704,
+        "metrics/recall(B)": 0.531202041639989,
+        "metrics/mAP50(B)": 0.5755191985204794,
+        "metrics/mAP50-95(B)": 0.4259466341521342,
+        "fitness": 0.4259466341521342
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/eval_fixed_val512/d_control/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/eval_fixed_val512/d_control/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "assigner_conflict_metrics": [
+        "overlap"
+      ],
+      "run_name": "d_control",
+      "cell": "d",
+      "topk": 7,
+      "topk2": 1,
+      "assignment_summary": {
+        "images": 512,
+        "total_gt": 3536,
+        "candidate_positive_per_image": 45.60629921259842,
+        "post_conflict_positive_per_image": 44.224409448818896,
+        "final_positive_per_image": 6.931102362204724,
+        "candidate_gt_coverage": 0.9983031674208145,
+        "final_gt_coverage": 0.9957579185520362,
+        "conflict_anchor_per_image": 1.3011811023622046,
+        "matched_iou_mean": 0.8379974327170792,
+        "cls_loss_mean": 1.309531104117923,
+        "box_loss_mean": 1.0628979342873208,
+        "dfl_loss_mean": 0.010481294418013931,
+        "prediction_per_image": 146.849609375,
+        "fp_iou50_per_image": 140.947265625,
+        "fn_iou50_per_image": 1.00390625
+      }
+    },
+    "d_candidate10": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/d_candidate10_seed260829_5ep/weights/last.pt",
+      "checkpoint_sha256": "30659223c37d3cbaeedce75c7ca1ba3d45b3f2cd2fb8cb4fb477364363e9ac07",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6410059500046704,
+        "metrics/recall(B)": 0.531202041639989,
+        "metrics/mAP50(B)": 0.5755191985204794,
+        "metrics/mAP50-95(B)": 0.4259466341521342,
+        "fitness": 0.4259466341521342
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/eval_fixed_val512/d_candidate10/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/eval_fixed_val512/d_candidate10/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "assigner_conflict_metrics": [
+        "overlap"
+      ],
+      "run_name": "d_candidate10",
+      "cell": "d",
+      "topk": 10,
+      "topk2": 1,
+      "assignment_summary": {
+        "images": 512,
+        "total_gt": 3536,
+        "candidate_positive_per_image": 63.06496062992126,
+        "post_conflict_positive_per_image": 60.746062992125985,
+        "final_positive_per_image": 6.929133858267717,
+        "candidate_gt_coverage": 0.9983031674208145,
+        "final_gt_coverage": 0.995475113122172,
+        "conflict_anchor_per_image": 2.190944881889764,
+        "matched_iou_mean": 0.8379519330296322,
+        "cls_loss_mean": 1.3092182388718356,
+        "box_loss_mean": 1.06337485142285,
+        "dfl_loss_mean": 0.01048994485631738,
+        "prediction_per_image": 146.849609375,
+        "fp_iou50_per_image": 140.947265625,
+        "fn_iou50_per_image": 1.00390625
+      }
+    }
+  },
+  "git": {
+    "commit": "f1ac1f5c012615cf03c66d9dafa593215bf63759",
+    "diff_stat": "smoke/a1/A1_P0_P1_PROGRESS_REPORT.md         | 1106 ++++----\n smoke/a1/A1_P2_PLAN.md                       |  513 ++--\n ultralytics/nn/modules/moe/factor_adapter.py |  259 +-\n ultralytics/nn/modules/moe/modules.py        |   69 +-\n ultralytics/utils/loss.py                    | 3531 +++++++++++++-------------\n ultralytics/utils/tal.py                     |  970 +++----\n 6 files changed, 3416 insertions(+), 3032 deletions(-)"
+  },
+  "completed_at": "2026-09-05T04:25:45.574992+00:00"
+}
