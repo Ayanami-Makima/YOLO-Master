@@ -1,0 +1,77 @@
+{
+  "status": "completed",
+  "device": 1,
+  "batch": 1,
+  "imgsz": 640,
+  "precision": "FP32",
+  "normalized_scale": 2,
+  "cells": {
+    "d_alpha0p0_seed260829": {
+      "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+      "passes": {
+        "square_reference": {
+          "metrics": {
+            "metrics/precision(B)": 0.6162793417095465,
+            "metrics/recall(B)": 0.5384527249048585,
+            "metrics/mAP50(B)": 0.5728302320639027,
+            "metrics/mAP50-95(B)": 0.4243096482648621,
+            "fitness": 0.4243096482648621
+          }
+        },
+        "rect_raw": {
+          "metrics": {
+            "metrics/precision(B)": 0.5856184298310201,
+            "metrics/recall(B)": 0.540863982078019,
+            "metrics/mAP50(B)": 0.5749171614763725,
+            "metrics/mAP50-95(B)": 0.42386755967524103,
+            "fitness": 0.42386755967524103
+          }
+        },
+        "rect_norm_lowres": {
+          "metrics": {
+            "metrics/precision(B)": 0.5762375373598322,
+            "metrics/recall(B)": 0.541196819537428,
+            "metrics/mAP50(B)": 0.569966852710184,
+            "metrics/mAP50-95(B)": 0.4028158113966579,
+            "fitness": 0.4028158113966579
+          }
+        }
+      }
+    },
+    "d_alpha0p1_seed260829": {
+      "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+      "passes": {
+        "square_reference": {
+          "metrics": {
+            "metrics/precision(B)": 0.6004809400232605,
+            "metrics/recall(B)": 0.5481008735603037,
+            "metrics/mAP50(B)": 0.5758332740098919,
+            "metrics/mAP50-95(B)": 0.4256950176080504,
+            "fitness": 0.4256950176080504
+          }
+        },
+        "rect_raw": {
+          "metrics": {
+            "metrics/precision(B)": 0.588449292378014,
+            "metrics/recall(B)": 0.5352189335008838,
+            "metrics/mAP50(B)": 0.5718320354769127,
+            "metrics/mAP50-95(B)": 0.42202441960778797,
+            "fitness": 0.42202441960778797
+          }
+        },
+        "rect_norm_lowres": {
+          "metrics": {
+            "metrics/precision(B)": 0.5778332526086103,
+            "metrics/recall(B)": 0.5394216246760852,
+            "metrics/mAP50(B)": 0.5701952279535984,
+            "metrics/mAP50-95(B)": 0.403221234175575,
+            "fitness": 0.403221234175575
+          }
+        }
+      }
+    }
+  },
+  "script_sha256": "b8e18d7065f1ebce384d1efc84e3daff918cc2b61d5ec70f9719a0ef3c7ea8f8",
+  "note": "Read-only lowest-resolution head feature scale normalization counterfactual; no checkpoint mutation.",
+  "updated_at": "2026-09-07T12:06:31.359730+00:00"
+}

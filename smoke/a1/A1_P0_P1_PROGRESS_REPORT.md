@@ -1,6 +1,22 @@
 # A1 P0 / P1 实验进展报告
 
-更新日期：2026-09-03
+> **P3-r2 pilot 收尾（2026-09-08）**：均衡辅助项修复了 r1 路由塌缩，但 5 epoch 同预算 pilot 未带来精度收益。B0 Dense best/last mAP50-95=0.42339/0.41681；B1 balanced 2-expert Top-1=0.42137/0.41364（−0.20/−0.32 pp），路由门禁仍通过且冻结参数最大变化 0。B1 首轮约 318 s，B0 约 79 s，MoE 延迟明显更高。详见 [P3-r2 pilot报告](P3_O2O_HEAD_MOE_R2_PILOT_REPORT.md)。
+
+> **P3-r2 修正版 preflight（2026-09-08）**：针对 r1 的 one-to-one head 路由塌缩，固定加入 `balance_loss_coeff=0.05` 的均衡辅助项，完成独立 1 epoch/5000 图像复评。三尺度最大选择比例 0.604/0.660/0.559，归一化熵 0.969/0.925/0.990，无死专家；mAP50-95=0.42137（B0=0.42339，−0.20 pp），冻结参数最大变化 0。r2 preflight 门禁通过，允许另起 5 epoch pilot，但尚未证明精度收益。详见 [P3-r2报告](P3_O2O_HEAD_MOE_R2_PREFLIGHT_REPORT.md)。
+
+> **P3 初步验证（2026-09-08）**：按“只在 one-to-one head 加入 2-expert Top-1 轻量 MoE”的方向完成 B0/B1 1 epoch preflight。B1 的初始化、reload、参数更新和冻结门禁通过，但路由在三个尺度出现 100%/100%/94.5% 单 expert 塌缩，mAP 比 B0 低 0.197 pp，故未启动 pilot；详见 [P3 preflight 门禁报告](P3_O2O_HEAD_MOE_PREFLIGHT_REPORT.md)。
+
+> **P2 收尾（2026-09-08）**：P2“seg pilot + 机制负结果”路线已完成实验收尾。新增 val5000 配对复评和500次 bootstrap：D alpha=0/0.1 的矩形−方形 mAP 中位数分别为 −0.1389/−0.1616 pp，95% CI 均跨0；AP90区间均完全为负。详见 [P2阶段交付报告](A1_P2_STAGE_DELIVERY_REPORT.md) 与 [PR/高IoU报告](p2_gradient_bridge_pilot_r3/PR_RANKING_REPORT.md)。
+
+> P2后续更新（2026-09-08）：完整PR与高IoU诊断已完成，四组标准mAP精确复现；高IoU差距较明显但根因未闭环，bridge收益仍随输入形状翻转。详见[PR与排序报告](p2_gradient_bridge_pilot_r3/PR_RANKING_REPORT.md)。不改变P1正式结论。
+
+更新日期：2026-09-08
+
+> 最新：[单侧检出诊断](p2_gradient_bridge_pilot_r3/SINGLE_SIDE_ERROR_REPORT.md)已完成。D alpha=0.1仅方形检出的118个GT中114个在矩形仍有较好定位的正确类别框，但未达conf0.25。固定阈值检出变化主要表现为分数越界，不能外推为全部mAP差距根因。未启动训练。
+
+> 2026-09-08新复评已完成：图像512/512、GT3536/3536正确配对；实际anchor/stride/decode误差0。统计已按同GT并将漏检分开，详见 [修复后诊断报告](p2_gradient_bridge_pilot_r3/SAME_GT_GRID_AUDIT_REPORT.md)。此前审计缺陷指旧r1产物，新证据为same_gt_grid_r2；P2机制根因仍未确定。
+
+> P2最新交付状态见 [P2阶段交付报告](A1_P2_STAGE_DELIVERY_REPORT.md)。6.18—6.21保留探索过程，其中“定位到空间布局/解码”“assigner已排除”等因果解释不能作为最终结论；以6.22—6.24审计更正为准。P2尚未最终收尾，本轮未新增训练。
 
 ## 1. 当前总体进展
 
@@ -659,33 +675,161 @@ mAP50-95 比 B 低 `0.014775`，p50 forward 约慢 `92%`、吞吐约低 `48%`。
 开销，并保持 A/B 对照。原始证据见 `smoke/a1/p2_seg_r1/`；服务器完整日志、checkpoint 和
 ONNX 保存在 `/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/`。
 
-### 6.13 P2-E r5：one-to-one 候选预算单因素 pilot（已完成）
+### 6.13 P2-E r5：训练消融无效，结论已撤回（2026-09-05 审计更正）
 
-为验证 one-to-one 精度差距是否来自候选生成预算，在固定 r28 B/D 原始 initializer、seed=260829、
-5 epoch、5000/512 pilot、GPU1、batch=4、640×640、SGD `lr0=1e-4`、AMP off、冻结策略和
-`topk2=1` 全部不变的条件下，仅将 TaskAlignedAssigner 的 one-to-one `tal_topk` 从官方默认 7
-改为 10。四组均独立重启：B/D 各有 `topk=7` 对照和 `topk=10` 处理；训练、评测和逐图像审计均正常
-完成，无 Traceback、OOM 或 NaN。
+原 r5 的四组训练结束、checkpoint 和固定 val512 指标仍作为原始记录保留，但不能据此判定
+`tal_topk=10` 无效。重放训练脚本的导入环境发现，它加载的是
+`/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/ultralytics/utils/loss.py`，
+该版本不识别 `A1_E2E_O2O_TAL_TOPK`，设置 10 时实际 assigner 仍为 7。
+B 对照/处理的全部 927 个状态张量、D 的全部 1636 个状态张量分别完全相同。
 
-固定 val512（512 图像、3536 GT）结果如下。评测使用各组 `last.pt`，batch=1、GPU1，并通过新增
-assigner 中间量记录候选 GT/正样本和冲突后匹配：
+原评估脚本加载了正确的新 checkout，因此候选统计确实因 topk 改变；
+但这只是对同一组权重的事后 assigner 审计。assigner 不参与推理，故相同 mAP 并不能证明
+“正确训练的 topk=10 没有收益”。原“拒绝 topk=10、无效缓解已完成”的结论撤回，
+r5 标记为 `invalid_training_intervention`；原始文件不删除、不覆盖。
 
-| 格 | tal_topk | mAP50-95 | precision | recall | 候选正样本/图 | 最终正样本/图 | 候选 GT 覆盖 | 最终 GT 覆盖 | 冲突 anchor/图 | matched IoU |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| B control | 7 | 0.426536 | 0.632169 | 0.533208 | 45.6063 | 6.9350 | 0.998303 | 0.996324 | 1.2598 | 0.837826 |
-| B candidate10 | 10 | 0.426536 | 0.632169 | 0.533208 | 63.0669 | 6.9331 | 0.998303 | 0.996041 | 2.1614 | 0.837910 |
-| D control | 7 | 0.425947 | 0.641006 | 0.531202 | 45.6063 | 6.9311 | 0.998303 | 0.995758 | 1.3012 | 0.837997 |
-| D candidate10 | 10 | 0.425947 | 0.641006 | 0.531202 | 63.0650 | 6.9291 | 0.998303 | 0.995475 | 2.1909 | 0.837951 |
+修复已在训练入口加入仓库路径固定及首 batch 的实际 criterion 参数校验。
+补充 CPU 诊断在 r28 B/D seed260829 的相同 8 张训练图上验证：
+实际 topk=7/10 的损失和 head 梯度相同（8/8），这里只说明该小样本未受到候选预算改变的影响。
+分支梯度审计还确认：native one-to-one 检测损失到 factor/router 的梯度为零，
+one-to-many 检测损失可以传到 factor/router。这与检测头 `detach()` 一致，
+不能写成“MoE 总梯度为零”或“路由必然坍塌”；MoE 辅助损失未包含在该分支实验中。
 
-`tal_topk=10` 使候选正样本增加约 `38.3%`，但候选 GT 覆盖已从 `0.998303` 接近饱和，最终 one-to-one
-匹配正样本、recall、mAP、FP/FN 和 loss 均未改善；冲突 anchor 反而增加约 `67%–72%`，最终 GT 覆盖
-略降。B/D 的处理组与各自对照在固定评测中数值完全一致（mAP 差为 `0.0`），因此本因素不能解释
-End-to-End 精度差距，也不值得扩大到三 seed 或长训。r5 结论：保留官方 `tal_topk=7, topk2=1`，
-后续应转向候选质量/置信度校准或 one-to-one loss 权重等因素；不再盲目扩大候选数。完整证据见
-`smoke/a1/p2_e2e_candidate_r5/`，服务器运行目录为
-`/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/`。
+当前研究转入固定输入、前向等价的梯度通路诊断，详见
+`P2_REQUIREMENTS_AND_RESEARCH_REVIEW_20260905.md`。
+审计证据：`p2_r5_validity_20260905/evidence.json`。
+
+### 6.14 P2 梯度通路诊断（三 seed 已完成）
+
+固定 r28 三个 seed 的 B/D last.pt、相同 32 张训练图（264 GT）、640、batch1、CPU、BN/base冻结，
+分别回传 one-to-many、native one-to-one，以及诊断内开放0.1倍共享梯度的 one-to-one 检测损失。
+三个 seed 的 native one-to-one 到 factor/router 梯度均为0，one-to-many 到 D router 梯度非零；
+开放共享梯度后，D router 与 one-to-many 梯度的 cosine 均值分别为0.684941/0.548093/0.706256，
+负 cosine 图数为2/32、4/32、1/32。前向误差均为0，全部模型状态不变。
+
+本轮排查支持“原生 one-to-one 检测梯度被隔离”，暂不支持普遍直接梯度冲突；这是已知 detach
+结构在本项目 MoE 上的实测，不是已经证明的掉点原因或精度收益。未测量辅助损失与检测梯度的
+相对作用，32图也非独立的192图。下一步为独立样本复核及alpha=0/0.1的单因素pilot。
+原始数据与复现说明见 `p2_gradient_bridge_r1/`，完整计划见
+`P2_REQUIREMENTS_AND_RESEARCH_REVIEW_20260905.md`。P2尚未验收完成。
+
+### 6.15 P2 梯度通路配对 pilot（2026-09-06 执行与更正）
+
+后续启动审计发现r2的8GiB allocator限额触发框架自动降batch4→2。已在首格epoch1结束前停止，
+不纳入配对结论；其他正式格未启动。此前preflight的正确训练图数是256（不是512），实际batch2，
+故恢复/冻结检查虽通过，预算门禁不完整。现用新目录r3、11GiB allocator限额和外部占用≤10GiB条件，
+新增每batch真实预算断言并禁止自动降batch；不续接r2权重。下文r2启动过程是历史记录，不是有效结果。
+
+独立图像复核完成：另取固定训练图索引128–159（32图、207 GT），三个 seed 的 D router cosine
+均值为0.532462/0.650216/0.530530，负方向图数5/32、4/32、5/32。仍是总体同向、少数反向；
+native one-to-one 到 router 梯度为0，bridge前向误差0，权重未变。这不是已证明的掉点原因。
+
+已实现仅训练时启用的可选0.1倍梯度通路，默认及推理/export保持原样。24项新增及关联测试通过；
+四格256train/128val、2epoch preflight均完成真实保存/退出/恢复，确认从epoch2继续、系数正确、
+459232个base参数冻结、每段冻结状态哈希不变、三层逐通道gain更新。
+首版r1仅因gain日志误按scalar转换中断，已保留失败记录；修复后新建r2，不沿用失败权重。
+
+2026-09-06 20:21:45（北京时间）在GPU1启动四格串行：B alpha0 → B alpha0.1 → D alpha0 → D alpha0.1。
+5000train/512val、5epochs、batch4、640、seed260829、SGD lr0=1e-4、AMP=False；各格从原始initializer
+独立开始。继承原有gain初始lr=0.01、无weight decay、不参与warmup策略；其余设置和数据顺序配对。
+最多一格，设备总显存阈值22GiB；SSH断连不影响后台序列，可识别资源中断有checkpoint时从已存epoch
+恢复，正确性错误停止。服务器重启后需重新启动序列入口，不声称逐batch无损或数值等价恢复。
+
+目前不能报告新的精度收益。主对照后续统一评估最后epoch EMA，best指标单列；还需补错误分解、
+辅助损失与检测梯度量级和真实导出复核。详见 `p2_gradient_bridge_pilot_r2/README.md`、
+`protocol.json`、`launch_gate.json`；独立样本证据见 `p2_gradient_bridge_holdout_20260906/`。
+
+### 6.16 P2 bridge pilot r3：真实batch4启动记录（历史快照）
+
+2026-09-06 20:32:17（北京时间），在GPU1从原始initializer启动B alpha0，随后串行B alpha0.1、
+D alpha0、D alpha0.1。已核对首格日志为epoch1/5、1250step/epoch、实际batch4，未出现自动减batch。
+自身进程占用约9608MiB，设备总占用约19399MiB（启动快照，低于22528MiB阈值）。
+
+四格256train/128val、batch4、64step/epoch的2epoch预检全部通过真实保存/退出/恢复；本轮正确性
+门禁明确检查实际batch、图数和步数。全部24项单测/配置回归通过；新增脚本lint/format通过。
+r1/r2只保留调试记录，不复用权重、不计入结论。当前为单seed短预算实验，不是P2最终精度结果。
+下一步等待四格完成后统一评估最后epoch EMA及错误分解。详见 `p2_gradient_bridge_pilot_r3/README.md`、
+`protocol.json`、`launch_gate.json`、`test_results.xml` 和各格运行回执。
 
 r28 的协议、数据列表、实现 SHA、initializer、正式请求、12 个 checkpoint 和 closure 证据继续封存保留；r23/r24/r25 仅作为历史审计证据。
+
+### 6.17 P2 bridge pilot r3：四格末轮统一复评完成（最新状态）
+
+2026-09-06四格训练及独立复评完成。固定GPU0/FP32/batch1/640、val512、5epoch末轮EMA last.pt，
+不是best。B alpha0/0.1 mAP50-95分别42.5601%/42.5214%；D分别42.5180%/42.5727%。
+B变化-0.0387个百分点、D+0.0547个百分点；D尚未达到内部三seed扩展线+0.1个百分点。
+conf0.25下B多漏5个目标；D少5个FP但多漏4个，分配IoU均未改善，没有一致的召回/定位收益。
+四格相同512图/3536目标，分配与loss诊断完整，评测前后checkpoint SHA一致。
+
+训练内与独立验证的小差值变号，不能混用两种口径或择优报告；D alpha0曾epoch级恢复，仍属单seed
+短预算证据，不宣称显著提升。暂停扩大训练；真实导出、辅助loss与检测梯度量级等尚非本次覆盖范围。
+完整PR、分类/定位错误、分配loss和限制见 `p2_gradient_bridge_pilot_r3/REEVALUATION_REPORT.md`，
+逐图证据见同目录 `reevaluation_r1/`。本次没有启动新的训练或推送GitHub。
+
+### 6.18 P2 padding-aware Router 受控诊断（D alpha=0.1）
+
+固定同一512图和末轮权重比较方形/原始Router、矩形/原始Router、矩形/fractional valid-region masked
+Router。mask只在诊断进程中替换Router空间均值，checkpoint与训练源码不变。mAP50-95分别为42.5695%、
+42.2024%、42.2130%；masked相对原始矩形仅回升0.0106个百分点，仍比方形低0.3565个百分点。
+Router专家集合虽发生72～182/512图的层级切换，TP仅增加2、FP减少2，不能解释主要精度差异。
+结论：padding会影响Router，但不是唯一主因；不进入masked Router训练，不扩大epoch。
+证据见 `p2_gradient_bridge_pilot_r3/masked_router_r2/evidence.json`，脚本为
+`scripts/a1/audit_p2_masked_router.py`。
+
+### 6.19 梯度桥当前提升口径记录
+
+训练内末轮D alpha=0/0.1的mAP50-95为42.323%/42.172%，变化-0.151个百分点；独立方形复评中，
+不融合为42.4310%/42.5695%（+0.1385个百分点），融合为42.5180%/42.5727%（+0.0547个百分点）。
+方形正差异很小且与训练期末轮方向相反，不能定义为稳定收益；矩形复评变化为-0.1843个百分点。
+当前记录口径为“单seed、5epoch、评测敏感的小幅方形正差异”，不启动扩大训练。
+
+### 6.20 one-to-one assignment/loss 的方形-矩形诊断
+
+固定同一512图、batch=1、FP32、未融合条件，使用原生 one-to-one assigner 对 D alpha=0/0.1 做方形与
+矩形只读对照。D alpha=0 的 mAP50-95 为42.4310%→42.3868%（-0.0442个百分点），正样本/唯一GT均为
+3524/3524，加权匹配IoU 0.78851→0.78750；D alpha=0.1 为42.5695%→42.2024%（-0.3671个百分点），
+正样本/唯一GT为3526/3526→3525/3525，加权匹配IoU 0.78857→0.78787。box/cls/dfl loss仅小幅变化，
+未出现正样本大量丢失或匹配GT重复。
+
+固定conf0.25时，矩形相对方形 D alpha=0 的 TP/FP/FN 为-19/-20/+19，D alpha=0.1 为-31/-7/+31；
+后者主要增加9个localization FP，同时减少8个duplicate FP。结论是 padding 会改变解码后的空间定位和置信度，
+但当前证据不支持把主要问题归因于 one-to-one assigner 发生崩溃，也不支持直接改 assigner/loss 或扩大epoch。
+下一步优先做 padding-aware 检测头坐标/解码和 valid-region 对照，仍保持原始权重只读验证。
+证据：`p2_gradient_bridge_pilot_r3/assignment_padding_r1/evidence.json`；脚本：
+`scripts/a1/audit_p2_assignment_padding.py`。
+
+### 6.21 下一步计划：padding-aware 检测头坐标/解码诊断
+
+当前已开始下一阶段的只读诊断设计，暂不修改模型、assigner/loss 或训练超参：
+
+1. 固定 D alpha=0/0.1 的同一末轮权重、同一512图、batch=1、FP32、未融合条件，记录检测头解码前后
+   的候选框中心、宽高、置信度及其相对 valid-region 的位置。
+2. 对方形/矩形分别计算 padding 区域候选比例、有效区域内候选比例、inverse-letterbox 后的框偏移，
+   检查问题是否集中在坐标解码/缩放而非 one-to-one 匹配。
+3. 只在诊断进程中做 valid-region 过滤/坐标校正的反事实评估；若矩形差异明显回升，再单独形成候选
+   修复并进行小规模回归。若不回升，则保持现有实现，转向检测头训练梯度和分类/定位误差分解。
+
+该计划不改变 A1/P2 当前结论，也不以一次方形小幅提升作为继续扩大训练的依据。
+
+检测头 valid-region 对照已完成（D alpha=0/0.1，四个条件，512图）。在 conf≥0.01 和 conf≥0.25 的候选中，
+四个条件均没有候选框中心落在有效内容区之外；conf≥0.001 的极低置信度候选也只有3～9个/512图落在区外。
+因此简单的“过滤padding区域候选框”不会解释矩形 mAP损失，也不值得作为训练修复。当前下一步从
+valid-region过滤转为 inverse-letterbox 后的框偏移/尺度误差和检测头多尺度输出对照。
+证据：`p2_gradient_bridge_pilot_r3/head_valid_region_r2/evidence.json`；脚本：
+`scripts/a1/audit_p2_head_valid_region.py`。
+
+### 6.22—6.24 后续诊断审计更正（2026-09-07）
+
+最新阶段交付与证据状态见 [A1 P2 阶段交付报告](A1_P2_STAGE_DELIVERY_REPORT.md)。本节替代此前6.22—6.24中的机制归因。
+
+- inverse-letterbox诊断将无匹配图像的IoU/定位误差填0，且两侧匹配对象不固定。原“平均IoU下降0.00255”不能作为同GT定位退化证据。双方都有匹配的486图中，D alpha=0.1每图平均IoU差约-0.000385；这仍不是同GT比较。
+- 三尺度检测头输入通道均值余弦约0.9975/0.9940/0.9810，只反映全局统计相似性；不能确定最低分辨率尺度是主因。
+- 最低分辨率统计归一化使D alpha=0的矩形mAP从42.3868%降至40.2816%，alpha=0.1从42.2024%降至40.3221%，分别下降2.1052/1.8803个百分点。否决这一具体干预；“破坏空间语义”未经证明。
+- anchor_grid_r1按顺序zip两种验证结果，只有1/512正确配对，逐图对比无效。总体平均有效anchor比例可保留为描述，比例增加不等于有效数量增加；脚本未核验实际解码anchor及缓存，不能据此宣布grid/stride正常或排除坐标问题。
+- 撤回“训练与矩形预处理分布不一致已确定为根因”。这仍是假设，不能直接据此启动新的训练方案。
+
+原始证据保留于 `p2_gradient_bridge_pilot_r3/{inverse_letterbox_r1,scale_norm_r2,anchor_grid_r1}/`。
+当前仅完成审计与文档更正；脚本修复、同图同GT比较及实际解码校验尚待执行。
 
 ## 8. 主要证据文件
 

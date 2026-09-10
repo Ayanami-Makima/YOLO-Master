@@ -1,0 +1,197 @@
+{
+  "status": "completed",
+  "started_at": "2026-09-07T04:49:28.062558+00:00",
+  "device": 1,
+  "batch": 1,
+  "precision": "FP32",
+  "fuse": false,
+  "cells": {
+    "d_alpha0p0_seed260829": {
+      "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+      "passes": {
+        "False": {
+          "metrics": {
+            "metrics/precision(B)": 0.6162793417095465,
+            "metrics/recall(B)": 0.5384527249048585,
+            "metrics/mAP50(B)": 0.5728302320639027,
+            "metrics/mAP50-95(B)": 0.4243096482648621,
+            "fitness": 0.4243096482648621
+          },
+          "routers": [
+            "model.4.factor.m.0.0.mlp.routing",
+            "model.4.factor.m.0.1.mlp.routing",
+            "model.6.factor.m.0.0.mlp.routing",
+            "model.6.factor.m.0.1.mlp.routing",
+            "model.8.factor.m.0.0.mlp.routing",
+            "model.8.factor.m.0.1.mlp.routing"
+          ]
+        },
+        "True": {
+          "metrics": {
+            "metrics/precision(B)": 0.5856184298310201,
+            "metrics/recall(B)": 0.540863982078019,
+            "metrics/mAP50(B)": 0.5749171614763725,
+            "metrics/mAP50-95(B)": 0.42386755967524103,
+            "fitness": 0.42386755967524103
+          },
+          "routers": [
+            "model.4.factor.m.0.0.mlp.routing",
+            "model.4.factor.m.0.1.mlp.routing",
+            "model.6.factor.m.0.0.mlp.routing",
+            "model.6.factor.m.0.1.mlp.routing",
+            "model.8.factor.m.0.0.mlp.routing",
+            "model.8.factor.m.0.1.mlp.routing"
+          ]
+        }
+      },
+      "summary": {
+        "same_content_images": 512,
+        "layers": {
+          "model.4.factor.m.0.0.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 200,
+            "weight_l1_mean": 0.4342859185417183,
+            "logit_l1_mean": 0.07731783358030953
+          },
+          "model.4.factor.m.0.1.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 164,
+            "weight_l1_mean": 0.3291434264392592,
+            "logit_l1_mean": 0.05222084917477332
+          },
+          "model.6.factor.m.0.0.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 329,
+            "weight_l1_mean": 0.7387402049498633,
+            "logit_l1_mean": 0.11886810629221145
+          },
+          "model.6.factor.m.0.1.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 309,
+            "weight_l1_mean": 0.6901305069914088,
+            "logit_l1_mean": 0.08380737827974372
+          },
+          "model.8.factor.m.0.0.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 389,
+            "weight_l1_mean": 1.0094935429515317,
+            "logit_l1_mean": 0.30513427295545625
+          },
+          "model.8.factor.m.0.1.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 434,
+            "weight_l1_mean": 1.1941163264564238,
+            "logit_l1_mean": 0.2459833104912832
+          }
+        },
+        "any_route_set_changed_groups": {
+          "False": {
+            "images": 0,
+            "tp_delta": 0,
+            "fp_delta": 0
+          },
+          "True": {
+            "images": 512,
+            "tp_delta": -19,
+            "fp_delta": -20
+          }
+        }
+      }
+    },
+    "d_alpha0p1_seed260829": {
+      "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+      "passes": {
+        "False": {
+          "metrics": {
+            "metrics/precision(B)": 0.6004809400232605,
+            "metrics/recall(B)": 0.5481008735603037,
+            "metrics/mAP50(B)": 0.5758332740098919,
+            "metrics/mAP50-95(B)": 0.4256950176080504,
+            "fitness": 0.4256950176080504
+          },
+          "routers": [
+            "model.4.factor.m.0.0.mlp.routing",
+            "model.4.factor.m.0.1.mlp.routing",
+            "model.6.factor.m.0.0.mlp.routing",
+            "model.6.factor.m.0.1.mlp.routing",
+            "model.8.factor.m.0.0.mlp.routing",
+            "model.8.factor.m.0.1.mlp.routing"
+          ]
+        },
+        "True": {
+          "metrics": {
+            "metrics/precision(B)": 0.588449292378014,
+            "metrics/recall(B)": 0.5352189335008838,
+            "metrics/mAP50(B)": 0.5718320354769127,
+            "metrics/mAP50-95(B)": 0.42202441960778797,
+            "fitness": 0.42202441960778797
+          },
+          "routers": [
+            "model.4.factor.m.0.0.mlp.routing",
+            "model.4.factor.m.0.1.mlp.routing",
+            "model.6.factor.m.0.0.mlp.routing",
+            "model.6.factor.m.0.1.mlp.routing",
+            "model.8.factor.m.0.0.mlp.routing",
+            "model.8.factor.m.0.1.mlp.routing"
+          ]
+        }
+      },
+      "summary": {
+        "same_content_images": 512,
+        "layers": {
+          "model.4.factor.m.0.0.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 179,
+            "weight_l1_mean": 0.38284905039472505,
+            "logit_l1_mean": 0.07420331539469771
+          },
+          "model.4.factor.m.0.1.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 165,
+            "weight_l1_mean": 0.334867493074853,
+            "logit_l1_mean": 0.050359852553810924
+          },
+          "model.6.factor.m.0.0.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 326,
+            "weight_l1_mean": 0.7541111881728284,
+            "logit_l1_mean": 0.11642543390917126
+          },
+          "model.6.factor.m.0.1.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 300,
+            "weight_l1_mean": 0.6964816504623741,
+            "logit_l1_mean": 0.08253972633974627
+          },
+          "model.8.factor.m.0.0.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 386,
+            "weight_l1_mean": 1.0156363959540613,
+            "logit_l1_mean": 0.30532633879602145
+          },
+          "model.8.factor.m.0.1.mlp.routing": {
+            "images": 512,
+            "set_changed_count": 415,
+            "weight_l1_mean": 1.111213994154241,
+            "logit_l1_mean": 0.2425578732327267
+          }
+        },
+        "any_route_set_changed_groups": {
+          "False": {
+            "images": 4,
+            "tp_delta": -2,
+            "fp_delta": 1
+          },
+          "True": {
+            "images": 508,
+            "tp_delta": -29,
+            "fp_delta": -8
+          }
+        }
+      }
+    }
+  },
+  "script_sha256": "d144ca07da050a8318076919b7b7f15237071285a6807891cda944559928e03c",
+  "note": "Observational padding+geometry probe, not a causal route intervention or proposed fix.",
+  "updated_at": "2026-09-07T04:53:13.406390+00:00"
+}

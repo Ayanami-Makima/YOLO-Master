@@ -1,0 +1,165 @@
+{
+  "skill": "yolo.system",
+  "status": "ok",
+  "summary": "environment doctor collected",
+  "data": {
+    "environment": {
+      "python": {
+        "executable": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+        "version": "3.10.12"
+      },
+      "workspace": {
+        "repo_root": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium",
+        "cwd": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium"
+      },
+      "ultralytics": {
+        "repo_version": "8.4.101",
+        "module_version": "8.4.101",
+        "module_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/__init__.py",
+        "local_repo_active": true
+      },
+      "cli": {
+        "available": true,
+        "path": "/data/data2/TuJiajun/A1-smoke/.venv-r4-torch210/bin/yolo",
+        "status": "available",
+        "install": {
+          "status": "available",
+          "path": "/data/data2/TuJiajun/A1-smoke/.venv-r4-torch210/bin/yolo"
+        }
+      },
+      "devices": {
+        "requested": "cuda:0",
+        "selected": "cuda:0",
+        "available": [
+          "cuda:0",
+          "cpu"
+        ],
+        "selection_source": "auto",
+        "torch": {
+          "installed": true,
+          "version": "2.10.0+cu128",
+          "cuda": {
+            "available": true,
+            "device_count": 2,
+            "devices": [
+              "NVIDIA GeForce RTX 4090",
+              "NVIDIA GeForce RTX 4090"
+            ]
+          },
+          "mps": {
+            "built": false,
+            "available": false
+          }
+        }
+      },
+      "runtime": {
+        "cwd": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium"
+      },
+      "references": {
+        "model": {
+          "requested": null,
+          "resolved": null,
+          "exists": false
+        },
+        "data": {
+          "requested": null,
+          "resolved": null,
+          "exists": false
+        },
+        "source": {
+          "requested": null,
+          "resolved": null,
+          "exists": false
+        }
+      }
+    },
+    "recommendations": []
+  },
+  "environment": {
+    "python": {
+      "executable": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+      "version": "3.10.12"
+    },
+    "workspace": {
+      "repo_root": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium",
+      "cwd": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium"
+    },
+    "ultralytics": {
+      "repo_version": "8.4.101",
+      "module_version": "8.4.101",
+      "module_path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/__init__.py",
+      "local_repo_active": true
+    },
+    "cli": {
+      "available": true,
+      "path": "/data/data2/TuJiajun/A1-smoke/.venv-r4-torch210/bin/yolo",
+      "status": "available",
+      "install": {
+        "status": "available",
+        "path": "/data/data2/TuJiajun/A1-smoke/.venv-r4-torch210/bin/yolo"
+      }
+    },
+    "devices": {
+      "requested": "cuda:0",
+      "selected": "cuda:0",
+      "available": [
+        "cuda:0",
+        "cpu"
+      ],
+      "selection_source": "auto",
+      "torch": {
+        "installed": true,
+        "version": "2.10.0+cu128",
+        "cuda": {
+          "available": true,
+          "device_count": 2,
+          "devices": [
+            "NVIDIA GeForce RTX 4090",
+            "NVIDIA GeForce RTX 4090"
+          ]
+        },
+        "mps": {
+          "built": false,
+          "available": false
+        }
+      }
+    },
+    "runtime": {
+      "cwd": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium"
+    },
+    "references": {
+      "model": {
+        "requested": null,
+        "resolved": null,
+        "exists": false
+      },
+      "data": {
+        "requested": null,
+        "resolved": null,
+        "exists": false
+      },
+      "source": {
+        "requested": null,
+        "resolved": null,
+        "exists": false
+      }
+    }
+  },
+  "recommendations": [],
+  "usage": {
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "requests": 0,
+    "records": []
+  },
+  "cost_estimate": {
+    "currency": "USD",
+    "amount": 0.0,
+    "basis": "no token usage"
+  },
+  "request_id": "yolo-system-16e82f85",
+  "manifest": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/runs/agent/yolo-system-16e82f85/skill_manifest.json"
+}

@@ -4,13 +4,52 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import inspect
 import json
 import math
+import sys
 import traceback
 from pathlib import Path
 
 import torch
 from torch import nn
+
+# Script execution puts scripts/a1 first; a different editable install may
+# otherwise silently supply the model and loss implementation.
+REPO_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(REPO_ROOT))
+
+
+def validate_candidate_runtime(model, request: dict) -> dict:
+    """Check the instantiated criterion, rather than trusting environment flags."""
+    import ultralytics
+
+    actual_module = Path(ultralytics.__file__).resolve()
+    if actual_module != REPO_ROOT / "ultralytics/__init__.py":
+        raise RuntimeError(f"wrong Ultralytics checkout: {actual_module}")
+    criterion = getattr(model, "criterion", None)
+    if criterion is None:
+        criterion = model.init_criterion()
+        model.criterion = criterion
+    native = getattr(criterion, "native_criterion", criterion)
+    expected = int(request["a1_policy"]["o2o_tal_topk"])
+    actual = native.one2one.assigner.topk
+    secondary = native.one2one.assigner.topk2
+    if (actual, secondary) != (expected, 1):
+        raise RuntimeError(f"candidate factor inactive: expected {(expected, 1)}, got {(actual, secondary)}")
+    source = Path(inspect.getfile(type(native))).resolve()
+    if REPO_ROOT not in source.parents:
+        raise RuntimeError(f"wrong criterion checkout: {source}")
+    return {
+        "module": str(actual_module),
+        "criterion_source": str(source),
+        "criterion_source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+        "expected_topk": expected,
+        "actual_topk": actual,
+        "actual_topk2": secondary,
+    }
+
 
 P1_ROUTING_PARAMS = {
     "moe_noise_std": 0.0,
@@ -453,6 +492,18 @@ def main() -> None:
 
     model.add_callback("on_pretrain_routine_end", prepare_training)
     model.add_callback("on_train_batch_start", enforce_and_schedule_p1_policy)
+    if "o2o_tal_topk" in request.get("a1_policy", {}):
+
+        def check_candidate(trainer) -> None:
+            if getattr(trainer, "p2_candidate_runtime_checked", False):
+                return
+            payload = validate_candidate_runtime(trainer.model, request)
+            (Path(trainer.save_dir) / "p2_candidate_runtime.json").write_text(
+                json.dumps(payload, indent=2) + "\n", encoding="utf-8"
+            )
+            trainer.p2_candidate_runtime_checked = True
+
+        model.add_callback("on_train_batch_start", check_candidate)
     try:
         results = model.train(data=request["inputs"]["data"], **params)
     except BaseException as error:

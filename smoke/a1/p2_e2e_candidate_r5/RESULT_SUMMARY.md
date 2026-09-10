@@ -1,54 +1,23 @@
-# P2-E r5：one-to-one 候选预算单因素结果
+# P2-E r5：训练消融无效，结论已撤回（2026-09-05 审计更正）
 
-## 结论
+原 r5 的四组训练结束、checkpoint 和固定 val512 指标仍作为原始记录保留，但不能据此判定
+`tal_topk=10` 无效。重放训练脚本的导入环境发现，它加载的是
+`/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/ultralytics/utils/loss.py`，
+该版本不识别 `A1_E2E_O2O_TAL_TOPK`，设置 10 时实际 assigner 仍为 7。
+B 对照/处理的全部 927 个状态张量、D 的全部 1636 个状态张量分别完全相同。
 
-本轮只改变 one-to-one TaskAlignedAssigner 的候选预算：官方默认 `tal_topk=7`，处理组为
-`tal_topk=10`；`tal_topk2=1`、冲突规则 `overlap`、模型、数据、优化器、冻结策略和预算均不变。
-B（Dense + End-to-End）和 D（MoE + End-to-End）各有一组对照和处理，四组均从 r28 原始
-initializer 独立启动。
+原评估脚本加载了正确的新 checkout，因此候选统计确实因 topk 改变；
+但这只是对同一组权重的事后 assigner 审计。assigner 不参与推理，故相同 mAP 并不能证明
+“正确训练的 topk=10 没有收益”。原“拒绝 topk=10、无效缓解已完成”的结论撤回，
+r5 标记为 `invalid_training_intervention`；原始文件不删除、不覆盖。
 
-`tal_topk=10` 将候选正样本从约 `45.606` 增加到 `63.066`/图（约 `+38.3%`），但候选 GT 覆盖
-本来已为 `0.998303`，最终 one-to-one 正样本、recall、mAP、FP/FN 和 loss 均没有改善；冲突
-anchor 增加约 `67%–72%`，最终 GT 覆盖略降。B/D 处理组与各自对照在固定 val512 的 mAP、
-precision、recall 完全一致。因此 r5 拒绝 `tal_topk=10`，保留官方 `tal_topk=7, topk2=1`，
-不扩大到三 seed 或长训。
+修复已在训练入口加入仓库路径固定及首 batch 的实际 criterion 参数校验。
+补充 CPU 诊断在 r28 B/D seed260829 的相同 8 张训练图上验证：
+实际 topk=7/10 的损失和 head 梯度相同（8/8），这里只说明该小样本未受到候选预算改变的影响。
+分支梯度审计还确认：native one-to-one 检测损失到 factor/router 的梯度为零，
+one-to-many 检测损失可以传到 factor/router。这与检测头 `detach()` 一致，
+不能写成“MoE 总梯度为零”或“路由必然坍塌”；MoE 辅助损失未包含在该分支实验中。
 
-## 固定设置
-
-| 项目 | 设置 |
-| --- | --- |
-| 基线 | SHA `acce839c7e895d6b179de7f7093fa879e237cc7b`，r28 原始 B/D initializer |
-| 单因素 | one-to-one `tal_topk=7` vs `10`；`tal_topk2=1` |
-| 数据 | COCO pilot：5000 train / 固定 512 val（3536 GT） |
-| 训练 | 5 epochs、batch 4、imgsz 640、SGD、lr0 `1e-4`、seed `260829`、GPU1、AMP off |
-| 评估 | GPU1、固定 val512、batch 1、imgsz 640、conf `0.001`、max_det `300` |
-| 不变项 | 官方 C3k2 base/BN 冻结、ResidualFactor 路径、E2E one-to-one 输出和后处理 |
-
-## 固定 val512 结果
-
-| 运行 | tal_topk | mAP50-95 | precision | recall | 候选正样本/图 | 最终正样本/图 | 候选 GT 覆盖 | 最终 GT 覆盖 | 冲突 anchor/图 | matched IoU |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| B control | 7 | 0.426536 | 0.632169 | 0.533208 | 45.6063 | 6.9350 | 0.998303 | 0.996324 | 1.2598 | 0.837826 |
-| B candidate10 | 10 | 0.426536 | 0.632169 | 0.533208 | 63.0669 | 6.9331 | 0.998303 | 0.996041 | 2.1614 | 0.837910 |
-| D control | 7 | 0.425947 | 0.641006 | 0.531202 | 45.6063 | 6.9311 | 0.998303 | 0.995758 | 1.3012 | 0.837997 |
-| D candidate10 | 10 | 0.425947 | 0.641006 | 0.531202 | 63.0650 | 6.9291 | 0.998303 | 0.995475 | 2.1909 | 0.837951 |
-
-候选预算增加没有增加最终监督：`topk2=1` 的二次筛选仍将每个 anchor/GT 的最终分配压缩到
-约 6.93 个正样本/图。候选覆盖已接近饱和，继续扩大 `tal_topk` 只制造更多候选冲突，不能
-弥补 one-to-one 的精度差距。
-
-## 决策
-
-1. 拒绝 `tal_topk=10` 处理组，保留官方 `tal_topk=7, topk2=1`。
-2. 不启动该处理的三 seed 或长训练，不把候选正样本数量增加写成精度收益。
-3. 后续优先做候选质量/置信度校准或 one-to-one loss 权重的单因素 pilot，继续固定数据、seed、
-   冻结和预算，并保留候选、冲突、最终匹配、分类/定位 loss 与 FP/FN 中间量。
-
-## 证据
-
-- `protocol.json`：实验协议、请求哈希和固定条件。
-- `evaluation/evidence.json`：四个 checkpoint 的固定 val512 指标与 assignment 汇总。
-- `evaluation/*/validator/per_image_metrics.csv`：512 张图逐图候选/匹配、TP/FP/FN 与损失。
-- `evaluation/*/validator/assignment_metrics.csv`：逐图 assignment 中间量和匹配统计。
-- `training/*_results.csv`：四组 5 epoch 训练结果。
-- 服务器运行目录：`/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/`。
+当前研究转入固定输入、前向等价的梯度通路诊断，详见
+`P2_REQUIREMENTS_AND_RESEARCH_REVIEW_20260905.md`。
+审计证据：`p2_r5_validity_20260905/evidence.json`。

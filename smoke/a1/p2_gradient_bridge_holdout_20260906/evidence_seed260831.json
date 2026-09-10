@@ -1,0 +1,4123 @@
+{
+  "schema": "p2-gradient-bridge/v1",
+  "status": "completed",
+  "seed": 260831,
+  "images": 32,
+  "offset": 128,
+  "device": "cpu",
+  "alpha": 0.1,
+  "optimizer_steps": 0,
+  "scope": "Fixed contiguous train subset, augmentation disabled, BN/base frozen, detection losses only",
+  "checkpoints": {
+    "b": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/b_formal_seed260831_15ep/weights/last.pt",
+      "sha256": "da33e8bac9ebf9a9f89a99bae7e70611ef57139ee8f730f0a2da29b91f6f01fd",
+      "state_changed_keys": [],
+      "parameters_changed": []
+    },
+    "d": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260831/d_formal_seed260831_15ep/weights/last.pt",
+      "sha256": "183efe3cd626d02ec0ca2adb13459493def87d17bad8c0edfaba27f000a65cdd",
+      "state_changed_keys": [],
+      "parameters_changed": []
+    }
+  },
+  "rows": [
+    {
+      "cell": "b",
+      "image_index": 128,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000014502.jpg",
+      "image_sha256": "aee5ce51f95b8340cf1d871d86c8d7b3f0bfb14c74e7b57fea5bd3dcad5c8a03",
+      "gt": 5,
+      "branches": {
+        "one2many": {
+          "loss": 1.7507532835006714,
+          "gradients": {
+            "factor": {
+              "l1": 2772.84912109375,
+              "l2": 6.227599620819092
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.2347605228424072,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2624.79248046875,
+              "l2": 24.181407928466797
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.2347605228424072,
+          "gradients": {
+            "factor": {
+              "l1": 247.14334106445312,
+              "l2": 0.5543226003646851,
+              "cosine_with_one2many": 0.9196049023306196
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2624.79248046875,
+              "l2": 24.181407928466797,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 129,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000014686.jpg",
+      "image_sha256": "be2128723e9ad11cf6a6a204dfa24ddc794c068d98c577165cefc3cb6d588779",
+      "gt": 6,
+      "branches": {
+        "one2many": {
+          "loss": 0.8754544258117676,
+          "gradients": {
+            "factor": {
+              "l1": 565.6900634765625,
+              "l2": 1.4053999185562134
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.7552328109741211,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 1479.4276123046875,
+              "l2": 20.59445571899414
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.7552328109741211,
+          "gradients": {
+            "factor": {
+              "l1": 56.602882385253906,
+              "l2": 0.1399666965007782,
+              "cosine_with_one2many": 0.9506702936838541
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 1479.4276123046875,
+              "l2": 20.59445571899414,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 130,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000014736.jpg",
+      "image_sha256": "0b4725b57198ae2b3da616c5a15f7e4bc23ef31316a9361fb8fb8d14fc83e944",
+      "gt": 3,
+      "branches": {
+        "one2many": {
+          "loss": 1.412121057510376,
+          "gradients": {
+            "factor": {
+              "l1": 646.340087890625,
+              "l2": 1.69636869430542
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.3339924812316895,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3733.396484375,
+              "l2": 36.783748626708984
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.3339924812316895,
+          "gradients": {
+            "factor": {
+              "l1": 231.6080780029297,
+              "l2": 0.6049660444259644,
+              "cosine_with_one2many": 0.4551118853085998
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3733.396484375,
+              "l2": 36.783748626708984,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 131,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000014757.jpg",
+      "image_sha256": "7b015c4eeb41230b3f9748fd84b799c916ce24df1d676dc81b6cdd34a1accb6a",
+      "gt": 3,
+      "branches": {
+        "one2many": {
+          "loss": 1.1291680335998535,
+          "gradients": {
+            "factor": {
+              "l1": 1041.343017578125,
+              "l2": 2.3978631496429443
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.1404222249984741,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2930.887939453125,
+              "l2": 28.894031524658203
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.1404222249984741,
+          "gradients": {
+            "factor": {
+              "l1": 155.31918334960938,
+              "l2": 0.3567992150783539,
+              "cosine_with_one2many": 0.9400237971113381
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2930.887939453125,
+              "l2": 28.894031524658203,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 132,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015016.jpg",
+      "image_sha256": "955b5b7c901c2e5f367f5735c9cf05249affcafdf083eb344a75432a6d1be694",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 0.6239990592002869,
+          "gradients": {
+            "factor": {
+              "l1": 309.67340087890625,
+              "l2": 0.7782615423202515
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.7782046794891357,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3982.845947265625,
+              "l2": 53.49730682373047
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.7782046794891357,
+          "gradients": {
+            "factor": {
+              "l1": 299.210205078125,
+              "l2": 0.728477418422699,
+              "cosine_with_one2many": 0.6183154563685537
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3982.845947265625,
+              "l2": 53.49730682373047,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 133,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015062.jpg",
+      "image_sha256": "146bc30fc71fa8e2a64a7b4934048daf326c0c64acd122080664a52769574f3f",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 1.7205049991607666,
+          "gradients": {
+            "factor": {
+              "l1": 770.8736572265625,
+              "l2": 1.7806572914123535
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.3596625328063965,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 4042.505615234375,
+              "l2": 44.55142593383789
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.3596625328063965,
+          "gradients": {
+            "factor": {
+              "l1": 257.2978515625,
+              "l2": 0.6364322900772095,
+              "cosine_with_one2many": -0.11310591057376401
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 4042.505615234375,
+              "l2": 44.55142593383789,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 134,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015427.jpg",
+      "image_sha256": "c08856b04bee1d7e75fe3a54b010bd592ddbfcb8308e25f58985ad27b4f98d54",
+      "gt": 20,
+      "branches": {
+        "one2many": {
+          "loss": 2.206226110458374,
+          "gradients": {
+            "factor": {
+              "l1": 1132.483154296875,
+              "l2": 2.6595094203948975
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.829512596130371,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2205.156005859375,
+              "l2": 19.4650821685791
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.829512596130371,
+          "gradients": {
+            "factor": {
+              "l1": 271.47894287109375,
+              "l2": 0.6331077218055725,
+              "cosine_with_one2many": 0.7856450082832019
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2205.156005859375,
+              "l2": 19.4650821685791,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 135,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015528.jpg",
+      "image_sha256": "778e9a1b141f6531dc28c89db216758e50a1d4d43f08a6d007bc2d8105a282a5",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 0.32486146688461304,
+          "gradients": {
+            "factor": {
+              "l1": 334.81396484375,
+              "l2": 0.8229571580886841
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.2853599190711975,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2723.8310546875,
+              "l2": 43.90213394165039
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.2853599190711975,
+          "gradients": {
+            "factor": {
+              "l1": 84.54552459716797,
+              "l2": 0.20838961005210876,
+              "cosine_with_one2many": 0.8000829446263378
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2723.8310546875,
+              "l2": 43.90213394165039,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 136,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015559.jpg",
+      "image_sha256": "d7a50a747183a034dd39caf0dd717704148437067ee9f9ec57fd11735a803b07",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 1.0685479640960693,
+          "gradients": {
+            "factor": {
+              "l1": 1385.38818359375,
+              "l2": 3.142432689666748
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.0927586555480957,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3822.94384765625,
+              "l2": 59.102378845214844
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.0927586555480957,
+          "gradients": {
+            "factor": {
+              "l1": 461.2903137207031,
+              "l2": 1.04603910446167,
+              "cosine_with_one2many": 0.8625361279013294
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3822.94384765625,
+              "l2": 59.102378845214844,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 137,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015618.jpg",
+      "image_sha256": "c6023d5585cdc55af359ee7c6c3eed8a330b4f3599e99ca4b22359147e94c51d",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 0.21145133674144745,
+          "gradients": {
+            "factor": {
+              "l1": 137.84820556640625,
+              "l2": 0.328277587890625
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.18384620547294617,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2235.21923828125,
+              "l2": 38.451717376708984
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.18384620547294617,
+          "gradients": {
+            "factor": {
+              "l1": 16.88873863220215,
+              "l2": 0.0399625189602375,
+              "cosine_with_one2many": 0.9017133359704289
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2235.21923828125,
+              "l2": 38.451717376708984,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 138,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015927.jpg",
+      "image_sha256": "9f637c2778c74057d61e7485078af3545c5f5334300c6adb465a10b6d0c78486",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 1.475478172302246,
+          "gradients": {
+            "factor": {
+              "l1": 1376.0723876953125,
+              "l2": 3.309689998626709
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.178694725036621,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2326.154052734375,
+              "l2": 28.09291648864746
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.178694725036621,
+          "gradients": {
+            "factor": {
+              "l1": 90.98641967773438,
+              "l2": 0.23136745393276215,
+              "cosine_with_one2many": 0.4345848820784622
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2326.154052734375,
+              "l2": 28.09291648864746,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 139,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016030.jpg",
+      "image_sha256": "2b500d976be2400e310ecf8b09b674e37b748972da15f62cb0348cc976a8b0dc",
+      "gt": 15,
+      "branches": {
+        "one2many": {
+          "loss": 3.2887349128723145,
+          "gradients": {
+            "factor": {
+              "l1": 2114.501708984375,
+              "l2": 5.281667709350586
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 4.090384483337402,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3590.89404296875,
+              "l2": 24.691055297851562
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 4.090384483337402,
+          "gradients": {
+            "factor": {
+              "l1": 488.9620361328125,
+              "l2": 1.1842281818389893,
+              "cosine_with_one2many": 0.4277038231749563
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3590.89404296875,
+              "l2": 24.691055297851562,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 140,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016064.jpg",
+      "image_sha256": "40c293f2f4f45edad9378b54ba8e650b766bcadaed8b8dd362273f3992efdf10",
+      "gt": 13,
+      "branches": {
+        "one2many": {
+          "loss": 1.611924648284912,
+          "gradients": {
+            "factor": {
+              "l1": 473.0023193359375,
+              "l2": 1.2181413173675537
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.7603881359100342,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 1611.81640625,
+              "l2": 17.535364151000977
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.7603881359100342,
+          "gradients": {
+            "factor": {
+              "l1": 85.10124206542969,
+              "l2": 0.21186766028404236,
+              "cosine_with_one2many": 0.6301560863323044
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 1611.81640625,
+              "l2": 17.535364151000977,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 141,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016180.jpg",
+      "image_sha256": "b0ee72a6897ad26add9fef26880afae766bb0610267c4df5000f79b93efa418b",
+      "gt": 7,
+      "branches": {
+        "one2many": {
+          "loss": 2.1731326580047607,
+          "gradients": {
+            "factor": {
+              "l1": 2792.913818359375,
+              "l2": 6.5253777503967285
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.1559650897979736,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3120.645263671875,
+              "l2": 21.90461540222168
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.1559650897979736,
+          "gradients": {
+            "factor": {
+              "l1": 319.26995849609375,
+              "l2": 0.7574961185455322,
+              "cosine_with_one2many": 0.7602316547936864
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3120.645263671875,
+              "l2": 21.90461540222168,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 142,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016449.jpg",
+      "image_sha256": "5b10b1fc75c84910285e8b5baeccfe03ef73ab3179258067e4fe6fd1ec7d4931",
+      "gt": 0,
+      "branches": {
+        "one2many": {
+          "loss": 0.12194347381591797,
+          "gradients": {
+            "factor": {
+              "l1": 545.2579345703125,
+              "l2": 1.241261601448059
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.016730070114135742,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 79.87532806396484,
+              "l2": 0.8373245000839233
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.016730070114135742,
+          "gradients": {
+            "factor": {
+              "l1": 9.652692794799805,
+              "l2": 0.022104792296886444,
+              "cosine_with_one2many": 0.9161467785401152
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 79.87532806396484,
+              "l2": 0.8373245000839233,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 143,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016458.jpg",
+      "image_sha256": "f8713da8c7aea5d7839af68a2eae0cbe7315adf81d23e189f2a322933f377ad1",
+      "gt": 5,
+      "branches": {
+        "one2many": {
+          "loss": 1.1140581369400024,
+          "gradients": {
+            "factor": {
+              "l1": 1704.5440673828125,
+              "l2": 4.285727500915527
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.0854921340942383,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2619.283935546875,
+              "l2": 24.182390213012695
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.0854921340942383,
+          "gradients": {
+            "factor": {
+              "l1": 213.8006591796875,
+              "l2": 0.5380845069885254,
+              "cosine_with_one2many": 0.9886518528566183
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2619.283935546875,
+              "l2": 24.182390213012695,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 144,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016497.jpg",
+      "image_sha256": "24b334a3e9d13184730598667514d4a4d79fcc67f0c15b972b5540e5e92a341d",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 0.8432429432868958,
+          "gradients": {
+            "factor": {
+              "l1": 1040.7919921875,
+              "l2": 2.3768246173858643
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.84017413854599,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2496.828857421875,
+              "l2": 28.817853927612305
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.84017413854599,
+          "gradients": {
+            "factor": {
+              "l1": 124.07585906982422,
+              "l2": 0.2881377935409546,
+              "cosine_with_one2many": 0.729616994085341
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2496.828857421875,
+              "l2": 28.817853927612305,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 145,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016518.jpg",
+      "image_sha256": "f681a4c193248ca3ae519af56873b6e257b2ac1e1e787a9f02733630875eb209",
+      "gt": 4,
+      "branches": {
+        "one2many": {
+          "loss": 1.009244680404663,
+          "gradients": {
+            "factor": {
+              "l1": 555.4182739257812,
+              "l2": 1.3038386106491089
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.9673951268196106,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 1234.1396484375,
+              "l2": 18.90475082397461
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.9673951268196106,
+          "gradients": {
+            "factor": {
+              "l1": 53.50082778930664,
+              "l2": 0.12449807673692703,
+              "cosine_with_one2many": 0.9160686403684114
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 1234.1396484375,
+              "l2": 18.90475082397461,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 146,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016525.jpg",
+      "image_sha256": "6a9436c446aaa933bd209eac75a4cb01c2d8025ffc14474d4b50aa20acd72589",
+      "gt": 30,
+      "branches": {
+        "one2many": {
+          "loss": 2.990365982055664,
+          "gradients": {
+            "factor": {
+              "l1": 798.1181640625,
+              "l2": 1.8926445245742798
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 4.225769519805908,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2168.457763671875,
+              "l2": 18.27118682861328
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 4.225769519805908,
+          "gradients": {
+            "factor": {
+              "l1": 169.0089874267578,
+              "l2": 0.4162881076335907,
+              "cosine_with_one2many": 0.6992888162097372
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2168.457763671875,
+              "l2": 18.27118682861328,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 147,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016673.jpg",
+      "image_sha256": "26a9d84ef41a18578c93c20125e9ebfbac51024aa071a4af349b9fae389ce642",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 1.0536950826644897,
+          "gradients": {
+            "factor": {
+              "l1": 719.7178955078125,
+              "l2": 1.7468860149383545
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.4837372303009033,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3698.796875,
+              "l2": 39.50885009765625
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.4837372303009033,
+          "gradients": {
+            "factor": {
+              "l1": 504.8996276855469,
+              "l2": 1.2301212549209595,
+              "cosine_with_one2many": -0.30934234011234585
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3698.796875,
+              "l2": 39.50885009765625,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 148,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016683.jpg",
+      "image_sha256": "0f00578cc11944d246aa13a4d135e286fd7fd0a31e561a7ee7b4bbe60172401c",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 0.3195703625679016,
+          "gradients": {
+            "factor": {
+              "l1": 264.58074951171875,
+              "l2": 0.6820127964019775
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.1691756248474121,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3491.927734375,
+              "l2": 58.956321716308594
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.1691756248474121,
+          "gradients": {
+            "factor": {
+              "l1": 45.81703567504883,
+              "l2": 0.11906176805496216,
+              "cosine_with_one2many": -0.3666396114546128
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3491.927734375,
+              "l2": 58.956321716308594,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 149,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016697.jpg",
+      "image_sha256": "14d2eb88302d2a01205ba963778608caaff990db097615c6c6ae6f8117cd32b2",
+      "gt": 9,
+      "branches": {
+        "one2many": {
+          "loss": 1.9733761548995972,
+          "gradients": {
+            "factor": {
+              "l1": 1073.2799072265625,
+              "l2": 2.561277151107788
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.357532262802124,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2023.62744140625,
+              "l2": 18.154083251953125
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.357532262802124,
+          "gradients": {
+            "factor": {
+              "l1": 369.15972900390625,
+              "l2": 0.8815299868583679,
+              "cosine_with_one2many": 0.6228879001841379
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2023.62744140625,
+              "l2": 18.154083251953125,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 150,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017100.jpg",
+      "image_sha256": "b1d8cb056cb4cf16981feea07053cff6e483162ad099881daa41b4b8a0b206b2",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 1.1567248106002808,
+          "gradients": {
+            "factor": {
+              "l1": 6541.3447265625,
+              "l2": 15.735002517700195
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.3023370504379272,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3336.406005859375,
+              "l2": 39.90479278564453
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.3023370504379272,
+          "gradients": {
+            "factor": {
+              "l1": 448.585693359375,
+              "l2": 1.0767666101455688,
+              "cosine_with_one2many": 0.9850237060299188
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3336.406005859375,
+              "l2": 39.90479278564453,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 151,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017137.jpg",
+      "image_sha256": "e476491a87588f5701a78384de0e3f9c0dfc3162293e2b9d00fdd03dfb36f571",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 1.6658440828323364,
+          "gradients": {
+            "factor": {
+              "l1": 704.3009643554688,
+              "l2": 1.6830824613571167
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.7487719058990479,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3024.948486328125,
+              "l2": 35.86301803588867
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.7487719058990479,
+          "gradients": {
+            "factor": {
+              "l1": 91.0670394897461,
+              "l2": 0.21353304386138916,
+              "cosine_with_one2many": 0.90396220263081
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3024.948486328125,
+              "l2": 35.86301803588867,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 152,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017167.jpg",
+      "image_sha256": "ebf5f2265805261c0e70172d4806c103d6fc5a6f2758311f8ddd004056e740fc",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 2.152188301086426,
+          "gradients": {
+            "factor": {
+              "l1": 1411.425048828125,
+              "l2": 3.1544692516326904
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.2213337421417236,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3354.233154296875,
+              "l2": 34.11194610595703
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.2213337421417236,
+          "gradients": {
+            "factor": {
+              "l1": 86.04462432861328,
+              "l2": 0.19666136801242828,
+              "cosine_with_one2many": -0.035054876555433434
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3354.233154296875,
+              "l2": 34.11194610595703,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 153,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017244.jpg",
+      "image_sha256": "2434b256bb27a67bc9dacce22c4793745dd11d57d61676dd367cbecbc5a14688",
+      "gt": 3,
+      "branches": {
+        "one2many": {
+          "loss": 0.9596683382987976,
+          "gradients": {
+            "factor": {
+              "l1": 881.8778076171875,
+              "l2": 2.136998414993286
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.1484804153442383,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3466.5048828125,
+              "l2": 48.33711242675781
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.1484804153442383,
+          "gradients": {
+            "factor": {
+              "l1": 7100.16796875,
+              "l2": 16.111278533935547,
+              "cosine_with_one2many": -0.045401301459555024
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3466.5048828125,
+              "l2": 48.33711242675781,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 154,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017350.jpg",
+      "image_sha256": "a74be27bcd9aaf408cebcc707da55516b0479e40fd6264440bd537a0e936352e",
+      "gt": 6,
+      "branches": {
+        "one2many": {
+          "loss": 2.1791532039642334,
+          "gradients": {
+            "factor": {
+              "l1": 2303.489990234375,
+              "l2": 5.451600551605225
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.1328701972961426,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3095.6962890625,
+              "l2": 20.92371368408203
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.1328701972961426,
+          "gradients": {
+            "factor": {
+              "l1": 339.0166931152344,
+              "l2": 0.7841646671295166,
+              "cosine_with_one2many": 0.6724579137723816
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3095.6962890625,
+              "l2": 20.92371368408203,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 155,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017474.jpg",
+      "image_sha256": "85bc189eddf4a5d780aadfb4c38a94481981f6501739cfe76dd1362d1f0b7115",
+      "gt": 34,
+      "branches": {
+        "one2many": {
+          "loss": 2.540550947189331,
+          "gradients": {
+            "factor": {
+              "l1": 597.2151489257812,
+              "l2": 1.5011343955993652
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.1261956691741943,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 1678.218994140625,
+              "l2": 13.487977027893066
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.1261956691741943,
+          "gradients": {
+            "factor": {
+              "l1": 64.81178283691406,
+              "l2": 0.16585831344127655,
+              "cosine_with_one2many": 0.4997975877026689
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 1678.218994140625,
+              "l2": 13.487977027893066,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 156,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017582.jpg",
+      "image_sha256": "f13433d0b015f7d6ef8b45e8c26768c171e53931a40984310f5e77bf034cf161",
+      "gt": 5,
+      "branches": {
+        "one2many": {
+          "loss": 1.9664766788482666,
+          "gradients": {
+            "factor": {
+              "l1": 1453.304931640625,
+              "l2": 3.39841890335083
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.0778913497924805,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3960.98193359375,
+              "l2": 35.487552642822266
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.0778913497924805,
+          "gradients": {
+            "factor": {
+              "l1": 277.82684326171875,
+              "l2": 0.6512799263000488,
+              "cosine_with_one2many": 0.4189166728156715
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3960.98193359375,
+              "l2": 35.487552642822266,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 157,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017667.jpg",
+      "image_sha256": "290138ee253e52eac225e027a8209fc9772d0ef3bee6545411e579d0cd5b3aff",
+      "gt": 4,
+      "branches": {
+        "one2many": {
+          "loss": 2.31333589553833,
+          "gradients": {
+            "factor": {
+              "l1": 1756.2750244140625,
+              "l2": 4.177929878234863
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.4552359580993652,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 4739.48193359375,
+              "l2": 39.852420806884766
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.4552359580993652,
+          "gradients": {
+            "factor": {
+              "l1": 227.96139526367188,
+              "l2": 0.5553860068321228,
+              "cosine_with_one2many": 0.7963810445432744
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 4739.48193359375,
+              "l2": 39.852420806884766,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 158,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017935.jpg",
+      "image_sha256": "6de0b0a9cf794c99248fff98de63f5a82f62946b7dd2f26d6c8eabe91768dff3",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 0.8706854581832886,
+          "gradients": {
+            "factor": {
+              "l1": 637.2957763671875,
+              "l2": 1.6740753650665283
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.4474704265594482,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3884.980224609375,
+              "l2": 40.53102493286133
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.4474704265594482,
+          "gradients": {
+            "factor": {
+              "l1": 197.74110412597656,
+              "l2": 0.5181581377983093,
+              "cosine_with_one2many": 0.49792955576580394
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 3884.980224609375,
+              "l2": 40.53102493286133,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "b",
+      "image_index": 159,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017945.jpg",
+      "image_sha256": "232397feb422ce739526cec7c9bce4e7c63e73a2c632f2146601f299dcb87f43",
+      "gt": 14,
+      "branches": {
+        "one2many": {
+          "loss": 2.0824153423309326,
+          "gradients": {
+            "factor": {
+              "l1": 803.4133911132812,
+              "l2": 1.9131767749786377
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.52712345123291,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2295.52734375,
+              "l2": 16.854578018188477
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.52712345123291,
+          "gradients": {
+            "factor": {
+              "l1": 271.1477355957031,
+              "l2": 0.6714469790458679,
+              "cosine_with_one2many": 0.45939691419220474
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0,
+              "cosine_with_one2many": null
+            },
+            "one2one_head": {
+              "l1": 2295.52734375,
+              "l2": 16.854578018188477,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 128,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000014502.jpg",
+      "image_sha256": "aee5ce51f95b8340cf1d871d86c8d7b3f0bfb14c74e7b57fea5bd3dcad5c8a03",
+      "gt": 5,
+      "branches": {
+        "one2many": {
+          "loss": 1.7317593097686768,
+          "gradients": {
+            "factor": {
+              "l1": 2913.44091796875,
+              "l2": 6.7190327644348145
+            },
+            "router": {
+              "l1": 0.7180895805358887,
+              "l2": 0.06130038946866989
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.2113590240478516,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2738.4365234375,
+              "l2": 25.765098571777344
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.2113590240478516,
+          "gradients": {
+            "factor": {
+              "l1": 283.4960632324219,
+              "l2": 0.6599277257919312,
+              "cosine_with_one2many": 0.8890190173472629
+            },
+            "router": {
+              "l1": 0.06422282755374908,
+              "l2": 0.005160721484571695,
+              "cosine_with_one2many": 0.9267769957061961
+            },
+            "one2one_head": {
+              "l1": 2738.4365234375,
+              "l2": 25.765098571777344,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 129,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000014686.jpg",
+      "image_sha256": "be2128723e9ad11cf6a6a204dfa24ddc794c068d98c577165cefc3cb6d588779",
+      "gt": 6,
+      "branches": {
+        "one2many": {
+          "loss": 0.8718695044517517,
+          "gradients": {
+            "factor": {
+              "l1": 647.997314453125,
+              "l2": 1.5212002992630005
+            },
+            "router": {
+              "l1": 0.121363565325737,
+              "l2": 0.014412378892302513
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.752308189868927,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 1507.5855712890625,
+              "l2": 20.65047264099121
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.752308189868927,
+          "gradients": {
+            "factor": {
+              "l1": 39.139461517333984,
+              "l2": 0.09096614271402359,
+              "cosine_with_one2many": 0.8005446045021672
+            },
+            "router": {
+              "l1": 0.005148088093847036,
+              "l2": 0.0006439529242925346,
+              "cosine_with_one2many": 0.7340534766694923
+            },
+            "one2one_head": {
+              "l1": 1507.5855712890625,
+              "l2": 20.65047264099121,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 130,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000014736.jpg",
+      "image_sha256": "0b4725b57198ae2b3da616c5a15f7e4bc23ef31316a9361fb8fb8d14fc83e944",
+      "gt": 3,
+      "branches": {
+        "one2many": {
+          "loss": 1.3936103582382202,
+          "gradients": {
+            "factor": {
+              "l1": 748.810546875,
+              "l2": 1.823445200920105
+            },
+            "router": {
+              "l1": 0.05385444685816765,
+              "l2": 0.007557144854217768
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.2979929447174072,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3654.039794921875,
+              "l2": 36.01039123535156
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.2979929447174072,
+          "gradients": {
+            "factor": {
+              "l1": 273.4930419921875,
+              "l2": 0.6686015725135803,
+              "cosine_with_one2many": 0.5110644418067748
+            },
+            "router": {
+              "l1": 0.04935002326965332,
+              "l2": 0.005791079252958298,
+              "cosine_with_one2many": -0.35477055077722225
+            },
+            "one2one_head": {
+              "l1": 3654.039794921875,
+              "l2": 36.01039123535156,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 131,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000014757.jpg",
+      "image_sha256": "7b015c4eeb41230b3f9748fd84b799c916ce24df1d676dc81b6cdd34a1accb6a",
+      "gt": 3,
+      "branches": {
+        "one2many": {
+          "loss": 1.15664541721344,
+          "gradients": {
+            "factor": {
+              "l1": 1148.03466796875,
+              "l2": 2.6589088439941406
+            },
+            "router": {
+              "l1": 0.3165314495563507,
+              "l2": 0.041269782930612564
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.1376638412475586,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2956.30810546875,
+              "l2": 29.064157485961914
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.1376638412475586,
+          "gradients": {
+            "factor": {
+              "l1": 165.90635681152344,
+              "l2": 0.3830562233924866,
+              "cosine_with_one2many": 0.9045569853745845
+            },
+            "router": {
+              "l1": 0.037690453231334686,
+              "l2": 0.005320596043020487,
+              "cosine_with_one2many": 0.9561634343339555
+            },
+            "one2one_head": {
+              "l1": 2956.30810546875,
+              "l2": 29.064157485961914,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 132,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015016.jpg",
+      "image_sha256": "955b5b7c901c2e5f367f5735c9cf05249affcafdf083eb344a75432a6d1be694",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 0.6204559803009033,
+          "gradients": {
+            "factor": {
+              "l1": 311.7711181640625,
+              "l2": 0.7659631371498108
+            },
+            "router": {
+              "l1": 0.05191952735185623,
+              "l2": 0.005815093871206045
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.8021053075790405,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3838.27099609375,
+              "l2": 68.16081237792969
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.8021053075790405,
+          "gradients": {
+            "factor": {
+              "l1": 1726.5526123046875,
+              "l2": 4.1441450119018555,
+              "cosine_with_one2many": -0.411616319612529
+            },
+            "router": {
+              "l1": 0.42333972454071045,
+              "l2": 0.039190005511045456,
+              "cosine_with_one2many": -0.006840248019153135
+            },
+            "one2one_head": {
+              "l1": 3838.27099609375,
+              "l2": 68.16081237792969,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 133,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015062.jpg",
+      "image_sha256": "146bc30fc71fa8e2a64a7b4934048daf326c0c64acd122080664a52769574f3f",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 1.730291485786438,
+          "gradients": {
+            "factor": {
+              "l1": 789.1846313476562,
+              "l2": 1.852016568183899
+            },
+            "router": {
+              "l1": 0.0802382081747055,
+              "l2": 0.011404722929000854
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.3425049781799316,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3957.525390625,
+              "l2": 42.871604919433594
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.3425049781799316,
+          "gradients": {
+            "factor": {
+              "l1": 159.46893310546875,
+              "l2": 0.38809239864349365,
+              "cosine_with_one2many": -0.06872485007485062
+            },
+            "router": {
+              "l1": 0.030557576566934586,
+              "l2": 0.003907601814717054,
+              "cosine_with_one2many": 0.09401935278840774
+            },
+            "one2one_head": {
+              "l1": 3957.525390625,
+              "l2": 42.871604919433594,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 134,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015427.jpg",
+      "image_sha256": "c08856b04bee1d7e75fe3a54b010bd592ddbfcb8308e25f58985ad27b4f98d54",
+      "gt": 20,
+      "branches": {
+        "one2many": {
+          "loss": 2.261852502822876,
+          "gradients": {
+            "factor": {
+              "l1": 1063.572998046875,
+              "l2": 2.4091649055480957
+            },
+            "router": {
+              "l1": 0.21372371912002563,
+              "l2": 0.027669591829180717
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.8297829627990723,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2227.64794921875,
+              "l2": 17.489145278930664
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.8297829627990723,
+          "gradients": {
+            "factor": {
+              "l1": 184.55398559570312,
+              "l2": 0.41782841086387634,
+              "cosine_with_one2many": 0.5401137122636817
+            },
+            "router": {
+              "l1": 0.034490279853343964,
+              "l2": 0.003809079760685563,
+              "cosine_with_one2many": 0.8361583246993953
+            },
+            "one2one_head": {
+              "l1": 2227.64794921875,
+              "l2": 17.489145278930664,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 135,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015528.jpg",
+      "image_sha256": "778e9a1b141f6531dc28c89db216758e50a1d4d43f08a6d007bc2d8105a282a5",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 0.31572964787483215,
+          "gradients": {
+            "factor": {
+              "l1": 328.3780517578125,
+              "l2": 0.79631507396698
+            },
+            "router": {
+              "l1": 0.10915915668010712,
+              "l2": 0.0101716173812747
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.27460214495658875,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2318.447021484375,
+              "l2": 38.73094940185547
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.27460214495658875,
+          "gradients": {
+            "factor": {
+              "l1": 63.487953186035156,
+              "l2": 0.1524863988161087,
+              "cosine_with_one2many": 0.642318157456105
+            },
+            "router": {
+              "l1": 0.02165036089718342,
+              "l2": 0.0021228038240224123,
+              "cosine_with_one2many": 0.6855260498719559
+            },
+            "one2one_head": {
+              "l1": 2318.447021484375,
+              "l2": 38.73094940185547,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 136,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015559.jpg",
+      "image_sha256": "d7a50a747183a034dd39caf0dd717704148437067ee9f9ec57fd11735a803b07",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 1.023904800415039,
+          "gradients": {
+            "factor": {
+              "l1": 1327.675537109375,
+              "l2": 2.9656782150268555
+            },
+            "router": {
+              "l1": 0.06606335192918777,
+              "l2": 0.009483493864536285
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.9929385185241699,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3748.7080078125,
+              "l2": 58.80439376831055
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.9929385185241699,
+          "gradients": {
+            "factor": {
+              "l1": 381.38836669921875,
+              "l2": 0.8522223830223083,
+              "cosine_with_one2many": 0.8905774370641644
+            },
+            "router": {
+              "l1": 0.03624671697616577,
+              "l2": 0.004398735705763102,
+              "cosine_with_one2many": 0.5794250746753385
+            },
+            "one2one_head": {
+              "l1": 3748.7080078125,
+              "l2": 58.80439376831055,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 137,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015618.jpg",
+      "image_sha256": "c6023d5585cdc55af359ee7c6c3eed8a330b4f3599e99ca4b22359147e94c51d",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 0.20661590993404388,
+          "gradients": {
+            "factor": {
+              "l1": 114.78840637207031,
+              "l2": 0.26869529485702515
+            },
+            "router": {
+              "l1": 0.01789921708405018,
+              "l2": 0.0018166779773309827
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.18515822291374207,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2241.26220703125,
+              "l2": 38.49298858642578
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.18515822291374207,
+          "gradients": {
+            "factor": {
+              "l1": 17.660600662231445,
+              "l2": 0.04062039032578468,
+              "cosine_with_one2many": 0.8331091886137497
+            },
+            "router": {
+              "l1": 0.0028662928380072117,
+              "l2": 0.00032596528762951493,
+              "cosine_with_one2many": 0.7555663790837728
+            },
+            "one2one_head": {
+              "l1": 2241.26220703125,
+              "l2": 38.49298858642578,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 138,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000015927.jpg",
+      "image_sha256": "9f637c2778c74057d61e7485078af3545c5f5334300c6adb465a10b6d0c78486",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 1.456421971321106,
+          "gradients": {
+            "factor": {
+              "l1": 1254.6995849609375,
+              "l2": 3.103576183319092
+            },
+            "router": {
+              "l1": 0.36633792519569397,
+              "l2": 0.03577391803264618
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.1840510368347168,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2343.16064453125,
+              "l2": 28.12041664123535
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.1840510368347168,
+          "gradients": {
+            "factor": {
+              "l1": 102.90351867675781,
+              "l2": 0.26435011625289917,
+              "cosine_with_one2many": 0.622899721407387
+            },
+            "router": {
+              "l1": 0.04283427074551582,
+              "l2": 0.004340729676187038,
+              "cosine_with_one2many": 0.8298594952459437
+            },
+            "one2one_head": {
+              "l1": 2343.16064453125,
+              "l2": 28.12041664123535,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 139,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016030.jpg",
+      "image_sha256": "2b500d976be2400e310ecf8b09b674e37b748972da15f62cb0348cc976a8b0dc",
+      "gt": 15,
+      "branches": {
+        "one2many": {
+          "loss": 3.3073792457580566,
+          "gradients": {
+            "factor": {
+              "l1": 2889.40283203125,
+              "l2": 7.305677890777588
+            },
+            "router": {
+              "l1": 0.6830053329467773,
+              "l2": 0.0711265504360199
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 4.06246280670166,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3493.353515625,
+              "l2": 24.181385040283203
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 4.06246280670166,
+          "gradients": {
+            "factor": {
+              "l1": 406.1275634765625,
+              "l2": 0.9577323794364929,
+              "cosine_with_one2many": 0.5000284866695335
+            },
+            "router": {
+              "l1": 0.06492689251899719,
+              "l2": 0.008537857793271542,
+              "cosine_with_one2many": 0.6939911860594159
+            },
+            "one2one_head": {
+              "l1": 3493.353515625,
+              "l2": 24.181385040283203,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 140,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016064.jpg",
+      "image_sha256": "40c293f2f4f45edad9378b54ba8e650b766bcadaed8b8dd362273f3992efdf10",
+      "gt": 13,
+      "branches": {
+        "one2many": {
+          "loss": 1.6203413009643555,
+          "gradients": {
+            "factor": {
+              "l1": 548.8219604492188,
+              "l2": 1.3121274709701538
+            },
+            "router": {
+              "l1": 0.13292162120342255,
+              "l2": 0.013033662922680378
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.7567681074142456,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 1490.764404296875,
+              "l2": 15.360718727111816
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.7567681074142456,
+          "gradients": {
+            "factor": {
+              "l1": 79.40220642089844,
+              "l2": 0.18272395431995392,
+              "cosine_with_one2many": 0.5039518135308843
+            },
+            "router": {
+              "l1": 0.015353692695498466,
+              "l2": 0.0014485574793070555,
+              "cosine_with_one2many": 0.7743765412145891
+            },
+            "one2one_head": {
+              "l1": 1490.764404296875,
+              "l2": 15.360718727111816,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 141,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016180.jpg",
+      "image_sha256": "b0ee72a6897ad26add9fef26880afae766bb0610267c4df5000f79b93efa418b",
+      "gt": 7,
+      "branches": {
+        "one2many": {
+          "loss": 2.1742095947265625,
+          "gradients": {
+            "factor": {
+              "l1": 3022.3349609375,
+              "l2": 7.357936382293701
+            },
+            "router": {
+              "l1": 0.6320328712463379,
+              "l2": 0.06989942491054535
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.132251262664795,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3253.0029296875,
+              "l2": 23.14752197265625
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.132251262664795,
+          "gradients": {
+            "factor": {
+              "l1": 299.068115234375,
+              "l2": 0.7169596552848816,
+              "cosine_with_one2many": 0.6758380511528449
+            },
+            "router": {
+              "l1": 0.0397697314620018,
+              "l2": 0.004533847793936729,
+              "cosine_with_one2many": 0.8704384951501782
+            },
+            "one2one_head": {
+              "l1": 3253.0029296875,
+              "l2": 23.14752197265625,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 142,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016449.jpg",
+      "image_sha256": "5b10b1fc75c84910285e8b5baeccfe03ef73ab3179258067e4fe6fd1ec7d4931",
+      "gt": 0,
+      "branches": {
+        "one2many": {
+          "loss": 0.12211012840270996,
+          "gradients": {
+            "factor": {
+              "l1": 557.1983642578125,
+              "l2": 1.2781739234924316
+            },
+            "router": {
+              "l1": 0.15551111102104187,
+              "l2": 0.020184066146612167
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.015963315963745117,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 77.7870101928711,
+              "l2": 0.8029640913009644
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.015963315963745117,
+          "gradients": {
+            "factor": {
+              "l1": 10.120793342590332,
+              "l2": 0.02397921495139599,
+              "cosine_with_one2many": 0.8734565295906388
+            },
+            "router": {
+              "l1": 0.0029574111104011536,
+              "l2": 0.00036232880665920675,
+              "cosine_with_one2many": 0.9265479123056964
+            },
+            "one2one_head": {
+              "l1": 77.7870101928711,
+              "l2": 0.8029640913009644,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 143,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016458.jpg",
+      "image_sha256": "f8713da8c7aea5d7839af68a2eae0cbe7315adf81d23e189f2a322933f377ad1",
+      "gt": 5,
+      "branches": {
+        "one2many": {
+          "loss": 1.0991487503051758,
+          "gradients": {
+            "factor": {
+              "l1": 1798.255126953125,
+              "l2": 4.451199054718018
+            },
+            "router": {
+              "l1": 0.3332362771034241,
+              "l2": 0.041144948452711105
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.0641553401947021,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2611.435302734375,
+              "l2": 24.108919143676758
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.0641553401947021,
+          "gradients": {
+            "factor": {
+              "l1": 241.39663696289062,
+              "l2": 0.5972108840942383,
+              "cosine_with_one2many": 0.9900316931242414
+            },
+            "router": {
+              "l1": 0.045926984399557114,
+              "l2": 0.005939876195043325,
+              "cosine_with_one2many": 0.9958289366241538
+            },
+            "one2one_head": {
+              "l1": 2611.435302734375,
+              "l2": 24.108919143676758,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 144,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016497.jpg",
+      "image_sha256": "24b334a3e9d13184730598667514d4a4d79fcc67f0c15b972b5540e5e92a341d",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 0.8502521514892578,
+          "gradients": {
+            "factor": {
+              "l1": 982.093994140625,
+              "l2": 2.2137556076049805
+            },
+            "router": {
+              "l1": 0.12508200109004974,
+              "l2": 0.010791091248393059
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.8541913628578186,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2506.16162109375,
+              "l2": 29.128206253051758
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.8541913628578186,
+          "gradients": {
+            "factor": {
+              "l1": 133.630859375,
+              "l2": 0.30867457389831543,
+              "cosine_with_one2many": 0.8743830453572005
+            },
+            "router": {
+              "l1": 0.02666851319372654,
+              "l2": 0.0019411890534684062,
+              "cosine_with_one2many": 0.8162273893551566
+            },
+            "one2one_head": {
+              "l1": 2506.16162109375,
+              "l2": 29.128206253051758,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 145,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016518.jpg",
+      "image_sha256": "f681a4c193248ca3ae519af56873b6e257b2ac1e1e787a9f02733630875eb209",
+      "gt": 4,
+      "branches": {
+        "one2many": {
+          "loss": 1.0112507343292236,
+          "gradients": {
+            "factor": {
+              "l1": 449.5289306640625,
+              "l2": 1.0457428693771362
+            },
+            "router": {
+              "l1": 0.06801587343215942,
+              "l2": 0.006920746993273497
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.9864487648010254,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 1392.2142333984375,
+              "l2": 19.772214889526367
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.9864487648010254,
+          "gradients": {
+            "factor": {
+              "l1": 105.3739242553711,
+              "l2": 0.2414223700761795,
+              "cosine_with_one2many": 0.26134518914590177
+            },
+            "router": {
+              "l1": 0.01149638369679451,
+              "l2": 0.0011666606878861785,
+              "cosine_with_one2many": 0.37371729661845826
+            },
+            "one2one_head": {
+              "l1": 1392.2142333984375,
+              "l2": 19.772214889526367,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 146,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016525.jpg",
+      "image_sha256": "6a9436c446aaa933bd209eac75a4cb01c2d8025ffc14474d4b50aa20acd72589",
+      "gt": 30,
+      "branches": {
+        "one2many": {
+          "loss": 3.000983715057373,
+          "gradients": {
+            "factor": {
+              "l1": 1135.77783203125,
+              "l2": 2.7248411178588867
+            },
+            "router": {
+              "l1": 0.5162761211395264,
+              "l2": 0.040805164724588394
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 4.239230155944824,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2418.617919921875,
+              "l2": 21.68563461303711
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 4.239230155944824,
+          "gradients": {
+            "factor": {
+              "l1": 333.7781066894531,
+              "l2": 0.8133777379989624,
+              "cosine_with_one2many": 0.46983075731655355
+            },
+            "router": {
+              "l1": 0.13144272565841675,
+              "l2": 0.010813888162374496,
+              "cosine_with_one2many": 0.8773099047703471
+            },
+            "one2one_head": {
+              "l1": 2418.617919921875,
+              "l2": 21.68563461303711,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 147,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016673.jpg",
+      "image_sha256": "26a9d84ef41a18578c93c20125e9ebfbac51024aa071a4af349b9fae389ce642",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 1.0384633541107178,
+          "gradients": {
+            "factor": {
+              "l1": 667.412841796875,
+              "l2": 1.6344490051269531
+            },
+            "router": {
+              "l1": 0.05164241045713425,
+              "l2": 0.005471845157444477
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.3499571084976196,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2660.000244140625,
+              "l2": 28.4614315032959
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.3499571084976196,
+          "gradients": {
+            "factor": {
+              "l1": 111.18396759033203,
+              "l2": 0.26388314366340637,
+              "cosine_with_one2many": 0.04236718623949663
+            },
+            "router": {
+              "l1": 0.017676644027233124,
+              "l2": 0.0013169001322239637,
+              "cosine_with_one2many": -0.3496908092978593
+            },
+            "one2one_head": {
+              "l1": 2660.000244140625,
+              "l2": 28.4614315032959,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 148,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016683.jpg",
+      "image_sha256": "0f00578cc11944d246aa13a4d135e286fd7fd0a31e561a7ee7b4bbe60172401c",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 0.3185448944568634,
+          "gradients": {
+            "factor": {
+              "l1": 355.9762878417969,
+              "l2": 0.9457679390907288
+            },
+            "router": {
+              "l1": 0.04220448434352875,
+              "l2": 0.004185287281870842
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.680895984172821,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 5451.8984375,
+              "l2": 112.73957061767578
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.680895984172821,
+          "gradients": {
+            "factor": {
+              "l1": 3152.572021484375,
+              "l2": 7.635585784912109,
+              "cosine_with_one2many": 0.06498445944344265
+            },
+            "router": {
+              "l1": 0.505257248878479,
+              "l2": 0.05863972380757332,
+              "cosine_with_one2many": -0.7204264039499529
+            },
+            "one2one_head": {
+              "l1": 5451.8984375,
+              "l2": 112.73957061767578,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 149,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000016697.jpg",
+      "image_sha256": "14d2eb88302d2a01205ba963778608caaff990db097615c6c6ae6f8117cd32b2",
+      "gt": 9,
+      "branches": {
+        "one2many": {
+          "loss": 1.9511159658432007,
+          "gradients": {
+            "factor": {
+              "l1": 942.3101806640625,
+              "l2": 2.190263032913208
+            },
+            "router": {
+              "l1": 0.3320542573928833,
+              "l2": 0.05307628959417343
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.4138200283050537,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2337.900634765625,
+              "l2": 22.685791015625
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.4138200283050537,
+          "gradients": {
+            "factor": {
+              "l1": 889.7798461914062,
+              "l2": 2.0680747032165527,
+              "cosine_with_one2many": 0.2505138263610082
+            },
+            "router": {
+              "l1": 0.2316182553768158,
+              "l2": 0.017242558300495148,
+              "cosine_with_one2many": 0.6932310715115734
+            },
+            "one2one_head": {
+              "l1": 2337.900634765625,
+              "l2": 22.685791015625,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 150,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017100.jpg",
+      "image_sha256": "b1d8cb056cb4cf16981feea07053cff6e483162ad099881daa41b4b8a0b206b2",
+      "gt": 1,
+      "branches": {
+        "one2many": {
+          "loss": 1.0798817873001099,
+          "gradients": {
+            "factor": {
+              "l1": 3796.551025390625,
+              "l2": 9.18445110321045
+            },
+            "router": {
+              "l1": 0.41817963123321533,
+              "l2": 0.05568411946296692
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.24398672580719,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3323.51171875,
+              "l2": 39.92167663574219
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.24398672580719,
+          "gradients": {
+            "factor": {
+              "l1": 531.6317749023438,
+              "l2": 1.27413010597229,
+              "cosine_with_one2many": 0.9856705005634999
+            },
+            "router": {
+              "l1": 0.05440439656376839,
+              "l2": 0.007900984026491642,
+              "cosine_with_one2many": 0.9830865320957594
+            },
+            "one2one_head": {
+              "l1": 3323.51171875,
+              "l2": 39.92167663574219,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 151,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017137.jpg",
+      "image_sha256": "e476491a87588f5701a78384de0e3f9c0dfc3162293e2b9d00fdd03dfb36f571",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 1.6520832777023315,
+          "gradients": {
+            "factor": {
+              "l1": 773.3501586914062,
+              "l2": 1.883421540260315
+            },
+            "router": {
+              "l1": 0.18813294172286987,
+              "l2": 0.015824323520064354
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.7372090816497803,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3004.760498046875,
+              "l2": 35.79965591430664
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.7372090816497803,
+          "gradients": {
+            "factor": {
+              "l1": 94.43612670898438,
+              "l2": 0.22458139061927795,
+              "cosine_with_one2many": 0.9213993727287062
+            },
+            "router": {
+              "l1": 0.01927395537495613,
+              "l2": 0.0014217502903193235,
+              "cosine_with_one2many": 0.9764622910908777
+            },
+            "one2one_head": {
+              "l1": 3004.760498046875,
+              "l2": 35.79965591430664,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 152,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017167.jpg",
+      "image_sha256": "ebf5f2265805261c0e70172d4806c103d6fc5a6f2758311f8ddd004056e740fc",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 2.166767120361328,
+          "gradients": {
+            "factor": {
+              "l1": 1304.64013671875,
+              "l2": 2.909471273422241
+            },
+            "router": {
+              "l1": 0.10213629901409149,
+              "l2": 0.015821706503629684
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.240780830383301,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3349.365966796875,
+              "l2": 34.2200927734375
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.240780830383301,
+          "gradients": {
+            "factor": {
+              "l1": 90.28718566894531,
+              "l2": 0.21623480319976807,
+              "cosine_with_one2many": 0.15276344022452987
+            },
+            "router": {
+              "l1": 0.011567378416657448,
+              "l2": 0.0016601919196546078,
+              "cosine_with_one2many": 0.89653352099107
+            },
+            "one2one_head": {
+              "l1": 3349.365966796875,
+              "l2": 34.2200927734375,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 153,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017244.jpg",
+      "image_sha256": "2434b256bb27a67bc9dacce22c4793745dd11d57d61676dd367cbecbc5a14688",
+      "gt": 3,
+      "branches": {
+        "one2many": {
+          "loss": 0.9606475830078125,
+          "gradients": {
+            "factor": {
+              "l1": 921.7203369140625,
+              "l2": 2.141940116882324
+            },
+            "router": {
+              "l1": 0.2636536955833435,
+              "l2": 0.023034919053316116
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 0.9651184678077698,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2421.877685546875,
+              "l2": 22.035198211669922
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 0.9651184678077698,
+          "gradients": {
+            "factor": {
+              "l1": 398.80474853515625,
+              "l2": 0.9062991738319397,
+              "cosine_with_one2many": -0.2391116983983765
+            },
+            "router": {
+              "l1": 0.07419215142726898,
+              "l2": 0.007087374571710825,
+              "cosine_with_one2many": -0.6374424165843803
+            },
+            "one2one_head": {
+              "l1": 2421.877685546875,
+              "l2": 22.035198211669922,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 154,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017350.jpg",
+      "image_sha256": "a74be27bcd9aaf408cebcc707da55516b0479e40fd6264440bd537a0e936352e",
+      "gt": 6,
+      "branches": {
+        "one2many": {
+          "loss": 2.1852192878723145,
+          "gradients": {
+            "factor": {
+              "l1": 2398.329833984375,
+              "l2": 5.798829078674316
+            },
+            "router": {
+              "l1": 0.7331629991531372,
+              "l2": 0.09006022661924362
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.1272385120391846,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3073.560546875,
+              "l2": 20.892620086669922
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.1272385120391846,
+          "gradients": {
+            "factor": {
+              "l1": 423.1656188964844,
+              "l2": 1.0259279012680054,
+              "cosine_with_one2many": 0.6698333148449994
+            },
+            "router": {
+              "l1": 0.13367870450019836,
+              "l2": 0.015787633135914803,
+              "cosine_with_one2many": 0.9431584442584571
+            },
+            "one2one_head": {
+              "l1": 3073.560546875,
+              "l2": 20.892620086669922,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 155,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017474.jpg",
+      "image_sha256": "85bc189eddf4a5d780aadfb4c38a94481981f6501739cfe76dd1362d1f0b7115",
+      "gt": 34,
+      "branches": {
+        "one2many": {
+          "loss": 2.5351998805999756,
+          "gradients": {
+            "factor": {
+              "l1": 561.4821166992188,
+              "l2": 1.386031985282898
+            },
+            "router": {
+              "l1": 0.061558615416288376,
+              "l2": 0.007265647407621145
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.117257595062256,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 1639.43310546875,
+              "l2": 13.091282844543457
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.117257595062256,
+          "gradients": {
+            "factor": {
+              "l1": 59.18987274169922,
+              "l2": 0.15347430109977722,
+              "cosine_with_one2many": 0.452737247535396
+            },
+            "router": {
+              "l1": 0.007773672230541706,
+              "l2": 0.0007065617828629911,
+              "cosine_with_one2many": 0.17102379987047533
+            },
+            "one2one_head": {
+              "l1": 1639.43310546875,
+              "l2": 13.091282844543457,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 156,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017582.jpg",
+      "image_sha256": "f13433d0b015f7d6ef8b45e8c26768c171e53931a40984310f5e77bf034cf161",
+      "gt": 5,
+      "branches": {
+        "one2many": {
+          "loss": 1.9982534646987915,
+          "gradients": {
+            "factor": {
+              "l1": 1685.82373046875,
+              "l2": 3.8830971717834473
+            },
+            "router": {
+              "l1": 0.14709462225437164,
+              "l2": 0.019280489534139633
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.1085152626037598,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3888.1103515625,
+              "l2": 33.29830551147461
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.1085152626037598,
+          "gradients": {
+            "factor": {
+              "l1": 279.80419921875,
+              "l2": 0.6628575325012207,
+              "cosine_with_one2many": 0.38725072916651226
+            },
+            "router": {
+              "l1": 0.03627195581793785,
+              "l2": 0.004444637801498175,
+              "cosine_with_one2many": 0.17392180443160749
+            },
+            "one2one_head": {
+              "l1": 3888.1103515625,
+              "l2": 33.29830551147461,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 157,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017667.jpg",
+      "image_sha256": "290138ee253e52eac225e027a8209fc9772d0ef3bee6545411e579d0cd5b3aff",
+      "gt": 4,
+      "branches": {
+        "one2many": {
+          "loss": 2.355468988418579,
+          "gradients": {
+            "factor": {
+              "l1": 1688.45361328125,
+              "l2": 3.9308419227600098
+            },
+            "router": {
+              "l1": 0.4107702970504761,
+              "l2": 0.04438233748078346
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 3.4702720642089844,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 4750.8828125,
+              "l2": 39.90876007080078
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 3.4702720642089844,
+          "gradients": {
+            "factor": {
+              "l1": 232.5579833984375,
+              "l2": 0.5682937502861023,
+              "cosine_with_one2many": 0.7671115087589127
+            },
+            "router": {
+              "l1": 0.05863716080784798,
+              "l2": 0.0058919345028698444,
+              "cosine_with_one2many": 0.9076684722320998
+            },
+            "one2one_head": {
+              "l1": 4750.8828125,
+              "l2": 39.90876007080078,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 158,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017935.jpg",
+      "image_sha256": "6de0b0a9cf794c99248fff98de63f5a82f62946b7dd2f26d6c8eabe91768dff3",
+      "gt": 2,
+      "branches": {
+        "one2many": {
+          "loss": 0.8671389818191528,
+          "gradients": {
+            "factor": {
+              "l1": 776.9104614257812,
+              "l2": 1.969983696937561
+            },
+            "router": {
+              "l1": 0.058180518448352814,
+              "l2": 0.006789962761104107
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 1.4849773645401,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 3874.71630859375,
+              "l2": 40.41841125488281
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 1.4849773645401,
+          "gradients": {
+            "factor": {
+              "l1": 233.51498413085938,
+              "l2": 0.6138973236083984,
+              "cosine_with_one2many": 0.35135548736154637
+            },
+            "router": {
+              "l1": 0.043672412633895874,
+              "l2": 0.0055752345360815525,
+              "cosine_with_one2many": 0.30859906485670613
+            },
+            "one2one_head": {
+              "l1": 3874.71630859375,
+              "l2": 40.41841125488281,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    },
+    {
+      "cell": "d",
+      "image_index": 159,
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000017945.jpg",
+      "image_sha256": "232397feb422ce739526cec7c9bce4e7c63e73a2c632f2146601f299dcb87f43",
+      "gt": 14,
+      "branches": {
+        "one2many": {
+          "loss": 2.0669357776641846,
+          "gradients": {
+            "factor": {
+              "l1": 810.0909423828125,
+              "l2": 1.8723721504211426
+            },
+            "router": {
+              "l1": 0.11795234680175781,
+              "l2": 0.011736036278307438
+            },
+            "one2one_head": {
+              "l1": 0.0,
+              "l2": 0.0
+            }
+          }
+        },
+        "native_one2one": {
+          "loss": 2.537189483642578,
+          "gradients": {
+            "factor": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "router": {
+              "l1": 0.0,
+              "l2": 0.0
+            },
+            "one2one_head": {
+              "l1": 2296.568115234375,
+              "l2": 16.787553787231445
+            }
+          }
+        },
+        "bridge_one2one": {
+          "loss": 2.537189483642578,
+          "gradients": {
+            "factor": {
+              "l1": 102.09120178222656,
+              "l2": 0.236963152885437,
+              "cosine_with_one2many": 0.4367802789151571
+            },
+            "router": {
+              "l1": 0.013409221544861794,
+              "l2": 0.001456823549233377,
+              "cosine_with_one2many": 0.26645545722851954
+            },
+            "one2one_head": {
+              "l1": 2296.568115234375,
+              "l2": 16.787553787231445,
+              "cosine_with_one2many": null
+            }
+          }
+        }
+      },
+      "forward_max_error": 0.0
+    }
+  ]
+}

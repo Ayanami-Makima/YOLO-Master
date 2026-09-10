@@ -1,0 +1,169 @@
+{
+  "schema": "p2-gradient-bridge-summary/v1",
+  "status": "completed",
+  "sources": [
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_r1/evidence_seed260829.json",
+      "sha256": "f908902e45f5032611b684e4c3a89e100ef3e32fed0595cba3b39dd64047e551"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_r1/evidence_seed260830.json",
+      "sha256": "a50983fdf9488c8dd815ae886e96d4632049ba936f37c494e3d50da2f6a5bcd4"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_r1/evidence_seed260831.json",
+      "sha256": "87598fa36f351dcf0511f0c8da498aa404ad47860b2759f7b10065c2a4ac2a0b"
+    }
+  ],
+  "independent_training_seeds": 3,
+  "distinct_input_images": 32,
+  "paired_seed_cell_image_runs": 192,
+  "forward_max_error": 0.0,
+  "changed_state_tensors": 0,
+  "optimizer_steps": 0,
+  "per_seed": [
+    {
+      "seed": 260829,
+      "cell": "b",
+      "images": 32,
+      "gt": 264,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.8176491986960173,
+        "cosine_mean": 0.6665630115117656,
+        "negative_images": 1,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.0,
+        "cosine_mean": null,
+        "negative_images": 0,
+        "defined_cosine_images": 0
+      }
+    },
+    {
+      "seed": 260829,
+      "cell": "d",
+      "images": 32,
+      "gt": 264,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.6423102465923876,
+        "cosine_mean": 0.64181618531023,
+        "negative_images": 3,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.0061484526463573275,
+        "cosine_mean": 0.6849411750034292,
+        "negative_images": 2,
+        "defined_cosine_images": 32
+      }
+    },
+    {
+      "seed": 260830,
+      "cell": "b",
+      "images": 32,
+      "gt": 264,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.9594929646700621,
+        "cosine_mean": 0.6103369224789837,
+        "negative_images": 2,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.0,
+        "cosine_mean": null,
+        "negative_images": 0,
+        "defined_cosine_images": 0
+      }
+    },
+    {
+      "seed": 260830,
+      "cell": "d",
+      "images": 32,
+      "gt": 264,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.6766230195062235,
+        "cosine_mean": 0.6194560358010424,
+        "negative_images": 1,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.005289185376113892,
+        "cosine_mean": 0.5480927327521737,
+        "negative_images": 4,
+        "defined_cosine_images": 32
+      }
+    },
+    {
+      "seed": 260831,
+      "cell": "b",
+      "images": 32,
+      "gt": 264,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.6587098455056548,
+        "cosine_mean": 0.6523791021354728,
+        "negative_images": 1,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.0,
+        "cosine_mean": null,
+        "negative_images": 0,
+        "defined_cosine_images": 0
+      }
+    },
+    {
+      "seed": 260831,
+      "cell": "d",
+      "images": 32,
+      "gt": 264,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.761608406319283,
+        "cosine_mean": 0.6513055105039803,
+        "negative_images": 0,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.0064058671159727965,
+        "cosine_mean": 0.7062561657973614,
+        "negative_images": 1,
+        "defined_cosine_images": 32
+      }
+    }
+  ],
+  "seed_statistics": {
+    "b": {
+      "factor": {
+        "cosine_seed_mean": 0.643093012042074,
+        "cosine_seed_std": 0.029240671570564446
+      },
+      "router": {
+        "cosine_seed_mean": null,
+        "cosine_seed_std": null
+      }
+    },
+    "d": {
+      "factor": {
+        "cosine_seed_mean": 0.6375259105384176,
+        "cosine_seed_std": 0.01635243415906357
+      },
+      "router": {
+        "cosine_seed_mean": 0.6464300245176547,
+        "cosine_seed_std": 0.08582685722991004
+      }
+    }
+  },
+  "limitation": "Fixed trained checkpoints and first 32 train images; diagnostic only, no accuracy claim"
+}

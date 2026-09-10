@@ -2223,6 +2223,16 @@ def parse_model(d, ch, verbose=True):
                 m.legacy = False
             else:
                 args.extend([reg_max, end2end, [ch[x] for x in f]])
+                if m is Detect:
+                    args.extend(
+                        [
+                            d.get("o2o_moe", False),
+                            d.get("o2o_moe_num_experts", 2),
+                            d.get("o2o_moe_top_k", 1),
+                            d.get("o2o_moe_bottleneck_ratio", 8),
+                            d.get("o2o_moe_balance_loss_coeff", 0.0),
+                        ]
+                    )
                 if m is Segment or m is YOLOESegment or m is Segment26 or m is YOLOESegment26:
                     args[2] = make_divisible(min(args[2], max_channels) * width, 8)
                 if m in {

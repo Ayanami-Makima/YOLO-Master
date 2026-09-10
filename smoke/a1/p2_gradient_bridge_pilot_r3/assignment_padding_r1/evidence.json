@@ -1,0 +1,151 @@
+{
+  "status": "completed",
+  "device": 1,
+  "batch": 1,
+  "imgsz": 640,
+  "precision": "FP32",
+  "fuse": false,
+  "cells": {
+    "d_alpha0p0_seed260829": {
+      "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+      "passes": {
+        "rect0": {
+          "metrics": {
+            "metrics/precision(B)": 0.6162793417095465,
+            "metrics/recall(B)": 0.5384527249048585,
+            "metrics/mAP50(B)": 0.5728302320639027,
+            "metrics/mAP50-95(B)": 0.4243096482648621,
+            "fitness": 0.4243096482648621
+          },
+          "assignment": {
+            "images": 512,
+            "positive_count": 3524,
+            "unique_matched_gt": 3524,
+            "positive_weighted_iou": 0.7885055585027536,
+            "box_loss_mean": 1.0593292332414421,
+            "cls_loss_mean": 1.3138358090873226,
+            "dfl_loss_mean": 0.010476554462911736
+          },
+          "errors_conf025": {
+            "gt": 3536,
+            "tp": 1813,
+            "fp": 695,
+            "fn": 1723,
+            "matched_iou_sum": 1551.9415956139565,
+            "fp_duplicate": 140,
+            "fp_classification": 91,
+            "fp_localization": 215,
+            "fp_classification_localization": 67,
+            "fp_background": 182
+          },
+          "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+          "rect": false
+        },
+        "rect1": {
+          "metrics": {
+            "metrics/precision(B)": 0.5856184298310201,
+            "metrics/recall(B)": 0.540863982078019,
+            "metrics/mAP50(B)": 0.5749171614763725,
+            "metrics/mAP50-95(B)": 0.42386755967524103,
+            "fitness": 0.42386755967524103
+          },
+          "assignment": {
+            "images": 512,
+            "positive_count": 3524,
+            "unique_matched_gt": 3524,
+            "positive_weighted_iou": 0.7874994377727714,
+            "box_loss_mean": 1.0717210286966292,
+            "cls_loss_mean": 1.3002657376346178,
+            "dfl_loss_mean": 0.012041471046813967
+          },
+          "errors_conf025": {
+            "gt": 3536,
+            "tp": 1794,
+            "fp": 675,
+            "fn": 1742,
+            "matched_iou_sum": 1535.0188094377518,
+            "fp_duplicate": 122,
+            "fp_classification": 97,
+            "fp_localization": 210,
+            "fp_classification_localization": 66,
+            "fp_background": 180
+          },
+          "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+          "rect": true
+        }
+      }
+    },
+    "d_alpha0p1_seed260829": {
+      "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+      "passes": {
+        "rect0": {
+          "metrics": {
+            "metrics/precision(B)": 0.6004809400232605,
+            "metrics/recall(B)": 0.5481008735603037,
+            "metrics/mAP50(B)": 0.5758332740098919,
+            "metrics/mAP50-95(B)": 0.4256950176080504,
+            "fitness": 0.4256950176080504
+          },
+          "assignment": {
+            "images": 512,
+            "positive_count": 3526,
+            "unique_matched_gt": 3526,
+            "positive_weighted_iou": 0.7885730941016575,
+            "box_loss_mean": 1.0648196435940918,
+            "cls_loss_mean": 1.3070591662544757,
+            "dfl_loss_mean": 0.01051245208805085
+          },
+          "errors_conf025": {
+            "gt": 3536,
+            "tp": 1814,
+            "fp": 687,
+            "fn": 1722,
+            "matched_iou_sum": 1552.6505935788155,
+            "fp_duplicate": 137,
+            "fp_classification": 92,
+            "fp_localization": 209,
+            "fp_classification_localization": 65,
+            "fp_background": 184
+          },
+          "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+          "rect": false
+        },
+        "rect1": {
+          "metrics": {
+            "metrics/precision(B)": 0.588449292378014,
+            "metrics/recall(B)": 0.5352189335008838,
+            "metrics/mAP50(B)": 0.5718320354769127,
+            "metrics/mAP50-95(B)": 0.42202441960778797,
+            "fitness": 0.42202441960778797
+          },
+          "assignment": {
+            "images": 512,
+            "positive_count": 3525,
+            "unique_matched_gt": 3525,
+            "positive_weighted_iou": 0.7878705222183403,
+            "box_loss_mean": 1.0717908902879572,
+            "cls_loss_mean": 1.3007784302317305,
+            "dfl_loss_mean": 0.011935361715586623
+          },
+          "errors_conf025": {
+            "gt": 3536,
+            "tp": 1783,
+            "fp": 680,
+            "fn": 1753,
+            "matched_iou_sum": 1524.9826319813728,
+            "fp_duplicate": 129,
+            "fp_classification": 90,
+            "fp_localization": 218,
+            "fp_classification_localization": 69,
+            "fp_background": 174
+          },
+          "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+          "rect": true
+        }
+      }
+    }
+  },
+  "script_sha256": "a71e4cc98e156e0b14762e4b2331c2359d2ee21f189ea743635a48ba8ec90e7f",
+  "note": "Read-only native one-to-one assignment/loss diagnostic; no training or checkpoint mutation.",
+  "updated_at": "2026-09-07T11:29:28.090726+00:00"
+}

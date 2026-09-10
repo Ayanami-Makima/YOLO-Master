@@ -5,11 +5,79 @@ from __future__ import annotations
 import copy
 
 import torch
+import torch.nn.functional as F
 from torch import nn
 
 from ..block import A2C2f, C3k2
+from ..routing_protocol import publish_aux_loss
+from .loss import differentiable_balance_loss
 from .modules import A2C2fMoE
 
+
+class OneToOneTop1ResidualAdapter(nn.Module):
+    """Lightweight hard-Top1 residual adapter used only by Detect's one-to-one head.
+
+    The forward path is exactly ``x`` at initialization because ``gain`` is zero.
+    Hard routing is used in the forward pass, while a straight-through probability
+    term lets the one-to-one loss train the router directly.
+    """
+
+    def __init__(
+        self,
+        channels: int,
+        num_experts: int = 2,
+        top_k: int = 1,
+        bottleneck_ratio: int = 8,
+        balance_loss_coeff: float = 0.0,
+    ) -> None:
+        super().__init__()
+        if num_experts != 2 or top_k != 1:
+            raise ValueError("A1 P3 adapter is locked to 2 experts and Top-1")
+        hidden = max(4, channels // bottleneck_ratio)
+        self.channels = int(channels)
+        self.num_experts = int(num_experts)
+        self.top_k = int(top_k)
+        self.hidden = int(hidden)
+        self.balance_loss_coeff = float(balance_loss_coeff)
+        self.router = nn.Conv2d(channels, num_experts, 1, bias=True)
+        self.down = nn.Conv2d(channels, hidden, 1, bias=False)
+        self.experts = nn.ModuleList(
+            nn.Sequential(
+                nn.Conv2d(hidden, hidden, 3, padding=1, groups=hidden, bias=False),
+                nn.SiLU(),
+                nn.Conv2d(hidden, channels, 1, bias=False),
+            )
+            for _ in range(num_experts)
+        )
+        self.gain = nn.Parameter(torch.zeros(channels))
+        self.register_buffer("last_selection_fraction", torch.zeros(num_experts), persistent=False)
+        self.last_aux_loss = torch.zeros((), requires_grad=False)
+        self.last_routing_snapshot = {}
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        logits = self.router(F.adaptive_avg_pool2d(x, 1)).flatten(1)
+        probs = logits.softmax(dim=1)
+        indices = probs.argmax(dim=1)
+        hard = F.one_hot(indices, self.num_experts).to(dtype=probs.dtype)
+        gates = hard + probs - probs.detach()
+        self.last_selection_fraction = hard.detach().mean(dim=0)
+        self.last_routing_snapshot = {
+            "selection_fraction": self.last_selection_fraction.cpu().tolist()
+        }
+        if self.training and self.balance_loss_coeff > 0.0:
+            balance = differentiable_balance_loss(probs, hard.mean(dim=0), self.num_experts)
+            self.last_aux_loss = publish_aux_loss(self, self.balance_loss_coeff * balance, kind="moe")
+        else:
+            self.last_aux_loss = publish_aux_loss(self, x.new_zeros(()), kind="moe", training=False)
+        hidden = self.down(x)
+        residual = torch.stack([expert(hidden) for expert in self.experts], dim=1)
+        residual = (residual * gates[:, :, None, None, None]).sum(dim=1)
+        return x + self.gain.view(1, -1, 1, 1) * residual
+
+    @property
+    def aux_loss(self) -> torch.Tensor:
+        """Training-only balance loss consumed by the canonical MoE collector."""
+        return self.last_aux_loss
 
 class ResidualFactorAdapter(nn.Module):
     """Keep a pretrained base block intact and learn a zero-gated residual factor.

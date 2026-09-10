@@ -1,5 +1,7 @@
 # A1 P2 方案：MoE × End-to-End NMS-free 闭环与机制验证
 
+> 2026-09-07状态更正：当前阶段交付以 [A1_P2_STAGE_DELIVERY_REPORT.md](A1_P2_STAGE_DELIVERY_REPORT.md) 为准。下文历史“已完成”指相应pilot执行完成，不代表P2最终验收。效率筛选的Dense仅按活动MLP计算量匹配；r5训练结论已撤回；最新anchor配对和定位统计存在缺陷，根因仍未确定。优先修订证据，不据已有过度归因直接启动长训。
+
 ## 1. 目标与边界
 
 ### 核心问题
@@ -11,7 +13,7 @@ End-to-End 相对 NMS 路径的精度差距，重点分析召回率、匹配质�
 这不是“再造一个检测头”。任务是核验已有 one-to-many / one-to-one、训练、推理、导出和评测
 路径是否构成真正的 NMS-free 闭环，并定位 MoE 路由与一对一监督是否发生冲突。
 
-### 不可变验收边界
+### 任务书边界与本项目选择
 
 | 项目 | 规则 |
 | --- | --- |
@@ -19,8 +21,8 @@ End-to-End 相对 NMS 路径的精度差距，重点分析召回率、匹配质�
 | 主任务 | COCO detect，MoE on/off × NMS on/off 2×2 |
 | 共同变量 | 数据 manifest、imgsz、batch、epoch、优化器、增强、设备、seed、评测脚本 |
 | 主指标 | mAP50-95、GPU/CPU batch=1 端到端延迟及标准差 |
-| P2 主目标 | detect 侧 End-to-End 精度诊断与 one-to-one assigner/loss 改进 |
-| P2 备选目标 | seg/pose 扩展，或机制级、可复现的负结果 |
+| A1 P2 原文 | 扩展到 seg/pose，或给出梯度稀疏、匹配冲突、路由坍塌等有证据的机制负结果 |
+| 用户选定研究主线 | detect 侧 End-to-End 精度诊断与 one-to-one assigner/loss 受控验证；用于形成机制证据 |
 | 禁止项 | 仅写 `nms=False` 不能证明 NMS-free；必须证明 one-to-one end-to-end 输出未隐式回落到 NMS |
 
 `YOLO-Master-v26.08` 可以说明版本来源；代码差异、成员贡献与最终验收均以以上 SHA 为起点。
@@ -44,7 +46,8 @@ forward 时间，必须报告 mean、std、p50、p90、p99 和逐次样本。
 
 ### P2 判定
 
-P1 通过后，优先完成 detect 侧 End-to-End 精度主线；资源或时间不足时，再选择以下备选主线：
+任务书给出的两条 P2 路线是任务扩展或有证据的机制分析；不要求二者全做，也不要求每轮改动涨点。
+以下为本项目执行顺序，非任务书新增验收条款：
 
 1. 在固定预算下定位并改善 one-to-one 的召回率/匹配/分类/定位差距；
 2. 将 detect 侧已验证的 MoE + NMS-free 方案扩展到 `seg` 或 `pose`，并完成最小对照；或
@@ -231,6 +234,23 @@ smoke/a1/                   # 已完成的准入 Smoke 和原始轻量证据
 
 ## 10. 当前下一步
 
+最新状态（2026-09-06 20:32）：r3真实batch4预检和断点恢复门禁全部通过，已在GPU1启动四格串行
+5000train/512val、5epoch配对pilot。首格日志确认1250step/epoch、实际batch4，设备总显存约19GB。
+以 `p2_gradient_bridge_pilot_r3/README.md`、`launch_gate.json` 为准；下文r2只为历史记录。
+
+2026-09-06 后续更正：r2启动后发现框架OOM时自动减batch，已停止并排除。新目录r3加入真实
+batch/数据量/步数门禁、禁止自动减batch，并在总显存22GiB内调整自身限额。r2历史门禁文件不再代表
+有效的预算放行；不得恢复其权重作为本轮配对实验。新的真实训练状态另见r3报告。
+
+2026-09-06 更新：不重叠32图的三seed复核、四格极小训练及真实断点恢复门禁全部通过。
+已在GPU1启动 `p2_gradient_bridge_pilot_r2`，B/D×alpha0/0.1、5000/512、5epochs、单seed四格串行。
+使用原始initializer，不复用preflight权重。运行与恢复范围、源码锁定及结果判读见
+`p2_gradient_bridge_pilot_r2/README.md`。下一项交付是四格最后epoch对照及错误分析，不是扩大专家数。
+
+2026-09-05 更正：r5 训练未使用正确 checkout，训练消融无效，已撤回“不支持 topk=10”的结论。
+当前已完成源码/权重审计及三 seed、固定32图的梯度通路诊断，优先按
+`P2_REQUIREMENTS_AND_RESEARCH_REVIEW_20260905.md` 的方案推进。下文保留历史阶段记录。
+
 P0 与 P1 r28 已完成并封存。P1 的效率 profiling 和 dispatch 原型表明，MoE 的主要开销来自
 路由同步、Python dispatch、索引和聚合；当前没有可直接合入的加速实现。
 
@@ -318,26 +338,26 @@ D 的 512 图像 hard Top-2 路由审计出现 6 个零选择专家，但所有�
 
 原始证据：`smoke/a1/p2_seg_r1/`；服务器完整目录：`/data/data2/TuJiajun/A1-smoke-r4/p2_seg_r1/`。
 
-### P2-E r5：one-to-one 候选预算单因素 pilot（已完成）
+### P2-E r5：训练消融无效，结论已撤回（2026-09-05 审计更正）
 
-为验证 one-to-one 精度差距是否来自候选生成预算，在固定 r28 B/D 原始 initializer、seed=260829、
-5 epoch、5000/512 pilot、GPU1、batch=4、640×640、SGD `lr0=1e-4`、AMP off、冻结策略和
-`topk2=1` 全部不变的条件下，仅将 TaskAlignedAssigner 的 one-to-one `tal_topk` 从官方默认 7
-改为 10。四组均独立重启：B/D 各有 `topk=7` 对照和 `topk=10` 处理；训练、评测和逐图像审计均正常
-完成，无 Traceback、OOM 或 NaN。
+原 r5 的四组训练结束、checkpoint 和固定 val512 指标仍作为原始记录保留，但不能据此判定
+`tal_topk=10` 无效。重放训练脚本的导入环境发现，它加载的是
+`/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/ultralytics/utils/loss.py`，
+该版本不识别 `A1_E2E_O2O_TAL_TOPK`，设置 10 时实际 assigner 仍为 7。
+B 对照/处理的全部 927 个状态张量、D 的全部 1636 个状态张量分别完全相同。
 
-固定 val512（512 图像、3536 GT）结果：
+原评估脚本加载了正确的新 checkout，因此候选统计确实因 topk 改变；
+但这只是对同一组权重的事后 assigner 审计。assigner 不参与推理，故相同 mAP 并不能证明
+“正确训练的 topk=10 没有收益”。原“拒绝 topk=10、无效缓解已完成”的结论撤回，
+r5 标记为 `invalid_training_intervention`；原始文件不删除、不覆盖。
 
-| 格 | tal_topk | mAP50-95 | precision | recall | 候选正样本/图 | 最终正样本/图 | 候选 GT 覆盖 | 最终 GT 覆盖 | 冲突 anchor/图 | matched IoU |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| B control | 7 | 0.426536 | 0.632169 | 0.533208 | 45.6063 | 6.9350 | 0.998303 | 0.996324 | 1.2598 | 0.837826 |
-| B candidate10 | 10 | 0.426536 | 0.632169 | 0.533208 | 63.0669 | 6.9331 | 0.998303 | 0.996041 | 2.1614 | 0.837910 |
-| D control | 7 | 0.425947 | 0.641006 | 0.531202 | 45.6063 | 6.9311 | 0.998303 | 0.995758 | 1.3012 | 0.837997 |
-| D candidate10 | 10 | 0.425947 | 0.641006 | 0.531202 | 63.0650 | 6.9291 | 0.998303 | 0.995475 | 2.1909 | 0.837951 |
+修复已在训练入口加入仓库路径固定及首 batch 的实际 criterion 参数校验。
+补充 CPU 诊断在 r28 B/D seed260829 的相同 8 张训练图上验证：
+实际 topk=7/10 的损失和 head 梯度相同（8/8），这里只说明该小样本未受到候选预算改变的影响。
+分支梯度审计还确认：native one-to-one 检测损失到 factor/router 的梯度为零，
+one-to-many 检测损失可以传到 factor/router。这与检测头 `detach()` 一致，
+不能写成“MoE 总梯度为零”或“路由必然坍塌”；MoE 辅助损失未包含在该分支实验中。
 
-`tal_topk=10` 使候选正样本增加约 `38.3%`，但候选 GT 覆盖已接近饱和，最终 one-to-one 匹配正样本、
-recall、mAP、FP/FN 和 loss 均未改善；冲突 anchor 反而增加约 `67%–72%`，最终 GT 覆盖略降。B/D
-处理组与各自对照在固定评测中数值完全一致（mAP 差为 `0.0`），因此该因素不能解释 End-to-End
-精度差距，不扩大到三 seed 或长训。r5 拒绝 `tal_topk=10`，保留官方 `tal_topk=7, topk2=1`；
-后续聚焦候选质量/置信度校准或 one-to-one loss 权重等因素，不再盲目扩大候选数。完整证据见
-`smoke/a1/p2_e2e_candidate_r5/`。
+当前研究转入固定输入、前向等价的梯度通路诊断，详见
+`P2_REQUIREMENTS_AND_RESEARCH_REVIEW_20260905.md`。
+审计证据：`p2_r5_validity_20260905/evidence.json`。

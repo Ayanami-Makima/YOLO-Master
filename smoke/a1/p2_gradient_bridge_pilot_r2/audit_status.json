@@ -1,0 +1,14 @@
+{
+  "status": "invalid_batch_budget",
+  "date": "2026-09-06",
+  "cause": "8 GiB allocator cap caused engine OOM fallback from batch 4 to batch 2",
+  "requested_batch": 4,
+  "actual_batch": 2,
+  "preflight_train_images": 256,
+  "pilot_train_images": 5000,
+  "actual_pilot_batches_per_epoch": 2500,
+  "action": "Stopped own sequence and first training cell before epoch 1 completion; preserved all outputs",
+  "launch_gate_superseded": true,
+  "next_run": "p2_gradient_bridge_pilot_r3",
+  "reuse_weights": false
+}

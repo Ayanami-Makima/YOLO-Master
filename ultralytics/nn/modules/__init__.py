@@ -113,6 +113,7 @@ from .moe import (
     A2C2fMoE,
     ABlockMoE,
     C3k2ResidualFactor,
+    OneToOneTop1ResidualAdapter,
     ResidualFactorAdapter,
     AdaptiveGateMoE,
     DetailAwareLowRankHybridAdaptiveGateMoE,
