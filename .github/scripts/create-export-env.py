@@ -35,25 +35,29 @@ def build_env(env_id, root):
     indexes = [token for flag, url in recipe["indexes"] for token in (flag, url)]
     index_strategy = ["--index-strategy", "unsafe-best-match"] if indexes else []
     torch = [f"torch{recipe['torch']}"] if recipe["torch"] else []
-    subprocess.run(
-        [
-            "uv",
-            "pip",
-            "install",
-            "--python",
-            str(python),
-            "-e",
-            package,
-            "pytest",
-            *torch,
-            *recipe["requirements"],
-            *indexes,
-            *index_strategy,
-            "--torch-backend",
-            "cpu",
-        ],
-        check=True,
-    )
+    install_base = [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        str(python),
+        "-e",
+        package,
+        "pytest",
+        *torch,
+        *recipe["requirements"],
+    ]
+    install_options = [*indexes, *index_strategy, "--torch-backend", "cpu"]
+    try:
+        subprocess.run([*install_base, *install_options], check=True)
+    except subprocess.CalledProcessError:
+        # Vendor indexes can be temporarily unreachable (for example, DNS outages).
+        # Retry against the default index; if a dependency truly requires the vendor
+        # index, this retry still fails and preserves the CI failure signal.
+        if not indexes:
+            raise
+        print("Optional vendor package index unavailable; retrying with the default index.", file=sys.stderr)
+        subprocess.run([*install_base, "--torch-backend", "cpu"], check=True)
 
     if recipe["env"]:
         site_packages = next(venv.glob("lib/python*/site-packages"))
