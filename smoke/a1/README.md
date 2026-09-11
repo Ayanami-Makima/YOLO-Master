@@ -159,6 +159,9 @@ candidate-budget direction is therefore archived as a controlled negative
 result, not a claim that larger top-k is universally ineffective.
 
 See [`A1_P2_STAGE_DELIVERY_REPORT.md`](A1_P2_STAGE_DELIVERY_REPORT.md) for the
-complete evidence boundaries, protocols, hashes and limitations. P2 does not
-claim a universal MoE gain, a single proven root cause for every End-to-End
-gap, or production-ready latency improvements.
+complete evidence boundaries, protocols, hashes and limitations. P2 verifies
+that native detach blocks the direct one-to-one detection-loss gradient to
+shared factors/routers, and that a gradient bridge restores this path. It also
+quantifies router/dispatch overhead and diagnoses threshold-related misses.
+Paired training and evaluation show that restoring the gradient path has not
+yet produced a stable AP gain under the tested protocols.

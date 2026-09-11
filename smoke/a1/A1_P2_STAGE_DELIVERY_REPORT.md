@@ -12,8 +12,8 @@
 
 > 2026-09-08更新：下文第6节第1—2项已完成本轮修复和复评，详见 [同GT/实际网格复核报告](p2_gradient_bridge_pilot_r3/SAME_GT_GRID_AUDIT_REPORT.md)。512图、3536GT正确配对；实际anchor/stride/decode误差均0，逆变换最大误差0.00004503像素。D alpha=0/0.1在矩形下净少检出19/31个GT；共同GT的IoU差约-0.000714/-0.001123。旧产物保持其无效/有偏状态，新证据位于same_gt_grid_r2。根因尚未确定，但本报告已完成 P2 证据型结论与归档说明。
 
-整理日期：2026-09-09。作者：Ayanami-Makima（@delei-kong）。
-状态：证据型负结果路线已收尾，可提交导师/评审审阅；不宣称已证明全部精度差距的唯一根因。
+整理日期：2026-09-09。作者：Ayanami-Makima。
+状态：已完成机制验证与受控干预的证据型交付。已验证 detach 是 one-to-one 检测损失无法直接更新共享 factor/router 的原因，并通过梯度桥恢复该通路；配对训练显示通路恢复尚未转化为稳定 AP 提升。
 公共基线：`acce839c7e895d6b179de7f7093fa879e237cc7b`。
 
 ## 1. 任务标准与当前完成情况
@@ -29,7 +29,7 @@
 | seg 扩展 | 已完成单 seed pilot | A/B/D train/val/ONNX export；随机 mask/proto 初始化与短预算限制精度解释 |
 | pose 扩展 | 未开展 | 原文不要求 seg、pose 两项全做 |
 | 正确生效的候选预算复评 | 已完成 | B/D 各自 `topk=7` 对照 `topk=10` 处理，固定 seed、5 epoch、train5000/val512；运行时确认 `topk/topk2=10/1` |
-| 最终机制负结果包 | 已收尾 | 已包含梯度通路、匹配/网格、路由效率、单侧目标、完整 PR/高 IoU、val5000 bootstrap 和 seg pilot；待导师/评审审阅，不能宣称已证明全部精度差距的唯一根因 |
+| 最终机制证据包 | 已收尾 | 验证 detach 阻断直接共享梯度的机制；量化 Router/分发开销，完成匹配/网格、单侧目标、完整 PR/高 IoU、val5000 bootstrap 和 seg pilot，形成可追溯的优化依据 |
 
 ## 2. 效率结果与筛选决策
 
