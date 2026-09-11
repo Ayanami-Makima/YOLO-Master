@@ -1,0 +1,72 @@
+{
+  "schema": "a1-p2-dispatch-mode-benchmark/v1",
+  "status": "completed",
+  "timestamp_utc": "2026-09-03T07:37:53.390693+00:00",
+  "cells": {
+    "c": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+      "modes": {
+        "sparse": {
+          "mean_ms": 27.12407662073771,
+          "p50_ms": 13.911295890808105,
+          "p99_ms": 105.75564575195312,
+          "throughput_images_per_s": 36.867614480761716,
+          "peak_allocated_bytes": 740132352,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.0
+        },
+        "dense_gather": {
+          "mean_ms": 22.20444370905558,
+          "p50_ms": 14.567423820495605,
+          "p99_ms": 54.63935852050781,
+          "throughput_images_per_s": 45.036030314606464,
+          "peak_allocated_bytes": 742813696,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.0
+        },
+        "vmap_grouped": {
+          "mean_ms": 14.146779696146647,
+          "p50_ms": 14.12179183959961,
+          "p99_ms": 14.484479904174805,
+          "throughput_images_per_s": 70.68746537930352,
+          "peak_allocated_bytes": 752599552,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.550445556640625
+        }
+      }
+    },
+    "d": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+      "modes": {
+        "sparse": {
+          "mean_ms": 14.677127488454182,
+          "p50_ms": 14.703840255737305,
+          "p99_ms": 15.144960403442383,
+          "throughput_images_per_s": 68.13322298839836,
+          "peak_allocated_bytes": 743749120,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.0
+        },
+        "dense_gather": {
+          "mean_ms": 14.924131139119465,
+          "p50_ms": 14.973952293395996,
+          "p99_ms": 15.308799743652344,
+          "throughput_images_per_s": 67.00557578047393,
+          "peak_allocated_bytes": 739989504,
+          "moe_count": 6,
+          "max_error_vs_sparse": 0.0
+        },
+        "vmap_grouped": {
+          "mean_ms": 14.320420296986898,
+          "p50_ms": 14.296064376831055,
+          "p99_ms": 14.501888275146484,
+          "throughput_images_per_s": 69.83035268946722,
+          "peak_allocated_bytes": 751355904,
+          "moe_count": 6,
+          "max_error_vs_sparse": 675.649169921875
+        }
+      }
+    }
+  },
+  "completed_timestamp_utc": "2026-09-03T07:37:59.193420+00:00"
+}

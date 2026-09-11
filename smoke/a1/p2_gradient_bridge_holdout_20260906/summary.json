@@ -1,0 +1,170 @@
+{
+  "schema": "p2-gradient-bridge-summary/v1",
+  "status": "completed",
+  "sources": [
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_holdout_20260906/evidence_seed260829.json",
+      "sha256": "7ff536545bfa0b28ae0ba031e5ec888333f9313febac4640ed565697d7a7c762"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_holdout_20260906/evidence_seed260830.json",
+      "sha256": "f8360763398b013abf3570f2e7912063e083e78bb0db00188397a92a8dd45311"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p2_gradient_bridge_holdout_20260906/evidence_seed260831.json",
+      "sha256": "c747fdb64a076e5bcd113c21e99e51a240431580d21c919ff20067f95907b740"
+    }
+  ],
+  "independent_training_seeds": 3,
+  "distinct_input_images": 32,
+  "image_offset": 128,
+  "paired_seed_cell_image_runs": 192,
+  "forward_max_error": 0.0,
+  "changed_state_tensors": 0,
+  "optimizer_steps": 0,
+  "per_seed": [
+    {
+      "seed": 260829,
+      "cell": "b",
+      "images": 32,
+      "gt": 207,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.910832725581713,
+        "cosine_mean": 0.6038704303148678,
+        "negative_images": 2,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.0,
+        "cosine_mean": null,
+        "negative_images": 0,
+        "defined_cosine_images": 0
+      }
+    },
+    {
+      "seed": 260829,
+      "cell": "d",
+      "images": 32,
+      "gt": 207,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.6794066607835703,
+        "cosine_mean": 0.6358411286313224,
+        "negative_images": 1,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.007660008901211768,
+        "cosine_mean": 0.5324617779564187,
+        "negative_images": 5,
+        "defined_cosine_images": 32
+      }
+    },
+    {
+      "seed": 260830,
+      "cell": "b",
+      "images": 32,
+      "gt": 207,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.6968821883783676,
+        "cosine_mean": 0.6330748459738447,
+        "negative_images": 3,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.0,
+        "cosine_mean": null,
+        "negative_images": 0,
+        "defined_cosine_images": 0
+      }
+    },
+    {
+      "seed": 260830,
+      "cell": "d",
+      "images": 32,
+      "gt": 207,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 1.135673578013666,
+        "cosine_mean": 0.6191268590496581,
+        "negative_images": 3,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.009937665937741258,
+        "cosine_mean": 0.6502155604581993,
+        "negative_images": 4,
+        "defined_cosine_images": 32
+      }
+    },
+    {
+      "seed": 260831,
+      "cell": "b",
+      "images": 32,
+      "gt": 207,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.9968057033838704,
+        "cosine_mean": 0.585105085547033,
+        "negative_images": 5,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.0,
+        "cosine_mean": null,
+        "negative_images": 0,
+        "defined_cosine_images": 0
+      }
+    },
+    {
+      "seed": 260831,
+      "cell": "d",
+      "images": 32,
+      "gt": 207,
+      "factor": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.8673306441050954,
+        "cosine_mean": 0.5170744786181602,
+        "negative_images": 3,
+        "defined_cosine_images": 32
+      },
+      "router": {
+        "native_o2o_l2_mean": 0.0,
+        "bridge_o2o_l2_mean": 0.007465243300430302,
+        "cosine_mean": 0.5305298835972198,
+        "negative_images": 5,
+        "defined_cosine_images": 32
+      }
+    }
+  ],
+  "seed_statistics": {
+    "b": {
+      "factor": {
+        "cosine_seed_mean": 0.6073501206119152,
+        "cosine_seed_std": 0.024173449531954494
+      },
+      "router": {
+        "cosine_seed_mean": null,
+        "cosine_seed_std": null
+      }
+    },
+    "d": {
+      "factor": {
+        "cosine_seed_mean": 0.5906808220997136,
+        "cosine_seed_std": 0.06429045070969283
+      },
+      "router": {
+        "cosine_seed_mean": 0.5710690740039459,
+        "cosine_seed_std": 0.06854967390508696
+      }
+    }
+  },
+  "limitation": "Fixed trained checkpoints and 32 contiguous train images; diagnostic only, no accuracy claim"
+}

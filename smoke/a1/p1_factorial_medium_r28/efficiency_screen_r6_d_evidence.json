@@ -1,0 +1,121 @@
+{
+  "schema": "a1-p1-r28-efficiency-screen/v1",
+  "status": "completed",
+  "timestamp_utc": "2026-09-03T07:23:33.655541+00:00",
+  "protocol": {
+    "device": "cuda:0",
+    "cell": "d",
+    "seed": "260829",
+    "batch": 1,
+    "image_size": 640,
+    "warmup": 20,
+    "samples": 60,
+    "scope": "model forward only"
+  },
+  "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/d_formal_seed260829_15ep/weights/last.pt",
+  "variants": {
+    "top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 90.48639348347982,
+        "p50_ms": 92.44979095458984,
+        "p90_ms": 99.64882202148438,
+        "p99_ms": 112.42953605651856,
+        "min_ms": 67.01158142089844,
+        "max_ms": 112.53043365478516
+      },
+      "throughput_images_per_s": 11.051385313335214,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 86.57101478576661,
+        "p50_ms": 87.98328018188477,
+        "p90_ms": 95.90804672241211,
+        "p99_ms": 98.66197105407714,
+        "min_ms": 71.83155059814453,
+        "max_ms": 99.36691284179688
+      },
+      "throughput_images_per_s": 11.551210326858879,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap4_top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 94.85394090016683,
+        "p50_ms": 91.62752151489258,
+        "p90_ms": 108.68531036376953,
+        "p99_ms": 116.69386405944822,
+        "min_ms": 60.74067306518555,
+        "max_ms": 120.50431823730469
+      },
+      "throughput_images_per_s": 10.542524543629597,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap4_top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 83.32210006713868,
+        "p50_ms": 86.81011199951172,
+        "p90_ms": 90.06305313110352,
+        "p99_ms": 93.31779403686524,
+        "min_ms": 67.57273864746094,
+        "max_ms": 93.33350372314453
+      },
+      "throughput_images_per_s": 12.0016178084113,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap2_top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 79.7580078125,
+        "p50_ms": 81.8493423461914,
+        "p90_ms": 90.3354362487793,
+        "p99_ms": 94.44192268371582,
+        "min_ms": 56.2503662109375,
+        "max_ms": 95.70098876953125
+      },
+      "throughput_images_per_s": 12.537926001748453,
+      "peak_allocated_bytes": 729922560,
+      "peak_reserved_bytes": 765460480
+    },
+    "late_top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 39.485728899637856,
+        "p50_ms": 37.494272232055664,
+        "p90_ms": 49.75534172058106,
+        "p99_ms": 58.14033378601073,
+        "min_ms": 16.6329288482666,
+        "max_ms": 60.7907829284668
+      },
+      "throughput_images_per_s": 25.325605677477352,
+      "peak_allocated_bytes": 85371904,
+      "peak_reserved_bytes": 102760448
+    }
+  },
+  "completed_timestamp_utc": "2026-09-03T07:24:16.501572+00:00"
+}

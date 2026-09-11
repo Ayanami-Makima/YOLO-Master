@@ -1,0 +1,476 @@
+{
+  "status": "ready",
+  "blockers": [],
+  "cells": {
+    "a": {
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep",
+      "request_sha256": "6b0de1fb6722f7ee41ce7520aa73498a543829090cd33cb370d9b17a114a9962",
+      "args_sha256": "83a1e6d5d935a163564fa71edeb34dfcb0b803ac3e5144291d836c0b6ad4c525",
+      "results_sha256": "2281d10bee510fae7f3dccbe8e5cc4986ece783116616a8c861312e5a6e11086",
+      "training_manifest_sha256": "ea47482edd01a38284052a7da55d6b15a5ee070b2c53003cc2b8d0422c99648a",
+      "weights": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/weights/best.pt",
+          "sha256": "c81768c67e62f88ffb2589b2e515ee44e318a91bbb6dc7f7cbc1a5cf51756eb4",
+          "bytes": 5432121
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/weights/last.pt",
+          "sha256": "5b7d5b0d5a16dbe64571800ea47be1c3e631e8e0d79e45ecd3d4cbac4de4c30a",
+          "bytes": 5432121
+        }
+      },
+      "runner": {
+        "lane": "0",
+        "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+        "state_sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+        "logs": [
+          {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stdout.log",
+            "sha256": "f5201cc93b8449a84713894deb6707c4470e8345543abdd6e3db060b6af50489",
+            "bytes": 985107
+          }
+        ]
+      },
+      "epochs": 5,
+      "seed": 260829,
+      "last_epoch_mAP50_95": 0.00039,
+      "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+    },
+    "b": {
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep",
+      "request_sha256": "21d7deddeec0393ae523edc4499ccdd44d078cd1ba2cf73438841f7d9ab75778",
+      "args_sha256": "46c74bce289daf7aa842a8df3beeb81d4668527ff904b17bee3b3edfff848540",
+      "results_sha256": "8c4c32ed6a0d06e4340ec8a06da870f8ae2cb6aefa235e069bc28896952992ef",
+      "training_manifest_sha256": "87c8f665efcf03eed5249f75472ba24962fc2229ca6a0ba3a7e305ad82c497d0",
+      "weights": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/weights/best.pt",
+          "sha256": "e86013e10d48c930ac37f834155b17fbaf53fbb83287a55885044711f3ba6d73",
+          "bytes": 5792801
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/weights/last.pt",
+          "sha256": "6ce682efe158178c06893772bdaa3d98b682e4d76561373a54c82e0ac0cdd626",
+          "bytes": 5792801
+        }
+      },
+      "runner": {
+        "lane": "1",
+        "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+        "state_sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+        "logs": [
+          {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stdout.log",
+            "sha256": "6091452ba180511f5941d92aabf850449ea15aec34eacee299da48dea5ff1adc",
+            "bytes": 987271
+          }
+        ]
+      },
+      "epochs": 5,
+      "seed": 260829,
+      "last_epoch_mAP50_95": 0.00023,
+      "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+    },
+    "c": {
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep",
+      "request_sha256": "5fe941fca0b4a6aeebfdeb46e489071c96e5f83c87029c68ed81c6a30369a31e",
+      "args_sha256": "5477a9d69a859f96915afe008e56ff28ba2b78ccd37ec6d7f9d67c5f63ffc910",
+      "results_sha256": "e7bcc19147d8b4e38996dc91a3667bd9629784e80f424bc2ddc6dfa86505cfbe",
+      "training_manifest_sha256": "1812634f30338f7cecb1fd166822312b0159fced83bd4f90e93bff029fe0b55c",
+      "weights": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/weights/best.pt",
+          "sha256": "382ed7399cdb471578517dc536de14ac929631c81c8c2a51a6881580c652c6fa",
+          "bytes": 10486749
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/weights/last.pt",
+          "sha256": "b69e0cb6b4c673154ea98334829e0d46683b6bbe67608cf4cdaa0d0df3255602",
+          "bytes": 10486749
+        }
+      },
+      "runner": {
+        "lane": "0",
+        "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+        "state_sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+        "logs": [
+          {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_full/cli-1adqua94/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_full/cli-1adqua94/stdout.log",
+            "sha256": "bee397bc50472af74a222934f3354a8f3182ccb48566848d175417a96916f30b",
+            "bytes": 1064410
+          }
+        ]
+      },
+      "epochs": 5,
+      "seed": 260829,
+      "last_epoch_mAP50_95": 8e-05,
+      "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+    },
+    "d": {
+      "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep",
+      "request_sha256": "4688a14124203d00a5bf071db92abaf13ad5621d9d2154e255ba04b40dcaf428",
+      "args_sha256": "e21111e929bdcae2a910925913927a197465135e1b62750cc7952b0d654dce8a",
+      "results_sha256": "cbb79d7b56c6910d80c04c4c76ab9dfdb851906552df2512f341114eab03e60b",
+      "training_manifest_sha256": "fa8f8b4352004a08ae04997464d6da8282563fceb29d3fae321e5df162699009",
+      "weights": {
+        "best.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/weights/best.pt",
+          "sha256": "7d59a593f25882efda134439592984d1ece92a9b902e96693641ac89802266dc",
+          "bytes": 10847613
+        },
+        "last.pt": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/weights/last.pt",
+          "sha256": "4ac76936e9fb71fdabde96a1f1e735cba00d6f040bca2704cad0bc084daee7d0",
+          "bytes": 10847613
+        }
+      },
+      "runner": {
+        "lane": "1",
+        "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+        "state_sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+        "logs": [
+          {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/d_full/cli-0h3p8pby/stderr.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/d_full/cli-0h3p8pby/stdout.log",
+            "sha256": "f50ee6fc67f2c3d8040a60aaa81bd5a97b0faaa0d769bb0cbbdd146b7a088ea8",
+            "bytes": 1064131
+          }
+        ]
+      },
+      "epochs": 5,
+      "seed": 260829,
+      "last_epoch_mAP50_95": 0.0003,
+      "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+    }
+  },
+  "protocol_sha256": "83afec2749a8fa5c8c57d0113ff48f90de9f27fc885935a6c8580efafa0dcf72",
+  "protocol": {
+    "schema_version": 2,
+    "locked_sha": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+    "head_sha": "bb06b37973dd9eccc2198d6ac9a5f31174ce8c38",
+    "core_diff_from_lock": "empty",
+    "parent": "ultralytics/cfg/models/26/yolo26-master-n.yaml",
+    "parent_sha256": "135ae1f18197f42039dbd67d4e6104cd531c7d9d65ede77c8edb4d0afa11a223",
+    "dataset_manifest": "/data/data2/TuJiajun/COCO2017/coco/dataset_manifest.json",
+    "dataset_manifest_sha256": "f2a2adb80b6f5d20cb02b600b97158ed3dec032a4b3942ff6c3060f5293fa0ac",
+    "selection_manifest": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/selection_manifest.json",
+    "selection_manifest_sha256": "799f87f1ab06f35740ea52da88c72e0d6644ada9a346d83158b4b6a9ee15dd14",
+    "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+    "data_yaml_sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+    "evaluation_data_yaml": "/data/data2/TuJiajun/COCO2017/coco/coco2017.yaml",
+    "evaluation_data_yaml_sha256": "fadd46a0ceb946a0e4439f072eccc19b6af92b4de545d601dfac367be7adef92",
+    "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+    "checkpoint_sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef",
+    "run_root": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1",
+    "matrix": {
+      "a": {
+        "moe": false,
+        "end2end": false,
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/a_matched.yaml",
+        "sha256": "c318e832fb461abbe675113de323d02ac5acd2ce0559a1fe8fbfa9991b1d0064"
+      },
+      "b": {
+        "moe": false,
+        "end2end": true,
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/b_matched.yaml",
+        "sha256": "eef7dd3573cb7d3d6aaade8dc85092594a7aaa094fb3966d1e7ba40281dae3c2"
+      },
+      "c": {
+        "moe": true,
+        "end2end": false,
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/c_matched.yaml",
+        "sha256": "b0b9b901277a513d5c91ffcd43797aabb8ebf1080d68bf2276859acacf5310d4"
+      },
+      "d": {
+        "moe": true,
+        "end2end": true,
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/d_matched.yaml",
+        "sha256": "41bd192d73d436819864b9fec7dd3da4a992f613aeb34bc682fa442bb6c42e56"
+      }
+    },
+    "requests_sha256": {
+      "a_preflight": "3ff9940a01b4509ec3ac39452e698f24fa536d21e1092bbc0aa16b0ad8ede5c7",
+      "a_full": "6b0de1fb6722f7ee41ce7520aa73498a543829090cd33cb370d9b17a114a9962",
+      "b_preflight": "f312145b722a9093ff67d31d47fa98b7e05323664743dd54d2e3d75a13397e03",
+      "b_full": "21d7deddeec0393ae523edc4499ccdd44d078cd1ba2cf73438841f7d9ab75778",
+      "c_preflight": "7b5b6731da7348faed20a5d9c8151a1808e035d68e39e05f9fba48e20b359f6d",
+      "c_full": "5fe941fca0b4a6aeebfdeb46e489071c96e5f83c87029c68ed81c6a30369a31e",
+      "d_preflight": "156c1b0f51b1df805471b1e0386b791092abb7836c33e538cfe131483c3666e2",
+      "d_full": "4688a14124203d00a5bf071db92abaf13ad5621d9d2154e255ba04b40dcaf428"
+    },
+    "common_training": {
+      "epochs": 5,
+      "imgsz": 640,
+      "batch": 4,
+      "workers": 0,
+      "pretrained": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+      "optimizer": "SGD",
+      "lr0": 0.001,
+      "lrf": 0.01,
+      "momentum": 0.9,
+      "weight_decay": 0.0005,
+      "nbs": 64,
+      "warmup_epochs": 1.0,
+      "warmup_bias_lr": 0.0,
+      "warmup_momentum": 0.8,
+      "amp": false,
+      "deterministic": true,
+      "seed": 260829,
+      "patience": 0,
+      "close_mosaic": 1,
+      "cos_lr": false,
+      "cache": false,
+      "plots": false,
+      "save": true,
+      "save_period": 1,
+      "val": true,
+      "fraction": 1.0,
+      "exist_ok": true
+    },
+    "preflight_data": {
+      "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/coco.yaml",
+      "data_yaml_sha256": "5cff596be05e9a902d16ddcea380098711e5152fbe02588e5304dbd0f9cb9c14",
+      "lists": {
+        "train2017": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/train2017.txt",
+          "sha256": "565e51e347d8448aa4892dd660a002bb3bdc800ce5bdcda60780b50226f1ab0b",
+          "images": 256
+        },
+        "val2017": {
+          "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/val2017.txt",
+          "sha256": "73ba70f0f3dc06b6b2d9b1fc2fafef7e2f801f018184fe22520ba0c0ee20d4d5",
+          "images": 128
+        }
+      }
+    },
+    "scope": "single-seed 5-epoch pretrained P1 pilot; final accuracy is re-evaluated on full COCO val2017",
+    "limitations": [
+      "single seed; report uncertainty and do not claim statistical significance"
+    ]
+  },
+  "lanes": {
+    "0": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+      "sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+      "cells": [
+        "c",
+        "a"
+      ],
+      "status": "completed"
+    },
+    "1": {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+      "sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+      "cells": [
+        "d",
+        "b"
+      ],
+      "status": "completed"
+    }
+  },
+  "identity": {
+    "protocol_sha256": "83afec2749a8fa5c8c57d0113ff48f90de9f27fc885935a6c8580efafa0dcf72",
+    "lanes": {
+      "0": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+        "sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+        "cells": [
+          "c",
+          "a"
+        ],
+        "status": "completed"
+      },
+      "1": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+        "sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+        "cells": [
+          "d",
+          "b"
+        ],
+        "status": "completed"
+      }
+    },
+    "cells": {
+      "a": {
+        "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep",
+        "request_sha256": "6b0de1fb6722f7ee41ce7520aa73498a543829090cd33cb370d9b17a114a9962",
+        "args_sha256": "83a1e6d5d935a163564fa71edeb34dfcb0b803ac3e5144291d836c0b6ad4c525",
+        "results_sha256": "2281d10bee510fae7f3dccbe8e5cc4986ece783116616a8c861312e5a6e11086",
+        "training_manifest_sha256": "ea47482edd01a38284052a7da55d6b15a5ee070b2c53003cc2b8d0422c99648a",
+        "weights": {
+          "best.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/weights/best.pt",
+            "sha256": "c81768c67e62f88ffb2589b2e515ee44e318a91bbb6dc7f7cbc1a5cf51756eb4",
+            "bytes": 5432121
+          },
+          "last.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/a_matched_seed260829_5ep/weights/last.pt",
+            "sha256": "5b7d5b0d5a16dbe64571800ea47be1c3e631e8e0d79e45ecd3d4cbac4de4c30a",
+            "bytes": 5432121
+          }
+        },
+        "runner": {
+          "lane": "0",
+          "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+          "state_sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+          "logs": [
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/a_full/cli-fflbzxcg/stdout.log",
+              "sha256": "f5201cc93b8449a84713894deb6707c4470e8345543abdd6e3db060b6af50489",
+              "bytes": 985107
+            }
+          ]
+        },
+        "epochs": 5,
+        "seed": 260829,
+        "last_epoch_mAP50_95": 0.00039,
+        "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+      },
+      "b": {
+        "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep",
+        "request_sha256": "21d7deddeec0393ae523edc4499ccdd44d078cd1ba2cf73438841f7d9ab75778",
+        "args_sha256": "46c74bce289daf7aa842a8df3beeb81d4668527ff904b17bee3b3edfff848540",
+        "results_sha256": "8c4c32ed6a0d06e4340ec8a06da870f8ae2cb6aefa235e069bc28896952992ef",
+        "training_manifest_sha256": "87c8f665efcf03eed5249f75472ba24962fc2229ca6a0ba3a7e305ad82c497d0",
+        "weights": {
+          "best.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/weights/best.pt",
+            "sha256": "e86013e10d48c930ac37f834155b17fbaf53fbb83287a55885044711f3ba6d73",
+            "bytes": 5792801
+          },
+          "last.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/b_matched_seed260829_5ep/weights/last.pt",
+            "sha256": "6ce682efe158178c06893772bdaa3d98b682e4d76561373a54c82e0ac0cdd626",
+            "bytes": 5792801
+          }
+        },
+        "runner": {
+          "lane": "1",
+          "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+          "state_sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+          "logs": [
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/b_full/cli-kw5bu9tj/stdout.log",
+              "sha256": "6091452ba180511f5941d92aabf850449ea15aec34eacee299da48dea5ff1adc",
+              "bytes": 987271
+            }
+          ]
+        },
+        "epochs": 5,
+        "seed": 260829,
+        "last_epoch_mAP50_95": 0.00023,
+        "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+      },
+      "c": {
+        "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep",
+        "request_sha256": "5fe941fca0b4a6aeebfdeb46e489071c96e5f83c87029c68ed81c6a30369a31e",
+        "args_sha256": "5477a9d69a859f96915afe008e56ff28ba2b78ccd37ec6d7f9d67c5f63ffc910",
+        "results_sha256": "e7bcc19147d8b4e38996dc91a3667bd9629784e80f424bc2ddc6dfa86505cfbe",
+        "training_manifest_sha256": "1812634f30338f7cecb1fd166822312b0159fced83bd4f90e93bff029fe0b55c",
+        "weights": {
+          "best.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/weights/best.pt",
+            "sha256": "382ed7399cdb471578517dc536de14ac929631c81c8c2a51a6881580c652c6fa",
+            "bytes": 10486749
+          },
+          "last.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/c_matched_seed260829_5ep/weights/last.pt",
+            "sha256": "b69e0cb6b4c673154ea98334829e0d46683b6bbe67608cf4cdaa0d0df3255602",
+            "bytes": 10486749
+          }
+        },
+        "runner": {
+          "lane": "0",
+          "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane0_state.json",
+          "state_sha256": "41368461e23892c39bb6b8e0ba8102db108fce5efc30f6335f0eb7d2730926b8",
+          "logs": [
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_full/cli-1adqua94/stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/c_full/cli-1adqua94/stdout.log",
+              "sha256": "bee397bc50472af74a222934f3354a8f3182ccb48566848d175417a96916f30b",
+              "bytes": 1064410
+            }
+          ]
+        },
+        "epochs": 5,
+        "seed": 260829,
+        "last_epoch_mAP50_95": 8e-05,
+        "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+      },
+      "d": {
+        "run_dir": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep",
+        "request_sha256": "4688a14124203d00a5bf071db92abaf13ad5621d9d2154e255ba04b40dcaf428",
+        "args_sha256": "e21111e929bdcae2a910925913927a197465135e1b62750cc7952b0d654dce8a",
+        "results_sha256": "cbb79d7b56c6910d80c04c4c76ab9dfdb851906552df2512f341114eab03e60b",
+        "training_manifest_sha256": "fa8f8b4352004a08ae04997464d6da8282563fceb29d3fae321e5df162699009",
+        "weights": {
+          "best.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/weights/best.pt",
+            "sha256": "7d59a593f25882efda134439592984d1ece92a9b902e96693641ac89802266dc",
+            "bytes": 10847613
+          },
+          "last.pt": {
+            "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/d_matched_seed260829_5ep/weights/last.pt",
+            "sha256": "4ac76936e9fb71fdabde96a1f1e735cba00d6f040bca2704cad0bc084daee7d0",
+            "bytes": 10847613
+          }
+        },
+        "runner": {
+          "lane": "1",
+          "state_path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/full_lane1_state.json",
+          "state_sha256": "aecb736d8f59b1d7a61c62bc8923c7aaf2624431806adaee802cde21dded733e",
+          "logs": [
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/d_full/cli-0h3p8pby/stderr.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            {
+              "path": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/cli_logs/d_full/cli-0h3p8pby/stdout.log",
+              "sha256": "f50ee6fc67f2c3d8040a60aaa81bd5a97b0faaa0d769bb0cbbdd146b7a088ea8",
+              "bytes": 1064131
+            }
+          ]
+        },
+        "epochs": 5,
+        "seed": 260829,
+        "last_epoch_mAP50_95": 0.0003,
+        "checkpoint_selection": "best.pt from native trainer; last CSV row is not its validation result"
+      }
+    }
+  }
+}

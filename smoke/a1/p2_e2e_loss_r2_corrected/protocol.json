@@ -1,0 +1,40 @@
+{
+  "schema": "a1-p2-e2e-cls-gain-r2-c/v1",
+  "experiment": "p2_e2e_loss_r2_corrected",
+  "invalid_prior_experiment": "p2_e2e_loss_r2",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "source_experiment": "p1_factorial_medium_r28",
+  "source_policy": "original_initializer_only",
+  "cells": ["b", "d"],
+  "seed": 260829,
+  "device": "GPU1",
+  "data": {"train_images": 5000, "val_images": 512, "manifest_fixed_order": true},
+  "training": {
+    "epochs": 5,
+    "imgsz": 640,
+    "batch": 4,
+    "optimizer": "SGD",
+    "lr0": 0.0001,
+    "amp": false,
+    "mosaic": 0.0,
+    "mixup": 0.0,
+    "copy_paste": 0.0,
+    "freeze_policy": "P1 BN + residual-factor base frozen",
+    "routing": "hard Top-2 from step zero, deterministic noise-free"
+  },
+  "factor": {
+    "name": "one_to_one_classification_loss_gain",
+    "control": 1.0,
+    "treatment": 1.2,
+    "implementation": "A1_E2E_O2O_CLS_GAIN",
+    "import_isolation": "repository root inserted at sys.path[0]"
+  },
+  "runs": [
+    {"cell": "b", "gain": 1.0},
+    {"cell": "b", "gain": 1.2},
+    {"cell": "d", "gain": 1.0},
+    {"cell": "d", "gain": 1.2}
+  ],
+  "status": "ready_to_run",
+  "next": "run_corrected_sequence_then_evaluate_fixed_val512"
+}

@@ -1,8 +1,11 @@
 # 🐧Please note that this file has been modified by Tencent on 2026/02/07. All Tencent Modifications are Copyright (C) 2026 Tencent.
 """Expert modules for Mixture-of-Experts models"""
+
 import torch
 import torch.nn as nn
 import math
+from ultralytics.nn.modules.conv import Conv
+
 from .utils import FlopsUtils, get_safe_groups
 
 
@@ -20,7 +23,7 @@ class OptimizedSimpleExpert(nn.Module):
             nn.GroupNorm(get_safe_groups(hidden_dim, num_groups), hidden_dim),
             nn.SiLU(inplace=True),
             nn.Conv2d(hidden_dim, out_channels, 1, bias=False),
-            nn.GroupNorm(get_safe_groups(out_channels, num_groups), out_channels)
+            nn.GroupNorm(get_safe_groups(out_channels, num_groups), out_channels),
         )
         self.hidden_dim = hidden_dim
 
@@ -47,12 +50,12 @@ class FusedGhostExpert(nn.Module):
         self.primary_conv = nn.Sequential(
             nn.Conv2d(in_channels, init_channels, kernel_size, padding=kernel_size // 2, bias=False),
             nn.GroupNorm(min(num_groups, init_channels), init_channels),
-            nn.SiLU(inplace=True)
+            nn.SiLU(inplace=True),
         )
         self.cheap_operation = nn.Sequential(
             nn.Conv2d(init_channels, new_channels, 3, padding=1, groups=init_channels, bias=False),
             nn.GroupNorm(min(num_groups, new_channels), new_channels),
-            nn.SiLU(inplace=True)
+            nn.SiLU(inplace=True),
         )
         self.init_channels = init_channels
 
@@ -60,7 +63,7 @@ class FusedGhostExpert(nn.Module):
         x1 = self.primary_conv(x)
         x2 = self.cheap_operation(x1)
         out = torch.cat([x1, x2], dim=1)
-        return out[:, :self.out_channels, :, :]
+        return out[:, : self.out_channels, :, :]
 
     def compute_flops(self, input_shape):
         B, C, H, W = input_shape
@@ -80,16 +83,46 @@ class SimpleExpert(nn.Module):
             nn.GroupNorm(get_safe_groups(hidden_dim, num_groups), hidden_dim),
             nn.SiLU(inplace=True),
             nn.Conv2d(hidden_dim, out_channels, 1, bias=False),
-            nn.GroupNorm(get_safe_groups(out_channels, num_groups), out_channels)
+            nn.GroupNorm(get_safe_groups(out_channels, num_groups), out_channels),
         )
 
-    def forward(self, x): return self.conv(x)
+    def forward(self, x):
+        return self.conv(x)
 
-    def compute_flops(self, input_shape): return FlopsUtils.count_conv2d(self.conv, input_shape)
+    def compute_flops(self, input_shape):
+        return FlopsUtils.count_conv2d(self.conv, input_shape)
+
+
+class DenseMLPExpert(nn.Module):
+    """ABlock-compatible MLP expert for function-preserving dense-to-MoE warm starts.
+
+    Unlike ``SimpleExpert``, this expert intentionally retains the exact two
+    Ultralytics ``Conv`` blocks (including BatchNorm state) used by ``ABlock``.
+    When every expert is initialized from the same dense MLP and the shared
+    expert is zero, normalized Top-K mixing reproduces the dense teacher at the
+    start of training. P1 freezes all BatchNorm modules, so routed sub-batches
+    never update or estimate expert-local running statistics.
+    """
+
+    def __init__(self, in_channels, out_channels, expand_ratio=2, num_groups=8):
+        super().__init__()
+        del num_groups
+        hidden_dim = int(in_channels * expand_ratio)
+        self.mlp = nn.Sequential(
+            Conv(in_channels, hidden_dim, 1),
+            Conv(hidden_dim, out_channels, 1, act=False),
+        )
+
+    def forward(self, x):
+        return self.mlp(x)
+
+    def compute_flops(self, input_shape):
+        return FlopsUtils.count_conv2d(self.mlp, input_shape)
 
 
 class SpatialExpert(nn.Module):
     """Expert network with 3x3 spatial convolution, enabling experts to learn spatial patterns."""
+
     def __init__(self, in_ch, out_ch, expand_ratio=2, num_groups=8):
         super().__init__()
         hid = int(in_ch * expand_ratio)
@@ -123,18 +156,18 @@ class GhostExpert(nn.Module):
         self.primary_conv = nn.Sequential(
             nn.Conv2d(in_channels, init_channels, kernel_size, padding=kernel_size // 2, bias=False),
             nn.GroupNorm(get_safe_groups(init_channels, num_groups), init_channels),
-            nn.SiLU(inplace=True)
+            nn.SiLU(inplace=True),
         )
         self.cheap_operation = nn.Sequential(
             nn.Conv2d(init_channels, new_channels, 3, padding=1, groups=init_channels, bias=False),
             nn.GroupNorm(get_safe_groups(new_channels, num_groups), new_channels),
-            nn.SiLU(inplace=True)
+            nn.SiLU(inplace=True),
         )
 
     def forward(self, x):
         x1 = self.primary_conv(x)
         x2 = self.cheap_operation(x1)
-        return torch.cat([x1, x2], dim=1)[:, :self.out_channels, :, :]
+        return torch.cat([x1, x2], dim=1)[:, : self.out_channels, :, :]
 
     def compute_flops(self, input_shape):
         B, C, H, W = input_shape
@@ -150,6 +183,7 @@ class InvertedResidualExpert(nn.Module):
     Highly efficient expert module: Uses Inverted Residual structure (MobileNetV2 style).
     2-3x faster than standard convolution experts, fewer parameters, stronger non-linearity.
     """
+
     def __init__(self, in_channels, out_channels, expand_ratio=2, kernel_size=3, num_groups=8):
         super().__init__()
         hidden_dim = int(in_channels * expand_ratio)
@@ -160,13 +194,12 @@ class InvertedResidualExpert(nn.Module):
             nn.GroupNorm(get_safe_groups(hidden_dim, num_groups), hidden_dim),
             nn.SiLU(inplace=True),
             # 2. Depthwise Spatial
-            nn.Conv2d(hidden_dim, hidden_dim, kernel_size, padding=kernel_size//2, 
-                      groups=hidden_dim, bias=False),
+            nn.Conv2d(hidden_dim, hidden_dim, kernel_size, padding=kernel_size // 2, groups=hidden_dim, bias=False),
             nn.GroupNorm(get_safe_groups(hidden_dim, num_groups), hidden_dim),
             nn.SiLU(inplace=True),
             # 3. Pointwise Project
             nn.Conv2d(hidden_dim, out_channels, 1, bias=False),
-            nn.GroupNorm(get_safe_groups(out_channels, num_groups), out_channels)
+            nn.GroupNorm(get_safe_groups(out_channels, num_groups), out_channels),
         )
 
     def forward(self, x):
@@ -242,14 +275,12 @@ class SharedInvertedExpertGroup(nn.Module):
             # DDP needs a stable parameter-use graph; export/tracing also cannot
             # capture the data-dependent sparse dispatch below. Compute every
             # expert projection, then gather Top-K and weighted-sum.
-            all_projs = torch.stack(
-                [proj(features) for proj in self.expert_projections], dim=1
-            )  # [B, E, out_C, H, W]
+            all_projs = torch.stack([proj(features) for proj in self.expert_projections], dim=1)  # [B, E, out_C, H, W]
             for k in range(top_k):
-                idx_k = indices[:, k]                                              # [B]
-                w_k = weights[:, k] * valid_mask[:, k].to(weights.dtype)           # [B]
+                idx_k = indices[:, k]  # [B]
+                w_k = weights[:, k] * valid_mask[:, k].to(weights.dtype)  # [B]
                 idx_exp = idx_k.view(B, 1, 1, 1, 1).expand(B, 1, self.out_channels, H, W)
-                selected = torch.gather(all_projs, 1, idx_exp).squeeze(1)          # [B, out_C, H, W]
+                selected = torch.gather(all_projs, 1, idx_exp).squeeze(1)  # [B, out_C, H, W]
                 output = output + selected * w_k.view(B, 1, 1, 1)
             return output
 
@@ -279,8 +310,9 @@ class DepthwiseSeparableConv(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1):
         super(DepthwiseSeparableConv, self).__init__()
         padding = (kernel_size - 1) // 2
-        self.depthwise = nn.Conv2d(in_channels, in_channels, kernel_size,
-                                   stride=stride, padding=padding, groups=in_channels, bias=False)
+        self.depthwise = nn.Conv2d(
+            in_channels, in_channels, kernel_size, stride=stride, padding=padding, groups=in_channels, bias=False
+        )
         self.pointwise = nn.Conv2d(in_channels, out_channels, kernel_size=1, bias=False)
         self.bn = nn.BatchNorm2d(out_channels)
         self.act = nn.SiLU(inplace=True)

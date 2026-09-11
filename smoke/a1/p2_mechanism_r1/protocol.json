@@ -1,0 +1,25 @@
+{
+  "schema": "a1-p2-mechanism-r1/v1",
+  "experiment": "p2_mechanism_r1",
+  "base_ref": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "source_experiment": "p1_factorial_medium_r28",
+  "cells": ["c", "d"],
+  "seeds": [260829, 260830, 260831],
+  "data": {
+    "val_list": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/val2017.txt",
+    "images": 512
+  },
+  "device": "GPU1",
+  "imgsz": 640,
+  "router": "eval noise-free hard Top-2",
+  "metrics": [
+    "expert_load",
+    "selection_fraction",
+    "normalized_entropy",
+    "gini",
+    "dead_expert_count",
+    "candidate_count",
+    "same_class_iou_ge_0.9_duplicate_rate"
+  ],
+  "status": "r1_completed_r2_pending"
+}

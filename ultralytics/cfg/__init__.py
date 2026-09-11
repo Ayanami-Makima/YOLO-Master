@@ -362,6 +362,7 @@ CFG_INT_MIN = {  # minimum valid values for integer arguments used as divisors, 
     "mot_sparse_train_warmup_steps": 0,
     "mot_local_attn_window": 0,
     "moa_regional_max_kv_tokens": 0,
+    "moe_prune_calibration_steps": 1,
 }
 MIXTURE_BOOL_KEYS = frozenset(
     {

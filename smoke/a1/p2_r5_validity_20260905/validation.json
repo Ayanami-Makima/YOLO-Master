@@ -1,0 +1,13 @@
+{
+  "date": "2026-09-05",
+  "focused_tests": {"passed": 7, "failed": 0, "files": ["tests/test_p2_candidate_runtime.py", "tests/test_p2_e2e_assigner.py"]},
+  "changed_python_lint": "passed",
+  "changed_python_format": "passed",
+  "py_compile": "passed",
+  "sequence_bash_syntax": "passed",
+  "real_initializer_runtime_probe": {"expected_topk": 10, "actual_topk": 10, "actual_topk2": 1, "checkout": "YOLO-Master-r28-medium"},
+  "repository_wide_ruff_errors": 2843,
+  "repository_wide_files_requiring_format": 126,
+  "codespell": "unavailable in remote venv",
+  "ci_pass_claimed": false
+}

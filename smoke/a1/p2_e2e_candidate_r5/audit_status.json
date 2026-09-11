@@ -1,0 +1,14 @@
+{
+  "status": "invalid_training_intervention",
+  "audited_at": "2026-09-05",
+  "supersedes": "RESULT_SUMMARY.md conclusion at commit 2764d2a",
+  "reason": "Training loaded the original editable YOLO-Master checkout, whose loss did not recognize A1_E2E_O2O_TAL_TOPK. Both requested conditions trained with topk=7.",
+  "paired_state_comparison": {
+    "b": {"tensors": 927, "changed": 0},
+    "d": {"tensors": 1636, "changed": 0}
+  },
+  "evidence": "../p2_r5_validity_20260905/evidence.json",
+  "permitted_interpretation": "Historical runs and post-hoc assignment statistics on unchanged checkpoint weights",
+  "withdrawn_interpretation": "Topk=10 training is ineffective or rejected on the basis of identical mAP",
+  "original_artifacts_preserved": true
+}

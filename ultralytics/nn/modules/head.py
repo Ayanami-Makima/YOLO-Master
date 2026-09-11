@@ -17,6 +17,7 @@ from ultralytics.utils.torch_utils import TORCH_1_11, fuse_conv_and_bn, smart_in
 
 from .block import DFL, SAVPE, BNContrastiveHead, ContrastiveHead, Proto, Proto26, RealNVP, Residual, SwiGLUFFN
 from .conv import Conv, DWConv
+from .moe import OneToOneTop1ResidualAdapter
 from .transformer import MLP, DeformableTransformerDecoder, DeformableTransformerDecoderLayer
 from .utils import bias_init_with_prob, linear_init
 
@@ -86,7 +87,18 @@ class Detect(nn.Module):
     legacy = False  # backward compatibility for v3/v5/v8/v9 models
     xyxy = False  # xyxy or xywh output
 
-    def __init__(self, nc: int = 80, reg_max=16, end2end=False, ch: tuple = ()):
+    def __init__(
+        self,
+        nc: int = 80,
+        reg_max=16,
+        end2end=False,
+        ch: tuple = (),
+        o2o_moe: bool = False,
+        o2o_moe_num_experts: int = 2,
+        o2o_moe_top_k: int = 1,
+        o2o_moe_bottleneck_ratio: int = 8,
+        o2o_moe_balance_loss_coeff: float = 0.0,
+    ):
         """Initialize the YOLO detection layer with specified number of classes and channels.
 
         Args:
@@ -118,10 +130,45 @@ class Detect(nn.Module):
             )
         )
         self.dfl = DFL(self.reg_max) if self.reg_max > 1 else nn.Identity()
+        self.o2o_moe = None
 
         if end2end:
             self.one2one_cv2 = copy.deepcopy(self.cv2)
             self.one2one_cv3 = copy.deepcopy(self.cv3)
+            self.o2o_moe = nn.ModuleList(
+                OneToOneTop1ResidualAdapter(
+                    c,
+                    o2o_moe_num_experts,
+                    o2o_moe_top_k,
+                    o2o_moe_bottleneck_ratio,
+                    o2o_moe_balance_loss_coeff,
+                )
+                for c in ch
+            ) if o2o_moe else None
+
+    def attach_o2o_moe(
+        self,
+        num_experts: int = 2,
+        top_k: int = 1,
+        bottleneck_ratio: int = 8,
+        balance_loss_coeff: float = 0.0,
+    ) -> nn.ModuleList:
+        """Attach the locked lightweight MoE adapters to the one-to-one path."""
+        if not self.end2end or not hasattr(self, "one2one_cv2"):
+            raise ValueError("one-to-one MoE requires end2end Detect")
+        channels = [module[0].conv.in_channels for module in self.one2one_cv2]
+        self.o2o_moe = nn.ModuleList(
+            OneToOneTop1ResidualAdapter(c, num_experts, top_k, bottleneck_ratio, balance_loss_coeff)
+            for c in channels
+        )
+        self.o2o_moe_config = {
+            "num_experts": int(num_experts),
+            "top_k": int(top_k),
+            "bottleneck_ratio": int(bottleneck_ratio),
+            "balance_loss_coeff": float(balance_loss_coeff),
+            "routing": "hard_top1_straight_through",
+        }
+        return self.o2o_moe
 
     @property
     def one2many(self):
@@ -161,6 +208,15 @@ class Detect(nn.Module):
         preds = self.forward_head(x, **self.one2many)
         if self.end2end:
             x_detach = [xi.detach() for xi in x]
+            # Opt-in detection research only. Default, evaluation and export retain native detach semantics.
+            alpha = getattr(self, "p2_o2o_gradient_alpha", 0.0) if self.training and not self.export else 0.0
+            if alpha:
+                if type(self) is not Detect or not math.isfinite(alpha) or not 0.0 <= alpha <= 1.0:
+                    raise ValueError("P2 gradient bridge requires Detect and a finite alpha in [0, 1]")
+                x_detach = [xd + alpha * (xi - xd) for xi, xd in zip(x, x_detach)]
+            o2o_moe = getattr(self, "o2o_moe", None)
+            if o2o_moe is not None:
+                x_detach = [adapter(feature) for adapter, feature in zip(o2o_moe, x_detach)]
             one2one = self.forward_head(x_detach, **self.one2one)
             preds = {"one2many": preds, "one2one": one2one}
         if self.training:

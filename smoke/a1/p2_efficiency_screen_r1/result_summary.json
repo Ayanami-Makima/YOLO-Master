@@ -1,0 +1,43 @@
+{
+  "schema": "a1-p2-late-moe-efficiency-screen-summary/v1",
+  "status": "completed_no_go_for_long_moe_training",
+  "locked_sha": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "device": "cuda:1",
+  "budget": {
+    "epochs": 1,
+    "train_images": 5000,
+    "val_images": 512,
+    "batch": 4,
+    "imgsz": 640,
+    "optimizer": "SGD",
+    "lr0": 0.0001,
+    "seed": 260829,
+    "amp": false
+  },
+  "accuracy_gate": {
+    "status": "pass",
+    "max_abs_delta_vs_matched_dense": 0.000424045379534,
+    "note": "One-epoch fixed-val pilot; not a formal long-training claim"
+  },
+  "latency_gate": {
+    "status": "fail",
+    "matched_dense_e2e_ms": {
+      "top1": 6.2422575855,
+      "top2": 6.36904769897
+    },
+    "moe_e2e_ms": {
+      "2e_top1": 9.09437308311,
+      "2e_top2": 9.31359971046,
+      "4e_top1": 9.14879806519,
+      "4e_top2": 9.4054434967
+    },
+    "relative_slowdown_range": [0.4569, 0.4768]
+  },
+  "decision": "retain_dense_controls; reject_all_late_layer_moe_variants_for_long_training",
+  "evidence": {
+    "protocol": "protocol.json",
+    "evaluation": "eval_fixed_val512/evaluation_evidence.json",
+    "benchmark": "benchmark/benchmark_evidence.json",
+    "raw_samples": "benchmark/samples.csv"
+  }
+}

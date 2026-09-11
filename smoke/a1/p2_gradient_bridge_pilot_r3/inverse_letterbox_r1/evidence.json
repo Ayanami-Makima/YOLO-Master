@@ -1,0 +1,120 @@
+{
+  "status": "completed",
+  "device": 1,
+  "batch": 1,
+  "imgsz": 640,
+  "precision": "FP32",
+  "cells": {
+    "d_alpha0p0_seed260829": {
+      "checkpoint_sha256": "950f7321bcecfd01006e606ba8902fda6c22c462f143b281e39bb0a4099fd924",
+      "passes": {
+        "rect0": {
+          "metrics": {
+            "metrics/precision(B)": 0.6162793417095465,
+            "metrics/recall(B)": 0.5384527249048585,
+            "metrics/mAP50(B)": 0.5728302320639027,
+            "metrics/mAP50-95(B)": 0.4243096482648621,
+            "fitness": 0.4243096482648621
+          }
+        },
+        "rect1": {
+          "metrics": {
+            "metrics/precision(B)": 0.5856184298310201,
+            "metrics/recall(B)": 0.540863982078019,
+            "metrics/mAP50(B)": 0.5749171614763725,
+            "metrics/mAP50-95(B)": 0.42386755967524103,
+            "fitness": 0.42386755967524103
+          }
+        }
+      },
+      "summary_rect_minus_square": {
+        "images": 512,
+        "box_deltas": {
+          "pred_conf025": -0.076171875,
+          "matches_iou050": -0.037109375,
+          "mean_iou": 0.0006314994945213082,
+          "mean_center_error_norm": 0.0003067405903507533,
+          "mean_width_log_abs": 0.0012668064061506505,
+          "mean_height_log_abs": 0.0020725815526033333
+        },
+        "head": [
+          {
+            "channel_mean_cosine": 0.9975287612730386,
+            "mean_delta": 0.0028806782502215356,
+            "std_delta": 0.004804458818398416,
+            "norm_delta": 0.005485106026753783
+          },
+          {
+            "channel_mean_cosine": 0.9939550188723418,
+            "mean_delta": -0.0014591285289498046,
+            "std_delta": 0.005243252497166395,
+            "norm_delta": 0.0048437456134706736
+          },
+          {
+            "channel_mean_cosine": 0.9810320302402291,
+            "mean_delta": -0.0021523868053918704,
+            "std_delta": 0.0036121400771662593,
+            "norm_delta": 0.0032518432708457112
+          }
+        ]
+      }
+    },
+    "d_alpha0p1_seed260829": {
+      "checkpoint_sha256": "a9478f01e6fda07b53d454a934f87d9dc14f89038c2e12131dc2c02dbe7cb65d",
+      "passes": {
+        "rect0": {
+          "metrics": {
+            "metrics/precision(B)": 0.6004809400232605,
+            "metrics/recall(B)": 0.5481008735603037,
+            "metrics/mAP50(B)": 0.5758332740098919,
+            "metrics/mAP50-95(B)": 0.4256950176080504,
+            "fitness": 0.4256950176080504
+          }
+        },
+        "rect1": {
+          "metrics": {
+            "metrics/precision(B)": 0.588449292378014,
+            "metrics/recall(B)": 0.5352189335008838,
+            "metrics/mAP50(B)": 0.5718320354769127,
+            "metrics/mAP50-95(B)": 0.42202441960778797,
+            "fitness": 0.42202441960778797
+          }
+        }
+      },
+      "summary_rect_minus_square": {
+        "images": 512,
+        "box_deltas": {
+          "pred_conf025": -0.07421875,
+          "matches_iou050": -0.060546875,
+          "mean_iou": -0.0025522102181997157,
+          "mean_center_error_norm": 0.0003042556084621485,
+          "mean_width_log_abs": -0.00016001542583217546,
+          "mean_height_log_abs": 0.0003218635446422702
+        },
+        "head": [
+          {
+            "channel_mean_cosine": 0.9975142782184047,
+            "mean_delta": 0.002719583862926811,
+            "std_delta": 0.004537943168543279,
+            "norm_delta": 0.0051807500422000885
+          },
+          {
+            "channel_mean_cosine": 0.99387077031898,
+            "mean_delta": -0.001402744572260417,
+            "std_delta": 0.005051019135862589,
+            "norm_delta": 0.004665298503823578
+          },
+          {
+            "channel_mean_cosine": 0.981261373084528,
+            "mean_delta": -0.0023750069813104346,
+            "std_delta": 0.004115095711313188,
+            "norm_delta": 0.003713410347700119
+          }
+        ]
+      }
+    }
+  },
+  "script_sha256": "15c5b1a96bd8ccb159aa9cebf7cffd503fc0d09b9f040b380fff4c0c7a85c6e5",
+  "note": "Read-only inverse-letterbox and multi-scale head diagnostic; no training or checkpoint mutation.",
+  "updated_at": "2026-09-07T11:54:18.458983+00:00"
+}

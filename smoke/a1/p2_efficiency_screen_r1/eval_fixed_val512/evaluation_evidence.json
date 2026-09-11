@@ -1,0 +1,125 @@
+{
+  "schema": "a1-p2-late-moe-efficiency-screen-eval/v1",
+  "status": "completed",
+  "created_at": "2026-09-04T05:01:24.223336+00:00",
+  "protocol": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p2_efficiency_screen_r1/protocol.json",
+  "data": {
+    "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+    "sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+    "train_images": 5000,
+    "val_images": 512
+  },
+  "device": "cuda:1",
+  "images": 512,
+  "runs": {
+    "late_dense_eq_top1": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_dense_eq_top1_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "92efbbbe8b9d1902a9ef7ee2f81d88d875883978704e867c06700277e7d5d2b0",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6477791892404859,
+        "metrics/recall(B)": 0.5275536399889159,
+        "metrics/mAP50(B)": 0.5754768880338004,
+        "metrics/mAP50-95(B)": 0.42707574510630936,
+        "fitness": 0.42707574510630936
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_dense_eq_top1/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_dense_eq_top1/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "variant": "late_dense_eq_top1"
+    },
+    "late_dense_eq_top2": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_dense_eq_top2_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "d94eb94e7928c17c589acebc56a2a5c4fd524360a657012245f318f5957eac5a",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6468087770679514,
+        "metrics/recall(B)": 0.528087882381849,
+        "metrics/mAP50(B)": 0.5756181547465244,
+        "metrics/mAP50-95(B)": 0.426883632320408,
+        "fitness": 0.426883632320408
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_dense_eq_top2/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_dense_eq_top2/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "variant": "late_dense_eq_top2"
+    },
+    "late_moe_2e_top1": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_moe_2e_top1_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "f5f72f731041e841062d956ac51c6a5b86762fa16d8306755bc691e118ee4983",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6481461417687043,
+        "metrics/recall(B)": 0.527587914753362,
+        "metrics/mAP50(B)": 0.5756882083879988,
+        "metrics/mAP50-95(B)": 0.4271379763260288,
+        "fitness": 0.4271379763260288
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_moe_2e_top1/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_moe_2e_top1/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "variant": "late_moe_2e_top1"
+    },
+    "late_moe_2e_top2": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_moe_2e_top2_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "5f9673927f46b8eec0fcf0ff03812c16d9a7e7fe1e7b00b7daf9d7aa3f128b15",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6453125147195589,
+        "metrics/recall(B)": 0.5274035641682412,
+        "metrics/mAP50(B)": 0.574684257810758,
+        "metrics/mAP50-95(B)": 0.4267741161335452,
+        "fitness": 0.4267741161335452
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_moe_2e_top2/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_moe_2e_top2/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "variant": "late_moe_2e_top2"
+    },
+    "late_moe_4e_top1": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_moe_4e_top1_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "9e7f046a11507a0eab4c0ea43097363bb178299f90cf4ad00de93b1098e94418",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6459819028897148,
+        "metrics/recall(B)": 0.5275225196465748,
+        "metrics/mAP50(B)": 0.5760134916052689,
+        "metrics/mAP50-95(B)": 0.427499790485843,
+        "fitness": 0.427499790485843
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_moe_4e_top1/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_moe_4e_top1/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "variant": "late_moe_4e_top1"
+    },
+    "late_moe_4e_top2": {
+      "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/pilot/late_moe_4e_top2_seed260829_1ep/weights/last.pt",
+      "checkpoint_sha256": "9cf67fa8412d18b476d402a4172028c617c9d00901e98fe2d9ef2f32d6996e41",
+      "images": 512,
+      "metrics": {
+        "metrics/precision(B)": 0.6458487162294413,
+        "metrics/recall(B)": 0.5262317668822647,
+        "metrics/mAP50(B)": 0.5756938985228757,
+        "metrics/mAP50-95(B)": 0.4267496483729639,
+        "fitness": 0.4267496483729639
+      },
+      "per_image_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_moe_4e_top2/validator/per_image_metrics.csv",
+      "assignment_metrics": "/data/data2/TuJiajun/A1-smoke-r4/p2_efficiency_screen_r1/eval_fixed_val512/late_moe_4e_top2/validator/assignment_metrics.csv",
+      "assigner_branches": [
+        "one2one"
+      ],
+      "variant": "late_moe_4e_top2"
+    }
+  },
+  "completed_at": "2026-09-04T05:02:11.791950+00:00"
+}

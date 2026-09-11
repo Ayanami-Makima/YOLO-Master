@@ -1,0 +1,121 @@
+{
+  "schema": "a1-p1-r28-efficiency-screen/v1",
+  "status": "completed",
+  "timestamp_utc": "2026-09-03T07:25:23.753136+00:00",
+  "protocol": {
+    "device": "cuda:0",
+    "cell": "c",
+    "seed": "260829",
+    "batch": 1,
+    "image_size": 640,
+    "warmup": 20,
+    "samples": 60,
+    "scope": "model forward only"
+  },
+  "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/p1_factorial_medium_r28/formal/seed260829/c_formal_seed260829_15ep/weights/last.pt",
+  "variants": {
+    "top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 13.004413906733195,
+        "p50_ms": 12.94657564163208,
+        "p90_ms": 13.226092720031739,
+        "p99_ms": 13.82338571548462,
+        "min_ms": 12.801823616027832,
+        "max_ms": 13.847552299499512
+      },
+      "throughput_images_per_s": 76.89696799655367,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480
+    },
+    "top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 12.735980796813966,
+        "p50_ms": 12.592128276824951,
+        "p90_ms": 13.010681533813477,
+        "p99_ms": 15.271046934127794,
+        "min_ms": 12.255231857299805,
+        "max_ms": 17.740928649902344
+      },
+      "throughput_images_per_s": 78.51770632774196,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap4_top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 13.556642150878906,
+        "p50_ms": 13.614448070526123,
+        "p90_ms": 14.09391679763794,
+        "p99_ms": 14.461767539978027,
+        "min_ms": 12.933119773864746,
+        "max_ms": 14.583807945251465
+      },
+      "throughput_images_per_s": 73.76457893263546,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 763363328
+    },
+    "cap4_top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 12.334770123163858,
+        "p50_ms": 12.221439838409424,
+        "p90_ms": 12.80592966079712,
+        "p99_ms": 13.295882482528686,
+        "min_ms": 12.105055809020996,
+        "max_ms": 13.316896438598633
+      },
+      "throughput_images_per_s": 81.07163652138665,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480
+    },
+    "cap2_top1": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 12.502331209182739,
+        "p50_ms": 12.416975975036621,
+        "p90_ms": 12.806128025054932,
+        "p99_ms": 13.60603650093078,
+        "min_ms": 12.120063781738281,
+        "max_ms": 14.381343841552734
+      },
+      "throughput_images_per_s": 79.98508304319421,
+      "peak_allocated_bytes": 729261568,
+      "peak_reserved_bytes": 765460480
+    },
+    "late_top2": {
+      "adapter_count": 3,
+      "moe_count": 6,
+      "variant_note": "cap variants remap routes to first N trained experts; late_top2 bypasses earlier factors",
+      "timing": {
+        "n": 60,
+        "mean_ms": 5.6679498513539635,
+        "p50_ms": 5.675055980682373,
+        "p90_ms": 5.902457571029663,
+        "p99_ms": 6.277201967239379,
+        "min_ms": 5.3685760498046875,
+        "max_ms": 6.390783786773682
+      },
+      "throughput_images_per_s": 176.43063651332756,
+      "peak_allocated_bytes": 84710912,
+      "peak_reserved_bytes": 102760448
+    }
+  },
+  "completed_timestamp_utc": "2026-09-03T07:25:30.378152+00:00"
+}

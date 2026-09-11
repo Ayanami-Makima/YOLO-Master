@@ -1,0 +1,54 @@
+{
+  "skill": "yolo.train",
+  "request_id": "d_matched_seed260829_preflight",
+  "runtime": {
+    "cwd": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master",
+    "python": "/data/data2/TuJiajun/A1-smoke-r4/.venv/bin/python",
+    "prefer_cli": true
+  },
+  "inputs": {
+    "model": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/d_matched.yaml",
+    "task": "detect",
+    "data": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/coco.yaml"
+  },
+  "params": {
+    "epochs": 1,
+    "imgsz": 640,
+    "batch": 4,
+    "workers": 0,
+    "pretrained": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+    "optimizer": "SGD",
+    "lr0": 0.001,
+    "lrf": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "nbs": 64,
+    "warmup_epochs": 1.0,
+    "warmup_bias_lr": 0.0,
+    "warmup_momentum": 0.8,
+    "amp": false,
+    "deterministic": true,
+    "seed": 260829,
+    "patience": 0,
+    "close_mosaic": 0,
+    "cos_lr": false,
+    "cache": false,
+    "plots": false,
+    "save": true,
+    "save_period": -1,
+    "val": true,
+    "fraction": 1.0,
+    "exist_ok": true,
+    "device": "1",
+    "project": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1",
+    "name": "d_matched_seed260829_preflight"
+  },
+  "artifacts": {
+    "project": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1/agent_manifests",
+    "name": "d_matched_seed260829_preflight"
+  },
+  "policy": {
+    "async": true,
+    "dry_run": false
+  }
+}

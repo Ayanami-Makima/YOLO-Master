@@ -1,0 +1,104 @@
+{
+  "schema_version": 2,
+  "locked_sha": "acce839c7e895d6b179de7f7093fa879e237cc7b",
+  "head_sha": "bb06b37973dd9eccc2198d6ac9a5f31174ce8c38",
+  "core_diff_from_lock": "empty",
+  "parent": "ultralytics/cfg/models/26/yolo26-master-n.yaml",
+  "parent_sha256": "135ae1f18197f42039dbd67d4e6104cd531c7d9d65ede77c8edb4d0afa11a223",
+  "dataset_manifest": "/data/data2/TuJiajun/COCO2017/coco/dataset_manifest.json",
+  "dataset_manifest_sha256": "f2a2adb80b6f5d20cb02b600b97158ed3dec032a4b3942ff6c3060f5293fa0ac",
+  "selection_manifest": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/selection_manifest.json",
+  "selection_manifest_sha256": "799f87f1ab06f35740ea52da88c72e0d6644ada9a346d83158b4b6a9ee15dd14",
+  "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/coco.yaml",
+  "data_yaml_sha256": "e62c96c61ea2572b4535fd877f6377d72f33574ab1929dcd9d8f8eba907228d8",
+  "evaluation_data_yaml": "/data/data2/TuJiajun/COCO2017/coco/coco2017.yaml",
+  "evaluation_data_yaml_sha256": "fadd46a0ceb946a0e4439f072eccc19b6af92b4de545d601dfac367be7adef92",
+  "checkpoint": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+  "checkpoint_sha256": "9b09cc8bf347f0fc8a5f7657480587f25db09b34bf33b0652110fb03a8ad4fef",
+  "run_root": "/data/data2/TuJiajun/A1-smoke-r4/p1_pretrained_r1",
+  "matrix": {
+    "a": {
+      "moe": false,
+      "end2end": false,
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/a_matched.yaml",
+      "sha256": "c318e832fb461abbe675113de323d02ac5acd2ce0559a1fe8fbfa9991b1d0064"
+    },
+    "b": {
+      "moe": false,
+      "end2end": true,
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/b_matched.yaml",
+      "sha256": "eef7dd3573cb7d3d6aaade8dc85092594a7aaa094fb3966d1e7ba40281dae3c2"
+    },
+    "c": {
+      "moe": true,
+      "end2end": false,
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/c_matched.yaml",
+      "sha256": "b0b9b901277a513d5c91ffcd43797aabb8ebf1080d68bf2276859acacf5310d4"
+    },
+    "d": {
+      "moe": true,
+      "end2end": true,
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/d_matched.yaml",
+      "sha256": "41bd192d73d436819864b9fec7dd3da4a992f613aeb34bc682fa442bb6c42e56"
+    }
+  },
+  "requests_sha256": {
+    "a_preflight": "3ff9940a01b4509ec3ac39452e698f24fa536d21e1092bbc0aa16b0ad8ede5c7",
+    "a_full": "6b0de1fb6722f7ee41ce7520aa73498a543829090cd33cb370d9b17a114a9962",
+    "b_preflight": "f312145b722a9093ff67d31d47fa98b7e05323664743dd54d2e3d75a13397e03",
+    "b_full": "21d7deddeec0393ae523edc4499ccdd44d078cd1ba2cf73438841f7d9ab75778",
+    "c_preflight": "7b5b6731da7348faed20a5d9c8151a1808e035d68e39e05f9fba48e20b359f6d",
+    "c_full": "5fe941fca0b4a6aeebfdeb46e489071c96e5f83c87029c68ed81c6a30369a31e",
+    "d_preflight": "156c1b0f51b1df805471b1e0386b791092abb7836c33e538cfe131483c3666e2",
+    "d_full": "4688a14124203d00a5bf071db92abaf13ad5621d9d2154e255ba04b40dcaf428"
+  },
+  "common_training": {
+    "epochs": 5,
+    "imgsz": 640,
+    "batch": 4,
+    "workers": 0,
+    "pretrained": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/yolo26n.pt",
+    "optimizer": "SGD",
+    "lr0": 0.001,
+    "lrf": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "nbs": 64,
+    "warmup_epochs": 1.0,
+    "warmup_bias_lr": 0.0,
+    "warmup_momentum": 0.8,
+    "amp": false,
+    "deterministic": true,
+    "seed": 260829,
+    "patience": 0,
+    "close_mosaic": 1,
+    "cos_lr": false,
+    "cache": false,
+    "plots": false,
+    "save": true,
+    "save_period": 1,
+    "val": true,
+    "fraction": 1.0,
+    "exist_ok": true
+  },
+  "preflight_data": {
+    "data_yaml": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/coco.yaml",
+    "data_yaml_sha256": "5cff596be05e9a902d16ddcea380098711e5152fbe02588e5304dbd0f9cb9c14",
+    "lists": {
+      "train2017": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/train2017.txt",
+        "sha256": "565e51e347d8448aa4892dd660a002bb3bdc800ce5bdcda60780b50226f1ab0b",
+        "images": 256
+      },
+      "val2017": {
+        "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/preflight_data/val2017.txt",
+        "sha256": "73ba70f0f3dc06b6b2d9b1fc2fafef7e2f801f018184fe22520ba0c0ee20d4d5",
+        "images": 128
+      }
+    }
+  },
+  "scope": "single-seed 5-epoch pretrained P1 pilot; final accuracy is re-evaluated on full COCO val2017",
+  "limitations": [
+    "single seed; report uncertainty and do not claim statistical significance"
+  ]
+}

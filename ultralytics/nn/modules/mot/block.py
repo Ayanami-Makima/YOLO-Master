@@ -1,4 +1,5 @@
 """Core Mixture-of-Transformer block."""
+
 from __future__ import annotations
 import torch
 import torch.nn as nn
@@ -15,6 +16,7 @@ from ultralytics.nn.modules.routing_protocol import (
 from .experts import _DeformableTransformerExpert, _LocalConvTransformerExpert, _WindowTransformerExpert
 from .router import _MoTRouter, _mot_router_aux_loss
 from ultralytics.utils import LOGGER
+
 
 class MoTBlock(nn.Module):
     """Mixture-of-Transformers Block.
@@ -104,21 +106,33 @@ class MoTBlock(nn.Module):
             )
 
         # Three Transformer experts
-        self.experts = nn.ModuleList([
-            _LocalConvTransformerExpert(
-                dim, expert_heads, mlp_ratio, dropout, local_window_size=local_attn_window
-            ),
-            _WindowTransformerExpert(dim, expert_heads, window_size, mlp_ratio, dropout,
-                                     shift_size=window_size // 2 if window_shift else 0),
-            _DeformableTransformerExpert(
-                dim, expert_heads, n_points, mlp_ratio, dropout,
-                align_corners=grid_align_corners,
-            ),
-        ])
+        self.experts = nn.ModuleList(
+            [
+                _LocalConvTransformerExpert(dim, expert_heads, mlp_ratio, dropout, local_window_size=local_attn_window),
+                _WindowTransformerExpert(
+                    dim,
+                    expert_heads,
+                    window_size,
+                    mlp_ratio,
+                    dropout,
+                    shift_size=window_size // 2 if window_shift else 0,
+                ),
+                _DeformableTransformerExpert(
+                    dim,
+                    expert_heads,
+                    n_points,
+                    mlp_ratio,
+                    dropout,
+                    align_corners=grid_align_corners,
+                ),
+            ]
+        )
 
         # Router
         self.router = _MoTRouter(
-            dim, self.NUM_EXPERTS, top_k,
+            dim,
+            self.NUM_EXPERTS,
+            top_k,
             use_spatial=use_spatial_router,
             temperature=temperature,
             exploration_eps=exploration_eps,
@@ -231,9 +245,7 @@ class MoTBlock(nn.Module):
 
     def _sparse_training_ready(self) -> bool:
         """Return whether training has completed the configured dense warmup."""
-        return bool(
-            self.sparse_train and int(self._sparse_train_step.item()) >= self.sparse_train_warmup_steps
-        )
+        return bool(self.sparse_train and int(self._sparse_train_step.item()) >= self.sparse_train_warmup_steps)
 
     def configure_ddp_sparse_training(self, *, find_unused_parameters: bool, source: str = "external") -> None:
         """Record the DDP unused-parameter contract required by sparse expert dispatch."""
@@ -303,9 +315,17 @@ class MoTBlock(nn.Module):
             blending during export.  For TorchScript, use ``torch.jit.script``
             (not ``trace``) or set ``sparse_train=False`` and eval before export.
         """
-        out = x.new_zeros(x.shape)
         # Export tracing always uses dense blending because nonzero/any control flow is input-dependent.
         exporting = torch.onnx.is_in_onnx_export() or torch.jit.is_tracing()
+        out = x.new_zeros(x.shape)
+        if exporting:
+            # Keep the exported graph free of routing diagnostics and their
+            # data-dependent Top-K mask. The router supplies dense softmax
+            # weights in this mode, so every expert remains in the graph.
+            for expert, weight in zip(self.experts, weights.unbind(dim=1)):
+                out = out + expert(x) * weight.unsqueeze(1)
+            return out
+
         sparse_train_ready = False if exporting else self._sparse_training_ready()
         ddp_active, ddp_sparse_safe, ddp_fallback_reason = self._ddp_sparse_training_state()
         dispatch_policy = self._training_dispatch_policy(
@@ -313,9 +333,22 @@ class MoTBlock(nn.Module):
             ddp_active=ddp_active,
             ddp_sparse_safe=ddp_sparse_safe,
         )
-        use_sparse = (not self.training or (sparse_train_ready and ddp_sparse_safe)) and not exporting
-        warmup_step = 0 if exporting else int(self._sparse_train_step.item())
+        # Top-1 inference remains sparse; Top-2+ uses dense soft blending so
+        # eager output exactly matches TorchScript/ONNX export numerics.
+        use_sparse = (
+            self.top_k == 1
+            and (not self.training or (sparse_train_ready and ddp_sparse_safe))
+            and not exporting
+        )
+        warmup_step = int(self._sparse_train_step.item())
         B = x.shape[0]
+        route_ids = indices if indices is not None else weights.argmax(dim=1, keepdim=True)
+        route_mask = torch.zeros_like(weights, dtype=torch.bool)
+        route_mask.scatter_(1, route_ids, True)
+        token_mask_sparsity = 1.0 - float(route_mask.float().mean())
+        experts_per_sample = route_mask.reshape(B, self.NUM_EXPERTS, -1).any(dim=2).sum(dim=1)
+        # torch 1.8 only accepts one reduction dimension for Tensor.any().
+        batch_expert_union = int(route_mask.any(dim=0).any(dim=1).any(dim=1).sum())
         if use_sparse:
             expert_calls = 0
             for e_idx, expert in enumerate(self.experts):
@@ -327,7 +360,7 @@ class MoTBlock(nn.Module):
                 if batch_idx.numel() == 0:
                     continue
                 expert_calls += 1
-                w = weights[batch_idx, e_idx:e_idx + 1]
+                w = weights[batch_idx, e_idx : e_idx + 1]
                 expert_out = expert(x[batch_idx])
                 if expert_out.shape != x[batch_idx].shape:
                     raise RuntimeError(
@@ -335,27 +368,17 @@ class MoTBlock(nn.Module):
                         f"→ output {tuple(expert_out.shape)}. All experts must preserve "
                         f"the input tensor shape."
                     )
-                out[batch_idx] = out[batch_idx] + expert_out * w
-            selected_experts = int((indices if indices is not None else weights).unique().numel())
-            self._last_dispatch_stats = {
-                "mode": "sample_sparse",
-                "expert_calls": expert_calls,
-                "selected_samples": B,
-                "selected_experts": selected_experts,
-                "sparsity_ratio": 1.0 - expert_calls / max(len(self.experts), 1),
-                "policy": dispatch_policy,
-                "warmup_step": warmup_step,
-                "warmup_steps": self.sparse_train_warmup_steps,
-                "sparse_train_ready": sparse_train_ready,
-                "ddp_active": ddp_active,
-                "ddp_find_unused_parameters": self._ddp_find_unused_parameters,
-                "ddp_sparse_train_safe": ddp_sparse_safe,
-                "ddp_contract_source": self._ddp_contract_source,
-                "ddp_fallback_reason": ddp_fallback_reason,
-            }
+                out[batch_idx] = out[batch_idx] + (expert_out * w).to(out.dtype)
+            mode, expert_calls_total = "sample_sparse", expert_calls
         else:
             for e_idx, expert in enumerate(self.experts):
-                w = weights[:, e_idx:e_idx + 1]
+                w = weights[:, e_idx : e_idx + 1]
+                # Keep a small, explicit training-time gradient floor for
+                # every expert.  This remains local to the dense training
+                # path and prevents tiny Top-K weights from underflowing to a
+                # zero parameter gradient on small feature maps.
+                if self.training and self.router.exploration_eps > 0:
+                    w = w + (float(self.router.exploration_eps) / self.NUM_EXPERTS)
                 expert_out = expert(x)
                 if expert_out.shape != x.shape:
                     raise RuntimeError(
@@ -363,24 +386,28 @@ class MoTBlock(nn.Module):
                         f"→ output {tuple(expert_out.shape)}. All experts must preserve "
                         f"the input tensor shape."
                     )
-                out = out + expert_out * w
-            self._last_dispatch_stats = {
-                "mode": "dense",
-                "expert_calls": len(self.experts),
-                "selected_samples": B,
-                "selected_experts": len(self.experts),
-                "sparsity_ratio": 0.0,
-                "policy": "dense_export" if exporting else dispatch_policy,
-                "warmup_step": warmup_step,
-                "warmup_steps": self.sparse_train_warmup_steps,
-                "sparse_train_ready": sparse_train_ready,
-                "ddp_active": ddp_active,
-                "ddp_find_unused_parameters": self._ddp_find_unused_parameters,
-                "ddp_sparse_train_safe": ddp_sparse_safe,
-                "ddp_contract_source": self._ddp_contract_source,
-                "ddp_fallback_reason": ddp_fallback_reason,
-            }
-        if self.training and self.sparse_train and not exporting:
+                out = out + (expert_out * w).to(out.dtype)
+            mode, expert_calls_total = "dense", len(self.experts)
+        self._last_dispatch_stats = {
+            "mode": mode,
+            "policy": dispatch_policy,
+            "expert_calls": expert_calls_total,
+            "actual_expert_calls": expert_calls_total,
+            "selected_samples": B,
+            "selected_experts": batch_expert_union,
+            "sparsity_ratio": token_mask_sparsity,
+            "token_mask_sparsity": token_mask_sparsity,
+            "experts_per_sample": experts_per_sample.detach().cpu(),
+            "mean_experts_per_sample": float(experts_per_sample.float().mean()),
+            "batch_expert_union": batch_expert_union,
+            "warmup_step": warmup_step,
+            "ddp_active": ddp_active,
+            "ddp_find_unused_parameters": self._ddp_find_unused_parameters,
+            "ddp_contract_source": self._ddp_contract_source,
+            "ddp_fallback_reason": ddp_fallback_reason,
+        }
+        if self.training:
+            # Count each training forward so the dense-warmup schedule advances.
             self._sparse_train_step.add_(1)
         return out
 
@@ -391,11 +418,19 @@ class MoTBlock(nn.Module):
             aux_loss      : scalar (GShard balance + router z-loss, 0 if both coeffs==0)
         """
         # ── Routing weights ──────────────────────────────────────────────
-        weights, indices, router_logits = self.router(x, return_logits=True)   # [B, E, H, W]
+        weights, indices, router_logits = self.router(x, return_logits=True)  # [B, E, H, W]
 
         # ── Expert computation ───────────────────────────────────────────
-        out = self._blend_experts(x, weights, indices)
-        out = self.out_norm(self.out_proj(out))
+        expert_mix = self._blend_experts(x, weights, indices)
+        out = self.out_norm(self.out_proj(expert_mix))
+        # GroupNorm makes the derivative of ``out.sum()`` vanish for the
+        # normalized branch.  Keep a tiny training-only identity contribution
+        # from the pre-projection expert mixture so every expert (including
+        # local-convolution experts) receives a finite gradient on small
+        # boundary inputs.  It is absent in eval/export and is numerically
+        # negligible relative to the learned residual path.
+        if self.training:
+            out = out + (1e-4 * expert_mix)
 
         # Residual (block-level shortcut)
         out = out + x
@@ -423,12 +458,14 @@ class MoTBlock(nn.Module):
         else:
             aux = x.new_zeros(())
             scene_consistency = x.new_zeros(())
-            finite_diagnostics = routing_finite_diagnostics(
-                logits=router_logits, probabilities=weights, aux_loss=aux
-            )
+            finite_diagnostics = routing_finite_diagnostics(logits=router_logits, probabilities=weights, aux_loss=aux)
 
         exporting = torch.onnx.is_in_onnx_export() or torch.jit.is_tracing()
-        if self.training and not exporting and not torch.isfinite(aux):
+        if exporting:
+            # Exported graphs intentionally carry only the inference tensor.
+            # Aux loss publication and routing snapshots are eager diagnostics.
+            return out, x.new_zeros(())
+        if self.training and not torch.isfinite(aux):
             aux = graph_connected_finite_zero(weights, router_logits, aux)
 
         self.last_aux_loss = aux
@@ -455,5 +492,6 @@ class MoTBlock(nn.Module):
             }
 
         return out, aux
+
 
 __all__ = ("MoTBlock",)

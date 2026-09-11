@@ -1,0 +1,2112 @@
+{
+  "schema": "p2-r5-validity-and-gradient-audit/v1",
+  "status": "completed",
+  "device": "cpu",
+  "torch_threads": 2,
+  "original_script_import_reproduction": {
+    "module": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/ultralytics/__init__.py",
+    "loss": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/ultralytics/utils/loss.py",
+    "supports_topk_env": false
+  },
+  "controlled_module": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/__init__.py",
+  "controlled_loss": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master-r28-medium/ultralytics/utils/loss.py",
+  "controlled_loss_sha256": "31114fea396efaa3231838d3548b1f4e58049a6d9d00924a443624f9dacd854e",
+  "checkpoint_pairs": {
+    "b": {
+      "paths": [
+        "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/b_control_seed260829_5ep/weights/last.pt",
+        "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/b_candidate10_seed260829_5ep/weights/last.pt"
+      ],
+      "file_sha256": [
+        "c4fb998fc21d33611e15fd9aa5e4426c258c3a649c84ca82b056e73692ad18ee",
+        "cd317c17886a2d9a63b057e44b6a193ad7450792ed6a1680b58735267415fd72"
+      ],
+      "state_tensors": 927,
+      "changed_tensors": 0,
+      "changed_keys": []
+    },
+    "d": {
+      "paths": [
+        "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/d_control_seed260829_5ep/weights/last.pt",
+        "/data/data2/TuJiajun/A1-smoke-r4/p2_e2e_candidate_r5/d_candidate10_seed260829_5ep/weights/last.pt"
+      ],
+      "file_sha256": [
+        "6a7c235fd2f56f6752b918faec37c10a5b98a506a4e1f08896dc991f8255b194",
+        "30659223c37d3cbaeedce75c7ca1ba3d45b3f2cd2fb8cb4fb477364363e9ac07"
+      ],
+      "state_tensors": 1636,
+      "changed_tensors": 0,
+      "changed_keys": []
+    }
+  },
+  "gradients": [
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000151.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 2.357044219970703,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 0,
+          "l1": 4473.714198112488
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3943.197702072561
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 30,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 3,
+        "final_positive_count": 30,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000151.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 2.2558984756469727,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 5179.731123350561
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 21,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 21,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000151.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 2.2558984756469727,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 5179.731123350561
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000154.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 0.41653794050216675,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 0,
+          "l1": 134.66469150781631
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1683.698900424759
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 30,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 3,
+        "final_positive_count": 30,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000154.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 0.3852970600128174,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1665.8172736379784
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 21,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 21,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000154.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 0.3852970600128174,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1665.8172736379784
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000308.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 1.7895201444625854,
+      "gt": 13,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 0,
+          "l1": 976.9023880958557
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1564.5869877748191
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 122,
+        "post_conflict_gt_count": 13,
+        "post_secondary_topk_positive_count": 122,
+        "post_secondary_topk_gt_count": 13,
+        "candidate_positive_count": 122,
+        "candidate_gt_count": 13,
+        "final_positive_count": 122,
+        "final_gt_count": 13
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000308.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 2.2500364780426025,
+      "gt": 13,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2672.4626454152167
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 3,
+        "post_conflict_positive_count": 83,
+        "post_conflict_gt_count": 13,
+        "post_secondary_topk_positive_count": 13,
+        "post_secondary_topk_gt_count": 13,
+        "candidate_positive_count": 86,
+        "candidate_gt_count": 13,
+        "final_positive_count": 13,
+        "final_gt_count": 13
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000308.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 2.2500364780426025,
+      "gt": 13,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2672.4626454152167
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 3,
+        "post_conflict_positive_count": 119,
+        "post_conflict_gt_count": 13,
+        "post_secondary_topk_positive_count": 13,
+        "post_secondary_topk_gt_count": 13,
+        "candidate_positive_count": 122,
+        "candidate_gt_count": 13,
+        "final_positive_count": 13,
+        "final_gt_count": 13
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000531.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 2.377054214477539,
+      "gt": 15,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 0,
+          "l1": 570.6396541595459
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1598.4791803858243
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 8,
+        "post_conflict_positive_count": 90,
+        "post_conflict_gt_count": 14,
+        "post_secondary_topk_positive_count": 90,
+        "post_secondary_topk_gt_count": 14,
+        "candidate_positive_count": 98,
+        "candidate_gt_count": 14,
+        "final_positive_count": 90,
+        "final_gt_count": 14
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000531.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 2.912717580795288,
+      "gt": 15,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2303.9323783526197
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 7,
+        "post_conflict_positive_count": 75,
+        "post_conflict_gt_count": 15,
+        "post_secondary_topk_positive_count": 15,
+        "post_secondary_topk_gt_count": 15,
+        "candidate_positive_count": 82,
+        "candidate_gt_count": 15,
+        "final_positive_count": 15,
+        "final_gt_count": 15
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000531.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 2.912717580795288,
+      "gt": 15,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2303.9323783526197
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 8,
+        "post_conflict_positive_count": 90,
+        "post_conflict_gt_count": 15,
+        "post_secondary_topk_positive_count": 15,
+        "post_secondary_topk_gt_count": 15,
+        "candidate_positive_count": 98,
+        "candidate_gt_count": 15,
+        "final_positive_count": 15,
+        "final_gt_count": 15
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000560.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 2.4807076454162598,
+      "gt": 5,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 0,
+          "l1": 1932.9119291305542
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2920.458506660536
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 42,
+        "post_conflict_gt_count": 5,
+        "post_secondary_topk_positive_count": 42,
+        "post_secondary_topk_gt_count": 5,
+        "candidate_positive_count": 42,
+        "candidate_gt_count": 5,
+        "final_positive_count": 42,
+        "final_gt_count": 5
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000560.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 3.653965473175049,
+      "gt": 5,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3714.7507579773664
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 5,
+        "post_secondary_topk_positive_count": 5,
+        "post_secondary_topk_gt_count": 5,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 5,
+        "final_positive_count": 5,
+        "final_gt_count": 5
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000560.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 3.653965473175049,
+      "gt": 5,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3714.7507579773664
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 42,
+        "post_conflict_gt_count": 5,
+        "post_secondary_topk_positive_count": 5,
+        "post_secondary_topk_gt_count": 5,
+        "candidate_positive_count": 42,
+        "candidate_gt_count": 5,
+        "final_positive_count": 5,
+        "final_gt_count": 5
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000595.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 1.6569150686264038,
+      "gt": 1,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 0,
+          "l1": 937.1288714408875
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2898.9444073331542
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 10,
+        "post_conflict_gt_count": 1,
+        "post_secondary_topk_positive_count": 10,
+        "post_secondary_topk_gt_count": 1,
+        "candidate_positive_count": 10,
+        "candidate_gt_count": 1,
+        "final_positive_count": 10,
+        "final_gt_count": 1
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000595.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 1.3686789274215698,
+      "gt": 1,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2322.6286458075047
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 7,
+        "post_conflict_gt_count": 1,
+        "post_secondary_topk_positive_count": 1,
+        "post_secondary_topk_gt_count": 1,
+        "candidate_positive_count": 7,
+        "candidate_gt_count": 1,
+        "final_positive_count": 1,
+        "final_gt_count": 1
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000595.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 1.3686789274215698,
+      "gt": 1,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2322.6286458075047
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 10,
+        "post_conflict_gt_count": 1,
+        "post_secondary_topk_positive_count": 1,
+        "post_secondary_topk_gt_count": 1,
+        "candidate_positive_count": 10,
+        "candidate_gt_count": 1,
+        "final_positive_count": 1,
+        "final_gt_count": 1
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000715.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 3.4235174655914307,
+      "gt": 43,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 0,
+          "l1": 1437.6525492668152
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1755.5092181386426
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 5,
+        "post_conflict_positive_count": 374,
+        "post_conflict_gt_count": 43,
+        "post_secondary_topk_positive_count": 374,
+        "post_secondary_topk_gt_count": 43,
+        "candidate_positive_count": 379,
+        "candidate_gt_count": 43,
+        "final_positive_count": 374,
+        "final_gt_count": 43
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000715.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 4.154017925262451,
+      "gt": 43,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1963.839908124879
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 4,
+        "post_conflict_positive_count": 270,
+        "post_conflict_gt_count": 43,
+        "post_secondary_topk_positive_count": 43,
+        "post_secondary_topk_gt_count": 43,
+        "candidate_positive_count": 274,
+        "candidate_gt_count": 43,
+        "final_positive_count": 43,
+        "final_gt_count": 43
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000715.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 4.154017925262451,
+      "gt": 43,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1963.839908124879
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 10,
+        "post_conflict_positive_count": 367,
+        "post_conflict_gt_count": 43,
+        "post_secondary_topk_positive_count": 43,
+        "post_secondary_topk_gt_count": 43,
+        "candidate_positive_count": 378,
+        "candidate_gt_count": 43,
+        "final_positive_count": 43,
+        "final_gt_count": 43
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000781.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 1.3442422151565552,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 0,
+          "l1": 1900.9812440872192
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2374.197008024901
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 23,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 23,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 23,
+        "candidate_gt_count": 3,
+        "final_positive_count": 23,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000781.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 2.3372271060943604,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3406.65611462947
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 17,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 17,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "b",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000781.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 2.3372271060943604,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 39,
+          "none": 39,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 0,
+          "none": 0,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3406.65611462947
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 23,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 23,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000151.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 2.4493749141693115,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 88,
+          "l1": 5468.683483521221
+        },
+        "router": {
+          "tensors": 12,
+          "none": 0,
+          "l1": 1.734587113140151
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3719.690852086991
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 30,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 3,
+        "final_positive_count": 30,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000151.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 2.385401487350464,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 5118.946382444352
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 21,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 21,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000151.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 2.385401487350464,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 5118.946382444352
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000154.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 0.4162803590297699,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 88,
+          "l1": 112.97592098731002
+        },
+        "router": {
+          "tensors": 12,
+          "none": 0,
+          "l1": 0.015814256848898367
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1606.9052972162026
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 30,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 3,
+        "final_positive_count": 30,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000154.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 0.3822403848171234,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1678.152793248184
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 21,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 21,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000154.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 0.3822403848171234,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1678.152793248184
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000308.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 1.7821705341339111,
+      "gt": 13,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 88,
+          "l1": 1132.7745388015173
+        },
+        "router": {
+          "tensors": 12,
+          "none": 0,
+          "l1": 0.2264194949530065
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1632.7122792080045
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 122,
+        "post_conflict_gt_count": 13,
+        "post_secondary_topk_positive_count": 122,
+        "post_secondary_topk_gt_count": 13,
+        "candidate_positive_count": 122,
+        "candidate_gt_count": 13,
+        "final_positive_count": 122,
+        "final_gt_count": 13
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000308.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 2.2723541259765625,
+      "gt": 13,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2307.148558150977
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 3,
+        "post_conflict_positive_count": 83,
+        "post_conflict_gt_count": 13,
+        "post_secondary_topk_positive_count": 13,
+        "post_secondary_topk_gt_count": 13,
+        "candidate_positive_count": 86,
+        "candidate_gt_count": 13,
+        "final_positive_count": 13,
+        "final_gt_count": 13
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000308.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 2.2723541259765625,
+      "gt": 13,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2307.148558150977
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 4,
+        "post_conflict_positive_count": 118,
+        "post_conflict_gt_count": 13,
+        "post_secondary_topk_positive_count": 13,
+        "post_secondary_topk_gt_count": 13,
+        "candidate_positive_count": 122,
+        "candidate_gt_count": 13,
+        "final_positive_count": 13,
+        "final_gt_count": 13
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000531.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 2.3652801513671875,
+      "gt": 15,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 88,
+          "l1": 572.7253813158022
+        },
+        "router": {
+          "tensors": 12,
+          "none": 0,
+          "l1": 0.11923426494468004
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1608.360271838028
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 9,
+        "post_conflict_positive_count": 89,
+        "post_conflict_gt_count": 14,
+        "post_secondary_topk_positive_count": 89,
+        "post_secondary_topk_gt_count": 14,
+        "candidate_positive_count": 98,
+        "candidate_gt_count": 14,
+        "final_positive_count": 89,
+        "final_gt_count": 14
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000531.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 2.932788133621216,
+      "gt": 15,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2274.0585228810087
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 6,
+        "post_conflict_positive_count": 76,
+        "post_conflict_gt_count": 15,
+        "post_secondary_topk_positive_count": 15,
+        "post_secondary_topk_gt_count": 15,
+        "candidate_positive_count": 82,
+        "candidate_gt_count": 15,
+        "final_positive_count": 15,
+        "final_gt_count": 15
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000531.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 2.932788133621216,
+      "gt": 15,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2274.0585228810087
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 8,
+        "post_conflict_positive_count": 90,
+        "post_conflict_gt_count": 15,
+        "post_secondary_topk_positive_count": 15,
+        "post_secondary_topk_gt_count": 15,
+        "candidate_positive_count": 98,
+        "candidate_gt_count": 15,
+        "final_positive_count": 15,
+        "final_gt_count": 15
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000560.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 2.4594552516937256,
+      "gt": 5,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 88,
+          "l1": 1888.4058706767391
+        },
+        "router": {
+          "tensors": 12,
+          "none": 0,
+          "l1": 0.2974522120784968
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3070.6675043068826
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 42,
+        "post_conflict_gt_count": 5,
+        "post_secondary_topk_positive_count": 42,
+        "post_secondary_topk_gt_count": 5,
+        "candidate_positive_count": 42,
+        "candidate_gt_count": 5,
+        "final_positive_count": 42,
+        "final_gt_count": 5
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000560.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 3.654773712158203,
+      "gt": 5,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3687.065038256347
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 30,
+        "post_conflict_gt_count": 5,
+        "post_secondary_topk_positive_count": 5,
+        "post_secondary_topk_gt_count": 5,
+        "candidate_positive_count": 30,
+        "candidate_gt_count": 5,
+        "final_positive_count": 5,
+        "final_gt_count": 5
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000560.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 3.654773712158203,
+      "gt": 5,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3687.065038256347
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 42,
+        "post_conflict_gt_count": 5,
+        "post_secondary_topk_positive_count": 5,
+        "post_secondary_topk_gt_count": 5,
+        "candidate_positive_count": 42,
+        "candidate_gt_count": 5,
+        "final_positive_count": 5,
+        "final_gt_count": 5
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000595.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 1.6722649335861206,
+      "gt": 1,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 88,
+          "l1": 1182.0159425034508
+        },
+        "router": {
+          "tensors": 12,
+          "none": 0,
+          "l1": 0.09970610284653958
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2940.277385839261
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 10,
+        "post_conflict_gt_count": 1,
+        "post_secondary_topk_positive_count": 10,
+        "post_secondary_topk_gt_count": 1,
+        "candidate_positive_count": 10,
+        "candidate_gt_count": 1,
+        "final_positive_count": 10,
+        "final_gt_count": 1
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000595.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 1.3877991437911987,
+      "gt": 1,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2413.1527669588104
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 7,
+        "post_conflict_gt_count": 1,
+        "post_secondary_topk_positive_count": 1,
+        "post_secondary_topk_gt_count": 1,
+        "candidate_positive_count": 7,
+        "candidate_gt_count": 1,
+        "final_positive_count": 1,
+        "final_gt_count": 1
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000595.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 1.3877991437911987,
+      "gt": 1,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2413.1527669588104
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 10,
+        "post_conflict_gt_count": 1,
+        "post_secondary_topk_positive_count": 1,
+        "post_secondary_topk_gt_count": 1,
+        "candidate_positive_count": 10,
+        "candidate_gt_count": 1,
+        "final_positive_count": 1,
+        "final_gt_count": 1
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000715.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 3.4274489879608154,
+      "gt": 43,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 88,
+          "l1": 1384.148849419551
+        },
+        "router": {
+          "tensors": 12,
+          "none": 0,
+          "l1": 0.23054259200580418
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1774.9729241672903
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 5,
+        "post_conflict_positive_count": 374,
+        "post_conflict_gt_count": 43,
+        "post_secondary_topk_positive_count": 374,
+        "post_secondary_topk_gt_count": 43,
+        "candidate_positive_count": 379,
+        "candidate_gt_count": 43,
+        "final_positive_count": 374,
+        "final_gt_count": 43
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000715.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 4.140787601470947,
+      "gt": 43,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1979.1397966705263
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 3,
+        "post_conflict_positive_count": 272,
+        "post_conflict_gt_count": 43,
+        "post_secondary_topk_positive_count": 43,
+        "post_secondary_topk_gt_count": 43,
+        "candidate_positive_count": 275,
+        "candidate_gt_count": 43,
+        "final_positive_count": 43,
+        "final_gt_count": 43
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000715.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 4.140787601470947,
+      "gt": 43,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 1979.1397966705263
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 10,
+        "post_conflict_positive_count": 368,
+        "post_conflict_gt_count": 43,
+        "post_secondary_topk_positive_count": 43,
+        "post_secondary_topk_gt_count": 43,
+        "candidate_positive_count": 379,
+        "candidate_gt_count": 43,
+        "final_positive_count": 43,
+        "final_gt_count": 43
+      },
+      "gradient_max_difference_vs_7": 0.0
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000781.jpg",
+      "branch": "one2many",
+      "topk": 10,
+      "loss": 1.3724210262298584,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 88,
+          "l1": 1848.1467392569612
+        },
+        "router": {
+          "tensors": 12,
+          "none": 0,
+          "l1": 0.30758405981760006
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 2429.1160602346063
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 23,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 23,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 23,
+        "candidate_gt_count": 3,
+        "final_positive_count": 23,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000781.jpg",
+      "branch": "one2one",
+      "topk": 7,
+      "loss": 2.4432389736175537,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3470.125934958458
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 17,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 17,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      }
+    },
+    {
+      "cell": "d",
+      "image": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000781.jpg",
+      "branch": "one2one",
+      "topk": 10,
+      "loss": 2.4432389736175537,
+      "gt": 3,
+      "gradients": {
+        "factor": {
+          "tensors": 157,
+          "none": 157,
+          "l1": 0
+        },
+        "router": {
+          "tensors": 12,
+          "none": 12,
+          "l1": 0
+        },
+        "one2one_head": {
+          "tensors": 30,
+          "none": 0,
+          "l1": 3470.125934958458
+        },
+        "one2many_head": {
+          "tensors": 30,
+          "none": 30,
+          "l1": 0
+        }
+      },
+      "assigner": {
+        "conflict_metric": "overlap",
+        "conflict_anchor_count": 0,
+        "post_conflict_positive_count": 23,
+        "post_conflict_gt_count": 3,
+        "post_secondary_topk_positive_count": 3,
+        "post_secondary_topk_gt_count": 3,
+        "candidate_positive_count": 23,
+        "candidate_gt_count": 3,
+        "final_positive_count": 3,
+        "final_gt_count": 3
+      },
+      "gradient_max_difference_vs_7": 0.0
+    }
+  ],
+  "scope": "Fixed first training images, no optimizer steps, separate detection branches, excludes MoE aux loss",
+  "images": [
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000151.jpg",
+      "sha256": "107e1f06d2ed2ced90e6f02ae2a5056080abcb0c07efa7dd198db9b61d78c276"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000154.jpg",
+      "sha256": "0c726be74f7b08dc54fd021adc50a74643de87179d26df743a3689d7b1343d51"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000308.jpg",
+      "sha256": "41c58689c39d01b836d1caffc4357f821826e5e95fec1fb1b8a91e77920992ea"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000531.jpg",
+      "sha256": "a56d655e793fe6a22172e38d981b12de0f6a6656af808025dd93bd66defbfb9e"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000560.jpg",
+      "sha256": "834de271b379e5ae62d4ed5a8df7e002ee68d72d68e8f5503ec6d9200441f083"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000595.jpg",
+      "sha256": "efe094616431dbdef9d2438b6e143218df07801ac153023cc8d11114c9461029"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000715.jpg",
+      "sha256": "45e8925104949b569b5280347cb829149dd3e9e9ed51098f3a55847ed7afa294"
+    },
+    {
+      "path": "/data/data2/TuJiajun/A1-smoke-r4/YOLO-Master/configs/a1/p1_pretrained/pilot_data/images/train2017/000000000781.jpg",
+      "sha256": "969ddff04b2525cd6678a718c8eb0e5217887d8dd15cbeb9dce6dcd4f262ab25"
+    }
+  ],
+  "r5_training_comparison_valid": false
+}
